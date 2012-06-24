@@ -1468,6 +1468,32 @@ $wgExternalServers = array();
 $wgDefaultExternalStore = false;
 
 /**
+ * Associative array of storage names to configuration arrays, each having:
+ *   - clusterPrefix : The prefix to each external cluster name
+ *   - clusterCount  : The number of clusters in the store (power of 2)
+ * The clusters are all named <clusterPrefix><x>, where x is in [1,<clusterCount>].
+ * These clusters need to actually exist in $wgExternalServers or $wgLBFactoryConf.
+ *
+ * This setting must be global to all wikis that may use the store.
+ *
+ * Example use:
+ *   $wgRDBStores = array( 'main' => array( 'prefix' => 'rdCluster', 'clusters' => 2 ) )
+ *
+ * @var array
+ */
+$wgRDBStores = array();
+
+/**
+ * Map of table names to external $wgRDBStores names.
+ * Core or extensions may check this to determine where a table is placed.
+ * This can be used to partition large tables, storing them in large,
+ * horizontally scalable, RDBMs data stores.
+ *
+ * @var array
+ */
+$wgRDBStoredTables = array();
+
+/**
  * Revision text may be cached in $wgMemc to reduce load on external storage
  * servers and object extraction overhead for frequently-loaded revisions.
  *

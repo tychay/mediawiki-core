@@ -329,6 +329,48 @@ function wfRandomString( $length = 32 ) {
 }
 
 /**
+ * Get a statistically unique 64-bit unsigned integer ID string.
+ * A string is returned since 64/32 bit PHP integers are large enough.
+ * The bits of the ID are prefixed with the time down to the microsecond.
+ *
+ * IDs are suitable as a PRIMARY KEY for sharded DB tables, since new rows
+ * will almost always have higher UUIDs, which makes B-TREE updates faster on INSERT.
+ * It can also be stored efficiently as an UNSIGNED BIGINT in MySQL. If a column uses
+ * these as values, it should still be declared as UNIQUE, to handle any collisions.
+ * If two threads insert at the same microsecond, the chance of a collision is either
+ * about 1/65535 for 64-bit systems or about 1/4096 for 32 bit systems.
+ *
+ * @param $epoch integer Epoch (defaults to "January 1, 2012")
+ * @return string
+ * @since 1.20
+ */
+function wfTimestampedUID64( $epoch = 1325376000 ) {
+	$time = microtime( true ); // float
+	if ( $epoch >= floor( $time ) ) {
+		throw new MWException( "Detected invalid timestamp epoch." );
+	}
+	$seconds  = floor( $time ) - (int)$epoch; // start from epoch
+	$useconds = floor( 1e6 * ( $time - floor( $time ) ) );
+	if ( PHP_INT_SIZE == 8 ) { // 64 bit
+		# Take the 48 MSBs of "microseconds since epoch" (rolls over in ~89 years)
+		$id_binary = wfBaseConvert( 1e6 * $seconds + $useconds, 10, 2, 48 );
+		# Add on 16 bits of randomness to make 64 bits total
+		$id_binary .= wfBaseConvert( mt_rand( 0, 65535 ), 10, 2, 16 );
+	} else { // 32 bit
+		# Create a 64 bit binary string from the time (rolls over in 2038).
+		# Note that (10^6)/(2^20) = 0.953674316
+		$id_binary = wfBaseConvert( $seconds, 10, 2, 32 ) . wfBaseConvert( $useconds, 10, 2, 20 );
+		# Add on 12 bits of randomness to make 64 bits total
+		$id_binary .= wfBaseConvert( mt_rand( 0, 4096 ), 10, 2, 12 ); // 2^12 = 4096
+	}
+	# Convert back to an integer string
+	if ( strlen( $id_binary ) != 64 ) {
+		throw new MWException( "Detected overflow for microsecond timestamp." );
+	}
+	return wfBaseConvert( $id_binary, 2, 10 );
+}
+
+/**
  * We want some things to be included as literal characters in our title URLs
  * for prettiness, which urlencode encodes by default.  According to RFC 1738,
  * all of the following should be safe:

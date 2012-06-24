@@ -491,6 +491,12 @@ $wgAutoloadLocalClasses = array(
 	'SavepointPostgres' => 'includes/db/DatabasePostgres.php',
 	'SQLiteField' => 'includes/db/DatabaseSqlite.php',
 
+	# includes/rdbstore
+	'RDBStore' => 'includes/db/rdbstore/RDBStore.php',
+	'RDBStoreGroup' => 'includes/db/rdbstore/RDBStoreGroup.php',
+	'ExternalRDBStore' => 'includes/db/rdbstore/ExternalRDBStore.php',
+	'LocalRDBStore' => 'includes/db/rdbstore/LocalRDBStore.php',
+
 	# includes/debug
 	'MWDebug' => 'includes/debug/Debug.php',
 
