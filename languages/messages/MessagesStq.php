@@ -86,7 +86,6 @@ $messages = array(
 'tog-watchlisthideliu' => 'Beoarbaidengen truch ounmäldede Benutsere in ju Beoboachtengslieste uutbländje',
 'tog-watchlisthideanons' => 'Beoarbaidengen truch anonyme Benutsere (IP) in ju Beoboachtengslieste uutbländje',
 'tog-watchlisthidepatrolled' => 'Kontrollierde Annerengen in ju Beooboachtengslieste "Lääste Annerengen" uutbländje',
-'tog-nolangconversion' => 'Konvertierenge fon Sproakvarianten deaktivierje',
 'tog-ccmeonemails' => 'Seend mie Kopien fon do E-Maile, do iek uur Benutsere seende.',
 'tog-diffonly' => 'Wies bie dän Versionsfergliek bloot do Unnerskeede, nit ju fulboodige Siede',
 'tog-showhiddencats' => 'Wies ferstatte Kategorien',
@@ -190,7 +189,6 @@ $messages = array(
 'qbbrowse' => 'Bleederje',
 'qbedit' => 'Annerje',
 'qbpageoptions' => 'Disse Siede',
-'qbpageinfo' => 'Siedendoatäie',
 'qbmyoptions' => 'Mien Sieden',
 'qbspecialpages' => 'Spezialsieden',
 'faq' => 'Oafte stoalde Froagen',
@@ -444,7 +442,7 @@ Die Administrator, die dän Skrieuwtougriep speerde, roate foulgjenden Gruund an
 # Login and logout pages
 'logouttext' => "'''Du bäst nu oumälded.'''
 
-Du koast {{SITENAME}} nu anonym fääre benutsje, of die fonnäien unner dänsälge of n uur Benutsernoome wier [[Special:UserLogin|anmäldje]].
+Du koast {{SITENAME}} nu anonym fääre benutsje, of die fonnäien unner dänsälge of n uur Benutsernoome wier <span class='plainlinks'>[$1 anmäldje]</span>.
 Beoachtje, dät eenige Sieden noch anwiese konnen, dät du oumälded bäst, soloange du nit din Browsercache loosmoaked hääst.",
 'welcomecreation' => '== Wäilkuumen, $1 ==
 
@@ -1008,8 +1006,6 @@ Staal deertruch sicher, dät ju Versionsgeskichte fon n Artikkel historisk akroa
 'search-interwiki-caption' => 'Susterprojekte',
 'search-interwiki-default' => '$1 Resultoate:',
 'search-interwiki-more' => '(wiedere)',
-'search-mwsuggest-enabled' => 'mäd Foarsleeke',
-'search-mwsuggest-disabled' => 'neen Foarsleeke',
 'search-relatedarticle' => 'Früünde',
 'mwsuggest-disable' => 'Foarsleeke truch Ajax deaktivierje',
 'searcheverything-enable' => 'Säik in aal Noomensruume',
@@ -1373,12 +1369,12 @@ Bestäätigje dan ju Lizenz-Fereenboarenge un klik deerätter ap '''„Doatäi h
 Dit kon n Skoft duurje, besunners bie ne loangsomme Internet-Ferbiendenge.
 
 Uum ne '''Bielde''' in ne Siede tou ferweenden, skrieuw an Steede fon ju Bielde toun Biespil:
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}:Doatäi.jpg<nowiki>]]</nowiki></tt>'''
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}:Doatäi.jpg|Link-Text<nowiki>]]</nowiki></tt>'''
+* '''<code><nowiki>[[</nowiki>{{ns:file}}:Doatäi.jpg<nowiki>]]</nowiki></code>'''
+* '''<code><nowiki>[[</nowiki>{{ns:file}}:Doatäi.jpg|Link-Text<nowiki>]]</nowiki></code>'''
 
 Uum '''Mediendoatäie''' ientoubienden, ferweende toun Biespil:
-* '''<tt><nowiki>[[</nowiki>{{ns:media}}:Doatäi.ogg<nowiki>]]</nowiki></tt>'''
-* '''<tt><nowiki>[[</nowiki>{{ns:media}}:Doatäi.ogg|Link-Text<nowiki>]]</nowiki></tt>'''
+* '''<code><nowiki>[[</nowiki>{{ns:media}}:Doatäi.ogg<nowiki>]]</nowiki></code>'''
+* '''<code><nowiki>[[</nowiki>{{ns:media}}:Doatäi.ogg|Link-Text<nowiki>]]</nowiki></code>'''
 
 Beoachtje, dät, juust as bie normoale Sieden-Inhoolde, uur Benutsere dien Doatäie läskje of annerje konnen.",
 'upload-permitted' => 'Ferlööwede Doatäitypen: $1.',
@@ -1424,20 +1420,20 @@ Ferlööwed {{PLURAL:$3|is|sunt}} $2.",
 'windows-nonascii-filename' => 'Dit Wiki unnerstöänt neen Doatäinoomen do der Sunnerteekene änthoolde.',
 'fileexists' => "Ne Doatäi mäd dissen Noome bestoant al.
 Wan du ap 'Doatäi spiekerje' klikst, wäd ju Doatäi uurskrieuwen.
-Unner '''<tt>[[:$1]]</tt>''' koast du die bewisje, of du dät wuddelk wolt.
+Unner <strong>[[:$1]]</strong> koast du die bewisje, of du dät wuddelk wolt.
 [[$1|thumb]]",
-'filepageexists' => "Ju Beskrieuwengssiede foar disse Doatäi wuude al moaked as '''<tt>[[:$1]]</tt>''', man der bestoant neen Doatäi mäd dissen Noome.
+'filepageexists' => 'Ju Beskrieuwengssiede foar disse Doatäi wuude al moaked as <strong>[[:$1]]</strong>, man der bestoant neen Doatäi mäd dissen Noome.
 Ju ienroate Beskrieuwenge wäd nit ap ju Beskrieuwengssiede uurnuumen.
 Ju Beskrieuwengssiede moast du ätter dät Hoochleeden fon ju Doatäi noch mäd de Hounde beoarbaidje.
-[[$1|thumb]]",
-'fileexists-extension' => "Een Doatäi mäd n äänelken Noome existiert al: [[$2|thumb]]
-* Noome fon ju hoochtouleedende Doatäi: '''<tt>[[:$1]]</tt>'''
-* Noome fon ju anweesende Doatäi: '''<tt>[[:$2]]</tt>'''
-Wääl n uur Noome.",
+[[$1|thumb]]',
+'fileexists-extension' => 'Een Doatäi mäd n äänelken Noome existiert al: [[$2|thumb]]
+* Noome fon ju hoochtouleedende Doatäi: <strong>[[:$1]]</strong>
+* Noome fon ju anweesende Doatäi: <strong>[[:$2]]</strong>
+Wääl n uur Noome.',
 'fileexists-thumbnail-yes' => "Bie ju Doatäi skient et sik uum ne Bielde fon ferlitjerde Grööte ''(thumbnail)'' tou honneljen. [[$1|thumb]]
-Pröif ju Doatäi '''<tt>[[:$1]]</tt>'''.
+Pröif ju Doatäi <strong>[[:$1]]</strong>.
 Wan et sik uum ju Bielde in Originoalgrööte honnelt, dan houget neen apaate Foarskaubielde hoochleeden tou wäiden.",
-'file-thumbnail-no' => "Die Doatäinoome begint mäd '''<tt>$1</tt>'''. Dit tjut ap ne Bielde fon ferlitjerde Grööte ''(thumbnail)'' wai.
+'file-thumbnail-no' => "Die Doatäinoome begint mäd <strong>$1</strong>. Dit tjut ap ne Bielde fon ferlitjerde Grööte ''(thumbnail)'' wai.
 Pröif, of du ju Bielde in fulle Aplöösenge foarlääsen hääst un leed ju unner dän Originoalnoome hooch. Uurs annerje dän Doatäinoome.",
 'fileexists-forbidden' => 'Mäd dissen Noome bestoant al ne Doatäi un ju kon nit uurskrieuwen wäide. Gung jädden tourääch un leede dien Doatäi unner n uur Noome hooch. [[File:$1|thumb|center|$1]]',
 'fileexists-shared-forbidden' => 'Mäd dissen Noome bestoant al ne Doatäi in dät zentroale Medienarchiv.
@@ -1629,7 +1625,7 @@ Ne [[Special:WhatLinksHere/$2|fulständige Lieste]] is ferföigboar.',
 
 # MIME search
 'mimesearch' => 'Säike ätter MIME-Typ',
-'mimesearch-summary' => 'Ap disse Spezialsiede konnen do Doatäie ätter dän MIME-Typ filterd wäide. Ju Iengoawe mout immer dän Medien- un Subtyp beienhoolde: <tt>image/jpeg</tt> (sjuch Bieldbeskrieuwengssiede).',
+'mimesearch-summary' => 'Ap disse Spezialsiede konnen do Doatäie ätter dän MIME-Typ filterd wäide. Ju Iengoawe mout immer dän Medien- un Subtyp beienhoolde: <code>image/jpeg</code> (sjuch Bieldbeskrieuwengssiede).',
 'mimetype' => 'MIME-Typ:',
 'download' => 'Deelleede',
 
@@ -1818,7 +1814,7 @@ Sjuch uk ju Lieste fon do [[Special:WantedCategories|wonskede Kategorien]].',
 'linksearch-pat' => 'Säikmuster:',
 'linksearch-ns' => 'Noomensruum:',
 'linksearch-ok' => 'Säike (012)',
-'linksearch-text' => 'Disse Spezioalsiede moaket ju Säike muugelke ätter Sieden, in do bestimde Webferbiendengen äntheelden sunt. Deerbie konnen Ploatshooldere as biespilswiese <tt>*.biespiell.de</tt> benutsed wäide. Der mout ap minste een Top-Level-Domai, t.B. „*.org“. anroat wäide. <br />Unnerstutsede Protokolle: <tt>$1</tt> (Disse jädden nit bie ju Säikanfroage anreeke.)',
+'linksearch-text' => 'Disse Spezioalsiede moaket ju Säike muugelke ätter Sieden, in do bestimde Webferbiendengen äntheelden sunt. Deerbie konnen Ploatshooldere as biespilswiese <code>*.biespiell.de</code> benutsed wäide. Der mout ap minste een Top-Level-Domai, t.B. „*.org“. anroat wäide. <br />Unnerstutsede Protokolle: <code>$1</code> (Disse jädden nit bie ju Säikanfroage anreeke.)',
 'linksearch-line' => '$1 is ferlinked fon $2',
 'linksearch-error' => 'Wildcards konnen bloot an dän Ounfang fon ju URL ferwoand wäide.',
 
@@ -2610,15 +2606,10 @@ Do ap dän lokoale Reekener spiekerje un deerätter hier hoochleede.',
 # Info page
 'pageinfo-title' => 'Informatione tou „$1“',
 'pageinfo-header-edits' => 'Beoarbaidengen',
-'pageinfo-header-watchlist' => 'Beooboachtengslieste',
-'pageinfo-header-views' => 'Siedenaproupe',
-'pageinfo-subjectpage' => 'Siede',
-'pageinfo-talkpage' => 'Diskussionssiede',
+'pageinfo-views' => 'Antaal fon Siedenaproupe',
 'pageinfo-watchers' => 'Antaal fon do Besäikere',
 'pageinfo-edits' => 'Antaal fon do  Beoarbaidengen',
 'pageinfo-authors' => 'Antaal fon unnerskeedelke Autoren',
-'pageinfo-views' => 'Antaal fon Siedenaproupe',
-'pageinfo-viewsperedit' => 'Siedenaproupe pro Beoarbaidenge',
 
 # Patrolling
 'markaspatrolleddiff' => 'As pröiwed markierje',
@@ -3306,5 +3297,9 @@ Ne [{{SERVER}}{{SCRIPTPATH}}/COPYING Kopie fon ju ''GNU General Public License''
 'revdelete-restricted' => 'Einskränkengen jäilde uk foar Administratore',
 'revdelete-unrestricted' => 'Ienskränkengen foar Administratore wächhoald',
 'newuserlog-byemail' => 'dät Paaswoud wuud uur E-Mail fersoand',
+
+# Search suggestions
+'searchsuggest-search' => 'Säik',
+'searchsuggest-containing' => 'Fultextsäike ätter ...',
 
 );

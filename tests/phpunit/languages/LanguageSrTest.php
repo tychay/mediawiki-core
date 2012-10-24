@@ -12,17 +12,17 @@
  * @file
  */
 
-require_once dirname( dirname( __FILE__ ) ) . '/bootstrap.php';
+require_once dirname( __DIR__ ) . '/bootstrap.php';
 
-/** Tests for MediaWiki languages/LanguageTr.php */
+/** Tests for MediaWiki languages/LanguageSr.php */
 class LanguageSrTest extends MediaWikiTestCase {
 	/* Language object. Initialized before each test */
 	private $lang;
 
-	function setUp() {
+	protected function setUp() {
 		$this->lang = Language::factory( 'sr' );
 	}
-	function tearDown() {
+	protected function tearDown() {
 		unset( $this->lang );
 	}
 

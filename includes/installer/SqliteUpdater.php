@@ -92,6 +92,20 @@ class SqliteUpdater extends DatabaseUpdater {
 			array( 'addIndex', 'revision', 'page_user_timestamp', 'patch-revision-user-page-index.sql' ),
 			array( 'addField', 'ipblocks', 'ipb_parent_block_id', 'patch-ipb-parent-block-id.sql' ),
 			array( 'addIndex', 'ipblocks', 'ipb_parent_block_id', 'patch-ipb-parent-block-id-index.sql' ),
+			array( 'dropField', 'category',     'cat_hidden',       'patch-cat_hidden.sql' ),
+
+			// 1.21
+			array( 'addField', 'revision', 'rev_content_format', 'patch-revision-rev_content_format.sql' ),
+			array( 'addField', 'revision', 'rev_content_model',  'patch-revision-rev_content_model.sql' ),
+			array( 'addField', 'archive',  'ar_content_format',  'patch-archive-ar_content_format.sql' ),
+			array( 'addField', 'archive',  'ar_content_model',   'patch-archive-ar_content_model.sql' ),
+			array( 'addField', 'page',     'page_content_model', 'patch-page-page_content_model.sql' ),
+
+			array( 'dropField', 'site_stats',    'ss_admins',         'patch-drop-ss_admins.sql' ),
+			array( 'dropField', 'recentchanges', 'rc_moved_to_title', 'patch-rc_moved.sql' ),
+			array( 'addTable', 'sites',                            'patch-sites.sql' ),
+			array( 'addField', 'filearchive',   'fa_sha1',          'patch-fa_sha1.sql' ),
+			array( 'addField', 'job',           'job_token',         'patch-job_token.sql' ),
 		);
 	}
 
@@ -101,22 +115,16 @@ class SqliteUpdater extends DatabaseUpdater {
 			$this->output( "...have initial indexes\n" );
 			return;
 		}
-		$this->output( "Adding initial indexes..." );
-		$this->applyPatch( 'initial-indexes.sql' );
-		$this->output( "done\n" );
+		$this->applyPatch( 'initial-indexes.sql', false, "Adding initial indexes" );
 	}
 
 	protected function sqliteSetupSearchindex() {
 		$module = DatabaseSqlite::getFulltextSearchModule();
 		$fts3tTable = $this->updateRowExists( 'fts3' );
 		if ( $fts3tTable &&  !$module ) {
-			$this->output( '...PHP is missing FTS3 support, downgrading tables...' );
-			$this->applyPatch( 'searchindex-no-fts.sql' );
-			$this->output( "done\n" );
+			$this->applyPatch( 'searchindex-no-fts.sql', false, 'PHP is missing FTS3 support, downgrading tables' );
 		} elseif ( !$fts3tTable && $module == 'FTS3' ) {
-			$this->output( '...adding FTS3 search capabilities...' );
-			$this->applyPatch( 'searchindex-fts3.sql' );
-			$this->output( "done\n" );
+			$this->applyPatch( 'searchindex-fts3.sql', false, "Adding FTS3 search capabilities" );
 		} else {
 			$this->output( "...fulltext search table appears to be in order.\n" );
 		}

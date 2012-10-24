@@ -61,16 +61,16 @@ $specialPageAliases = array(
 );
 
 $magicWords = array(
-	'redirect'                => array( '0', '#KÚFÙ', '#REDIRECT' ),
-	'fullpagename'            => array( '1', 'ÁHÀNÍLÉNKÈIHÜ', 'FULLPAGENAME' ),
-	'msg'                     => array( '0', 'OZI:', 'MSG:' ),
-	'img_right'               => array( '1', 'áká_ịkẹngạ', 'right' ),
-	'img_left'                => array( '1', 'áká_èkpè', 'left' ),
-	'img_top'                 => array( '1', 'élú', 'top' ),
-	'img_middle'              => array( '1', 'ẹtítì', 'middle' ),
-	'img_text_bottom'         => array( '1', 'okpúrù-ede', 'text-bottom' ),
-	'displaytitle'            => array( '1', 'ZIÍSHÍ', 'DISPLAYTITLE' ),
-	'pagesize'                => array( '1', 'ÀSÁIHÜ', 'PAGESIZE' ),
+	'redirect'                  => array( '0', '#KÚFÙ', '#REDIRECT' ),
+	'fullpagename'              => array( '1', 'ÁHÀNÍLÉNKÈIHÜ', 'FULLPAGENAME' ),
+	'msg'                       => array( '0', 'OZI:', 'MSG:' ),
+	'img_right'                 => array( '1', 'áká_ịkẹngạ', 'right' ),
+	'img_left'                  => array( '1', 'áká_èkpè', 'left' ),
+	'img_top'                   => array( '1', 'élú', 'top' ),
+	'img_middle'                => array( '1', 'ẹtítì', 'middle' ),
+	'img_text_bottom'           => array( '1', 'okpúrù-ede', 'text-bottom' ),
+	'displaytitle'              => array( '1', 'ZIÍSHÍ', 'DISPLAYTITLE' ),
+	'pagesize'                  => array( '1', 'ÀSÁIHÜ', 'PAGESIZE' ),
 );
 
 $messages = array(
@@ -439,7 +439,7 @@ Maka ikuwaria na asụsụ nke ozor, biko chetu I ji [//translatewiki.net/wiki/M
 # Login and logout pages
 'logouttext' => "'''I fwuóla ubwá.'''
 
-I nwèríkí jíwá {{SITENAME}} na nke ẹnwéghi áhà, mànà Í nwèríkí [[Special:UserLogin|bátá òzọr]] na áhà Í shị fwüo ma áhà ozọr.
+I nwèríkí jíwá {{SITENAME}} na nke ẹnwéghi áhà, mànà Í nwèríkí <span class='plainlinks'>[$1 bátá òzọr]</span> na áhà Í shị fwüo ma áhà ozọr.
 Màkwá na o dị ihü gi zi kà Í nor kwa ímé, o gi kwüshí mgbe Í sáfùrù cache ihe ishi a gá intanet gi.",
 'welcomecreation' => '== Nnöö, $1! ==
 Okíkè buwa gi a guchala.
@@ -732,8 +732,6 @@ Okwu ụmà: '''({{int:cur}})''' = gbánwe na nké orü mbu, '''({{int:last}})''
 'search-interwiki-caption' => 'Orürü nwanne nwanyị',
 'search-interwiki-default' => '$1 nke ziri:',
 'search-interwiki-more' => '(dikarírí)',
-'search-mwsuggest-enabled' => 'ma okwu',
-'search-mwsuggest-disabled' => 'adighi okwu',
 'search-relatedarticle' => 'Nwanne',
 'searcheverything-enable' => 'Chọwa na ébé nílé',
 'searchrelated' => 'nke kọlu',
@@ -1683,5 +1681,8 @@ Nke ozor gí zonari na áká onwe ha.
 'htmlform-submit' => 'Dànyé',
 'htmlform-reset' => 'Emekwàlà gbanwere',
 'htmlform-selectorother-other' => 'Nke ozor',
+
+# Search suggestions
+'searchsuggest-search' => 'Chọwa',
 
 );

@@ -80,11 +80,19 @@ class PNGHandler extends BitmapHandler {
 		}
 		return false;
 	}
-	
+	/**
+	 * We do not support making APNG thumbnails, so always false
+	 * @param $image File
+	 * @return bool false
+	 */
+	function canAnimateThumbnail( $image ) {
+		return false;
+	}
+
 	function getMetadataType( $image ) {
 		return 'parsed-png';
 	}
-	
+
 	function isMetadataValid( $image, $metadata ) {
 
 		if ( $metadata === self::BROKEN_FILE ) {
@@ -126,21 +134,21 @@ class PNGHandler extends BitmapHandler {
 
 		$info = array();
 		$info[] = $original;
-		
+
 		if ( $metadata['loopCount'] == 0 ) {
-			$info[] = wfMsgExt( 'file-info-png-looped', 'parseinline' );
+			$info[] = wfMessage( 'file-info-png-looped' )->parse();
 		} elseif ( $metadata['loopCount'] > 1 ) {
-			$info[] = wfMsgExt( 'file-info-png-repeat', 'parseinline', $metadata['loopCount'] );
+			$info[] = wfMessage( 'file-info-png-repeat' )->numParams( $metadata['loopCount'] )->parse();
 		}
-		
+
 		if ( $metadata['frameCount'] > 0 ) {
-			$info[] = wfMsgExt( 'file-info-png-frames', 'parseinline', $metadata['frameCount'] );
+			$info[] = wfMessage( 'file-info-png-frames' )->numParams( $metadata['frameCount'] )->parse();
 		}
-		
+
 		if ( $metadata['duration'] ) {
 			$info[] = $wgLang->formatTimePeriod( $metadata['duration'] );
 		}
-		
+
 		return $wgLang->commaList( $info );
 	}
 

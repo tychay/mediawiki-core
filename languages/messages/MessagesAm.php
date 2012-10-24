@@ -182,7 +182,6 @@ $messages = array(
 'qbbrowse' => 'ቃኝ',
 'qbedit' => 'አርም',
 'qbpageoptions' => 'ይህ ገጽ',
-'qbpageinfo' => 'አግባብ',
 'qbmyoptions' => 'የኔ ገጾች',
 'qbspecialpages' => 'ልዩ ገጾች',
 'faq' => 'ብጊየጥ (ብዙ ጊዜ የሚጠየቁ ጥያቀዎች)',
@@ -197,7 +196,7 @@ $messages = array(
 'vector-action-unprotect' => 'አለመቆለፍ',
 'vector-view-create' => 'አዲስ ፍጠር',
 'vector-view-edit' => 'አርም',
-'vector-view-history' => ' ታሪኩን አሳይ',
+'vector-view-history' => 'ታሪኩን አሳይ',
 'vector-view-view' => 'ለማንበብ',
 'vector-view-viewsource' => 'ጥሬ ኮድ ለመመልከት',
 
@@ -736,8 +735,6 @@ $1ን ወይም ማንም ሌላ [[{{MediaWiki:Grouppage-sysop}}|መጋቢ]] ስ
 'search-interwiki-caption' => 'ተዛማጅ ስራዎች',
 'search-interwiki-default' => '$1 ውጤቶች፦',
 'search-interwiki-more' => '(ተጨማሪ)',
-'search-mwsuggest-enabled' => 'ከ አማራጮች ጋር',
-'search-mwsuggest-disabled' => 'አማራጭ አልተገኘለትም',
 'search-relatedarticle' => 'የተዛመደ',
 'searchrelated' => 'የተዛመደ',
 'searchall' => 'ሁሉ',
@@ -946,6 +943,7 @@ $1ን ወይም ማንም ሌላ [[{{MediaWiki:Grouppage-sysop}}|መጋቢ]] ስ
 'recentchanges-legend' => 'የቅርብ ለውጥ አማራጮች፦',
 'recentchanges-summary' => 'በዚሁ ገጽ ላይ በቅርብ ጊዜ የወጡ አዳዲስ ለውጦች ለመከታተል ይችላሉ።',
 'recentchanges-feed-description' => 'በዚህ ዊኪ ላይ በቅርብ ግዜ የተለወጠውን በዚሁ feed መከታተል ይችላሉ',
+'recentchanges-label-minor' => 'ይህ ለውጥ ጥቃቅን ነው።',
 'rcnote' => "ከ$5 $4 እ.ኤ.አ. {{PLURAL:$2|ባለፈው 1 ቀን|ባለፉት '''$2''' ቀኖች}} {{PLURAL:$1|የተደረገው '''1''' ለውጥ እታች ይገኛል|የተደረጉት '''$1''' መጨረሻ ለውጦች እታች ይገኛሉ}}።",
 'rcnotefrom' => "ከ'''$2''' ጀምሮ የተቀየሩት ገጾች (እስከ '''$1''' ድረስ) ክዚህ በታች ይታያሉ።",
 'rclistfrom' => '(ከ $1 ጀምሮ አዲስ ለውጦቹን ለማየት)',
@@ -1017,17 +1015,17 @@ $1ን ወይም ማንም ሌላ [[{{MediaWiki:Grouppage-sysop}}|መጋቢ]] ስ
 'large-file' => 'የፋይል መጠን ከ$1 በላይ እንዳይሆን ይመከራል፤ የዚህ ፋይል መጠን $2 ነው።',
 'largefileserver' => 'ይህ ፋይል ሰርቨሩ ከሚችለው መጠን በላይ ነው።',
 'emptyfile' => 'የላኩት ፋይል ባዶ እንደ ሆነ ይመስላል። ይህ ምናልባት በፋይሉ ስም አንድ ግድፋት ስላለ ይሆናል። እባክዎ ይህን ፋይል በውኑ መላክ እንደ ፈለጉ ያረጋግጡ።',
-'fileexists' => "ይህ ስም ያለው ፋይል አሁን ይኖራል፤ እባክዎ እሱም ለመቀየር እንደፈለጉ እርግጥኛ ካልሆኑ '''<tt>[[:$1]]</tt>''' ይመለከቱ።
-[[$1|thumb]]",
-'filepageexists' => "የዚሁ ፋኡል መግለጫ ገጽ ከዚህ በፊት በ'''<tt>[[:$1]]</tt>''' ተፈጥሯል፤ ነገር ግን ይህ ስም ያለበት ፋይል አሁን አይኖርም። ስለዚህ ያቀረቡት ማጠቃለያ በመግለጫው ገጽ አይታይም። መግለጫዎ በዚያ እንዲታይ በእጅ ማስገባት ይኖርብዎታል።",
-'fileexists-extension' => "ተመሳሳይ ስም ያለበት ፋይል ይኖራል፦[[$2|thumb]]
-* የሚላክ ፋይል ስም፦ '''<tt>[[:$1]]</tt>'''
-* የሚኖር (የቆየው) ፋይል ስም፦ '''<tt>[[:$2]]</tt>'''
-እባክዎ ሌላ ስም ይምረጡ።",
+'fileexists' => 'ይህ ስም ያለው ፋይል አሁን ይኖራል፤ እባክዎ እሱም ለመቀየር እንደፈለጉ እርግጥኛ ካልሆኑ <strong>[[:$1]]</strong> ይመለከቱ።
+[[$1|thumb]]',
+'filepageexists' => 'የዚሁ ፋኡል መግለጫ ገጽ ከዚህ በፊት በ<strong>[[:$1]]</strong> ተፈጥሯል፤ ነገር ግን ይህ ስም ያለበት ፋይል አሁን አይኖርም። ስለዚህ ያቀረቡት ማጠቃለያ በመግለጫው ገጽ አይታይም። መግለጫዎ በዚያ እንዲታይ በእጅ ማስገባት ይኖርብዎታል።',
+'fileexists-extension' => 'ተመሳሳይ ስም ያለበት ፋይል ይኖራል፦[[$2|thumb]]
+* የሚላክ ፋይል ስም፦ <strong>[[:$1]]</strong>
+* የሚኖር (የቆየው) ፋይል ስም፦ <strong>[[:$2]]</strong>
+እባክዎ ሌላ ስም ይምረጡ።',
 'fileexists-thumbnail-yes' => "ፋይሉ የተቀነሰ መጠን ያለበት ስዕል ''(ናሙና)'' እንደ ሆነ ይመስላል። [[$1|thumb]]
-እባክዎ ፋይሉን '''<tt>[[:$1]]</tt>''' ይመለከቱ።
+እባክዎ ፋይሉን <strong>[[:$1]]</strong> ይመለከቱ።
 ያው ፋይል ለዚሁ ፋይል አንድ አይነት በኦሪጂናሉ መጠን ቢሆን ኖሮ፣ ተጨማሪ ናሙና መላክ አያስፈልግም።",
-'file-thumbnail-no' => "የፋይሉ ስም በ'''<tt>$1</tt>''' ይጀመራል። የተቀነሰ መጠን ያለበት ስዕል ''(ናሙና)'' እንደ ሆነ ይመስላል። ይህን ስዕል በሙሉ ማጉላት ካለዎ፣ ይህን ይላኩ፤ አለዚያ እባክዎ የፋይሉን ስም ይቀይሩ።",
+'file-thumbnail-no' => "የፋይሉ ስም በ<strong>$1</strong> ይጀመራል። የተቀነሰ መጠን ያለበት ስዕል ''(ናሙና)'' እንደ ሆነ ይመስላል። ይህን ስዕል በሙሉ ማጉላት ካለዎ፣ ይህን ይላኩ፤ አለዚያ እባክዎ የፋይሉን ስም ይቀይሩ።",
 'fileexists-forbidden' => 'በዚህ ስም የሚኖር ፋይል ገና አለ፤ እባክዎ ተመልሰው ይህን ፋይል በአዲስ ስም ስር ይልኩት። [[File:$1|thumb|center|$1]]',
 'fileexists-shared-forbidden' => 'ይህ ስም ያለበት ፋይል አሁን በጋራ ፋይል ምንጭ ይኖራል፤ እባክዎ ተመልሰው ፋይሉን በሌላ ስም ስር ይላኩት። [[File:$1|thumb|center|$1]]',
 'file-exists-duplicate' => 'ይህ ፋይል {{PLURAL:$1|የሚከተለው ፋኡል|የሚከተሉት ፋይሎች}} ቅጂ ነው፦',
@@ -2267,6 +2265,10 @@ $3
 # New logging system
 'newuserlog-byemail' => 'ማለፊያ-ቃል በኤ-መልዕክት ተልኳል',
 
+# Search suggestions
+'searchsuggest-search' => 'ፈልግ',
+'searchsuggest-containing' => 'በመጣጥፎች ይዘት ለመፈልግ...',
+
 # API errors
 'api-error-badaccess-groups' => 'እርስዎ በዚህ ውኪ ላይ ፋይል እንድሊኩ አልተፈቀደም።',
 'api-error-badtoken' => 'የውስጥ ስህተት: መጥፎ ጥቅል።',
@@ -2278,6 +2280,7 @@ $3
 'api-error-file-too-large' => 'የላኩት ፋይል በጣም ትልቅ ነበር።',
 'api-error-filename-tooshort' => 'የፋይሉ ስም በጣም ትንሽ ነው።',
 'api-error-filetype-banned' => 'የዚህ ዓይነት ፋይል ተከልክሏል።',
+'api-error-filetype-banned-type' => '$1 ያልተፈቀደ ፋይል አይነት ነው። የተፈቀዱት ፋይል አይነቶች $2 ናቸው።',
 'api-error-filetype-missing' => 'ፋይሉ ቅጥያ ይጎለዋል።',
 'api-error-illegal-filename' => 'የፋይሉ ስም የተፈቀደ አይደለም።',
 'api-error-invalid-file-key' => 'የውስጥ ስህተት: ፍይሉ የጊዜያዊ ማስቀመጫ ውስጥ አልተገኘም።',

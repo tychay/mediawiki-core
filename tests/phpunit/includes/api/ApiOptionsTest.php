@@ -5,18 +5,14 @@
  */
 class ApiOptionsTest extends MediaWikiLangTestCase {
 
-	private $mTested, $mApiMainMock, $mUserMock, $mContext, $mSession;
+	private $mTested, $mUserMock, $mContext, $mSession;
 
 	private static $Success = array( 'options' => 'success' );
 
-	function setUp() {
+	protected function setUp() {
 		parent::setUp();
 
 		$this->mUserMock = $this->getMockBuilder( 'User' )
-			->disableOriginalConstructor()
-			->getMock();
-
-		$this->mApiMainMock = $this->getMockBuilder( 'ApiBase' )
 			->disableOriginalConstructor()
 			->getMock();
 
@@ -24,19 +20,12 @@ class ApiOptionsTest extends MediaWikiLangTestCase {
 		$this->mContext = new DerivativeContext( new RequestContext() );
 		$this->mContext->setUser( $this->mUserMock );
 
-		$this->mApiMainMock->expects( $this->any() )
-			->method( 'getContext' )
-			->will( $this->returnValue( $this->mContext ) );
-
-		$this->mApiMainMock->expects( $this->any() )
-			->method( 'getResult' )
-			->will( $this->returnValue( new ApiResult( $this->mApiMainMock ) ) );
-
+		$main = new ApiMain( $this->mContext );
 
 		// Empty session
 		$this->mSession = array();
 
-		$this->mTested = new ApiOptions( $this->mApiMainMock, 'options' );
+		$this->mTested = new ApiOptions( $main, 'options' );
 	}
 
 	private function getSampleRequest( $custom = array() ) {

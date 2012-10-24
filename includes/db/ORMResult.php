@@ -3,6 +3,8 @@
  * ORMIterator that takes a ResultWrapper object returned from
  * a select operation returning IORMRow objects (ie IORMTable::select).
  *
+ * Documentation inline and at https://www.mediawiki.org/wiki/Manual:ORMTable
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -23,7 +25,7 @@
  * @file ORMResult.php
  * @ingroup ORM
  *
- * @licence GNU GPL v2 or later
+ * @license GNU GPL v2 or later
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 
@@ -67,7 +69,7 @@ class ORMResult implements ORMIterator {
 		if ( $row === false ) {
 			$this->current = false;
 		} else {
-			$this->current = $this->table->newFromDBResult( $row );
+			$this->current = $this->table->newRowFromDBResult( $row );
 		}
 	}
 

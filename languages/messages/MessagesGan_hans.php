@@ -1,5 +1,5 @@
 <?php
-/** Simplified Gan script (‪赣语（简体）‬)
+/** Simplified Gan script (赣语（简体）‎)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -74,7 +74,6 @@ $messages = array(
 'tog-watchlisthideliu' => '到监视清单里头弆到登入用户',
 'tog-watchlisthideanons' => '到监视清单里头弆到匿名用户',
 'tog-watchlisthidepatrolled' => '到监视清单里头弆到巡查过𠮶编辑',
-'tog-nolangconversion' => '嫑字转换',
 'tog-ccmeonemails' => '偶发email到人家时也发封副本到偶',
 'tog-diffonly' => '比较两只版本差异𠮶时间伓显示文章𠮶内容',
 'tog-showhiddencats' => '显示弆到𠮶分类',
@@ -177,7 +176,6 @@ $messages = array(
 'qbbrowse' => '查看',
 'qbedit' => '编写',
 'qbpageoptions' => '个页',
-'qbpageinfo' => '个页信息',
 'qbmyoptions' => '偶𠮶选项',
 'qbspecialpages' => '特殊页',
 'faq' => 'FAQ',
@@ -402,7 +400,7 @@ $2',
 # Login and logout pages
 'logouttext' => "'''汝退出正哩。'''
 
-接到汝得匿名使用{{SITENAME}}，或[[Special:UserLogin|登入过]]。除非汝删吥浏览器缓存，只把子页面可能会接到话汝系登入状态。",
+接到汝得匿名使用{{SITENAME}}，或<span class='plainlinks'>[$1 登入过]</span>。除非汝删吥浏览器缓存，只把子页面可能会接到话汝系登入状态。",
 'welcomecreation' => '== 欢迎, $1! ==
 
 建正哩汝𠮶帐户，莫𫍧记设置 [[Special:Preferences|{{SITENAME}}𠮶个人参数]]。',
@@ -768,8 +766,6 @@ $2',
 'search-interwiki-caption' => '姊妹计划',
 'search-interwiki-default' => '$1只结果：',
 'search-interwiki-more' => '（更多）',
-'search-mwsuggest-enabled' => '有建议',
-'search-mwsuggest-disabled' => '冇建议',
 'searchrelated' => '相关',
 'searchall' => '所有',
 'showingresults' => '底下从第<b>$2</b>条显示起先𠮶<b>$1</b>条结果:',
@@ -941,9 +937,9 @@ $2',
 要眵或要寻先前上传𠮶图像请去[[Special:FileList|图像列表]]，上传同删除会记到[[Special:Log/upload|上传日志]]里度。
 
 要系想扻文件到页面，用得正下底𠮶方式链接:
-'''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></tt>''',
-'''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|alt text]]</nowiki></tt>''' 或
-'''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></tt>''' 直接连接到个只文件。",
+'''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></code>''',
+'''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|alt text]]</nowiki></code>''' 或
+'''<code><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></code>''' 直接连接到个只文件。",
 'upload-permitted' => '容许𠮶文件类型：$1。',
 'upload-preferred' => '优先𠮶文件类型：$1。',
 'upload-prohibited' => '禁止𠮶文件类型：$1。',
@@ -966,15 +962,15 @@ $2',
 'large-file' => '建议档案𠮶大小伓要超吥$1；本档案大小系$2。',
 'largefileserver' => '个只档案要大过服务器配置容允𠮶大小。',
 'emptyfile' => '倷上传𠮶档案伓存在。个可能系因为档案名按错嘞。请检查倷系否真𠮶要上传个只档案。',
-'fileexists' => "个只档案名已存在。如果倷确定伓正倷系否要改佢，请检查'''<tt>[[:$1]]</tt>'''。 [[$1|thumb]]",
-'fileexists-extension' => "有嘞只飞像𠮶档名: [[$2|thumb]]
-* 上载文档𠮶档名: '''<tt>[[:$1]]</tt>'''
-* 目前档𠮶档名: '''<tt>[[:$2]]</tt>'''
-请拣只伓同𠮶名字。",
+'fileexists' => '个只档案名已存在。如果倷确定伓正倷系否要改佢，请检查<strong>[[:$1]]</strong>。 [[$1|thumb]]',
+'fileexists-extension' => '有嘞只飞像𠮶档名: [[$2|thumb]]
+* 上载文档𠮶档名: <strong>[[:$1]]</strong>
+* 目前档𠮶档名: <strong>[[:$2]]</strong>
+请拣只伓同𠮶名字。',
 'fileexists-thumbnail-yes' => "个只档案好像系一只图像𠮶缩小版''（缩图）''。 [[$1|thumb]]
-请检查清楚个只档案'''<tt>[[:$1]]</tt>'''。
+请检查清楚个只档案<strong>[[:$1]]</strong>。
 如果检查后𠮶档同原先图像𠮶大小系一样𠮶话，就嫑再上传多一只缩图。",
-'file-thumbnail-no' => "个只档案名系以'''<tt>$1</tt>'''开头。佢好像一只图像𠮶缩小版''（缩图）''。如果倷有个只图像𠮶完整版，伓然请再改过只档名。",
+'file-thumbnail-no' => "个只档案名系以<strong>$1</strong>开头。佢好像一只图像𠮶缩小版''（缩图）''。如果倷有个只图像𠮶完整版，伓然请再改过只档名。",
 'fileexists-forbidden' => '个只档案名已存在；请回头并换过只新𠮶名称来上传个只档案。[[File:$1|thumb|center|$1]]',
 'fileexists-shared-forbidden' => '到共用档案库里度有嘞同名𠮶档案；请回头并换过只新𠮶名称来上传个只档案。[[File:$1|thumb|center|$1]]',
 'uploadwarning' => '上传警告',
@@ -1076,7 +1072,7 @@ $2',
 
 # MIME search
 'mimesearch' => 'MIME搜索',
-'mimesearch-summary' => '个只页面启用档案MIME类型筛检程式。输入：内容类型/子类型，像 <tt>image/jpeg</tt>。',
+'mimesearch-summary' => '个只页面启用档案MIME类型筛检程式。输入：内容类型/子类型，像 <code>image/jpeg</code>。',
 'mimetype' => 'MIME 类型:',
 'download' => '下载',
 
@@ -2242,6 +2238,7 @@ $3
 'version-hook-subscribedby' => '订阅人',
 'version-version' => '（版本 $1）',
 'version-license' => '许可证',
+'version-poweredby-credits' => "个只 Wiki 由 '''[//www.mediawiki.org/ MediaWiki]''' 驱动，版权所有 © 2001-$1 $2。",
 'version-software' => '装正𠮶软件',
 'version-software-version' => '版本',
 
@@ -2270,5 +2267,8 @@ $3
 
 # Special:Tags
 'tag-filter' => '[[Special:Tags|标签]]过滤器：',
+
+# Search suggestions
+'searchsuggest-search' => '寻吖',
 
 );

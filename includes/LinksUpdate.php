@@ -49,9 +49,10 @@ class LinksUpdate extends SqlDataUpdate {
 	 * @param $title Title of the page we're updating
 	 * @param $parserOutput ParserOutput: output from a full parse of this page
 	 * @param $recursive Boolean: queue jobs for recursive updates?
+	 * @throws MWException
 	 */
 	function __construct( $title, $parserOutput, $recursive = true ) {
-		parent::__construct( );
+		parent::__construct( false ); // no implicit transaction
 
 		if ( !( $title instanceof Title ) ) {
 			throw new MWException( "The calling convention to LinksUpdate::LinksUpdate() has changed. " .
@@ -71,6 +72,7 @@ class LinksUpdate extends SqlDataUpdate {
 		}
 
 		$this->mParserOutput = $parserOutput;
+
 		$this->mLinks = $parserOutput->getLinks();
 		$this->mImages = $parserOutput->getImages();
 		$this->mTemplates = $parserOutput->getTemplates();
@@ -822,14 +824,16 @@ class LinksDeletionUpdate extends SqlDataUpdate {
 	/**
 	 * Constructor
 	 *
-	 * @param $title Title of the page we're updating
-	 * @param $parserOutput ParserOutput: output from a full parse of this page
-	 * @param $recursive Boolean: queue jobs for recursive updates?
+	 * @param $page WikiPage Page we are updating
 	 */
 	function __construct( WikiPage $page ) {
-		parent::__construct( );
+		parent::__construct( false ); // no implicit transaction
 
 		$this->mPage = $page;
+
+		if ( !$page->exists() ) {
+			throw new MWException( "Page ID not known, perhaps the page doesn't exist?" );
+		}
 	}
 
 	/**
@@ -880,5 +884,17 @@ class LinksDeletionUpdate extends SqlDataUpdate {
 				array( 'rc_type != ' . RC_LOG, 'rc_cur_id' => $id ),
 				__METHOD__ );
 		}
+	}
+
+	/**
+	 * Update all the appropriate counts in the category table.
+	 * @param $added array associative array of category name => sort key
+	 * @param $deleted array associative array of category name => sort key
+	 */
+	function updateCategoryCounts( $added, $deleted ) {
+		$a = WikiPage::factory( $this->mTitle );
+		$a->updateCategoryCounts(
+			array_keys( $added ), array_keys( $deleted )
+		);
 	}
 }

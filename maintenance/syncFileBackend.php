@@ -17,34 +17,63 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  *
+ * @file
  * @ingroup Maintenance
  */
 
-require_once( dirname( __FILE__ ) . '/Maintenance.php' );
+require_once( __DIR__ . '/Maintenance.php' );
 
+/**
+ * Maintenance script that syncs one file backend to another based on
+ * the journal of later.
+ *
+ * @ingroup Maintenance
+ */
 class SyncFileBackend extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Sync one file backend with another using the journal";
 		$this->addOption( 'src', 'Name of backend to sync from', true, true );
-		$this->addOption( 'dst', 'Name of destination backend to sync', true, true );
+		$this->addOption( 'dst', 'Name of destination backend to sync', false, true );
 		$this->addOption( 'start', 'Starting journal ID', false, true );
 		$this->addOption( 'end', 'Ending journal ID', false, true );
 		$this->addOption( 'posdir', 'Directory to read/record journal positions', false, true );
+		$this->addOption( 'posdump', 'Just dump current journal position into the position dir.' );
 		$this->addOption( 'verbose', 'Verbose mode', false, false, 'v' );
 		$this->setBatchSize( 50 );
 	}
 
 	public function execute() {
 		$src = FileBackendGroup::singleton()->get( $this->getOption( 'src' ) );
+
+		$posDir = $this->getOption( 'posdir' );
+		$posFile = $posDir ? $posDir . '/' . wfWikiID() : false;
+
+		if ( $this->hasOption( 'posdump' ) ) {
+			// Just dump the current position into the specified position dir
+			if ( !$this->hasOption( 'posdir' ) ) {
+				$this->error( "Param posdir required!", 1 );
+			}
+			$id = (int)$src->getJournal()->getCurrentPosition(); // default to 0
+			$this->output( "Current journal position is $id.\n" );
+			if ( file_put_contents( $posFile, $id, LOCK_EX ) !== false ) {
+				$this->output( "Saved journal position file.\n" );
+			} else {
+				$this->output( "Could not save journal position file.\n" );
+			}
+			if ( $this->isQuiet() ) {
+				print $id; // give a single machine-readable number
+			}
+			return;
+		}
+
+		if ( !$this->hasOption( 'dst' ) ) {
+			$this->error( "Param dst required!", 1 );
+		}
 		$dst = FileBackendGroup::singleton()->get( $this->getOption( 'dst' ) );
 
-		$posFile = $this->getOption( 'posdir' )
-			? $this->getOption( 'posdir' ) . '/' . wfWikiID()
-			: false;
-
 		$start = $this->getOption( 'start', 0 );
-		if ( !$start && $posFile ) {
+		if ( !$start && $posFile && is_dir( $posDir ) ) {
 			$start = is_file( $posFile )
 				? (int)trim( file_get_contents( $posFile ) )
 				: 0;
@@ -66,8 +95,11 @@ class SyncFileBackend extends Maintenance {
 
 		// Update the sync position file
 		if ( $startFromPosFile && $lastOKPos >= $start ) { // successfully advanced
-			file_put_contents( $posFile, $lastOKPos, LOCK_EX );
-			$this->output( "Updated journal position file.\n" );
+			if ( file_put_contents( $posFile, $lastOKPos, LOCK_EX ) !== false ) {
+				$this->output( "Updated journal position file.\n" );
+			} else {
+				$this->output( "Could not update journal position file.\n" );
+			}
 		}
 
 		if ( $lastOKPos === false ) {
@@ -127,7 +159,7 @@ class SyncFileBackend extends Maintenance {
 			if ( $status->isOK() ) {
 				$lastOKPos = max( $lastOKPos, $lastPosInBatch );
 			} else {
-				$this->output( print_r( $status->getErrorsArray(), true ) );
+				$this->error( print_r( $status->getErrorsArray(), true ) );
 				break; // no gaps; everything up to $lastPos must be OK
 			}
 
@@ -183,7 +215,8 @@ class SyncFileBackend extends Maintenance {
 				}
 				$fsFiles[] = $fsFile; // keep TempFSFile objects alive as needed
 				// Note: prepare() is usually fast for key/value backends
-				$status->merge( $dst->prepare( array( 'dir' => dirname( $dPath ) ) ) );
+				$status->merge( $dst->prepare( array(
+					'dir' => dirname( $dPath ), 'bypassReadOnly' => 1 ) ) );
 				if ( !$status->isOK() ) {
 					return $status;
 				}
@@ -198,10 +231,16 @@ class SyncFileBackend extends Maintenance {
 			}
 		}
 
-		$status->merge( $dst->doOperations( $ops,
-			array( 'nonLocking' => 1, 'nonJournaled' => 1 ) ) );
+		$t_start = microtime( true );
+		$status = $dst->doQuickOperations( $ops, array( 'bypassReadOnly' => 1 ) );
+		if ( !$status->isOK() ) {
+			sleep( 10 ); // wait and retry copy again
+			$status = $dst->doQuickOperations( $ops, array( 'bypassReadOnly' => 1 ) );
+		}
+		$ellapsed_ms = floor( ( microtime( true ) - $t_start ) * 1000 );
 		if ( $status->isOK() && $this->getOption( 'verbose' ) ) {
-			$this->output( "Synchronized these file(s):\n" . implode( "\n", $dPaths ) . "\n" );
+			$this->output( "Synchronized these file(s) [{$ellapsed_ms}ms]:\n" .
+				implode( "\n", $dPaths ) . "\n" );
 		}
 
 		return $status;

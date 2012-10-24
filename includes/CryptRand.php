@@ -83,8 +83,8 @@ class MWCryptRand {
 		$files[] = __FILE__;
 
 		// We must also have a parent folder, and with the usual file structure, a grandparent
-		$files[] = dirname( __FILE__ );
-		$files[] = dirname( dirname( __FILE__ ) );
+		$files[] = __DIR__;
+		$files[] = dirname( __DIR__ );
 
 		// The config file is likely the most often edited file we know should be around
 		// so include its stat info into the state.
@@ -391,7 +391,7 @@ class MWCryptRand {
 		// We hash the random state with more salt to avoid the state from leaking
 		// out and being used to predict the /randomness/ that follows.
 		if ( strlen( $buffer ) < $bytes ) {
-			wfDebug( __METHOD__ . ": Falling back to using a pseudo random state to generate randomness.\n" ); 
+			wfDebug( __METHOD__ . ": Falling back to using a pseudo random state to generate randomness.\n" );
 		}
 		while ( strlen( $buffer ) < $bytes ) {
 			wfProfileIn( __METHOD__ . '-fallback' );

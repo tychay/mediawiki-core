@@ -1,6 +1,7 @@
 <?php
-
 /**
+ * CLI-based MediaWiki installation and configuration.
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -16,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  *
+ * @file
  * @ingroup Maintenance
- * @see wfWaitForSlaves()
  */
 
 if ( !function_exists( 'version_compare' ) || ( version_compare( phpversion(), '5.3.2' ) < 0 ) ) {
@@ -29,8 +30,13 @@ if ( !function_exists( 'version_compare' ) || ( version_compare( phpversion(), '
 define( 'MW_CONFIG_CALLBACK', 'Installer::overrideConfig' );
 define( 'MEDIAWIKI_INSTALL', true );
 
-require_once( dirname( dirname( __FILE__ ) )."/maintenance/Maintenance.php" );
+require_once( dirname( __DIR__ )."/maintenance/Maintenance.php" );
 
+/**
+ * Maintenance script to install and configure MediaWiki
+ *
+ * @ingroup Maintenance
+ */
 class CommandLineInstaller extends Maintenance {
 	function __construct() {
 		parent::__construct();
@@ -39,7 +45,8 @@ class CommandLineInstaller extends Maintenance {
 		$this->addArg( 'name', 'The name of the wiki', true);
 
 		$this->addArg( 'admin', 'The username of the wiki administrator (WikiSysop)', true );
-		$this->addOption( 'pass', 'The password for the wiki administrator. You will be prompted for this if it isn\'t provided', false, true );
+		$this->addOption( 'pass', 'The password for the wiki administrator.', false, true );
+		$this->addOption( 'passfile', 'An alternative way to provide pass option, as the contents of this file', false, true );
 		/* $this->addOption( 'email', 'The email for the wiki administrator', false, true ); */
 		$this->addOption( 'scriptpath', 'The relative path of the wiki in the web server (/wiki)', false, true );
 
@@ -71,6 +78,9 @@ class CommandLineInstaller extends Maintenance {
 
 		$dbpassfile = $this->getOption( 'dbpassfile', false );
 		if ( $dbpassfile !== false ) {
+			if ( $this->getOption( 'dbpass', false ) !== false ) {
+				$this->error( 'WARNING: You provide the options "dbpass" and "dbpassfile". The content of "dbpassfile" overwrites "dbpass".' );
+			}
 			wfSuppressWarnings();
 			$dbpass = file_get_contents( $dbpassfile );
 			wfRestoreWarnings();
@@ -78,6 +88,22 @@ class CommandLineInstaller extends Maintenance {
 				$this->error( "Couldn't open $dbpassfile", true );
 			}
 			$this->mOptions['dbpass'] = trim( $dbpass, "\r\n" );
+		}
+
+		$passfile = $this->getOption( 'passfile', false );
+		if ( $passfile !== false ) {
+			if ( $this->getOption( 'pass', false ) !== false ) {
+				$this->error( 'WARNING: You provide the options "pass" and "passfile". The content of "passfile" overwrites "pass".' );
+			}
+			wfSuppressWarnings();
+			$pass = file_get_contents( $passfile );
+			wfRestoreWarnings();
+			if ( $pass === false ) {
+				$this->error( "Couldn't open $passfile", true );
+			}
+			$this->mOptions['pass'] = str_replace( array( "\n", "\r" ), "", $pass );
+		} elseif ( $this->getOption( 'pass', false ) === false ) {
+			$this->error( 'You need to provide the option "pass" or "passfile"', true );
 		}
 
 		$installer =

@@ -241,6 +241,11 @@ class DatabaseOracle extends DatabaseBase {
 
 	/**
 	 * Usually aborts on failure
+	 * @param string $server
+	 * @param string $user
+	 * @param string $password
+	 * @param string $dbName
+	 * @throws DBConnectionError
 	 * @return DatabaseBase|null
 	 */
 	function open( $server, $user, $password, $dbName ) {
@@ -810,7 +815,7 @@ class DatabaseOracle extends DatabaseBase {
 	/**
 	 * Return aggregated value function call
 	 */
-	function aggregateValue ( $valuedata, $valuename = 'value' ) {
+	public function aggregateValue( $valuedata, $valuename = 'value' ) {
 		return $valuedata;
 	}
 
@@ -955,12 +960,12 @@ class DatabaseOracle extends DatabaseBase {
 		return $this->fieldInfoMulti ($table, $field);
 	}
 
-	function begin( $fname = 'DatabaseOracle::begin' ) {
+	protected function doBegin( $fname = 'DatabaseOracle::begin' ) {
 		$this->mTrxLevel = 1;
 		$this->doQuery( 'SET CONSTRAINTS ALL DEFERRED' );
 	}
 
-	function commit( $fname = 'DatabaseOracle::commit' ) {
+	protected function doCommit( $fname = 'DatabaseOracle::commit' ) {
 		if ( $this->mTrxLevel ) {
 			$ret = oci_commit( $this->mConn );
 			if ( !$ret ) {
@@ -971,17 +976,12 @@ class DatabaseOracle extends DatabaseBase {
 		}
 	}
 
-	function rollback( $fname = 'DatabaseOracle::rollback' ) {
+	protected function doRollback( $fname = 'DatabaseOracle::rollback' ) {
 		if ( $this->mTrxLevel ) {
 			oci_rollback( $this->mConn );
 			$this->mTrxLevel = 0;
 			$this->doQuery( 'SET CONSTRAINTS ALL IMMEDIATE' );
 		}
-	}
-
-	/* Not even sure why this is used in the main codebase... */
-	function limitResultForUpdate( $sql, $num ) {
-		return $sql;
 	}
 
 	/* defines must comply with ^define\s*([^\s=]*)\s*=\s?'\{\$([^\}]*)\}'; */

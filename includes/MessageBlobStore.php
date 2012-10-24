@@ -140,7 +140,7 @@ class MessageBlobStore {
 		// Save the old and new blobs for later
 		$oldBlob = $row->mr_blob;
 		$newBlob = self::generateMessageBlob( $module, $lang );
-		
+
 		$newRow = array(
 			'mr_resource' => $name,
 			'mr_lang' => $lang,
@@ -299,7 +299,7 @@ class MessageBlobStore {
 	 */
 	private static function reencodeBlob( $blob, $key, $lang ) {
 		$decoded = FormatJson::decode( $blob, true );
-		$decoded[$key] = wfMsgExt( $key, array( 'language' => $lang ) );
+		$decoded[$key] = wfMessage( $key )->inLanguage( $lang )->plain();
 
 		return FormatJson::encode( (object)$decoded );
 	}
@@ -311,6 +311,7 @@ class MessageBlobStore {
 	 * @param $resourceLoader ResourceLoader object
 	 * @param $modules Array of module names
 	 * @param $lang String: language code
+	 * @throws MWException
 	 * @return array Array mapping module names to blobs
 	 */
 	private static function getFromDB( ResourceLoader $resourceLoader, $modules, $lang ) {
@@ -353,7 +354,7 @@ class MessageBlobStore {
 		$messages = array();
 
 		foreach ( $module->getMessages() as $key ) {
-			$messages[$key] = wfMsgExt( $key, array( 'language' => $lang ) );
+			$messages[$key] = wfMessage( $key )->inLanguage( $lang )->plain();
 		}
 
 		return FormatJson::encode( (object)$messages );

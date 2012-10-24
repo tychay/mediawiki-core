@@ -29,7 +29,7 @@
 class GIFHandler extends BitmapHandler {
 
 	const BROKEN_FILE = '0'; // value to store in img_metadata if error extracting metadata.
-	
+
 	function getMetadata( $image, $filename ) {
 		try {
 			$parsedGIFMetadata = BitmapMetadataHandler::GIF( $filename );
@@ -93,6 +93,17 @@ class GIFHandler extends BitmapHandler {
 		return false;
 	}
 
+	/**
+	 * We cannot animate thumbnails that are bigger than a particular size
+	 * @param File $file
+	 * @return bool
+	 */
+	function canAnimateThumbnail( $file ) {
+		global $wgMaxAnimatedGifArea;
+		$answer = $this->getImageArea( $file ) <= $wgMaxAnimatedGifArea;
+		return $answer;
+	}
+
 	function getMetadataType( $image ) {
 		return 'parsed-gif';
 	}
@@ -132,7 +143,7 @@ class GIFHandler extends BitmapHandler {
 		wfSuppressWarnings();
 		$metadata = unserialize($image->getMetadata());
 		wfRestoreWarnings();
-		
+
 		if (!$metadata || $metadata['frameCount'] <=  1) {
 			return $original;
 		}
@@ -140,19 +151,19 @@ class GIFHandler extends BitmapHandler {
 		/* Preserve original image info string, but strip the last char ')' so we can add even more */
 		$info = array();
 		$info[] = $original;
-		
+
 		if ( $metadata['looped'] ) {
-			$info[] = wfMsgExt( 'file-info-gif-looped', 'parseinline' );
+			$info[] = wfMessage( 'file-info-gif-looped' )->parse();
 		}
-		
+
 		if ( $metadata['frameCount'] > 1 ) {
-			$info[] = wfMsgExt( 'file-info-gif-frames', 'parseinline', $metadata['frameCount'] );
+			$info[] = wfMessage( 'file-info-gif-frames' )->numParams( $metadata['frameCount'] )->parse();
 		}
-		
+
 		if ( $metadata['duration'] ) {
 			$info[] = $wgLang->formatTimePeriod( $metadata['duration'] );
 		}
-		
+
 		return $wgLang->commaList( $info );
 	}
 }

@@ -7,6 +7,7 @@
  * @ingroup Language
  * @file
  *
+ * @author Geitost
  * @author Kaganer
  * @author Purodha
  * @author Slomox
@@ -55,33 +56,33 @@ $namespaceAliases = array(
 );
 
 $magicWords = array(
-	'redirect'                => array( '0', '#wiederleiden', '#WEITERLEITUNG', '#REDIRECT' ),
-	'notoc'                   => array( '0', '__KEENINHOLTVERTEKEN__', '__KEIN_INHALTSVERZEICHNIS__', '__KEININHALTSVERZEICHNIS__', '__NOTOC__' ),
-	'forcetoc'                => array( '0', '__WIESINHOLTVERTEKEN__', '__INHALTSVERZEICHNIS_ERZWINGEN__', '__FORCETOC__' ),
-	'toc'                     => array( '0', '__INHOLTVERTEKEN__', '__INHALTSVERZEICHNIS__', '__TOC__' ),
-	'noeditsection'           => array( '0', '__KEENÄNNERNLINK__', '__ABSCHNITTE_NICHT_BEARBEITEN__', '__NOEDITSECTION__' ),
-	'currentmonth'            => array( '1', 'AKTMAAND', 'JETZIGER_MONAT', 'JETZIGER_MONAT_2', 'CURRENTMONTH', 'CURRENTMONTH2' ),
-	'currentmonthname'        => array( '1', 'AKTMAANDNAAM', 'JETZIGER_MONATSNAME', 'CURRENTMONTHNAME' ),
-	'currentmonthnamegen'     => array( '1', 'AKTMAANDNAAMGEN', 'JETZIGER_MONATSNAME_GENITIV', 'CURRENTMONTHNAMEGEN' ),
-	'currentday'              => array( '1', 'AKTDAG', 'JETZIGER_KALENDERTAG', 'CURRENTDAY' ),
-	'currentdayname'          => array( '1', 'AKTDAGNAAM', 'JETZIGER_WOCHENTAG', 'CURRENTDAYNAME' ),
-	'currentyear'             => array( '1', 'AKTJOHR', 'JETZIGES_JAHR', 'CURRENTYEAR' ),
-	'currenttime'             => array( '1', 'AKTTIED', 'JETZIGE_UHRZEIT', 'CURRENTTIME' ),
-	'numberofarticles'        => array( '1', 'ARTIKELTALL', 'ARTIKELANZAHL', 'NUMBEROFARTICLES' ),
-	'pagename'                => array( '1', 'SIETNAAM', 'SEITENNAME', 'PAGENAME' ),
-	'pagenamee'               => array( '1', 'SIETNAAME', 'SEITENNAME_URL', 'PAGENAMEE' ),
-	'namespace'               => array( '1', 'NAAMRUUM', 'NAMENSRAUM', 'NAMESPACE' ),
-	'img_thumbnail'           => array( '1', 'duum', 'miniatur', 'mini', 'thumbnail', 'thumb' ),
-	'img_right'               => array( '1', 'rechts', 'right' ),
-	'img_left'                => array( '1', 'links', 'left' ),
-	'img_none'                => array( '1', 'keen', 'ohne', 'none' ),
-	'img_center'              => array( '1', 'merrn', 'zentriert', 'center', 'centre' ),
-	'img_framed'              => array( '1', 'rahmt', 'gerahmt', 'framed', 'enframed', 'frame' ),
-	'sitename'                => array( '1', 'STEEDNAAM', 'PROJEKTNAME', 'SITENAME' ),
-	'ns'                      => array( '0', 'NR:', 'NS:' ),
-	'localurl'                => array( '0', 'STEEDURL:', 'LOKALE_URL:', 'LOCALURL:' ),
-	'localurle'               => array( '0', 'STEEDURLE:', 'LOKALE_URL_C:', 'LOCALURLE:' ),
-	'grammar'                 => array( '0', 'GRAMMATIK:', 'GRAMMAR:' ),
+	'redirect'                  => array( '0', '#wiederleiden', '#WEITERLEITUNG', '#REDIRECT' ),
+	'notoc'                     => array( '0', '__KEENINHOLTVERTEKEN__', '__KEIN_INHALTSVERZEICHNIS__', '__KEININHALTSVERZEICHNIS__', '__NOTOC__' ),
+	'forcetoc'                  => array( '0', '__WIESINHOLTVERTEKEN__', '__INHALTSVERZEICHNIS_ERZWINGEN__', '__FORCETOC__' ),
+	'toc'                       => array( '0', '__INHOLTVERTEKEN__', '__INHALTSVERZEICHNIS__', '__TOC__' ),
+	'noeditsection'             => array( '0', '__KEENÄNNERNLINK__', '__ABSCHNITTE_NICHT_BEARBEITEN__', '__NOEDITSECTION__' ),
+	'currentmonth'              => array( '1', 'AKTMAAND', 'JETZIGER_MONAT', 'JETZIGER_MONAT_2', 'CURRENTMONTH', 'CURRENTMONTH2' ),
+	'currentmonthname'          => array( '1', 'AKTMAANDNAAM', 'JETZIGER_MONATSNAME', 'CURRENTMONTHNAME' ),
+	'currentmonthnamegen'       => array( '1', 'AKTMAANDNAAMGEN', 'JETZIGER_MONATSNAME_GENITIV', 'CURRENTMONTHNAMEGEN' ),
+	'currentday'                => array( '1', 'AKTDAG', 'JETZIGER_KALENDERTAG', 'CURRENTDAY' ),
+	'currentdayname'            => array( '1', 'AKTDAGNAAM', 'JETZIGER_WOCHENTAG', 'CURRENTDAYNAME' ),
+	'currentyear'               => array( '1', 'AKTJOHR', 'JETZIGES_JAHR', 'CURRENTYEAR' ),
+	'currenttime'               => array( '1', 'AKTTIED', 'JETZIGE_UHRZEIT', 'CURRENTTIME' ),
+	'numberofarticles'          => array( '1', 'ARTIKELTALL', 'ARTIKELANZAHL', 'NUMBEROFARTICLES' ),
+	'pagename'                  => array( '1', 'SIETNAAM', 'SEITENNAME', 'PAGENAME' ),
+	'pagenamee'                 => array( '1', 'SIETNAAME', 'SEITENNAME_URL', 'PAGENAMEE' ),
+	'namespace'                 => array( '1', 'NAAMRUUM', 'NAMENSRAUM', 'NAMESPACE' ),
+	'img_thumbnail'             => array( '1', 'duum', 'miniatur', 'mini', 'thumbnail', 'thumb' ),
+	'img_right'                 => array( '1', 'rechts', 'right' ),
+	'img_left'                  => array( '1', 'links', 'left' ),
+	'img_none'                  => array( '1', 'keen', 'ohne', 'none' ),
+	'img_center'                => array( '1', 'merrn', 'zentriert', 'center', 'centre' ),
+	'img_framed'                => array( '1', 'rahmt', 'gerahmt', 'framed', 'enframed', 'frame' ),
+	'sitename'                  => array( '1', 'STEEDNAAM', 'PROJEKTNAME', 'SITENAME' ),
+	'ns'                        => array( '0', 'NR:', 'NS:' ),
+	'localurl'                  => array( '0', 'STEEDURL:', 'LOKALE_URL:', 'LOCALURL:' ),
+	'localurle'                 => array( '0', 'STEEDURLE:', 'LOKALE_URL_C:', 'LOCALURLE:' ),
+	'grammar'                   => array( '0', 'GRAMMATIK:', 'GRAMMAR:' ),
 );
 
 
@@ -255,7 +256,6 @@ $messages = array(
 'tog-watchlisthideliu' => 'Ännern vun anmellt Brukers nich wiesen',
 'tog-watchlisthideanons' => 'Ännern vun anonyme Brukers nich wiesen',
 'tog-watchlisthidepatrolled' => 'Nakeken Ännern op de Oppasslist nich wiesen',
-'tog-nolangconversion' => 'Variantenkonverschoon utschalten',
 'tog-ccmeonemails' => 'vun Nettbreven, de ik wegschick, mi sülvst Kopien tostüren',
 'tog-diffonly' => "Na ''{{int:showdiff}}'' nich de kumplette Sied wiesen",
 'tog-showhiddencats' => 'Wies verstekene Kategorien',
@@ -359,7 +359,6 @@ $messages = array(
 'qbbrowse' => 'Blädern',
 'qbedit' => 'Ännern',
 'qbpageoptions' => 'Disse Sied',
-'qbpageinfo' => 'Sietendaten',
 'qbmyoptions' => 'Instellen',
 'qbspecialpages' => 'Spezialsieten',
 'faq' => 'Faken stellte Fragen',
@@ -606,7 +605,7 @@ As Grund is angeven: ''$2''.",
 # Login and logout pages
 'logouttext' => "'''Du büst nu afmellt.'''
 
-Du kannst {{SITENAME}} nu anonym wiederbruken oder di ünner dissen oder en annern Brukernaam wedder [[Special:UserLogin|anmellen]].
+Du kannst {{SITENAME}} nu anonym wiederbruken oder di ünner dissen oder en annern Brukernaam wedder <span class='plainlinks'>[$1 anmellen]</span>.
 Denk dor an, dat welk Sieden ünner Ümstänn noch jümmer so wiest warrn köönt, as wenn du anmellt weerst. Dat ännert sik, wenn du den Cache vun dien Browser leddig maakst.",
 'welcomecreation' => '== Willkamen, $1! ==
 Dien Brukerkonto is nu inricht.
@@ -809,7 +808,7 @@ Wenn du en anonymen Bruker büst un meenst, dat disse Kommentaren nich an di ric
 oder [{{fullurl:{{FULLPAGENAME}}|action=edit}} disse Sied ännern]</span>.',
 'noarticletext-nopermission' => 'Disse Sied hett opstunns keen Text.
 Du kannst in annere Sieden [[Special:Search/{{PAGENAME}}|na dissen Titel söken]]
-oder <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} in de Logböker söken]</span>.',
+oder <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} in de Logböker söken]</span>, man du hest nich dat Recht, de Sied optostellen.',
 'userpage-userdoesnotexist' => 'Dat Brukerkonto „<nowiki>$1</nowiki>“ gifft dat noch nich. Överlegg, wat du disse Siet würklich nee opstellen/ännern wullt.',
 'userpage-userdoesnotexist-view' => 'Dat Brukerkonto „$1“ gifft dat nich.',
 'blocked-notice-logextract' => 'Disse Bruker is opstunns sperrt.
@@ -827,7 +826,7 @@ De jüngste Indrag in dat Sperr-Logbook wart ünnen wiest:',
 'userinvalidcssjstitle' => "'''Wohrschau:''' Dat gifft keen Skin „$1“. Denk dor an, dat .css- un .js-Sieden  för Brukers mit en lütten Bookstaven anfangen mööt, to’n Bispeel ''{{ns:user}}:Brukernaam/vector.css'' un nich ''{{ns:user}}:Brukernaam/Vector.css''.",
 'updated' => '(Ännert)',
 'note' => "'''Wohrschau:'''",
-'previewnote' => "'''Dit is blots en Vörschau, de Siet is noch nich spiekert!'''",
+'previewnote' => "Dit is bloots en Vörschau, de Sied is noch nich spiekert!'''",
 'previewconflict' => 'Disse Vörschau wiest den Inholt vun dat Textfeld baven; so warrt de Siet utseihn, wenn du nu spiekerst.',
 'session_fail_preview' => "'''Deit uns leed! Wi kunnen dien Ännern nich spiekern. Diene Sitzungsdaten weren weg.
 Versöök dat noch wedder. Wenn dat noch jümmer nich geiht, denn versöök di [[Special:UserLogout|aftomellen]] un denn wedder antomellen.'''",
@@ -927,9 +926,7 @@ De Grund weer: ''$2''",
 'currentrev' => 'Aktuelle Version',
 'currentrev-asof' => 'Aktuelle Version vun’n $1',
 'revisionasof' => 'Version vun $1',
-'revision-info' => '<div id="viewingold-warning" style="background: #ffbdbd; border: 1px solid #BB7979; font-weight: bold; padding: .5em 1em;">
-Dit is en ole Version vun disse Siet, so as $2 de $1 ännert hett. De Version kann temlich stark vun de <a href="{{FULLURL:{{FULLPAGENAME}}}}" title="{{FULLPAGENAME}}">aktuelle Version</a> afwieken.
-</div>',
+'revision-info' => "Verschoon vun'n $4, Klock $5 vun $2",
 'previousrevision' => 'Nächstöllere Version→',
 'nextrevision' => 'Ne’ere Version →',
 'currentrevisionlink' => 'aktuelle Version',
@@ -1055,7 +1052,7 @@ Seh to, dat de Versionsgeschicht vun’n Artikel vun de Historie her bi de Reeg 
 'mergelogpagetext' => 'Dit is dat Logbook över de tohoopföhrten Versionshistorien.',
 
 # Diffs
-'history-title' => 'Versionshistorie vun „$1“',
+'history-title' => 'Verschoonsgeschicht vun „$1“',
 'lineno' => 'Reeg $1:',
 'compareselectedversions' => 'Ünnerscheed twischen den utwählten Versionen wiesen',
 'showhideselectedversions' => 'Utwählt Versionen wiesen/versteken',
@@ -1104,8 +1101,6 @@ Seh to, dat de Versionsgeschicht vun’n Artikel vun de Historie her bi de Reeg 
 'search-interwiki-caption' => 'Süsterprojekten',
 'search-interwiki-default' => '$1 Resultaten:',
 'search-interwiki-more' => '(mehr)',
-'search-mwsuggest-enabled' => 'mit Vörslääg',
-'search-mwsuggest-disabled' => 'kene Vörslääg',
 'search-relatedarticle' => 'Verwandt',
 'mwsuggest-disable' => 'Vörslääg per Ajax utstellen',
 'searcheverything-enable' => 'In all Naamrüüm söken',
@@ -1448,9 +1443,9 @@ Dat kann nich wedder ungeschehn maakt warrn.',
 Dat du hoochladene Datein söken un ankieken kannst, gah na de [[Special:FileList|List vun hoochladene Datein]]. Dat Hoochladen un nee Hoochladen vun Datein warrt ok in dat [[Special:Log/upload|Hoochlade-Logbook]] fasthollen. Dat Wegsmieten in dat [[Special:Log/delete|Wegsmiet-Logbook]].
 
 Üm en Datei in en Sied to bruken, schriev dat hier in de Sied rin:
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:datei.jpg]]</nowiki></tt>''' för de Datei in vulle Grött
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:datei.jpg|200px|thumb|left|Beschrieven]]</nowiki></tt>''' för dat Bild in en Breed vun 200 Pixels in en lütt Kassen op de linke Sied mit ''Beschrieven'' as Text ünner dat Bild
-* '''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></tt>''' för en direkten Lenk op de Datei, ahn dat se wiest warrt.",
+* '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:datei.jpg]]</nowiki></code>''' för de Datei in vulle Grött
+* '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:datei.jpg|200px|thumb|left|Beschrieven]]</nowiki></code>''' för dat Bild in en Breed vun 200 Pixels in en lütt Kassen op de linke Sied mit ''Beschrieven'' as Text ünner dat Bild
+* '''<code><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></code>''' för en direkten Lenk op de Datei, ahn dat se wiest warrt.",
 'upload-permitted' => 'Verlöövte Dateitypen: $1.',
 'upload-preferred' => 'Vörtagene Dateitypen: $1.',
 'upload-prohibited' => 'Verbadene Dateitypen: $1.',
@@ -1478,17 +1473,17 @@ Kiek bi de [[Special:NewFiles|Galerie vun ne’e Datein]] för en Översicht mit
 'large-file' => 'Datein schöölt opbest nich grötter wesen as $1. Disse Datei is $2 groot.',
 'largefileserver' => 'De Datei is grötter as de vun’n Server verlöövte Bövergrenz för de Grött.',
 'emptyfile' => 'De hoochladene Datei is leddig. De Grund kann en Tippfehler in de Dateinaam ween. Kontrolleer, of du de Datei redig hoochladen wullst.',
-'fileexists' => "En Datei mit dissen Naam existeert al, prööv '''<tt>[[:$1]]</tt>''', wenn du di nich seker büst of du dat ännern wullst.
-[[$1|thumb]]",
-'filepageexists' => "En Sied, de dat Bild beschrifft, gifft dat al as '''<tt>[[:$1]]</tt>''', dat gifft aver keen Datei mit dissen Naam. De Text, den du hier ingiffst, warrt nich op de Sied övernahmen. Du musst de Sied na dat Hoochladen noch wedder extra ännern.",
-'fileexists-extension' => "Dat gifft al en Datei mit en ähnlichen Naam: [[$2|thumb]]
-* Naam vun diene Datei: '''<tt>[[:$1]]</tt>'''
-* Naam vun de Datei, de al dor is: '''<tt>[[:$2]]</tt>'''
-Blot dat Ennen vun de Datei is bi dat Groot-/Lütt-Schrieven anners. Kiek na, wat de Datein villicht desülven sünd.",
+'fileexists' => 'En Datei mit dissen Naam existeert al, prööv <strong>[[:$1]]</strong>, wenn du di nich seker büst of du dat ännern wullst.
+[[$1|thumb]]',
+'filepageexists' => 'En Sied, de dat Bild beschrifft, gifft dat al as <strong>[[:$1]]</strong>, dat gifft aver keen Datei mit dissen Naam. De Text, den du hier ingiffst, warrt nich op de Sied övernahmen. Du musst de Sied na dat Hoochladen noch wedder extra ännern.',
+'fileexists-extension' => 'Dat gifft al en Datei mit en ähnlichen Naam: [[$2|thumb]]
+* Naam vun diene Datei: <strong>[[:$1]]</strong>
+* Naam vun de Datei, de al dor is: <strong>[[:$2]]</strong>
+Blot dat Ennen vun de Datei is bi dat Groot-/Lütt-Schrieven anners. Kiek na, wat de Datein villicht desülven sünd.',
 'fileexists-thumbnail-yes' => "De Datei schient en Bild to wesen, dat lütter maakt is ''(thumbnail)''. [[$1|thumb]]
-Kiek di de Datei '''<tt>[[:$1]]</tt>''' an.
+Kiek di de Datei <strong>[[:$1]]</strong> an.
 Wenn dat dat Bild in vulle Grött is, denn bruukst du keen extra Vörschaubild hoochladen.",
-'file-thumbnail-no' => "De Dateinaam fangt an mit '''<tt>$1</tt>'''. Dat düüdt dor op hen, dat dat en lütter maakt Bild ''(thumbnail, Duumnagel-Bild)'' is.
+'file-thumbnail-no' => "De Dateinaam fangt an mit <strong>$1</strong>. Dat düüdt dor op hen, dat dat en lütter maakt Bild ''(thumbnail, Duumnagel-Bild)'' is.
 Kiek na, wat du dat Bild nich ok in vulle Grött hest un laad dat ünner’n Originalnaam hooch oder änner den Dateinaam.",
 'fileexists-forbidden' => 'En Datei mit dissen Naam gifft dat al un kann nich överschreven warrn.
 Wenn du ehr liekers hoochladen wullt, gah trüch un laad de Datei ünner en annern Naam hooch. [[File:$1|thumb|center|$1]]',
@@ -1565,7 +1560,7 @@ Kann angahn, dat dat beter geiht, wenn du dat to en Tiet versöchst, to de op de
 'filehist-filesize' => 'Dateigrött',
 'filehist-comment' => 'Kommentar',
 'filehist-missing' => 'Datei fehlt',
-'imagelinks' => 'Dateiverwiesen',
+'imagelinks' => 'Dateibruuk',
 'linkstoimage' => 'Disse {{PLURAL:$1|Sied|Sieden}} bruukt dit Bild:',
 'linkstoimage-more' => 'Mehr as {{PLURAL:$1|ene Sied|$1 Sieden}} wiest na disse Datei.
 Disse List wiest blot {{PLURAL:$1|den eersten Lenk|de eersten $1 Lenken}} op disse Datei.
@@ -1614,7 +1609,7 @@ De [$2 Bildsied vun dor] warrt ünnen wiest.',
 
 # MIME search
 'mimesearch' => 'MIME-Söök',
-'mimesearch-summary' => 'Disse Sied verlööft dat Filtern vun Datein na’n MIME-Typ. Du musst jümmer den Medien- un den Subtyp ingeven, to’n Bispeel: <tt>image/jpeg</tt>.',
+'mimesearch-summary' => 'Disse Sied verlööft dat Filtern vun Datein na’n MIME-Typ. Du musst jümmer den Medien- un den Subtyp ingeven, to’n Bispeel: <code>image/jpeg</code>.',
 'mimetype' => 'MIME-Typ:',
 'download' => 'Dalladen',
 
@@ -1726,7 +1721,7 @@ to den vun den tweeten Wiederleiden wiest warrt, un to den de eerste Wiederleide
 'listusers-editsonly' => 'Blot Brukers mit Bidrääg wiesen',
 'listusers-creationsort' => 'Na Opstelldatum sorteren',
 'usereditcount' => '$1 {{PLURAL:$1|Ännern|Ännern}}',
-'usercreated' => 'Opstellt an’n $1 üm $2',
+'usercreated' => "{{GENDER:$3|Opstellt}} an'n $1 üm Klock $2",
 'newpages' => 'Ne’e Sieden',
 'newpages-username' => 'Brukernaam:',
 'ancientpages' => 'Öllste Sieden',
@@ -1795,8 +1790,8 @@ Kiek ok bi de [[Special:WantedCategories|wünschten Kategorien]].',
 'linksearch-pat' => 'Söökmunster:',
 'linksearch-ns' => 'Naamruum:',
 'linksearch-ok' => 'Söken',
-'linksearch-text' => 'Wildcards as to’n Bispeel <tt>*.wikipedia.org</tt> köönt bruukt warrn.<br />
-Ünnerstütt Protokollen: <tt>$1</tt>',
+'linksearch-text' => 'Wildcards as to’n Bispeel <code>*.wikipedia.org</code> köönt bruukt warrn.<br />
+Ünnerstütt Protokollen: <code>$1</code>',
 'linksearch-line' => '$1 hett en Lenk vun $2',
 'linksearch-error' => 'Wildcards dröfft blot an’n Anfang vun de URL stahn.',
 

@@ -1,5 +1,5 @@
 <?php
-/** Eastern Mari (Олык Марий)
+/** Eastern Mari (олык марий)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -72,14 +72,14 @@ $specialPageAliases = array(
 );
 
 $magicWords = array(
-	'img_right'               => array( '1', 'пурла', 'справа', 'right' ),
-	'img_left'                => array( '1', 'шола', 'слева', 'left' ),
-	'img_border'              => array( '1', 'чек', 'граница', 'border' ),
-	'img_sub'                 => array( '1', 'йымалне', 'под', 'sub' ),
-	'img_super'               => array( '1', 'ӱмбалне', 'над', 'super', 'sup' ),
-	'img_top'                 => array( '1', 'кӱшычын', 'сверху', 'top' ),
-	'img_middle'              => array( '1', 'покшелне', 'посередине', 'middle' ),
-	'img_bottom'              => array( '1', 'ӱлычын', 'снизу', 'bottom' ),
+	'img_right'                 => array( '1', 'пурла', 'справа', 'right' ),
+	'img_left'                  => array( '1', 'шола', 'слева', 'left' ),
+	'img_border'                => array( '1', 'чек', 'граница', 'border' ),
+	'img_sub'                   => array( '1', 'йымалне', 'под', 'sub' ),
+	'img_super'                 => array( '1', 'ӱмбалне', 'над', 'super', 'sup' ),
+	'img_top'                   => array( '1', 'кӱшычын', 'сверху', 'top' ),
+	'img_middle'                => array( '1', 'покшелне', 'посередине', 'middle' ),
+	'img_bottom'                => array( '1', 'ӱлычын', 'снизу', 'bottom' ),
 );
 
 $messages = array(
@@ -258,6 +258,7 @@ $messages = array(
 'jumpto' => 'Куснаш:',
 'jumptonavigation' => 'навигацийыш',
 'jumptosearch' => 'кычалмашшке',
+'pool-errorunknown' => 'Палыдыме йоҥылыш',
 
 # All link text and link target definitions of links into project namespace that get used by other message strings, with the exception of user group pages (see grouppage) and the disambiguation template definition (see disambiguations).
 'aboutsite' => '{{SITENAME}} нерген',
@@ -328,6 +329,7 @@ $messages = array(
 'filecopyerror' => '«$1» гыч «$2» файлыш копийым ышташ лийдыме.',
 'fileexistserror' => '«$1» файлыш возыкым ышташ лийдыме: файл уло.',
 'unexpected' => 'Келшыдыме кугыт: «$1»=«$2».',
+'cannotdelete-title' => '"$1" лаштыкым шӧраш ок лий',
 'badtitle' => 'Сай огыл лӱм',
 'badtitletext' => 'Йодмо лаштыкын лӱмжӧ йоҥылыш, але яра, але йылме кокла але интер-вики лӱмжӧ йоҥылыш. Ала лӱмыштӧ кӱлдымӧ тамга улыт.',
 'viewsource' => 'Тӱҥалтыш текст',
@@ -513,8 +515,6 @@ $messages = array(
 'search-interwiki-caption' => 'Родо проект-влак',
 'search-interwiki-default' => "$1'ште мумо:",
 'search-interwiki-more' => '(эше)',
-'search-mwsuggest-enabled' => 'темлымаш дене',
-'search-mwsuggest-disabled' => 'темлымаш деч посна',
 'searchall' => 'чыла',
 'nonefound' => "'''Ешартыш''':  Посна каласыме огыл дык, кычалмаш южо лӱм-влакын кумдыкышто эрта. Уло лӱм-влакын кумдыкышто кычалашлан(чӱктен каҥашымаш лаштык-влакым, ямдылык-влакым и туге молат) шке йодмашыштет ''all:'' префиксым кучылт, але кӱлешан лӱм-влакын кумдыкым ончыкто.",
 'search-nonefound' => 'Тыйын йодышлан нимом кычален мумо уке.',
@@ -662,7 +662,7 @@ $messages = array(
 'filehist-dimensions' => 'Кугытшо',
 'filehist-filesize' => 'Файлын кугытшо',
 'filehist-comment' => 'Файл нерген:',
-'imagelinks' => 'Файл деке кылвер-влак',
+'imagelinks' => 'Файлым кучылтмаш',
 'linkstoimage' => 'Тиде {{PLURAL:$1|$1 лаштык саде файл дене кылдалтын|$1 лаштык-влак саде файл дене кылдалтыныт}}:',
 'nolinkstoimage' => 'Тиде файл дене кылдалтше ик лаштыкат уке.',
 'sharedupload' => 'Тиде файлын верже: $1, туге гынат, тудым моло веренат кучылташ лиеш.',
@@ -719,6 +719,7 @@ $messages = array(
 'shortpages' => 'Кӱчык лаштык-влак',
 'longpages' => 'Кужу лаштык-влак',
 'protectedpages' => 'Тӧрлатымаш деч аралыме лаштык-влак',
+'usercreated' => '$1, $2 шагатлан {{GENDER:$3|регистрацийым эртен|регистрацийым эртен}}',
 'newpages' => 'У лаштык-влак',
 'newpages-username' => 'Пайдаланышын лӱмжӧ:',
 'move' => 'Кусараш',
@@ -877,6 +878,7 @@ $messages = array(
 'whatlinkshere-hideredirs' => 'вес вере колтымаш-влакым $1',
 'whatlinkshere-hidetrans' => 'пуртымашым $1',
 'whatlinkshere-hidelinks' => 'кылвер-влакым $1',
+'whatlinkshere-hideimages' => 'сӱрет деке кылвер-влакым $1',
 'whatlinkshere-filters' => 'Фильтр-влак',
 
 # Block/unblock
@@ -935,6 +937,7 @@ $messages = array(
 'export' => 'Лаштык-влакым келыштараш',
 
 # Namespace 8 related
+'allmessagesname' => 'Лӱм',
 'allmessages-filter-all' => 'Чыла',
 
 # Thumbnails

@@ -159,7 +159,6 @@ $messages = array(
 'qbbrowse' => 'Brouse',
 'qbedit' => 'Edit',
 'qbpageoptions' => 'This page',
-'qbpageinfo' => 'Context',
 'qbmyoptions' => 'Ma pages',
 'qbspecialpages' => 'Byordinar pages',
 'faq' => 'ASQ',
@@ -731,8 +730,6 @@ there micht be parteeculars in the [{{fullurl:{{#Special:Log}}/suppress|page={{F
 'search-section' => '(section $1)',
 'search-suggest' => 'Did ye mean: $1',
 'search-interwiki-more' => '(more)',
-'search-mwsuggest-enabled' => 'wi suggestions',
-'search-mwsuggest-disabled' => 'nae propone',
 'searchrelated' => 'related',
 'searchall' => 'aw',
 'showingresults' => "Shawin ablo up tae {{PLURAL:$1|'''1''' result|'''$1''' results}} stertin wi #'''$2'''.",
@@ -892,7 +889,7 @@ Tae pit the eimage intae a page, uise an airtin i the form
 'illegalfilename' => 'The filename "$1" haes characters that isna alloud in page teitles. Please rename the file an gie uplaidin it anither shot.',
 'badfilename' => 'Eimage name haes been chynged tae "$1".',
 'largefileserver' => 'This file is bigger nor the server is confeigurt tae allou.',
-'fileexists' => "A file wi this name exists aareadies, please check '''<tt>[[:$1]]</tt>''' gin ye'r no siccar that ye want tae chynge it.
+'fileexists' => "A file wi this name exists aareadies, please check <strong>[[:$1]]</strong> gin ye'r no siccar that ye want tae chynge it.
 [[$1|thumb]]",
 'fileexists-forbidden' => 'A file wi this name aareadies exists; please gang back an uplaid this file unner a new name. [[File:$1|thumb|center|$1]]',
 'fileexists-shared-forbidden' => 'A file wi this name aareadies exists in the shared file depose; please gang back an uplaid this file unner a new name. [[File:$1|thumb|center|$1]]',

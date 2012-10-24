@@ -633,7 +633,7 @@ class LocalFile extends File {
 
 	/**
 	 * Fix thumbnail files from 1.4 or before, with extreme prejudice
-	 * @TODO: do we still care about this? Perhaps a maintenance script
+	 * @todo : do we still care about this? Perhaps a maintenance script
 	 *        can be made instead. Enabling this code results in a serious
 	 *        RTT regression for wikis without 404 handling.
 	 */
@@ -1006,7 +1006,7 @@ class LocalFile extends File {
 	{
 		$pageText = SpecialUpload::getInitialPageText( $desc, $license, $copyStatus, $source );
 
-		if ( !$this->recordUpload2( $oldver, $desc, $pageText ) ) {
+		if ( !$this->recordUpload2( $oldver, $desc, $pageText, false, $timestamp ) ) {
 			return false;
 		}
 
@@ -1043,7 +1043,7 @@ class LocalFile extends File {
 		if ( !$props ) {
 			wfProfileIn( __METHOD__ . '-getProps' );
 			$props = $this->repo->getFileProps( $this->getVirtualUrl() );
-			wfProfileOut( __METHOD__ . -'getProps' );
+			wfProfileOut( __METHOD__ . '-getProps' );
 		}
 
 		if ( $timestamp === false ) {
@@ -1151,10 +1151,12 @@ class LocalFile extends File {
 		# Add the log entry
 		$log = new LogPage( 'upload' );
 		$action = $reupload ? 'overwrite' : 'upload';
-		$log->addEntry( $action, $descTitle, $comment, array(), $user );
+		$logId = $log->addEntry( $action, $descTitle, $comment, array(), $user );
 
 		wfProfileIn( __METHOD__ . '-edit' );
-		if ( $descTitle->exists() ) {
+		$exists = $descTitle->exists();
+
+		if ( $exists ) {
 			# Create a null revision
 			$latest = $descTitle->getLatestRevID();
 			$nullRevision = Revision::newNullRevision(
@@ -1169,20 +1171,36 @@ class LocalFile extends File {
 				wfRunHooks( 'NewRevisionFromEditComplete', array( $wikiPage, $nullRevision, $latest, $user ) );
 				$wikiPage->updateRevisionOn( $dbw, $nullRevision );
 			}
+		}
+
+		# Commit the transaction now, in case something goes wrong later
+		# The most important thing is that files don't get lost, especially archives
+		# NOTE: once we have support for nested transactions, the commit may be moved
+		#       to after $wikiPage->doEdit has been called.
+		$dbw->commit( __METHOD__ );
+
+		if ( $exists ) {
 			# Invalidate the cache for the description page
 			$descTitle->invalidateCache();
 			$descTitle->purgeSquid();
 		} else {
 			# New file; create the description page.
 			# There's already a log entry, so don't make a second RC entry
-			# Squid and file cache for the description page are purged by doEdit.
-			$wikiPage->doEdit( $pageText, $comment, EDIT_NEW | EDIT_SUPPRESS_RC, false, $user );
+			# Squid and file cache for the description page are purged by doEditContent.
+			$content = ContentHandler::makeContent( $pageText, $descTitle );
+			$status = $wikiPage->doEditContent( $content, $comment, EDIT_NEW | EDIT_SUPPRESS_RC, false, $user );
+
+			if ( isset( $status->value['revision'] ) ) { // XXX; doEdit() uses a transaction
+				$dbw->begin();
+				$dbw->update( 'logging',
+					array( 'log_page' => $status->value['revision']->getPage() ),
+					array( 'log_id' => $logId ),
+					__METHOD__
+				);
+				$dbw->commit(); // commit before anything bad can happen
+			}
 		}
 		wfProfileOut( __METHOD__ . '-edit' );
-
-		# Commit the transaction now, in case something goes wrong later
-		# The most important thing is that files don't get lost, especially archives
-		$dbw->commit( __METHOD__ );
 
 		# Save to cache and purge the squid
 		# We shall not saveToCache before the commit since otherwise
@@ -1456,11 +1474,11 @@ class LocalFile extends File {
 	 */
 	function getDescriptionText() {
 		global $wgParser;
-		$revision = Revision::newFromTitle( $this->title );
+		$revision = Revision::newFromTitle( $this->title, false, Revision::READ_NORMAL );
 		if ( !$revision ) return false;
-		$text = $revision->getText();
-		if ( !$text ) return false;
-		$pout = $wgParser->parse( $text, $this->title, new ParserOptions() );
+		$content = $revision->getContent();
+		if ( !$content ) return false;
+		$pout = $content->getParserOutput( $this->title, null, new ParserOptions() );
 		return $pout->getText();
 	}
 
@@ -1756,7 +1774,8 @@ class LocalFileDeleteBatch {
 					'fa_description'  => 'img_description',
 					'fa_user'         => 'img_user',
 					'fa_user_text'    => 'img_user_text',
-					'fa_timestamp'    => 'img_timestamp'
+					'fa_timestamp'    => 'img_timestamp',
+					'fa_sha1'         => 'img_sha1',
 				), $where, __METHOD__ );
 		}
 
@@ -1788,6 +1807,7 @@ class LocalFileDeleteBatch {
 					'fa_user'         => 'oi_user',
 					'fa_user_text'    => 'oi_user_text',
 					'fa_timestamp'    => 'oi_timestamp',
+					'fa_sha1'         => 'oi_sha1',
 				), $where, __METHOD__ );
 		}
 	}
@@ -2020,7 +2040,12 @@ class LocalFileRestoreBatch {
 			$deletedRel = $this->file->repo->getDeletedHashPath( $row->fa_storage_key ) . $row->fa_storage_key;
 			$deletedUrl = $this->file->repo->getVirtualUrl() . '/deleted/' . $deletedRel;
 
-			$sha1 = substr( $row->fa_storage_key, 0, strcspn( $row->fa_storage_key, '.' ) );
+			if( isset( $row->fa_sha1 ) ) {
+				$sha1 = $row->fa_sha1;
+			} else {
+				// old row, populate from key
+				$sha1 = LocalRepo::getHashFromKey( $row->fa_storage_key );
+			}
 
 			# Fix leading zero
 			if ( strlen( $sha1 ) == 32 && $sha1[0] == '0' ) {

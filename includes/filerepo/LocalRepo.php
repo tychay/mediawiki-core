@@ -235,12 +235,46 @@ class LocalRepo extends FileRepo {
 			'image',
 			LocalFile::selectFields(),
 			array( 'img_sha1' => $hash ),
-			__METHOD__
+			__METHOD__,
+			array( 'ORDER BY' => 'img_name' )
 		);
-		
+
 		$result = array();
 		foreach ( $res as $row ) {
 			$result[] = $this->newFileFromRow( $row );
+		}
+		$res->free();
+
+		return $result;
+	}
+
+	/**
+	 * Get an array of arrays or iterators of file objects for files that
+	 * have the given SHA-1 content hashes.
+	 *
+	 * Overrides generic implementation in FileRepo for performance reason
+	 *
+	 * @param $hashes array An array of hashes
+	 * @return array An Array of arrays or iterators of file objects and the hash as key
+	 */
+	function findBySha1s( array $hashes ) {
+		if( !count( $hashes ) ) {
+			return array(); //empty parameter
+		}
+
+		$dbr = $this->getSlaveDB();
+		$res = $dbr->select(
+			'image',
+			LocalFile::selectFields(),
+			array( 'img_sha1' => $hashes ),
+			__METHOD__,
+			array( 'ORDER BY' => 'img_name' )
+		);
+
+		$result = array();
+		foreach ( $res as $row ) {
+			$file = $this->newFileFromRow( $row );
+			$result[$file->getSha1()][] = $file;
 		}
 		$res->free();
 
@@ -265,7 +299,7 @@ class LocalRepo extends FileRepo {
 
 	/**
 	 * Get a key on the primary cache for this repository.
-	 * Returns false if the repository's cache is not accessible at this site. 
+	 * Returns false if the repository's cache is not accessible at this site.
 	 * The parameters are the parts of the key, as for wfMemcKey().
 	 *
 	 * @return string

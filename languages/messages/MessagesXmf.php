@@ -195,8 +195,8 @@ $messages = array(
 'helppage' => 'Help:დინორე',
 'mainpage' => 'დუდხასჷლა',
 'mainpage-description' => 'დუდხასჷლა',
-'portal' => 'საზოგადოებაშ ხასჷლეფი',
-'portal-url' => 'Project:საზოგადოებაშ ხასილეფ',
+'portal' => 'ჯარალუაშ ხასჷლეფი',
+'portal-url' => 'Project:ჯარალუაშ ხასჷლეფი',
 'privacy' => 'ანონიმურობაშ პოლიტიკა',
 'privacypage' => 'Project:ანონიმურობაშ პოლიტიკა',
 
@@ -431,8 +431,6 @@ $messages = array(
 'search-interwiki-caption' => 'ჯიმაია პროექტეფ',
 'search-interwiki-default' => 'მოღალირეფი $1-შე:',
 'search-interwiki-more' => '(უმოს)',
-'search-mwsuggest-enabled' => 'ელაჩამეფით',
-'search-mwsuggest-disabled' => 'ელაჩამეფიშ უმუშოთ',
 'searchrelated' => 'მათანგეფ',
 'searchall' => 'არძო',
 'showingresultsheader' => "{{PLURAL:$5|მოღალუ '''$1''' '''$3'''-შე|მოღალუეფ '''$1 - $2''' '''$3'''-შე}} '''$4'''-შო",
@@ -910,7 +908,7 @@ $messages = array(
 'version' => 'ვერსია',
 
 # Special:SpecialPages
-'specialpages' => 'სპეციალურ ხასილეფ',
+'specialpages' => 'გჷშაკერძაფილი ხასჷლეფი',
 
 # External image whitelist
 'external_image_whitelist' => '"#ქჷდიტე თე ღოზი კოკობო მუჭო რენ თეში<pre>
@@ -924,5 +922,8 @@ $messages = array(
 
 # Special:Tags
 'tag-filter' => '[[Special:Tags|ხინტკეფიშ]] ტკიბირი:',
+
+# Search suggestions
+'searchsuggest-search' => 'გორუა',
 
 );

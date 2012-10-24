@@ -32,8 +32,13 @@ if ( !function_exists( 'version_compare' ) || ( version_compare( phpversion(), '
 }
 
 $wgUseMasterForMaintenance = true;
-require_once( dirname( __FILE__ ) . '/Maintenance.php' );
+require_once( __DIR__ . '/Maintenance.php' );
 
+/**
+ * Maintenance script to run database schema updates.
+ *
+ * @ingroup Maintenance
+ */
 class UpdateMediaWiki extends Maintenance {
 
 	function __construct() {
@@ -121,12 +126,18 @@ class UpdateMediaWiki extends Maintenance {
 		$updater->doUpdates( $updates );
 
 		foreach( $updater->getPostDatabaseUpdateMaintenance() as $maint ) {
-			if ( $updater->updateRowExists( $maint ) ) {
+			$child = $this->runChild( $maint );
+
+			// LoggedUpdateMaintenance is checking the updatelog itself
+			$isLoggedUpdate = ( $child instanceof LoggedUpdateMaintenance );
+
+			if ( !$isLoggedUpdate && $updater->updateRowExists( $maint ) ) {
 				continue;
 			}
-			$child = $this->runChild( $maint );
 			$child->execute();
-			$updater->insertUpdateRow( $maint );
+			if ( !$isLoggedUpdate ) {
+				$updater->insertUpdateRow( $maint );
+			}
 		}
 
 		$this->output( "\nDone.\n" );

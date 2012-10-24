@@ -5,9 +5,10 @@ class PreprocessorTest extends MediaWikiTestCase {
 	var $mPPNodeCount = 0;
 	var $mOptions;
 
-	function setUp() {
-		global $wgParserConf;
-		$this->mOptions = new ParserOptions();
+	protected function setUp() {
+		global $wgParserConf, $wgContLang;
+		parent::setUp();
+		$this->mOptions = ParserOptions::newFromUserAndLang( new User, $wgContLang );
 		$name = isset( $wgParserConf['preprocessorClass'] ) ? $wgParserConf['preprocessorClass'] : 'Preprocessor_DOM';
 
 		$this->mPreprocessor = new $name( $this );
@@ -103,7 +104,7 @@ class PreprocessorTest extends MediaWikiTestCase {
 			array( "{{foo|bar=|}", "<root>{{foo|bar=|}</root>"),
 			array( "{{Foo|} Bar=", "<root>{{Foo|} Bar=</root>"),
 			array( "{{Foo|} Bar=}}", "<root><template><title>Foo</title><part><name>} Bar</name>=<value></value></part></template></root>"),
-			/* array( file_get_contents( dirname( __FILE__ ) . '/QuoteQuran.txt' ), file_get_contents( dirname( __FILE__ ) . '/QuoteQuranExpanded.txt' ) ), */
+			/* array( file_get_contents( __DIR__ . '/QuoteQuran.txt' ), file_get_contents( __DIR__ . '/QuoteQuranExpanded.txt' ) ), */
 		);
 	}
 
@@ -165,7 +166,7 @@ class PreprocessorTest extends MediaWikiTestCase {
 	 * @dataProvider provideFiles
 	 */
 	function testPreprocessorOutputFiles( $filename ) {
-		$folder = dirname( __FILE__ ) . "/../../../parser/preprocess";
+		$folder = __DIR__ . "/../../../parser/preprocess";
 		$wikiText = file_get_contents( "$folder/$filename.txt" );
 		$output = $this->preprocessToXml( $wikiText );
 

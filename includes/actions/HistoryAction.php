@@ -158,8 +158,12 @@ class HistoryAction extends FormlessAction {
 		} else {
 			$conds = array();
 		}
-		$checkDeleted = Xml::checkLabel( $this->msg( 'history-show-deleted' )->text(),
+		if ( $this->getUser()->isAllowed( 'deletedhistory' ) ) {
+			$checkDeleted = Xml::checkLabel( $this->msg( 'history-show-deleted' )->text(),
 			'deleted', 'mw-show-deleted-only', $request->getBool( 'deleted' ) ) . "\n";
+		} else {
+			$checkDeleted = '';
+		}
 
 		// Add the general form
 		$action = htmlspecialchars( $wgScript );
@@ -248,8 +252,8 @@ class HistoryAction extends FormlessAction {
 
 		$feed = new $wgFeedClasses[$type](
 			$this->getTitle()->getPrefixedText() . ' - ' .
-			wfMsgForContent( 'history-feed-title' ),
-			wfMsgForContent( 'history-feed-description' ),
+			$this->msg( 'history-feed-title' )->inContentLanguage()->text(),
+			$this->msg( 'history-feed-description' )->inContentLanguage()->text(),
 			$this->getTitle()->getFullUrl( 'action=history' )
 		);
 
@@ -275,8 +279,8 @@ class HistoryAction extends FormlessAction {
 
 	function feedEmpty() {
 		return new FeedItem(
-			wfMsgForContent( 'nohistory' ),
-			$this->getOutput()->parse( wfMsgForContent( 'history-feed-empty' ) ),
+			$this->msg( 'nohistory' )->inContentLanguage()->text(),
+			$this->msg( 'history-feed-empty' )->inContentLanguage()->parseAsBlock(),
 			$this->getTitle()->getFullUrl(),
 			wfTimestamp( TS_MW ),
 			'',
@@ -304,15 +308,14 @@ class HistoryAction extends FormlessAction {
 		);
 		if ( $rev->getComment() == '' ) {
 			global $wgContLang;
-			$title = wfMsgForContent( 'history-feed-item-nocomment',
+			$title = $this->msg( 'history-feed-item-nocomment',
 				$rev->getUserText(),
 				$wgContLang->timeanddate( $rev->getTimestamp() ),
 				$wgContLang->date( $rev->getTimestamp() ),
-				$wgContLang->time( $rev->getTimestamp() )
-			);
+				$wgContLang->time( $rev->getTimestamp() ) )->inContentLanguage()->text();
 		} else {
 			$title = $rev->getUserText() .
-			wfMsgForContent( 'colon-separator' ) .
+			$this->msg( 'colon-separator' )->inContentLanguage()->text() .
 			FeedItem::stripComment( $rev->getComment() );
 		}
 		return new FeedItem(
@@ -418,32 +421,9 @@ class HistoryPager extends ReverseChronologicalPager {
 				$batch->add( NS_USER_TALK, $row->rev_user_text );
 			}
 		}
-		$this->parentLens = $this->getParentLengths( $revIds );
+		$this->parentLens = Revision::getParentLengths( $this->mDb, $revIds );
 		$batch->execute();
 		$this->mResult->seek( 0 );
-	}
-
-	/**
-	 * Do a batched query to get the parent revision lengths
-	 * @param $revIds array
-	 * @return array
-	 * @TODO: stolen from Contributions, refactor
-	 */
-	private function getParentLengths( array $revIds ) {
-		$revLens = array();
-		if ( !$revIds ) {
-			return $revLens; // empty
-		}
-		wfProfileIn( __METHOD__ );
-		$res = $this->mDb->select( 'revision',
-			array( 'rev_id', 'rev_len' ),
-			array( 'rev_id' => $revIds ),
-			__METHOD__ );
-		foreach ( $res as $row ) {
-			$revLens[$row->rev_id] = $row->rev_len;
-		}
-		wfProfileOut( __METHOD__ );
-		return $revLens;
 	}
 
 	/**
@@ -596,7 +576,7 @@ class HistoryPager extends ReverseChronologicalPager {
 		} elseif ( $rev->getVisibility() && $user->isAllowed( 'deletedhistory' ) ) {
 			// If revision was hidden from sysops, disable the link
 			if ( !$rev->userCan( Revision::DELETED_RESTRICTED, $user ) ) {
-				$cdel = Linker::revDeleteLinkDisabled( false );
+				$del = Linker::revDeleteLinkDisabled( false );
 			// Otherwise, show the link...
 			} else {
 				$query = array( 'type' => 'revision',
@@ -628,25 +608,24 @@ class HistoryPager extends ReverseChronologicalPager {
 			: 0;
 		$sDiff = ChangesList::showCharacterDifference( $prevSize, $rev->getSize() );
 		$fSize = Linker::formatRevisionSize($rev->getSize());
-		$s .= " . . $fSize $sDiff";
+		$s .= ' <span class="mw-changeslist-separator">. .</span> ' . "$fSize $sDiff";
 
 		# Text following the character difference is added just before running hooks
 		$s2 = Linker::revComment( $rev, false, true );
 
 		if ( $notificationtimestamp && ( $row->rev_timestamp >= $notificationtimestamp ) ) {
 			$s2 .= ' <span class="updatedmarker">' .  $this->msg( 'updatedmarker' )->escaped() . '</span>';
+			$classes[] = 'mw-history-line-updated';
 		}
 
 		$tools = array();
 
 		# Rollback and undo links
-		if ( $prevRev &&
-			!count( $this->getTitle()->getUserPermissionsErrors( 'edit', $this->getUser() ) ) )
-		{
-			if ( $latest && !count( $this->getTitle()->getUserPermissionsErrors( 'rollback', $this->getUser() ) ) ) {
+		if ( $prevRev && $this->getTitle()->quickUserCan( 'edit', $user ) ) {
+			if ( $latest && $this->getTitle()->quickUserCan( 'rollback', $user ) ) {
 				$this->preventClickjacking();
 				$tools[] = '<span class="mw-rollback-link">' .
-					Linker::buildRollbackLink( $rev ) . '</span>';
+					Linker::buildRollbackLink( $rev, $this->getContext() ) . '</span>';
 			}
 
 			if ( !$rev->isDeleted( Revision::DELETED_TEXT )
@@ -683,7 +662,7 @@ class HistoryPager extends ReverseChronologicalPager {
 
 		# Include separator between character difference and following text
 		if ( $s2 !== '' ) {
-			$s .= " . . $s2";
+			$s .= ' <span class="mw-changeslist-separator">. .</span> ' . $s2;
 		}
 
 		wfRunHooks( 'PageHistoryLineEnding', array( $this, &$row , &$s, &$classes ) );
@@ -709,7 +688,7 @@ class HistoryPager extends ReverseChronologicalPager {
 			$link = Linker::linkKnown(
 				$this->getTitle(),
 				$date,
-				array(),
+				array( 'class' => 'mw-changeslist-date' ),
 				array( 'oldid' => $rev->getId() )
 			);
 		} else {

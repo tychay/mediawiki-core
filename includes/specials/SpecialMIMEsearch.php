@@ -34,9 +34,17 @@ class MIMEsearchPage extends QueryPage {
 		parent::__construct( $name );
 	}
 
-	function isExpensive() { return true; }
-	function isSyndicated() { return false; }
-	function isCacheable() { return false; }
+	function isExpensive() {
+		return true;
+	}
+
+	function isSyndicated() {
+		return false;
+	}
+
+	function isCacheable() {
+		return false;
+	}
 
 	function linkParameters() {
 		return array( 'mime' => "{$this->major}/{$this->minor}" );
@@ -45,9 +53,9 @@ class MIMEsearchPage extends QueryPage {
 	public function getQueryInfo() {
 		return array(
 			'tables' => array( 'image' ),
-			'fields' => array( "'" . NS_FILE . "' AS namespace",
-					'img_name AS title',
-					'img_major_mime AS value',
+			'fields' => array( 'namespace' => NS_FILE,
+					'title' => 'img_name',
+					'value' => 'img_major_mime',
 					'img_size',
 					'img_width',
 					'img_height',

@@ -29,28 +29,46 @@
  * @maintainers fdcn <fdcn64@gmail.com>, shinjiman <shinjiman@gmail.com>, PhiLiP <philip.npc@gmail.com>
  */
 class LanguageConverter {
-	var $mMainLanguageCode;
-	var $mVariants, $mVariantFallbacks, $mVariantNames;
-	var $mTablesLoaded = false;
-	var $mTables;
+
+	/**
+	 * languages supporting variants
+	 * @since 1.20
+	 * @var array
+	 */
+	static public $languagesWithVariants = array(
+		'gan',
+		'iu',
+		'kk',
+		'ku',
+		'shi',
+		'sr',
+		'tg',
+		'uz',
+		'zh',
+	);
+
+	public $mMainLanguageCode;
+	public $mVariants, $mVariantFallbacks, $mVariantNames;
+	public $mTablesLoaded = false;
+	public $mTables;
 	// 'bidirectional' 'unidirectional' 'disable' for each variant
-	var $mManualLevel;
+	public $mManualLevel;
 
 	/**
 	 * @var String: memcached key name
 	 */
-	var $mCacheKey;
+	public $mCacheKey;
 
-	var $mLangObj;
-	var $mFlags;
-	var $mDescCodeSep = ':', $mDescVarSep = ';';
-	var $mUcfirst = false;
-	var $mConvRuleTitle = false;
-	var $mURLVariant;
-	var $mUserVariant;
-	var $mHeaderVariant;
-	var $mMaxDepth = 10;
-	var $mVarSeparatorPattern;
+	public $mLangObj;
+	public $mFlags;
+	public $mDescCodeSep = ':', $mDescVarSep = ';';
+	public $mUcfirst = false;
+	public $mConvRuleTitle = false;
+	public $mURLVariant;
+	public $mUserVariant;
+	public $mHeaderVariant;
+	public $mMaxDepth = 10;
+	public $mVarSeparatorPattern;
 
 	const CACHE_VERSION_KEY = 'VERSION 6';
 
@@ -166,13 +184,17 @@ class LanguageConverter {
 
 	/**
 	 * Get default variant.
-	 * This function would not be affected by user's settings or headers
+	 * This function would not be affected by user's settings
 	 * @return String: the default variant code
 	 */
 	public function getDefaultVariant() {
 		global $wgDefaultLanguageVariant;
 
 		$req = $this->getURLVariant();
+
+		if ( !$req ) {
+			$req = $this->getHeaderVariant();
+		}
 
 		if ( $wgDefaultLanguageVariant && !$req ) {
 			$req = $this->validateVariant( $wgDefaultLanguageVariant );
@@ -277,7 +299,7 @@ class LanguageConverter {
 			// We record these fallback variants, and process
 			// them later.
 			$fallbacks = $this->getVariantFallbacks( $language );
-			if ( is_string( $fallbacks ) ) {
+			if ( is_string( $fallbacks ) && $fallbacks !== $this->mMainLanguageCode ) {
 				$fallbackLanguages[] = $fallbacks;
 			} elseif ( is_array( $fallbacks ) ) {
 				$fallbackLanguages =
@@ -388,7 +410,7 @@ class LanguageConverter {
 					$attr = $attrs[$attrName];
 					// Don't convert URLs
 					if ( !strpos( $attr, '://' ) ) {
-						$attr = $this->translate( $attr, $toVariant );
+						$attr = $this->convertTo( $attr, $toVariant );
 					}
 
 					// Remove HTML tags to avoid disrupting the layout
@@ -528,24 +550,41 @@ class LanguageConverter {
 	public function convertTitle( $title ) {
 		$variant = $this->getPreferredVariant();
 		$index = $title->getNamespace();
-		if ( $index === NS_MAIN ) {
-			$text = '';
+		if ( $index !== NS_MAIN ) {
+			$text = $this->convertNamespace( $index ) . ':';
 		} else {
-			// first let's check if a message has given us a converted name
+			$text = '';
+		}
+		$text .= $this->translate( $title->getText(), $variant );
+		return $text;
+	}
+
+	/**
+	 * Get the namespace display name in the preferred variant.
+	 *
+	 * @param $index int namespace id
+	 * @return String: namespace name for display
+	 */
+	public function convertNamespace( $index ) {
+		$variant = $this->getPreferredVariant();
+		if ( $index === NS_MAIN ) {
+			return '';
+		} else {
+			// First check if a message gives a converted name in the target variant.
+			$nsConvMsg = wfMessage( 'conversion-ns' . $index )->inLanguage( $variant );
+			if ( $nsConvMsg->exists() ) {
+				return $nsConvMsg->plain();
+			}
+			// Then check if a message gives a converted name in content language
+			// which needs extra translation to the target variant.
 			$nsConvMsg = wfMessage( 'conversion-ns' . $index )->inContentLanguage();
 			if ( $nsConvMsg->exists() ) {
-				$text = $nsConvMsg->plain();
-			} else {
-				// the message does not exist, try retrieve it from the current
-				// variant's namespace names.
-				$langObj = $this->mLangObj->factory( $variant );
-				$text = $langObj->getFormattedNsText( $index );
+				return $this->translate( $nsConvMsg->plain(), $variant );
 			}
-			$text .= ':';
+			// No message exists, retrieve it from the target variant's namespace names.
+			$langObj = $this->mLangObj->factory( $variant );
+			return $langObj->getFormattedNsText( $index );
 		}
-		$text .= $title->getText();
-		$text = $this->translate( $text, $variant );
-		return $text;
 	}
 
 	/**
@@ -669,8 +708,8 @@ class LanguageConverter {
 						$inner .= '-{';
 						if ( !$warningDone ) {
 							$inner .= '<span class="error">' .
-								wfMsgForContent( 'language-converter-depth-warning',
-									$this->mMaxDepth ) .
+								wfMessage( 'language-converter-depth-warning' )
+									->numParams( $this->mMaxDepth )->inContentLanguage()->text() .
 								'</span>';
 							$warningDone = true;
 						}
@@ -907,7 +946,11 @@ class LanguageConverter {
 			if ( $title && $title->exists() ) {
 				$revision = Revision::newFromTitle( $title );
 				if ( $revision ) {
-					$txt = $revision->getRawText();
+					if ( $revision->getContentModel() == CONTENT_MODEL_WIKITEXT ) {
+						$txt = $revision->getContent( Revision::RAW )->getNativeData();
+					}
+
+					//@todo: in the future, use a specialized content model, perhaps based on json!
 				}
 			}
 		}
@@ -1017,9 +1060,9 @@ class LanguageConverter {
 	 * MediaWiki:Conversiontable* is updated.
 	 * @private
 	 *
-	 * @param $article Article object
+	 * @param $page WikiPage object
 	 * @param $user Object: User object for the current user
-	 * @param $text String: article text (?)
+	 * @param $content Content: new page content
 	 * @param $summary String: edit summary of the edit
 	 * @param $isMinor Boolean: was the edit marked as minor?
 	 * @param $isWatch Boolean: did the user watch this page or not?
@@ -1028,9 +1071,9 @@ class LanguageConverter {
 	 * @param $revision Object: new Revision object or null
 	 * @return Boolean: true
 	 */
-	function OnArticleSaveComplete( $article, $user, $text, $summary, $isMinor,
+	function OnPageContentSaveComplete( $page, $user, $content, $summary, $isMinor,
 			$isWatch, $section, $flags, $revision ) {
-		$titleobj = $article->getTitle();
+		$titleobj = $page->getTitle();
 		if ( $titleobj->getNamespace() == NS_MEDIAWIKI ) {
 			$title = $titleobj->getDBkey();
 			$t = explode( '/', $title, 3 );
@@ -1095,18 +1138,17 @@ class LanguageConverter {
  * @author fdcn <fdcn64@gmail.com>, PhiLiP <philip.npc@gmail.com>
  */
 class ConverterRule {
-	var $mText; // original text in -{text}-
-	var $mConverter; // LanguageConverter object
-	var $mManualCodeError = '<strong class="error">code error!</strong>';
-	var $mRuleDisplay = '';
-	var $mRuleTitle = false;
-	var $mRules = '';// string : the text of the rules
-	var $mRulesAction = 'none';
-	var $mFlags = array();
-	var $mVariantFlags = array();
-	var $mConvTable = array();
-	var $mBidtable = array();// array of the translation in each variant
-	var $mUnidtable = array();// array of the translation in each variant
+	public $mText; // original text in -{text}-
+	public $mConverter; // LanguageConverter object
+	public $mRuleDisplay = '';
+	public $mRuleTitle = false;
+	public $mRules = '';// string : the text of the rules
+	public $mRulesAction = 'none';
+	public $mFlags = array();
+	public $mVariantFlags = array();
+	public $mConvTable = array();
+	public $mBidtable = array();// array of the translation in each variant
+	public $mUnidtable = array();// array of the translation in each variant
 
 	/**
 	 * Constructor
@@ -1473,7 +1515,9 @@ class ConverterRule {
 			}
 		}
 		if ( $this->mRuleDisplay === false ) {
-			$this->mRuleDisplay = $this->mManualCodeError;
+			$this->mRuleDisplay = '<span class="error">'
+				. wfMessage( 'converter-manual-rule-error' )->inContentLanguage()->escaped()
+				. '</span>';
 		}
 
 		$this->generateConvTable();

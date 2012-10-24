@@ -214,12 +214,12 @@ $messages = array(
 'unprotectthispage' => 'Bukak palindungan laman iko',
 'newpage' => 'Laman baru',
 'talkpage' => 'Musyawarahkan laman ko',
-'talkpagelinktext' => 'Kecek',
+'talkpagelinktext' => 'Maota',
 'specialpage' => 'Laman istimewa',
 'personaltools' => 'Peralatan pribadi',
 'postcomment' => 'Bagian baru',
 'articlepage' => 'Liek isi laman',
-'talk' => 'Pembicaraan',
+'talk' => 'Ota',
 'views' => 'Tampilan',
 'toolbox' => 'Kotak pakakeh',
 'userpage' => 'Liek laman pangguno',
@@ -302,12 +302,12 @@ $1',
 'site-atom-feed' => '$1 umpan Atom',
 'page-rss-feed' => 'Umpan RSS "$1"',
 'page-atom-feed' => '"$1" umpan Atom',
-'red-link-title' => '$1 (laman alun tasadio)',
+'red-link-title' => '$1 (halaman alun babuek)',
 'sort-descending' => 'Urutkan manurun',
 'sort-ascending' => 'Urutkan manaik',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
-'nstab-main' => 'Laman',
+'nstab-main' => 'Halaman',
 'nstab-user' => 'Laman pangguno',
 'nstab-media' => 'Laman Media',
 'nstab-special' => 'Laman istimewa',
@@ -400,7 +400,7 @@ Alasan nan diberikan adolah ''$2''.",
 # Login and logout pages
 'logouttext' => "'''Sanak alah kalua log dari sistem.'''
 
-Sanak dapek taruih manggunoan {{SITENAME}} sacaro anonim, atau Sanak dapek [[Special:UserLogin|masuak log liak]] sabagai pangguno nan samo atau pangguno nan lain.
+Sanak dapek taruih manggunoan {{SITENAME}} sacaro anonim, atau Sanak dapek <span class='plainlinks'>[$1 masuak log liak]</span> sabagai pangguno nan samo atau pangguno nan lain.
 Parhatian bahawa bara laman mungkin masih taruih manunjukkan bahawa Sanak masih masuak log sampai Sanak mambarasihan singgahan panjelajah web Sanak.",
 'welcomecreation' => '== Salamaik datang, $1! ==
 
@@ -778,7 +778,7 @@ Legend: '''({{int:kini}})''' = perbedaan jo revisi terakhir, '''({{int:dulu}})''
 
 # Search results
 'searchresults' => 'Hasil pencarian',
-'searchresults-title' => 'Hasil pencarian untuak "$1"',
+'searchresults-title' => 'Hasil pancarian untuak "$1"',
 'searchresulttext' => 'Untuak informasi lanjut tentang pencarian {{SITENAME}}, lihek [[{{MediaWiki:Helppage}}|{{int:help}}]].',
 'searchsubtitle' => 'Awak mancari \'\'\'[[:$1]]\'\'\' ([[Special:Prefixindex/$1|sado laman yang dimulai jo "$1"]]{{int:pipe-separator}}[[Special:WhatLinksHere/$1|sado laman nan tapauik ka "$1"]])',
 'searchsubtitleinvalid' => "Awak mancari '''$1'''",
@@ -810,8 +810,6 @@ Legend: '''({{int:kini}})''' = perbedaan jo revisi terakhir, '''({{int:dulu}})''
 'search-interwiki-caption' => 'Proyek badunsanak',
 'search-interwiki-default' => 'Hasil $1:',
 'search-interwiki-more' => '(selanjutnyo)',
-'search-mwsuggest-enabled' => 'dengan saran',
-'search-mwsuggest-disabled' => 'indak ado saran',
 'searchrelated' => 'bakaitan',
 'searchall' => 'Sadonyo',
 'showingresultsheader' => "{{PLURAL:$5|Hasil '''$1''' dari '''$3'''|Hasil '''$1 - $2''' dari '''$3'''}} untuak '''$4'''",
@@ -1142,13 +1140,13 @@ Awak hanyo buliah lihek sumber se',
 'tooltip-ca-unwatch' => 'Kaluaan laman ko dari senarai pantauan awak',
 'tooltip-search' => 'Cari {{SITENAME}}',
 'tooltip-search-go' => 'Cari suatu laman dengan namo yang samo jiko tasadio',
-'tooltip-search-fulltext' => 'Cari laman yang ado teks ko',
+'tooltip-search-fulltext' => 'Cari halaman nan mamuek teks ko',
 'tooltip-p-logo' => '↓ Kunjungi laman utamo',
 'tooltip-n-mainpage' => 'Kunjungi Halaman Utamo',
 'tooltip-n-mainpage-description' => 'Kunjungi halaman utamo',
 'tooltip-n-portal' => 'Tentang proyek, apo yang dapek awak lakukan, di mano mancari sasuatu',
 'tooltip-n-currentevents' => 'Temukan informasi latar dari peristiwa kini ko',
-'tooltip-n-recentchanges' => 'Senarai parubahan baru dalam wiki',
+'tooltip-n-recentchanges' => 'Daftar panyuntiangan baru dalam wiki',
 'tooltip-n-randompage' => 'Tampilkan sembarang halaman',
 'tooltip-n-help' => 'Tampek mancari bantuan',
 'tooltip-t-whatlinkshere' => 'Senarai sado halaman wiki yang punyo pranala ka halaman ko',
@@ -1158,7 +1156,7 @@ Awak hanyo buliah lihek sumber se',
 'tooltip-t-contributions' => 'Lihek senarai jariah pangguno ko',
 'tooltip-t-emailuser' => 'Kirimkan e-mail ka pangguno ko',
 'tooltip-t-upload' => 'Unggah berkas',
-'tooltip-t-specialpages' => 'Senarai semua halaman istimewa',
+'tooltip-t-specialpages' => 'Sadoalah halaman istimewa',
 'tooltip-t-print' => 'Versi cetak halaman ko',
 'tooltip-t-permalink' => 'Pranala permanen untuak revisi laman ko',
 'tooltip-ca-nstab-main' => 'Lihek isi laman',
@@ -1258,5 +1256,9 @@ Nan lainnyo akan tasuruak sacaro default.
 
 # Special:Tags
 'tag-filter' => '[[Special:Tags|Tag]] bateh:',
+
+# Search suggestions
+'searchsuggest-search' => 'Cari',
+'searchsuggest-containing' => 'Barisi...',
 
 );

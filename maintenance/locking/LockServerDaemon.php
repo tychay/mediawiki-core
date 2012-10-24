@@ -39,6 +39,8 @@ LockServerDaemon::init(
 
 /**
  * Simple lock server daemon that accepts lock/unlock requests
+ *
+ * @ingroup LockManager Maintenance
  */
 class LockServerDaemon {
 	/** @var resource */
@@ -66,6 +68,8 @@ class LockServerDaemon {
 
 	/**
 	 * @params $config Array
+	 * @param array $config
+	 * @throws Exception
 	 * @return LockServerDaemon
 	 */
 	public static function init( array $config ) {
@@ -111,6 +115,7 @@ class LockServerDaemon {
 	}
 
 	/**
+	 * @throws Exception
 	 * @return void
 	 */
 	protected function setupServerSocket() {
@@ -239,7 +244,7 @@ class LockServerDaemon {
 			list( $session, $key, $command, $type, $values ) = $m;
 			if ( sha1( $session . $command . $type . $values . $this->authKey ) !== $key ) {
 				return 'BAD_KEY';
-			} elseif ( strlen( $session ) !== 31 ) {
+			} elseif ( strlen( $session ) !== 32 ) {
 				return 'BAD_SESSION';
 			}
 			$values = explode( '|', $values );
@@ -272,7 +277,7 @@ class LockServerDaemon {
 	/**
 	 * Remove a socket's corresponding session from tracking and
 	 * store it in the dead session tracking if it still has locks.
-	 * 
+	 *
 	 * @param $socket resource
 	 * @return bool
 	 */
@@ -309,7 +314,7 @@ class LockServerDaemon {
 
 	/**
 	 * Get the current timestamp and memory usage
-	 * 
+	 *
 	 * @return string
 	 */
 	protected function stat() {
@@ -479,10 +484,10 @@ class LockHolder {
 
 	/**
 	 * @param $session string
-	 * @return bool 
+	 * @return bool
 	 */
 	public function sessionHasLocks( $session ) {
-		return isset( $this->sessionIndexSh[$session] ) 
+		return isset( $this->sessionIndexSh[$session] )
 			|| isset( $this->sessionIndexEx[$session] );
 	}
 

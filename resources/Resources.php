@@ -1,4 +1,24 @@
 <?php
+/**
+ * Definition of core ResourceLoader modules.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
+ */
 
 return array(
 
@@ -88,6 +108,7 @@ return array(
 	'jquery' => array(
 		'scripts' => 'resources/jquery/jquery.js',
 		'debugRaw' => false,
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 
 	/* jQuery Plugins */
@@ -106,6 +127,10 @@ return array(
 		'scripts' => 'resources/jquery/jquery.autoEllipsis.js',
 		'dependencies' => 'jquery.highlightText',
 	),
+	'jquery.badge' => array(
+		'scripts' => 'resources/jquery/jquery.badge.js',
+		'styles' => 'resources/jquery/jquery.badge.css',
+	),
 	'jquery.byteLength' => array(
 		'scripts' => 'resources/jquery/jquery.byteLength.js',
 	),
@@ -121,6 +146,7 @@ return array(
 	),
 	'jquery.collapsibleTabs' => array(
 		'scripts' => 'resources/jquery/jquery.collapsibleTabs.js',
+		'dependencies' => 'jquery.delayedBind',
 	),
 	'jquery.color' => array(
 		'scripts' => 'resources/jquery/jquery.color.js',
@@ -154,8 +180,13 @@ return array(
 	'jquery.getAttrs' => array(
 		'scripts' => 'resources/jquery/jquery.getAttrs.js',
 	),
+	'jquery.hidpi' => array(
+		'scripts' => 'resources/jquery/jquery.hidpi.js',
+		'targets' => array( 'desktop', 'mobile' ),
+	),
 	'jquery.highlightText' => array(
 		'scripts' => 'resources/jquery/jquery.highlightText.js',
+		'dependencies' => 'jquery.mwExtension',
 	),
 	'jquery.hoverIntent' => array(
 		'scripts' => 'resources/jquery/jquery.hoverIntent.js',
@@ -170,10 +201,6 @@ return array(
 		'scripts' => 'resources/jquery/jquery.makeCollapsible.js',
 		'styles' => 'resources/jquery/jquery.makeCollapsible.css',
 		'messages' => array( 'collapsible-expand', 'collapsible-collapse' ),
-	),
-	'jquery.messageBox' => array(
-		'scripts' => 'resources/jquery/jquery.messageBox.js',
-		'styles' => 'resources/jquery/jquery.messageBox.css',
 	),
 	'jquery.mockjax' => array(
 		'scripts' => 'resources/jquery/jquery.mockjax.js',
@@ -200,6 +227,10 @@ return array(
 		'scripts' => 'resources/jquery/jquery.spinner.js',
 		'styles' => 'resources/jquery/jquery.spinner.css',
 	),
+	'jquery.jStorage' => array(
+		'scripts' => 'resources/jquery/jquery.jStorage.js',
+		'dependencies' => 'jquery.json',
+	),
 	'jquery.suggestions' => array(
 		'scripts' => 'resources/jquery/jquery.suggestions.js',
 		'styles' => 'resources/jquery/jquery.suggestions.css',
@@ -212,6 +243,7 @@ return array(
 		'scripts' => 'resources/jquery/jquery.tablesorter.js',
 		'styles' => 'resources/jquery/jquery.tablesorter.css',
 		'messages' => array( 'sort-descending', 'sort-ascending' ),
+		'dependencies' => 'jquery.mwExtension',
 	),
 	'jquery.textSelection' => array(
 		'scripts' => 'resources/jquery/jquery.textSelection.js',
@@ -352,7 +384,6 @@ return array(
 			'fa' => 'resources/jquery.ui/i18n/jquery.ui.datepicker-fa.js',
 			'fi' => 'resources/jquery.ui/i18n/jquery.ui.datepicker-fi.js',
 			'fo' => 'resources/jquery.ui/i18n/jquery.ui.datepicker-fo.js',
-			'fr-ch' => 'resources/jquery.ui/i18n/jquery.ui.datepicker-fr-CH.js',
 			'fr' => 'resources/jquery.ui/i18n/jquery.ui.datepicker-fr.js',
 			'gl' => 'resources/jquery.ui/i18n/jquery.ui.datepicker-gl.js',
 			'he' => 'resources/jquery.ui/i18n/jquery.ui.datepicker-he.js',
@@ -521,6 +552,7 @@ return array(
 		'scripts' => 'resources/mediawiki/mediawiki.js',
 		'debugScripts' => 'resources/mediawiki/mediawiki.log.js',
 		'debugRaw' => false,
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 	'mediawiki.api' => array(
 		'scripts' => 'resources/mediawiki.api/mediawiki.api.js',
@@ -596,8 +628,38 @@ return array(
 			'feedback-bugnew',
 		),
 	),
+	'mediawiki.hidpi' => array(
+		'scripts' => 'resources/mediawiki/mediawiki.hidpi.js',
+		'dependencies' => array(
+			'jquery.hidpi',
+		),
+		'targets' => array( 'desktop', 'mobile' ),
+	),
 	'mediawiki.htmlform' => array(
 		'scripts' => 'resources/mediawiki/mediawiki.htmlform.js',
+	),
+	'mediawiki.notification' => array(
+		'styles' => 'resources/mediawiki/mediawiki.notification.css',
+		'scripts' => 'resources/mediawiki/mediawiki.notification.js',
+		'dependencies' => array(
+			'mediawiki.page.startup',
+		),
+	),
+	'mediawiki.notify' => array(
+		'scripts' => 'resources/mediawiki/mediawiki.notify.js',
+	),
+	'mediawiki.searchSuggest' => array(
+		'scripts' => 'resources/mediawiki/mediawiki.searchSuggest.js',
+		'messages' => array(
+			'searchsuggest-search',
+			'searchsuggest-containing',
+		),
+		'dependencies' => array(
+			'jquery.autoEllipsis',
+			'jquery.client',
+			'jquery.placeholder',
+			'jquery.suggestions',
+		),
 	),
 	'mediawiki.Title' => array(
 		'scripts' => 'resources/mediawiki/mediawiki.Title.js',
@@ -610,6 +672,9 @@ return array(
 		'scripts' => 'resources/mediawiki/mediawiki.user.js',
 		'dependencies' => array(
 			'jquery.cookie',
+			'mediawiki.api',
+			'user.options',
+			'user.tokens',
 		),
 	),
 	'mediawiki.util' => array(
@@ -617,8 +682,8 @@ return array(
 		'dependencies' => array(
 			'jquery.client',
 			'jquery.cookie',
-			'jquery.messageBox',
 			'jquery.mwExtension',
+			'mediawiki.notify',
 		),
 		'messages' => array( 'showtoc', 'hidetoc' ),
 		'position' => 'top', // For $wgPreloadJavaScriptMwUtil
@@ -632,6 +697,14 @@ return array(
 			'jquery.textSelection',
 			'jquery.byteLimit',
 		),
+		'position' => 'top',
+	),
+	'mediawiki.action.edit.preview' => array(
+		'scripts' => 'resources/mediawiki.action/mediawiki.action.edit.preview.js',
+		'dependencies' => array(
+			'jquery.form',
+			'jquery.spinner',
+		),
 	),
 	'mediawiki.action.history' => array(
 		'scripts' => 'resources/mediawiki.action/mediawiki.action.history.js',
@@ -643,7 +716,10 @@ return array(
 	),
 	'mediawiki.action.view.dblClickEdit' => array(
 		'scripts' => 'resources/mediawiki.action/mediawiki.action.view.dblClickEdit.js',
-		'dependencies' => 'mediawiki.util',
+		'dependencies' => array(
+			'mediawiki.util',
+			'mediawiki.page.startup',
+		),
 	),
 	'mediawiki.action.view.metadata' => array(
 		'scripts' => 'resources/mediawiki.action/mediawiki.action.view.metadata.js',
@@ -665,56 +741,35 @@ return array(
 	'mediawiki.language' => array(
 		'scripts' => 'resources/mediawiki.language/mediawiki.language.js',
 		'languageScripts' => array(
-			'am' => 'resources/mediawiki.language/languages/am.js',
-			'ar' => 'resources/mediawiki.language/languages/ar.js',
-			'bat-smg' => 'resources/mediawiki.language/languages/bat-smg.js',
-			'be' => 'resources/mediawiki.language/languages/be.js',
-			'be-tarask' => 'resources/mediawiki.language/languages/be-tarask.js',
-			'bh' => 'resources/mediawiki.language/languages/bh.js',
 			'bs' => 'resources/mediawiki.language/languages/bs.js',
-			'cs' => 'resources/mediawiki.language/languages/cs.js',
-			'cu' => 'resources/mediawiki.language/languages/cu.js',
-			'cy' => 'resources/mediawiki.language/languages/cy.js',
 			'dsb' => 'resources/mediawiki.language/languages/dsb.js',
 			'fi' => 'resources/mediawiki.language/languages/fi.js',
-			'fr' => 'resources/mediawiki.language/languages/fr.js',
 			'ga' => 'resources/mediawiki.language/languages/ga.js',
-			'gd' => 'resources/mediawiki.language/languages/gd.js',
-			'gv' => 'resources/mediawiki.language/languages/gv.js',
 			'he' => 'resources/mediawiki.language/languages/he.js',
-			'hi' => 'resources/mediawiki.language/languages/hi.js',
-			'hr' => 'resources/mediawiki.language/languages/hr.js',
 			'hsb' => 'resources/mediawiki.language/languages/hsb.js',
 			'hu' => 'resources/mediawiki.language/languages/hu.js',
 			'hy' => 'resources/mediawiki.language/languages/hy.js',
-			'ksh' => 'resources/mediawiki.language/languages/ksh.js',
 			'la' => 'resources/mediawiki.language/languages/la.js',
-			'ln' => 'resources/mediawiki.language/languages/ln.js',
-			'lt' => 'resources/mediawiki.language/languages/lt.js',
-			'lv' => 'resources/mediawiki.language/languages/lv.js',
-			'mg' => 'resources/mediawiki.language/languages/mg.js',
-			'mk' => 'resources/mediawiki.language/languages/mk.js',
-			'mo' => 'resources/mediawiki.language/languages/mo.js',
-			'mt' => 'resources/mediawiki.language/languages/mt.js',
-			'nso' => 'resources/mediawiki.language/languages/nso.js',
 			'os' => 'resources/mediawiki.language/languages/os.js',
-			'pl' => 'resources/mediawiki.language/languages/pl.js',
-			'ro' => 'resources/mediawiki.language/languages/ro.js',
 			'ru' => 'resources/mediawiki.language/languages/ru.js',
-			'se' => 'resources/mediawiki.language/languages/se.js',
-			'sh' => 'resources/mediawiki.language/languages/sh.js',
-			'sk' => 'resources/mediawiki.language/languages/sk.js',
 			'sl' => 'resources/mediawiki.language/languages/sl.js',
-			'sma' => 'resources/mediawiki.language/languages/sma.js',
-			'sr-ec' => 'resources/mediawiki.language/languages/sr-ec.js',
-			'sr-el' => 'resources/mediawiki.language/languages/sr-el.js',
-			'sr' => 'resources/mediawiki.language/languages/sr.js',
-			'ti' => 'resources/mediawiki.language/languages/ti.js',
-			'tl' => 'resources/mediawiki.language/languages/tl.js',
 			'uk' => 'resources/mediawiki.language/languages/uk.js',
-			'wa' => 'resources/mediawiki.language/languages/wa.js',
 		),
-		'dependencies' => array( 'mediawiki.language.data' ),
+		'dependencies' => array(
+				'mediawiki.language.data',
+				'mediawiki.cldr'
+			),
+	),
+
+	'mediawiki.cldr' => array(
+		'scripts' => 'resources/mediawiki.language/mediawiki.cldr.js',
+		'dependencies' => array(
+			'mediawiki.libs.pluralruleparser',
+		),
+	),
+
+	'mediawiki.libs.pluralruleparser' => array(
+		'scripts' => 'resources/mediawiki.libs/CLDRPluralRuleParser.js',
 	),
 
 	'mediawiki.language.init' => array(
@@ -760,7 +815,9 @@ return array(
 		'dependencies' => array(
 			'mediawiki.page.startup',
 			'mediawiki.api.watch',
-			'mediawiki.util'
+			'mediawiki.util',
+			'mediawiki.notify',
+			'jquery.mwExtension',
 		),
 		'messages' => array(
 			'watch',
@@ -887,19 +944,6 @@ return array(
 	),
 	'mediawiki.legacy.IEFixes' => array(
 		'scripts' => 'common/IEFixes.js',
-		'remoteBasePath' => $GLOBALS['wgStylePath'],
-		'localBasePath' => $GLOBALS['wgStyleDirectory'],
-		'dependencies' => 'mediawiki.legacy.wikibits',
-	),
-	'mediawiki.legacy.mwsuggest' => array(
-		'scripts' => 'common/mwsuggest.js',
-		'remoteBasePath' => $GLOBALS['wgStylePath'],
-		'localBasePath' => $GLOBALS['wgStyleDirectory'],
-		'dependencies' => 'mediawiki.legacy.wikibits',
-		'messages' => array( 'search-mwsuggest-enabled', 'search-mwsuggest-disabled' ),
-	),
-	'mediawiki.legacy.preview' => array(
-		'scripts' => 'common/preview.js',
 		'remoteBasePath' => $GLOBALS['wgStylePath'],
 		'localBasePath' => $GLOBALS['wgStyleDirectory'],
 		'dependencies' => 'mediawiki.legacy.wikibits',

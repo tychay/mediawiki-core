@@ -1,5 +1,5 @@
 <?php
-/** Sardinian (Sardu)
+/** Sardinian (sardu)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -392,7 +392,7 @@ Podet èsser stadu burradu dae calicunu àteru.',
 # Login and logout pages
 'logouttext' => "'''As acabadu sa sessione.'''
 
-Immoe podes sighire a impreare {{SITENAME}} in forma anònima, o ti podes [[Special:UserLogin|identificare torra]] comente su de prima o comente usuàriu diferente.
+Immoe podes sighire a impreare {{SITENAME}} in forma anònima, o ti podes <span class='plainlinks'>[$1 identificare torra]</span> comente su de prima o comente usuàriu diferente.
 Tene contu ca is pàginas ki sunt giai abertas in àteras bentanas podent sighire a pàrrer comente cando fias identificadu, fintzas a cando non ddas renfriscas.",
 'welcomecreation' => "== Benènnidu, $1! ==
 S'account tuo est istadu creadu.
@@ -650,8 +650,6 @@ Cosas de ammentare: '''({{int:cur}})''' = diferèntzias cun sa versione currente
 'search-interwiki-caption' => 'Progetos frades',
 'search-interwiki-default' => '$1 resurtados:',
 'search-interwiki-more' => '(àteru)',
-'search-mwsuggest-enabled' => 'cun impostos',
-'search-mwsuggest-disabled' => 'chentza impostos',
 'searcheverything-enable' => 'Chirca in totu is nùmene-logos:',
 'searchall' => 'totu',
 'showingresults' => "Inoghe sighende {{PLURAL:$1|benit ammustradu '''1''' resurtadu|benint ammustrados '''$1''' resurtados}} incumentzende dae su nùmeru '''$2'''.",
@@ -843,9 +841,9 @@ Is pàginas de sa [[Special:Watchlist|watchlist tua]] sunt in '''grassu'''.",
 Pro castiare o chircare is files giai carrigaus, bae a sa [[Special:FileList|lista de is files carrigaus]]. Carrigamentos de files e de noas versiones de files sunt registradas in su [[Special:Log/upload|registru de carrigamentu]], is burraduras in su [[Special:Log/delete|registru burraduras]].
 
 Pro insertare unu file aintru de una pàgina, tocat a faghere unu cullegamentu tipu custu:
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></tt>''' pro impreare sa versione cumpleta de su file
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|testo alternativo]]</nowiki></tt>''' pro impreare una versione lada 200 pixel insertada in d'unu box, allinniada a manca e cun 'testu alternativu' comente didascalia
-* '''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></tt>''' pro ingenerare unu cullegamentu a su file chentza de du biri",
+* '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></code>''' pro impreare sa versione cumpleta de su file
+* '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|testo alternativo]]</nowiki></code>''' pro impreare una versione lada 200 pixel insertada in d'unu box, allinniada a manca e cun 'testu alternativu' comente didascalia
+* '''<code><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></code>''' pro ingenerare unu cullegamentu a su file chentza de du biri",
 'uploadlogpage' => 'Carrigadas',
 'uploadlogpagetext' => 'A suta ddoi est sa lista de is files carrigados de reghente.
 Càstia sa [[Special:NewFiles|galleria de files nous]] pro una presentada prus bisuale.',
@@ -1559,5 +1557,8 @@ Is acàpius chi sighint in sa matessi lìnia sunt cunsideraus comente eccetzione
 
 # New logging system
 'newuserlog-byemail' => 'password imbiada via e-mail',
+
+# Search suggestions
+'searchsuggest-search' => 'Chirca',
 
 );

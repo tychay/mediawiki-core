@@ -1,5 +1,5 @@
 <?php
-/** Church Slavic (Словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
+/** Church Slavic (словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -61,8 +61,8 @@ $namespaceAliases = array(
 );
 
 $magicWords = array(
-	'redirect'                => array( '0', '#ПРѢНАПРАВЛЄНИѤ', '#REDIRECT' ),
-	'language'                => array( '0', '#ѨꙀꙐКЪ:', '#LANGUAGE:' ),
+	'redirect'                  => array( '0', '#ПРѢНАПРАВЛЄНИѤ', '#REDIRECT' ),
+	'language'                  => array( '0', '#ѨꙀꙐКЪ:', '#LANGUAGE:' ),
 );
 
 $defaultDateFormat = 'mdy';
@@ -544,6 +544,7 @@ $messages = array(
 'statistics-articles' => 'истиньнꙑ члѣни',
 'statistics-pages' => 'страницѧ',
 'statistics-files' => 'положєнꙑ дѣла',
+'statistics-users-active' => 'дѣꙗтєльнꙑ польꙃєватєлє',
 
 'disambiguations' => 'страницѧ ижє съвѧꙁи съ мъногосъмꙑслиꙗ имѫтъ',
 'disambiguationspage' => 'Template:мъногосъмꙑслиѥ',
@@ -733,11 +734,6 @@ $messages = array(
 'tooltip-ca-nstab-special' => 'си нарочьна страница ѥстъ · ѥѩжє иꙁмѣнꙗти нє можєши',
 'tooltip-watch' => 'си страницѧ блюдєниѥ',
 
-# Info page
-'pageinfo-header-watchlist' => 'блюдєниꙗ',
-'pageinfo-subjectpage' => 'страница',
-'pageinfo-talkpage' => 'бєсѣда',
-
 # Media information
 'file-info-size' => '$1 × $2 п҃ѯ · дѣла мѣра : $3 · MIME тѷпъ : $4',
 'svg-long-desc' => 'дѣло SVG · обꙑчьнъ обраꙁъ : $1 × $2 п҃ѯ · дѣла мѣра : $3',
@@ -798,6 +794,9 @@ $messages = array(
 'logentry-move-move' => '$1 нарєчє страницѫ ⁖ $3 ⁖ имєньмь ⁖ $4 ⁖',
 'logentry-move-move-noredirect' => '$1 нарєчє страницѫ ⁖ $3 ⁖ имєньмь ⁖ $4 ⁖ бєꙁ прѣнаправлєниꙗ сътворѥниꙗ',
 'logentry-newusers-create' => '$1 сътворихъ польꙃєватєльско мѣсто',
+
+# Search suggestions
+'searchsuggest-containing' => 'сѥ дрьжащи···',
 
 # API errors
 'api-error-unknownerror' => 'нєвѣдома блаꙁна : ⁖ $1 ⁖',

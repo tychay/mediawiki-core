@@ -213,7 +213,7 @@ class StringUtils {
 	 * Returns an Iterator
 	 * @param $separator
 	 * @param $subject
-	 * @return ArrayIterator|\ExplodeIterator
+	 * @return ArrayIterator|ExplodeIterator
 	 */
 	static function explode( $separator, $subject ) {
 		if ( substr_count( $subject, $separator ) > 1000 ) {
@@ -424,7 +424,7 @@ class ReplacementArray {
 
 /**
  * An iterator which works exactly like:
- * 
+ *
  * foreach ( explode( $delim, $s ) as $element ) {
  *    ...
  * }

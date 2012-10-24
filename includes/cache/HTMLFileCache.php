@@ -33,6 +33,7 @@ class HTMLFileCache extends FileCacheBase {
 	 * Construct an ObjectFileCache from a Title and an action
 	 * @param $title Title|string Title object or prefixed DB key string
 	 * @param $action string
+	 * @throws MWException
 	 * @return HTMLFileCache
 	 */
 	public static function newFromTitle( $title, $action ) {
@@ -142,6 +143,8 @@ class HTMLFileCache extends FileCacheBase {
 				wfDebug( __METHOD__ . " uncompressing cache file and sending it\n" );
 				readgzfile( $filename );
 			}
+		} else {
+			readfile( $filename );
 		}
 		$context->getOutput()->disable(); // tell $wgOut that output is taken care of
 	}

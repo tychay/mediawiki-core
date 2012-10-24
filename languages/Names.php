@@ -25,6 +25,11 @@
   * These determine things like interwikis, language selectors, and so on.
   * Safe to change without running scripts on the respective sites.
   *
+  * \xE2\x80\x8E is the left-to-right marker and
+  * \xE2\x80\x8F is the right-to-left marker.
+  * They are required for ensuring the correct display of brackets in
+  * mixed rtl/ltr environment.
+  *
   * @ingroup Language
   */
 /* private */ $coreLanguageNames = array(
@@ -46,18 +51,18 @@
 	'arz' => 'مصرى',	# Egyptian Spoken Arabic
 	'as' => 'অসমীয়া',	# Assamese
 	'ast' => 'asturianu',	# Asturian
-	'av' => 'Авар',	# Avar
+	'av' => 'авар',	# Avar
 	'avk' => 'Kotava', # Kotava
 	'ay' => 'Aymar aru',	# Aymara
 	'az' => 'azərbaycanca',	# Azerbaijani
-	'ba' => 'Башҡортса',	# Bashkir
+	'ba' => 'башҡортса',	# Bashkir
 	'bar' => 'Boarisch',	# Bavarian (Austro-Bavarian and South Tyrolean)
-	'bat-smg' => 'Žemaitėška', # Samogitian (deprecated code, 'sgs' in ISO 693-3 since 2010-06-30 )
+	'bat-smg' => 'žemaitėška', # Samogitian (deprecated code, 'sgs' in ISO 693-3 since 2010-06-30 )
 	'bcc' => 'بلوچی مکرانی', # Southern Balochi
 	'bcl' => 'Bikol Central', # Bikol: Central Bicolano language
 	'be' => 'беларуская',	#  Belarusian normative
-	'be-tarask' => "\xE2\x80\xAAбеларуская (тарашкевіца)\xE2\x80\xAC",	# Belarusian in Taraskievica orthography
-	'be-x-old' => "\xE2\x80\xAAбеларуская (тарашкевіца)\xE2\x80\xAC",	# Belarusian in Taraskievica orthography; compat link
+	'be-tarask' => "беларуская (тарашкевіца)\xE2\x80\x8E",	# Belarusian in Taraskievica orthography
+	'be-x-old' => "беларуская (тарашкевіца)\xE2\x80\x8E",	# Belarusian in Taraskievica orthography; compat link
 	'bg' => 'български',	# Bulgarian
 	'bh' => 'भोजपुरी',	# Bihari macro language. Falls back to Bhojpuri (bho). The name actually says "Bhojpuri".
 	'bho' => 'भोजपुरी',	# Bhojpuri
@@ -72,11 +77,11 @@
 	'brh' => 'Bráhuí',	# Brahui
 	'bs' => 'bosanski',		# Bosnian
 	'bug' => 'ᨅᨔ ᨕᨘᨁᨗ',	# Buginese
-	'bxr' => 'Буряад',	# Buryat (Russia)
+	'bxr' => 'буряад',	# Buryat (Russia)
 	'ca' => 'català',	# Catalan
 	'cbk-zam' => 'Chavacano de Zamboanga',	# Zamboanga Chavacano
 	'cdo' => 'Mìng-dĕ̤ng-ngṳ̄',	# Min Dong
-	'ce' => 'Нохчийн',	# Chechen
+	'ce' => 'нохчийн',	# Chechen
 	'ceb' => 'Cebuano',     # Cebuano
 	'ch' => 'Chamoru',		# Chamorro
 	'cho' => 'Choctaw',		# Choctaw
@@ -86,9 +91,9 @@
 	'co' => 'corsu',		# Corsican
 	'cps' => 'Capiceño', # Capiznon
 	'cr' => 'Nēhiyawēwin / ᓀᐦᐃᔭᐍᐏᐣ',		# Cree
-	'crh' => 'Qırımtatarca',   # Crimean Tatar (multiple scripts - defaults to Latin)
-	'crh-latn' => "\xE2\x80\xAAQırımtatarca (Latin)\xE2\x80\xAC",       # Crimean Tatar (Latin)
-	'crh-cyrl' => "\xE2\x80\xAAКъырымтатарджа (Кирилл)\xE2\x80\xAC",       # Crimean Tatar (Cyrillic)
+	'crh' => 'qırımtatarca',   # Crimean Tatar (multiple scripts - defaults to Latin)
+	'crh-latn' => "qırımtatarca (Latin)\xE2\x80\x8E",       # Crimean Tatar (Latin)
+	'crh-cyrl' => "къырымтатарджа (Кирилл)\xE2\x80\x8E",       # Crimean Tatar (Cyrillic)
 	'cs' => 'česky',	# Czech
 	'csb' => 'kaszëbsczi',	# Cassubian
 	'cu' => 'словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ',	# Old Church Slavonic (ancient language)
@@ -98,13 +103,14 @@
 	'de' => 'Deutsch',		# German ("Du")
 	'de-at' => 'Österreichisches Deutsch',		# Austrian German
 	'de-ch' => 'Schweizer Hochdeutsch',		# Swiss Standard German
-	'de-formal' => "\xE2\x80\xAADeutsch (Sie-Form)\xE2\x80\xAC",		# German - formal address ("Sie")
+	'de-formal' => "Deutsch (Sie-Form)\xE2\x80\x8E",		# German - formal address ("Sie")
 	'diq' => 'Zazaki',		# Zazaki
 	'dsb' => 'dolnoserbski', # Lower Sorbian
 	'dtp' => 'Dusun Bundu-liwan', # Central Dusun
 	'dv' => 'ދިވެހިބަސް',		# Dhivehi
 	'dz' => 'ཇོང་ཁ',		# Dzongkha (Bhutan)
 	'ee' => 'eʋegbe',	# Éwé
+	'egl' => 'Emiliàn',	# Emilian
 	'el' => 'Ελληνικά',	# Greek
 	'eml' => 'emiliàn e rumagnòl',	# Emiliano-Romagnolo / Sammarinese
 	'en' => 'English',		# English
@@ -131,8 +137,8 @@
 	'ga' => 'Gaeilge',		# Irish
 	'gag' => 'Gagauz',		# Gagauz
 	'gan' => '贛語',		# Gan (multiple scripts - defaults to Traditional)
-	'gan-hans' => "\xE2\x80\xAA赣语（简体）\xE2\x80\xAC",	# Gan (Simplified Han)
-	'gan-hant' => "\xE2\x80\xAA贛語（繁體）\xE2\x80\xAC",	# Gan (Traditional Han)
+	'gan-hans' => "赣语（简体）\xE2\x80\x8E",	# Gan (Simplified Han)
+	'gan-hant' => "贛語（繁體）\xE2\x80\x8E",	# Gan (Traditional Han)
 	'gd' => 'Gàidhlig',	# Scots Gaelic
 	'gl' => 'galego',		# Galician
 	'glk' => 'گیلکی',	# Gilaki
@@ -142,7 +148,7 @@
 	'gsw' => 'Alemannisch',	# Alemannic
 	'gu' => 'ગુજરાતી',	# Gujarati
 	'gv' => 'Gaelg',		# Manx
-	'ha' => 'هَوُسَ',	# Hausa
+	'ha' => 'Hausa',	# Hausa
 	'hak' => 'Hak-kâ-fa',	# Hakka
 	'haw' => 'Hawai`i',		# Hawaiian
 	'he' => 'עברית',	# Hebrew
@@ -186,13 +192,13 @@
 	'ki' => 'Gĩkũyũ',	# Gikuyu
 	'kiu' => 'Kırmancki',	# Kirmanjki
 	'kj' => 'Kwanyama',	# Kwanyama
-	'kk' => 'Қазақша',	# Kazakh (multiple scripts - defaults to Cyrillic)
-	'kk-arab' => "\xE2\x80\xABقازاقشا (تٴوتە)\xE2\x80\xAC",	# Kazakh Arabic
-	'kk-cyrl' => "\xE2\x80\xAAҚазақша (кирил)\xE2\x80\xAC",	# Kazakh Cyrillic
-	'kk-latn' => "\xE2\x80\xAAQazaqşa (latın)\xE2\x80\xAC",	# Kazakh Latin
-	'kk-cn' => "\xE2\x80\xABقازاقشا (جۇنگو)\xE2\x80\xAC",	# Kazakh (China)
-	'kk-kz' => "\xE2\x80\xAAҚазақша (Қазақстан)\xE2\x80\xAC",	# Kazakh (Kazakhstan)
-	'kk-tr' => "\xE2\x80\xAAQazaqşa (Türkïya)\xE2\x80\xAC",	# Kazakh (Turkey)
+	'kk' => 'қазақша',	# Kazakh (multiple scripts - defaults to Cyrillic)
+	'kk-arab' => "قازاقشا (تٴوتە)\xE2\x80\x8F",	# Kazakh Arabic
+	'kk-cyrl' => "қазақша (кирил)\xE2\x80\x8E",	# Kazakh Cyrillic
+	'kk-latn' => "qazaqşa (latın)\xE2\x80\x8E",	# Kazakh Latin
+	'kk-cn' => "قازاقشا (جۇنگو)\xE2\x80\x8F",	# Kazakh (China)
+	'kk-kz' => "қазақша (Қазақстан)\xE2\x80\x8E",	# Kazakh (Kazakhstan)
+	'kk-tr' => "qazaqşa (Türkïya)\xE2\x80\x8E",	# Kazakh (Turkey)
 	'kl' => 'kalaallisut',	# Inuktitut, Greenlandic/Greenlandic/Kalaallisut (kal)
 	'km' => 'ភាសាខ្មែរ',	# Khmer, Central
 	'kn' => 'ಕನ್ನಡ',	# Kannada
@@ -200,7 +206,7 @@
 	'ko-kp' => '한국어 (조선)',	# Korean (DPRK)
 	'koi' => 'Перем Коми', # Komi-Permyak
 	'kr' => 'Kanuri',		# Kanuri, Central
-	'krc' => 'Къарачай-Малкъар', # Karachay-Balkar
+	'krc' => 'къарачай-малкъар', # Karachay-Balkar
 	'kri' => 'Krio', # Krio
 	'krj' => 'Kinaray-a', # Kinaray-a
 	'ks' => 'कॉशुर / کٲشُر',	# Kashmiri (multiple scripts - defaults to Perso-Arabic)
@@ -208,16 +214,16 @@
 	'ks-deva' => 'कॉशुर',	# Kashmiri (Devanagari script)
 	'ksh' => 'Ripoarisch',	# Ripuarian
 	'ku'  => 'Kurdî',	# Kurdish (multiple scripts - defaults to Latin)
-	'ku-latn' => "\xE2\x80\xAAKurdî (latînî)\xE2\x80\xAC",	# Northern Kurdish (Latin script)
-	'ku-arab' => "\xE2\x80\xABكوردي (عەرەبی)\xE2\x80\xAC",	# Northern Kurdish (Arabic script) (falls back to ckb)
-	'kv' => 'Коми',	# Komi-Zyrian (Cyrillic is common script but also written in Latin script)
+	'ku-latn' => "Kurdî (latînî)\xE2\x80\x8E",	# Northern Kurdish (Latin script)
+	'ku-arab' => "كوردي (عەرەبی)\xE2\x80\x8F",	# Northern Kurdish (Arabic script) (falls back to ckb)
+	'kv' => 'коми',	# Komi-Zyrian (Cyrillic is common script but also written in Latin script)
 	'kw' => 'kernowek',		# Cornish
 	'ky' => 'Кыргызча',	# Kirghiz
 	'la' => 'Latina',		# Latin
 	'lad' => 'Ladino',	# Ladino
 	'lb' => 'Lëtzebuergesch',	# Luxemburguish
-	'lbe' => 'Лакку',	# Lak
-	'lez' => 'Лезги',	# Lezgi
+	'lbe' => 'лакку',	# Lak
+	'lez' => 'лезги',	# Lezgi
 	'lfn' => 'Lingua Franca Nova',	# Lingua Franca Nova
 	'lg' => 'Luganda',		# Ganda
 	'li' => 'Limburgs',	# Limburgian
@@ -235,10 +241,10 @@
 	'lzz' => 'Lazuri',	# Laz
 	'mai' => 'मैथिली', # Maithili
 	'map-bms' => 'Basa Banyumasan', # Banyumasan
-	'mdf' => 'Мокшень',		# Moksha
+	'mdf' => 'мокшень',		# Moksha
 	'mg' => 'Malagasy',		# Malagasy
 	'mh' => 'Ebon',			# Marshallese
-	'mhr' => 'Олык Марий',	# Eastern Mari
+	'mhr' => 'олык марий',	# Eastern Mari
 	'mi' => 'Māori',	# Maori
 	'min' => 'Baso Minangkabau',	# Minangkabau
 	'mk' => 'македонски',	# Macedonian
@@ -246,19 +252,19 @@
 	'mn' => 'монгол',	# Halh Mongolian (Cyrillic) (ISO 639-3: khk)
 	'mo' => 'молдовеняскэ',	# Moldovan, deprecated
 	'mr' => 'मराठी',	# Marathi
-	'mrj' => 'Кырык мары',	# Hill Mari
+	'mrj' => 'кырык мары',	# Hill Mari
 	'ms' => 'Bahasa Melayu',	# Malay
 	'mt' => 'Malti',	# Maltese
 	'mus' => 'Mvskoke',	# Muskogee/Creek
 	'mwl' => 'Mirandés',	# Mirandese
 	'my' => 'မြန်မာဘာသာ',		# Burmese
-	'myv' => 'Эрзянь',	# Erzya
+	'myv' => 'эрзянь',	# Erzya
 	'mzn' => 'مازِرونی',		# Mazanderani
 	'na' => 'Dorerin Naoero',		# Nauruan
 	'nah' => 'Nāhuatl',		# Nahuatl, en:Wikipedia writes Nahuatlahtolli, while another form is Náhuatl
 	'nan' => 'Bân-lâm-gú', # Min-nan -- (bug 8217) nan instead of zh-min-nan, http://www.sil.org/iso639-3/codes.asp?order=639_3&letter=n
 	'nap' => 'Nnapulitano',	# Neapolitan
-	'nb' => "\xE2\x80\xAAnorsk (bokmål)\xE2\x80\xAC",		# Norwegian (Bokmal)
+	'nb' => "norsk (bokmål)\xE2\x80\x8E",		# Norwegian (Bokmal)
 	'nds' => 'Plattdüütsch',	# Low German ''or'' Low Saxon
 	'nds-nl' => 'Nedersaksisch',	# Dutch Low Saxon
 	'ne' => 'नेपाली',	# Nepali
@@ -266,9 +272,9 @@
 	'ng' => 'Oshiwambo',		# Ndonga
 	'niu' => 'Niuē',	# Niuean
 	'nl' => 'Nederlands',	# Dutch
-	'nl-informal' => "\xE2\x80\xAANederlands (informeel)\xE2\x80\xAC",	# Dutch (informal address ("je"))
-	'nn' => "\xE2\x80\xAAnorsk (nynorsk)\xE2\x80\xAC",	# Norwegian (Nynorsk)
-	'no' => "\xE2\x80\xAAnorsk (bokmål)\xE2\x80\xAC",		# Norwegian (falls back to nb).
+	'nl-informal' => "Nederlands (informeel)\xE2\x80\x8E",	# Dutch (informal address ("je"))
+	'nn' => "norsk (nynorsk)\xE2\x80\x8E",	# Norwegian (Nynorsk)
+	'no' => "norsk (bokmål)\xE2\x80\x8E",		# Norwegian (falls back to nb).
 	'nov' => 'Novial',		# Novial
 	'nrm' => 'Nouormand',	# Norman
 	'nso' => 'Sesotho sa Leboa',	# Northern Sotho
@@ -341,8 +347,8 @@
 	'so' => 'Soomaaliga',	# Somali
 	'sq' => 'shqip',		# Albanian
 	'sr' => 'српски / srpski',	# Serbian (multiple scripts - defaults to Cyrillic)
-	'sr-ec' => "\xE2\x80\xAAсрпски (ћирилица)\xE2\x80\xAC",	# Serbian Cyrillic ekavian
-	'sr-el' => "\xE2\x80\xAAsrpski (latinica)\xE2\x80\xAC",	# Serbian Latin ekavian
+	'sr-ec' => "српски (ћирилица)\xE2\x80\x8E",	# Serbian Cyrillic ekavian
+	'sr-el' => "srpski (latinica)\xE2\x80\x8E",	# Serbian Latin ekavian
 	'srn' => 'Sranantongo',		# Sranan Tongo
 	'ss' => 'SiSwati',		# Swati
 	'st' => 'Sesotho',		# Southern Sotho
@@ -368,6 +374,7 @@
 	'tokipona' => 'Toki Pona',      # Toki Pona
 	'tpi' => 'Tok Pisin',	# Tok Pisin
 	'tr' => 'Türkçe',	# Turkish
+	'tru' => 'Ṫuroyo', # Turoyo
 	'ts' => 'Xitsonga',		# Tsonga
 	'tt' => 'татарча/tatarça',	# Tatar (multiple scripts - defaults to Cyrillic)
 	'tt-cyrl' => 'татарча',	# Tatar (Cyrillic script) (default)
@@ -375,17 +382,17 @@
 	'tum' => 'chiTumbuka',  # Tumbuka
 	'tw' => 'Twi',			# Twi, (FIXME!)
 	'ty' => 'Reo Mā`ohi',	# Tahitian
-	'tyv' => 'Тыва дыл',	# Tyvan
-	'udm' => 'Удмурт',	# Udmurt
+	'tyv' => 'тыва дыл',	# Tyvan
+	'udm' => 'удмурт',	# Udmurt
 	'ug' => 'ئۇيغۇرچە / Uyghurche',	# Uyghur (multiple scripts - defaults to Arabic)
 	'ug-arab' => 'ئۇيغۇرچە', # Uyghur (Arabic script) (default)
 	'ug-latn' => 'Uyghurche', # Uyghur (Latin script)
 	'uk' => 'українська',	# Ukrainian
 	'ur' => 'اردو',	# Urdu
-	'uz' => 'Oʻzbekcha',	# Uzbek
+	'uz' => 'oʻzbekcha',	# Uzbek
 	've' => 'Tshivenda',		# Venda
 	'vec' => 'vèneto',	# Venetian
-	'vep' => 'Vepsän kel’',	# Veps
+	'vep' => 'vepsän kel’',	# Veps
 	'vi' => 'Tiếng Việt',	# Vietnamese
 	'vls' => 'West-Vlams', # West Flemish
 	'vmf' => 'Mainfränkisch', # Upper Franconian, Main-Franconian
@@ -396,7 +403,7 @@
 	'war' => 'Winaray', # Waray-Waray
 	'wo' => 'Wolof',		# Wolof
 	'wuu' => '吴语',		# Wu Chinese
-	'xal' => 'Хальмг',		# Kalmyk-Oirat (Kalmuk, Kalmuck, Kalmack, Qalmaq, Kalmytskii Jazyk, Khal:mag, Oirat, Volga Oirat, European Oirat, Western Mongolian)
+	'xal' => 'хальмг',		# Kalmyk-Oirat (Kalmuk, Kalmuck, Kalmack, Qalmaq, Kalmytskii Jazyk, Khal:mag, Oirat, Volga Oirat, European Oirat, Western Mongolian)
 	'xh' => 'isiXhosa',		# Xhosan
 	'xmf' => 'მარგალური',	# Mingrelian
 	'yi' => 'ייִדיש',	# Yiddish
@@ -406,15 +413,15 @@
 	'zea' => 'Zeêuws',	# Zeeuws/Zeaws
 	'zh' => '中文',						# (Zhōng Wén) - Chinese
 	'zh-classical' => '文言',			# Classical Chinese/Literary Chinese -- (see bug 8217)
-	'zh-cn' => "\xE2\x80\xAA中文（中国大陆）\xE2\x80\xAC",	# Chinese (PRC)
-	'zh-hans' => "\xE2\x80\xAA中文（简体）\xE2\x80\xAC",	# Mandarin Chinese (Simplified Chinese script) (cmn-hans)
-	'zh-hant' => "\xE2\x80\xAA中文（繁體）\xE2\x80\xAC",	# Mandarin Chinese (Traditional Chinese script) (cmn-hant)
-	'zh-hk' => "\xE2\x80\xAA中文（香港）\xE2\x80\xAC",	# Chinese (Hong Kong)
+	'zh-cn' => "中文（中国大陆）\xE2\x80\x8E",	# Chinese (PRC)
+	'zh-hans' => "中文（简体）\xE2\x80\x8E",	# Mandarin Chinese (Simplified Chinese script) (cmn-hans)
+	'zh-hant' => "中文（繁體）\xE2\x80\x8E",	# Mandarin Chinese (Traditional Chinese script) (cmn-hant)
+	'zh-hk' => "中文（香港）\xE2\x80\x8E",	# Chinese (Hong Kong)
 	'zh-min-nan' => 'Bân-lâm-gú',				# Min-nan -- (see bug 8217)
-	'zh-mo' => "\xE2\x80\xAA中文（澳門）\xE2\x80\xAC",	# Chinese (Macau)
-	'zh-my' => "\xE2\x80\xAA中文（马来西亚）\xE2\x80\xAC",	# Chinese (Malaysia)
-	'zh-sg' => "\xE2\x80\xAA中文（新加坡）\xE2\x80\xAC",	# Chinese (Singapore)
-	'zh-tw' => "\xE2\x80\xAA中文（台灣）\xE2\x80\xAC",	# Chinese (Taiwan)
+	'zh-mo' => "中文（澳門）\xE2\x80\x8E",	# Chinese (Macau)
+	'zh-my' => "中文（马来西亚）\xE2\x80\x8E",	# Chinese (Malaysia)
+	'zh-sg' => "中文（新加坡）\xE2\x80\x8E",	# Chinese (Singapore)
+	'zh-tw' => "中文（台灣）\xE2\x80\x8E",	# Chinese (Taiwan)
 	'zh-yue' => '粵語',					# Cantonese -- (see bug 8217)
 	'zu' => 'isiZulu'		# Zulu
 );

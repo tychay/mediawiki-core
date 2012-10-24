@@ -325,6 +325,11 @@ class DatabasePostgres extends DatabaseBase {
 
 	/**
 	 * Usually aborts on failure
+	 * @param string $server
+	 * @param string $user
+	 * @param string $password
+	 * @param string $dbName
+	 * @throws DBConnectionError
 	 * @return DatabaseBase|null
 	 */
 	function open( $server, $user, $password, $dbName ) {
@@ -356,6 +361,10 @@ class DatabasePostgres extends DatabaseBase {
 		if ( $port != false && $port != '' ) {
 			$connectVars['port'] = $port;
 		}
+		if ( $this->mFlags & DBO_SSL ) {
+			$connectVars['sslmode'] = 1;
+		}
+
 		$this->connectString = $this->makeConnectionString( $connectVars, PGSQL_CONNECT_FORCE_NEW );
 		$this->close();
 		$this->installErrorHandler();
@@ -1037,7 +1046,7 @@ __INDEXATTR__;
 	/**
 	 * Return aggregated value function call
 	 */
-	function aggregateValue( $valuedata, $valuename = 'value' ) {
+	public function aggregateValue( $valuedata, $valuename = 'value' ) {
 		return $valuedata;
 	}
 
@@ -1296,11 +1305,6 @@ SQL;
 		return pg_field_type( $res, $index );
 	}
 
-	/* Not even sure why this is used in the main codebase... */
-	function limitResultForUpdate( $sql, $num ) {
-		return $sql;
-	}
-
 	/**
 	 * @param $b
 	 * @return Blob
@@ -1406,9 +1410,6 @@ SQL;
 
 		if ( isset( $noKeyOptions['FOR UPDATE'] ) ) {
 			$postLimitTail .= ' FOR UPDATE';
-		}
-		if ( isset( $noKeyOptions['LOCK IN SHARE MODE'] ) ) {
-			$postLimitTail .= ' LOCK IN SHARE MODE';
 		}
 		if ( isset( $noKeyOptions['DISTINCT'] ) || isset( $noKeyOptions['DISTINCTROW'] ) ) {
 			$startOpts .= 'DISTINCT';

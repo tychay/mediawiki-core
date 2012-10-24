@@ -23,7 +23,7 @@
  */
 
 $magicWords = array(
-	'redirect'                => array( '0', '#VARDA', '#RINVIA', '#RINVIO', '#RIMANDO', '#REDIRECT' ),
+	'redirect'                  => array( '0', '#VARDA', '#RINVIA', '#RINVIO', '#RIMANDO', '#REDIRECT' ),
 );
 
 $fallback = 'it';
@@ -294,7 +294,6 @@ $messages = array(
 'qbbrowse' => 'Sfoja',
 'qbedit' => 'Canbia',
 'qbpageoptions' => 'Opsion pajina',
-'qbpageinfo' => 'Informasion so ła pajina',
 'qbmyoptions' => 'Łe me pajine',
 'qbspecialpages' => 'Pagine speciali',
 'faq' => 'Domande frequenti',
@@ -548,7 +547,7 @@ L\'aministradore che ło ga blocà ga fornìo sta spiegasion: "$3".',
 # Login and logout pages
 'logouttext' => "'''Te sì 'ndà fora da la to utensa.'''
 
-Te poli 'ndar vanti doparando {{SITENAME}} come utente anonimo o se nò [[Special:UserLogin|entrar da novo]], col stesso nome utente o uno difarente.
+Te poli 'ndar vanti doparando {{SITENAME}} come utente anonimo o se nò <span class='plainlinks'>[$1 entrar da novo]</span>, col stesso nome utente o uno difarente.
 Ocio che serte pagine podarìa èssar che ti 'e vedi come se te fussi 'ncora drento col to nome de prima, fin che no te neti la ''cache'' del to browser.",
 'welcomecreation' => '== Benvegnù, $1! ==
 
@@ -1139,8 +1138,6 @@ Assicùrete che la continuità storica de la pagina no la vegna alterà.',
 'search-interwiki-caption' => 'Projeti fradei',
 'search-interwiki-default' => 'Risultati da $1:',
 'search-interwiki-more' => '(altro)',
-'search-mwsuggest-enabled' => 'con sujerimenti',
-'search-mwsuggest-disabled' => 'sensa sujerimenti',
 'search-relatedarticle' => 'Ligà',
 'mwsuggest-disable' => 'Disabilita sugerimenti AJAX',
 'searcheverything-enable' => 'Serca in tuti quanti i namespace',
@@ -1506,9 +1503,9 @@ Qua ghe xe el registro de le scancelassion e dei spostamenti:",
 Par védar o sercar i file zà caricà, consulta la [[Special:FileList|lista dei file caricà]]. I caricamenti de file te pol védarli nel [[Special:Log/upload|registro dei caricamenti]], le scancelasion nel [[Special:Log/delete|registro de le scancelasion]].
 
 Par métar un file drento de na pagina, te ghè da inserir un colegamento fato come uno de sti qua:
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></tt>''' par doparar la version conpleta de sto file
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|testo alternativo]]</nowiki></tt>'''par inserir sto file co na larghessa de 200 pixel in te un riquadro a sinistra con 'testo alternativo' come descrission
-* '''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></tt>''' par inserir diretamente un colegamento al file sensa che el se véda in te la pagina",
+* '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></code>''' par doparar la version conpleta de sto file
+* '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|testo alternativo]]</nowiki></code>'''par inserir sto file co na larghessa de 200 pixel in te un riquadro a sinistra con 'testo alternativo' come descrission
+* '''<code><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></code>''' par inserir diretamente un colegamento al file sensa che el se véda in te la pagina",
 'upload-permitted' => 'Tipi de file consentìi: $1.',
 'upload-preferred' => 'Tipi de file consiglià: $1.',
 'upload-prohibited' => 'Tipi de file mìa consentìi: $1.',
@@ -1550,19 +1547,19 @@ Varda la [[Special:NewFiles|galerìa dei file nóvi]] par na vision de insieme.'
 'largefileserver' => 'El file el supera le dimension consentìe da la configurazion del server.',
 'emptyfile' => 'El file che te ghè caricà el xè aparentemente vodo. Podarìa èssar par un eror nel nome del file. Par piaser controla se te vol dal bon caricar sto file.',
 'windows-nonascii-filename' => 'Sta wiki no suporta nomi de file co carateri speciałi.',
-'fileexists' => "Un file co sto nome el esiste de xà, par piaser controła '''<tt>[[:$1]]</tt>''' se no te sì sicuro de volerlo sovrascrìvar.
-[[$1|thumb]]",
-'filepageexists' => "La pagina de descrizion de sto file la xe zà stà creà a '''<tt>[[:$1]]</tt>''', anca se no ghe xe gnancora un file co sto nome.
+'fileexists' => 'Un file co sto nome el esiste de xà, par piaser controła <strong>[[:$1]]</strong> se no te sì sicuro de volerlo sovrascrìvar.
+[[$1|thumb]]',
+'filepageexists' => "La pagina de descrizion de sto file la xe zà stà creà a <strong>[[:$1]]</strong>, anca se no ghe xe gnancora un file co sto nome.
 La descrizion de l'ogeto inserìa in fase de caricamento no la vegnarà mìa fora su la pagina de discussion.
 Par far sì che l'ogeto el conpaja su la pagina de discussion, sarà necessario modificarla a man. [[$1|thumb]]",
-'fileexists-extension' => "Ghe xe zà un file co un nome che ghe someja a quel lì: [[$2|thumb]]
-* Nome del file cargà: '''<tt>[[:$1]]</tt>'''
-* Nome del file esistente: '''<tt>[[:$2]]</tt>'''
-Par piaser siegli un nome difarente.",
+'fileexists-extension' => 'Ghe xe zà un file co un nome che ghe someja a quel lì: [[$2|thumb]]
+* Nome del file cargà: <strong>[[:$1]]</strong>
+* Nome del file esistente: <strong>[[:$2]]</strong>
+Par piaser siegli un nome difarente.',
 'fileexists-thumbnail-yes' => "El file el pararìa èssar el risultato de n'anteprima ''(thumbnail)''. [[$1|thumb]]
-Verifica, par confronto, el file '''<tt>[[:$1]]</tt>'''.
+Verifica, par confronto, el file <strong>[[:$1]]</strong>.
 Se se trata de la stessa imagine, ne le dimension originali, no xe necessario caricarghene altre anteprime.",
-'file-thumbnail-no' => "El nome del file el scuminsia con '''<tt>$1</tt>'''.
+'file-thumbnail-no' => "El nome del file el scuminsia con <strong>$1</strong>.
 Pararìà quindi che el fusse el risultato de n'anteprima ''(thumbnail)''.
 Se se dispone de l'imagine ne la risoluzion originale, se prega di cargarla. In caso contrario, se prega de canbiar el nome del file.",
 'fileexists-forbidden' => 'Un file con sto nome el esiste xà, e no se pode scrìvarghe insima.
@@ -1765,7 +1762,7 @@ Qua soto vien mostrà la descrission presente in te la [$2 pàxena de descrissio
 
 # MIME search
 'mimesearch' => 'Serca in base al tipo MIME',
-'mimesearch-summary' => 'Sta pagina la consente de filtrare i file in base al tipo MIME. Inserissi la stringa de riserca ne la forma tipo/sototipo, ad es. <tt>image/jpeg</tt>.',
+'mimesearch-summary' => 'Sta pagina la consente de filtrare i file in base al tipo MIME. Inserissi la stringa de riserca ne la forma tipo/sototipo, ad es. <code>image/jpeg</code>.',
 'mimetype' => 'Tipo MIME:',
 'download' => 'descarga',
 
@@ -1952,7 +1949,7 @@ Varda anca le [[Special:WantedCategories|categorie domandà]].',
 'linksearch-ok' => 'Serca',
 'linksearch-text' => 'Xe posibiłe doparare metacarateri, come "*.wikipedia.org".<br />
 Xe necesario almanco un dominio de primo liveło, tipo "*.org".<br />
-Protocołi suportadi: <tt>$1</tt> (no sta xontare nesuno de sti cuà inte ła to riçerca).',
+Protocołi suportadi: <code>$1</code> (no sta xontare nesuno de sti cuà inte ła to riçerca).',
 'linksearch-line' => '$1 presente ne la pagina $2',
 'linksearch-error' => "I metacaràteri i pode vegner doparài solo a l'inizio del nome de l'host.",
 
@@ -3377,5 +3374,9 @@ Le imagini le vien mostrà a la risoluzion pi granda che se pol, par i altri tip
 'logentry-newusers-create2' => '$1 ga creà na utensa $3',
 'logentry-newusers-autocreate' => "L'utensa $1 xè stà creà automategamente",
 'newuserlog-byemail' => 'password spedìa par e-mail',
+
+# Search suggestions
+'searchsuggest-search' => 'Serca',
+'searchsuggest-containing' => 'che contien...',
 
 );

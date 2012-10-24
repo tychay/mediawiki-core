@@ -119,6 +119,11 @@ abstract class IndexPager extends ContextSource implements Pager {
 	protected $mLastShown, $mFirstShown, $mPastTheEndIndex, $mDefaultQuery, $mNavigationBar;
 
 	/**
+	 * Whether to include the offset in the query
+	 */
+	protected $mIncludeOffset = false;
+
+	/**
 	 * Result object for the query. Warning: seek before use.
 	 *
 	 * @var ResultWrapper
@@ -139,7 +144,10 @@ abstract class IndexPager extends ContextSource implements Pager {
 
 		# Use consistent behavior for the limit options
 		$this->mDefaultLimit = intval( $this->getUser()->getOption( 'rclimit' ) );
-		list( $this->mLimit, /* $offset */ ) = $this->mRequest->getLimitOffset();
+		if ( !$this->mLimit ) {
+			// Don't override if a subclass calls $this->setLimit() in its constructor.
+			list( $this->mLimit, /* $offset */ ) = $this->mRequest->getLimitOffset();
+		}
 
 		$this->mIsBackwards = ( $this->mRequest->getVal( 'dir' ) == 'prev' );
 		$this->mDb = wfGetDB( DB_SLAVE );
@@ -176,6 +184,15 @@ abstract class IndexPager extends ContextSource implements Pager {
 	}
 
 	/**
+	 * Get the Database object in use
+	 *
+	 * @return DatabaseBase
+	 */
+	public function getDatabase() {
+		return $this->mDb;
+	}
+
+	/**
 	 * Do the query, using information from the object context. This function
 	 * has been kept minimal to make it overridable if necessary, to allow for
 	 * result sets formed from multiple DB queries.
@@ -194,6 +211,7 @@ abstract class IndexPager extends ContextSource implements Pager {
 			$queryLimit,
 			$descending
 		);
+
 		$this->extractResultInfo( $this->mOffset, $queryLimit, $this->mResult );
 		$this->mQueryDone = true;
 
@@ -221,10 +239,30 @@ abstract class IndexPager extends ContextSource implements Pager {
 	/**
 	 * Set the limit from an other source than the request
 	 *
+	 * Verifies limit is between 1 and 5000
+	 *
 	 * @param $limit Int|String
 	 */
 	function setLimit( $limit ) {
-		$this->mLimit = $limit;
+		$limit = (int) $limit;
+		// WebRequest::getLimitOffset() puts a cap of 5000, so do same here.
+		if ( $limit > 5000 ) {
+			$limit = 5000;
+		}
+		if ( $limit > 0 ) {
+			$this->mLimit = $limit;
+		}
+	}
+
+	/**
+	 * Set whether a row matching exactly the offset should be also included
+	 * in the result or not. By default this is not the case, but when the
+	 * offset is user-supplied this might be wanted.
+	 *
+	 * @param $include bool
+	 */
+	public function setIncludeOffset( $include ) {
+		$this->mIncludeOffset = $include;
 	}
 
 	/**
@@ -249,8 +287,7 @@ abstract class IndexPager extends ContextSource implements Pager {
 			if ( $numRows > $this->mLimit && $numRows > 1 ) {
 				$res->seek( $numRows - 1 );
 				$this->mPastTheEndRow = $res->fetchObject();
-				$indexField = $this->mIndexField;
-				$this->mPastTheEndIndex = $this->mPastTheEndRow->$indexField;
+				$this->mPastTheEndIndex = $this->mPastTheEndRow->$indexColumn;
 				$res->seek( $numRows - 2 );
 				$row = $res->fetchRow();
 				$lastIndex = $row[$indexColumn];
@@ -303,7 +340,20 @@ abstract class IndexPager extends ContextSource implements Pager {
 	 * @param $descending Boolean: query direction, false for ascending, true for descending
 	 * @return ResultWrapper
 	 */
-	function reallyDoQuery( $offset, $limit, $descending ) {
+	public function reallyDoQuery( $offset, $limit, $descending ) {
+		list( $tables, $fields, $conds, $fname, $options, $join_conds ) = $this->buildQueryInfo( $offset, $limit, $descending );
+		return $this->mDb->select( $tables, $fields, $conds, $fname, $options, $join_conds );
+	}
+
+	/**
+	 * Build variables to use by the database wrapper.
+	 *
+	 * @param $offset String: index offset, inclusive
+	 * @param $limit Integer: exact query limit
+	 * @param $descending Boolean: query direction, false for ascending, true for descending
+	 * @return array
+	 */
+	protected function buildQueryInfo( $offset, $limit, $descending ) {
 		$fname = __METHOD__ . ' (' . $this->getSqlComment() . ')';
 		$info = $this->getQueryInfo();
 		$tables = $info['tables'];
@@ -314,21 +364,20 @@ abstract class IndexPager extends ContextSource implements Pager {
 		$sortColumns = array_merge( array( $this->mIndexField ), $this->mExtraSortFields );
 		if ( $descending ) {
 			$options['ORDER BY'] = $sortColumns;
-			$operator = '>';
+			$operator = $this->mIncludeOffset ? '>=' : '>';
 		} else {
 			$orderBy = array();
 			foreach ( $sortColumns as $col ) {
 				$orderBy[] = $col . ' DESC';
 			}
 			$options['ORDER BY'] = $orderBy;
-			$operator = '<';
+			$operator = $this->mIncludeOffset ? '<=' : '<';
 		}
 		if ( $offset != '' ) {
 			$conds[] = $this->mIndexField . $operator . $this->mDb->addQuotes( $offset );
 		}
 		$options['LIMIT'] = intval( $limit );
-		$res = $this->mDb->select( $tables, $fields, $conds, $fname, $options, $join_conds );
-		return new ResultWrapper( $this->mDb, $res );
+		return array( $tables, $fields, $conds, $fname, $options, $join_conds );
 	}
 
 	/**
@@ -877,7 +926,7 @@ abstract class TablePager extends IndexPager {
 		$tableClass = htmlspecialchars( $this->getTableClass() );
 		$sortClass = htmlspecialchars( $this->getSortHeaderClass() );
 
-		$s = "<table style='border:1;' class=\"mw-datatable $tableClass\"><thead><tr>\n";
+		$s = "<table style='border:1px;' class=\"mw-datatable $tableClass\"><thead><tr>\n";
 		$fields = $this->getFieldNames();
 
 		# Make table header
@@ -980,7 +1029,7 @@ abstract class TablePager extends IndexPager {
 	 * @protected
 	 *
 	 * @param $row Object: the database result row
-	 * @return Array of <attr> => <value>
+	 * @return Array of attribute => value
 	 */
 	function getRowAttrs( $row ) {
 		$class = $this->getRowClass( $row );
@@ -1095,7 +1144,7 @@ abstract class TablePager extends IndexPager {
 	}
 
 	/**
-	 * Get a <select> element which has options for each of the allowed limits
+	 * Get a "<select>" element which has options for each of the allowed limits
 	 *
 	 * @return String: HTML fragment
 	 */
@@ -1125,7 +1174,7 @@ abstract class TablePager extends IndexPager {
 	}
 
 	/**
-	 * Get <input type="hidden"> elements for use in a method="get" form.
+	 * Get \<input type="hidden"\> elements for use in a method="get" form.
 	 * Resubmits all defined elements of the query string, except for a
 	 * blacklist, passed in the $blacklist parameter.
 	 *

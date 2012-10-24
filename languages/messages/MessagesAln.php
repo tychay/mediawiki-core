@@ -54,16 +54,16 @@ $specialPageAliases = array(
 );
 
 $magicWords = array(
-	'currentmonth'            => array( '1', 'MUEJIAKTUAL', 'MUEJIAKTUAL2', 'MUAJIMOMENTAL', 'MUAJIMOMENTAL2', 'CURRENTMONTH', 'CURRENTMONTH2' ),
-	'currentmonth1'           => array( '1', 'MUEJIAKTUAL1', 'MUAJIMOMENTAL1', 'CURRENTMONTH1' ),
-	'currentmonthname'        => array( '1', 'EMNIMUEJITAKTUAL', 'EMRIIMUAJITMOMENTAL', 'CURRENTMONTHNAME' ),
-	'currenttime'             => array( '1', 'KOHATASH', 'KOHATANI', 'CURRENTTIME' ),
-	'currenthour'             => array( '1', 'ORATASH', 'ORATANI', 'CURRENTHOUR' ),
-	'localmonth'              => array( '1', 'MUEJILOKAL', 'MUAJILOKAL', 'LOCALMONTH', 'LOCALMONTH2' ),
-	'img_center'              => array( '1', 'qendër', 'qendrore', 'qëndër', 'qëndrore', 'center', 'centre' ),
-	'img_baseline'            => array( '1', 'vijabazë', 'linjabazë', 'baseline' ),
-	'servername'              => array( '0', 'EMNISERVERIT', 'EMRIISERVERIT', 'SERVERNAME' ),
-	'currentweek'             => array( '1', 'JAVAAKTUALE', 'JAVAMOMENTALE', 'CURRENTWEEK' ),
+	'currentmonth'              => array( '1', 'MUEJIAKTUAL', 'MUEJIAKTUAL2', 'MUAJIMOMENTAL', 'MUAJIMOMENTAL2', 'CURRENTMONTH', 'CURRENTMONTH2' ),
+	'currentmonth1'             => array( '1', 'MUEJIAKTUAL1', 'MUAJIMOMENTAL1', 'CURRENTMONTH1' ),
+	'currentmonthname'          => array( '1', 'EMNIMUEJITAKTUAL', 'EMRIIMUAJITMOMENTAL', 'CURRENTMONTHNAME' ),
+	'currenttime'               => array( '1', 'KOHATASH', 'KOHATANI', 'CURRENTTIME' ),
+	'currenthour'               => array( '1', 'ORATASH', 'ORATANI', 'CURRENTHOUR' ),
+	'localmonth'                => array( '1', 'MUEJILOKAL', 'MUAJILOKAL', 'LOCALMONTH', 'LOCALMONTH2' ),
+	'img_center'                => array( '1', 'qendër', 'qendrore', 'qëndër', 'qëndrore', 'center', 'centre' ),
+	'img_baseline'              => array( '1', 'vijabazë', 'linjabazë', 'baseline' ),
+	'servername'                => array( '0', 'EMNISERVERIT', 'EMRIISERVERIT', 'SERVERNAME' ),
+	'currentweek'               => array( '1', 'JAVAAKTUALE', 'JAVAMOMENTALE', 'CURRENTWEEK' ),
 );
 
 $messages = array(
@@ -108,7 +108,6 @@ $messages = array(
 'tog-watchlisthideliu' => "Mshef redaktimet e përdoruesve t'kyçun prej listës së vrojtimit",
 'tog-watchlisthideanons' => 'Mshef redaktimet e anonimëve prej listës së vrojtimit',
 'tog-watchlisthidepatrolled' => 'Mshef redaktimet e mbikëqyruna prej listës së vrojtimit',
-'tog-nolangconversion' => 'Mos lejo konvertimin e variantëve',
 'tog-ccmeonemails' => 'Më ço kopje të mesazheve qi ua dërgoj të tjerëve',
 'tog-diffonly' => 'Mos e trego përmbajtjen e faqes nën ndryshimin',
 'tog-showhiddencats' => 'Trego kategoritë e mshefta',
@@ -452,7 +451,7 @@ Arsyeja e dhânë âsht "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext' => "'''Jeni çlajmërue.'''
 
-Mundeni me vazhdue me shfrytëzue {{SITENAME}} në mënyrë anonime, apo mundeni [[Special:UserLogin|me u kyçë]] si përdoruesi i njêjtë apo si nji tjetër.
+Mundeni me vazhdue me shfrytëzue {{SITENAME}} në mënyrë anonime, apo mundeni <span class='plainlinks'>[$1 me u kyçë]</span> si përdoruesi i njêjtë apo si nji tjetër.
 Disa faqe mujnë me u paraqitë prap si t'kishit qenë t'kyçun, derisa ta pastroni memorizimin e shfletuesit.",
 'welcomecreation' => '== Mirësevini, $1! ==
 
@@ -930,8 +929,6 @@ Kini kujdes se përdorimi i lidhjeve të shfletimit do të ndryshojë përzgjedh
 'search-interwiki-caption' => 'Projektet simotra',
 'search-interwiki-default' => '$1 rezultate:',
 'search-interwiki-more' => '(mâ shumë)',
-'search-mwsuggest-enabled' => 'me parahedhje',
-'search-mwsuggest-disabled' => "s'ka parahedhje",
 'search-relatedarticle' => 'Të ngjajshme',
 'mwsuggest-disable' => 'Deaktivizo sygjerimet me AJAX',
 'searcheverything-enable' => 'Kërko në tâna hapësinat',
@@ -1621,5 +1618,9 @@ Tjerat kanë me mbetë të mshefuna.
 # New logging system
 'revdelete-restricted' => 'u vendosën kufizime për administruesit',
 'revdelete-unrestricted' => 'u hoqën kufizimet për administruesit',
+
+# Search suggestions
+'searchsuggest-search' => 'Kërkim',
+'searchsuggest-containing' => 'përmban ...',
 
 );

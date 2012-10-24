@@ -221,7 +221,6 @@ $messages = array(
 'qbbrowse' => 'Lemmi',
 'qbedit' => 'Soppi',
 'qbpageoptions' => 'Xëtuw tànneef',
-'qbpageinfo' => 'Xëtuw xibaar',
 'qbmyoptions' => 'Samay tànneef',
 'qbspecialpages' => 'Xëti jagleel',
 'faq' => 'Laaj yi ëpp',
@@ -450,7 +449,7 @@ Ngirte li mu joxe mooy ne « ''$2'' ».",
 # Login and logout pages
 'logouttext' => "Fi mu nekk nii génn nga.'''
 
-Man ngaa wéy di jëfandikoo {{SITENAME}} ci anam buñ la dul xamme walla nga  [[Special:UserLogin|duggewaat]] ak wenn tur wi walla ak weneen.",
+Man ngaa wéy di jëfandikoo {{SITENAME}} ci anam buñ la dul xamme walla nga  <span class='plainlinks'>[$1 duggewaat]</span> ak wenn tur wi walla ak weneen.",
 'welcomecreation' => '== Dalal-jàmm, $1 ! ==
 Sosees na sa sàq.
 Bul fatte soppi say [[Special:Preferences|{{SITENAME}} tànneef]].',
@@ -907,8 +906,6 @@ Soo jëfandikoo lëkkalekaayu joow yi day neenal boyot yi nga jotoon a fal.',
 'search-interwiki-caption' => 'Sémbu niroowaale',
 'search-interwiki-default' => '$1 ngérte :',
 'search-interwiki-more' => '(yeneen)',
-'search-mwsuggest-enabled' => 'ak xelal',
-'search-mwsuggest-disabled' => 'ci lu dul xelal',
 'search-relatedarticle' => 'Yeneeni ngérte',
 'mwsuggest-disable' => 'Doxadil xelal yu AJAX',
 'searcheverything-enable' => 'Seet ci barabi tur yépp',
@@ -1253,14 +1250,14 @@ Saytul [[Special:NewFiles| gaaraluwaayu dencukaay yu yees yi]] ngir gis bu gën 
 'large-file' => 'Li gën mooy dayoo dencukaay bi bañ a romb $1; bii dencukaay $2 la.',
 'largefileserver' => 'Dayoo dencukaay bi romb na kem bu joxekaay bi attan.',
 'emptyfile' => 'dencukaay bi nga bëgg a yeb dafa mel ni amul dara. Xéj-na ag njuumte ci turu dencukaay bi moo ko waral. Seetal bu baax ndax dëgg-dëgg bëgg nga yeb bii dencukaay.',
-'fileexists' => "Am na dencukaay bu tudd nii ba noppi.
-Saytul '''<tt>[[:$1]]</tt>''' su dee wóoru la ne bëgg nga koo soppi.
-[[$1|thumb]]",
-'filepageexists' => "Xëtu faramfacce bu dencukaay bi sos nañ ko ba noppi ci bii màkkaan '''<tt>[[:$1]]</tt>''', waaye amagul dencukaay bu ni tudd nii-nii. Faramfacceg xët wi nga dugal ci diirub yeb gi du feeñ ci xëtu waxtaanuwaay wi. Ngir faramfacce gi feeñ ci xëtu waxtaanuwaay wi faaw nga soppi ko ak sa loxo.",
-'fileexists-extension' => "Am na dencukaay bu ni tudd ba noppi: [[$2|thumb]]
-* Turu dencukaay bi ngay yeb : '''<tt>[[:$1]]</tt>'''
-* Turu dencukaay bi fi am : '''<tt>[[:$2]]</tt>'''
-Tànnal weneen tur.",
+'fileexists' => 'Am na dencukaay bu tudd nii ba noppi.
+Saytul <strong>[[:$1]]</strong> su dee wóoru la ne bëgg nga koo soppi.
+[[$1|thumb]]',
+'filepageexists' => 'Xëtu faramfacce bu dencukaay bi sos nañ ko ba noppi ci bii màkkaan <strong>[[:$1]]</strong>, waaye amagul dencukaay bu ni tudd nii-nii. Faramfacceg xët wi nga dugal ci diirub yeb gi du feeñ ci xëtu waxtaanuwaay wi. Ngir faramfacce gi feeñ ci xëtu waxtaanuwaay wi faaw nga soppi ko ak sa loxo.',
+'fileexists-extension' => 'Am na dencukaay bu ni tudd ba noppi: [[$2|thumb]]
+* Turu dencukaay bi ngay yeb : <strong>[[:$1]]</strong>
+* Turu dencukaay bi fi am : <strong>[[:$2]]</strong>
+Tànnal weneen tur.',
 'fileexists-forbidden' => 'Am na ŋara wu ni tudd ba noppi te mano koo war; Dellul ginnaaw ngir yeb ŋara wi ak weneen tur
 [[File:$1|thumb|center|$1]]',
 'fileexists-shared-forbidden' => 'Am na ŋara wu ni tudd ba noppi ci dencuwaayu ŋara bi ñuy bokk; Dellul ginnaaw ngir yeb ŋara wi ak weneen tur. [[File:$1|thumb|center|$1]]',
@@ -1358,7 +1355,7 @@ Faramfacce gi ci [$2 xëtu faramfaccewaayu xët wi] lañuy wone ci suuf .',
 # MIME search
 'mimesearch' => 'Seet ci xeeti ëmbiit yii di MIME',
 'mimesearch-summary' => "Xët wii dina la may nga man segg xeeti dencukaay yu MIME.
-Duggalal baat bi ci pax mi  ''xeet/''ron-xeet'', ci misaal <tt>image/jpeg</tt>.",
+Duggalal baat bi ci pax mi  ''xeet/''ron-xeet'', ci misaal <code>image/jpeg</code>.",
 'mimetype' => 'Xeet wu MIME :',
 'download' => 'yebbi',
 

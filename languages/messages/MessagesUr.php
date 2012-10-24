@@ -10,12 +10,14 @@
  * @author Chris H
  * @author Istabani
  * @author Meno25
+ * @author Muhammad Shuaib
  * @author O.bangash
  * @author Rachitrali
  * @author Reedy
  * @author Wisesabre
  * @author ZxxZxxZ
  * @author לערי ריינהארט
+ * @author زكريا
  * @author سمرقندی
  * @author محبوب عالم
  */
@@ -51,7 +53,7 @@ $messages = array(
 'tog-hidepatrolled' => 'حالیہ تبدیلیوں میں گشتی ترمیمات چُھپاؤ',
 'tog-newpageshidepatrolled' => 'جدید صفحاتی فہرست میں گشتی صفحات چُھپاؤ',
 'tog-extendwatchlist' => 'زیرِنظرفہرست کو پھیلاؤ تاکہ اِس میں تمام ترمیمات نظر آئیں، نہ کہ صرف حالیہ ترین',
-'tog-usenewrc' => 'افزودہ حالیہ تبدیلیاں استعمال کرو (JavaScript چاہئے ہوگا)',
+'tog-usenewrc' => 'افزودہ حالیہ تبدیلیاں استعمال کریں (JavaScript درکار ہوگا)',
 'tog-numberheadings' => 'سرخیوں کو خود نمبر دو',
 'tog-showtoolbar' => 'تدوینی اوزاردان دکھاؤ ( JavaScript چاہئے)',
 'tog-editondblclick' => 'طقین پر صفحات کی ترمیم (JavaScript چاہئے)',
@@ -164,6 +166,7 @@ $messages = array(
 'category-subcat-count' => '{{PLURAL:$2|اِس زمرہ میں صرف درج ذیل ذیلی زمرہ ہے.|اِس زمرہ میں درج ذیل {{PLURAL:$1|ذیلی زمرہ|$1 ذیلی زمرہ جات}}, کل $2 میں سے.}}',
 'category-subcat-count-limited' => 'اِس زمرہ میں درج ذیل {{PLURAL:$1|ذیلی زمرہ ہے|$1 ذیلی زمرہ جات ہیں}}.',
 'listingcontinuesabbrev' => '۔جاری',
+'noindex-category' => 'غیر مندرج صفحات',
 
 'about' => 'تعارف',
 'article' => 'صفحۂ مشمول',
@@ -273,8 +276,8 @@ $1',
 'edithelp' => 'معاونت براۓ ترمیم',
 'edithelppage' => 'Help:ترمیم',
 'helppage' => 'Help:فہرست',
-'mainpage' => 'سرورق',
-'mainpage-description' => 'سرورق',
+'mainpage' => 'صفحہ اول',
+'mainpage-description' => 'صفحہ اول',
 'policy-url' => 'Project:حکمتِ عملی',
 'portal' => 'دیوان عام',
 'portal-url' => 'Project:دیوان عام',
@@ -415,7 +418,7 @@ Warning: Page may not contain recent updates.',
 # Login and logout pages
 'logouttext' => "'''اب آپ خارج ہوچکے ہیں'''
 
-آپ گمنام طور پر {{SITENAME}}  کا استعمال جاری رکھ سکتے ہیں، یا دوبارہ اسی نام یا مختلف نام سے [[Special:UserLogin|دوبارہ داخلِ نوشتہ]] بھی ہو سکتے ہیں۔  یہ یاد آوری کرلیجیۓ کہ کچھ صفحات ایسے نظر آتے رہیں گے کہ جیسے ابھی آپ خارج نہیں ہوئے ، جب تک آپ اپنے متصفح کا ابطن صاف نہ کردیں۔",
+آپ گمنام طور پر {{SITENAME}}  کا استعمال جاری رکھ سکتے ہیں، یا دوبارہ اسی نام یا مختلف نام سے <span class='plainlinks'>[$1 دوبارہ داخلِ نوشتہ]</span> بھی ہو سکتے ہیں۔  یہ یاد آوری کرلیجیۓ کہ کچھ صفحات ایسے نظر آتے رہیں گے کہ جیسے ابھی آپ خارج نہیں ہوئے ، جب تک آپ اپنے متصفح کا ابطن صاف نہ کردیں۔",
 'welcomecreation' => '== خوش آمدید، $1 ! ==
 آپ کا کھاتہ بنا دیا گیا ہے۔ اپنی [[Special:Preferences|{{SITENAME}} ترجیحات]] مرتب کرنا مت بھولئے گا.',
 'yourname' => 'اسمِ رکنیت',
@@ -787,8 +790,6 @@ $1",
 'search-interwiki-caption' => 'ساتھی منصوبے',
 'search-interwiki-default' => '$1 نتائج:',
 'search-interwiki-more' => '(مزید)',
-'search-mwsuggest-enabled' => 'بمع تجاویز',
-'search-mwsuggest-disabled' => 'تجاویز نہیں',
 'search-relatedarticle' => 'متعلقہ',
 'mwsuggest-disable' => 'AJAX تجاویز غیرفعال',
 'searchrelated' => 'متعلقہ',
@@ -897,13 +898,22 @@ HTML tags جانچئے.',
 'prefs-i18n' => 'بین الاقوامیت',
 'prefs-signature' => 'دستخط',
 'prefs-dateformat' => 'شکلبندِ تاریخ',
+'prefs-diffs' => 'فروق',
 
 # User rights
 'userrights' => 'حقوقِ صارف کی نظامت',
 'userrights-lookup-user' => 'گروہائے صارف کا انتظام',
 'userrights-user-editname' => 'کوئی اسم‌صارف داخل کیجئے:',
+'editusergroup' => 'ترمیم گروہائے صارف',
 'editinguser' => "تبدیلئ حقوق برائے صارف '''[[صارف:$1|$1]]''' $2",
+'userrights-editusergroup' => 'ترمیم گروہائے صارف',
+'saveusergroups' => 'گروہائے صارف محفوظ',
 'userrights-groupsmember' => 'رکنِ:',
+'userrights-groupsmember-auto' => 'اعتباری صارف در',
+'userrights-groups-help' => 'آپ ان گروہان میں تبدیلی کرسکتے ہیں جن سے صارف متعلق ہے: 
+* نشان زد خانہ کا مطلب یہ ہے کہ صارف کا تعلق اس گروہ سے ہے۔ 
+* غیر نشان زد خانہ کا مطلب یہ ہے کہ صارف کا تعلق اس گروہ سے نہیں ہے۔ 
+* یہ * علامت اس بات کا اشارہ ہے کہ آپ اس گروہ کو نہیں ہٹا سکتے جسے ایک مرتبہ آپ نے شامل کردیا ہو، یا اس کے بر عکس۔',
 'userrights-reason' => 'وجہ:',
 'userrights-no-interwiki' => 'دوسرے ویکیوں پر حقوقِ صارف میں ترمیم کی آپ کو اجازت نہیں ہے.',
 'userrights-changeable-col' => 'مجموعات جو آپ تبدیل کرسکتے ہیں',
@@ -912,16 +922,30 @@ HTML tags جانچئے.',
 # Groups
 'group' => 'گروہ:',
 'group-user' => 'صارفین',
+'group-autoconfirmed' => 'خود توثیق شدہ صارفین',
 'group-bot' => 'روبالات',
 'group-sysop' => 'منتظمین',
+'group-bureaucrat' => 'مامورین اداری',
+'group-suppress' => 'نگران',
 'group-all' => '(تمام)',
 
 'group-user-member' => 'صارف',
 'group-autoconfirmed-member' => 'خودتصدیق شدہ صارف',
 'group-bot-member' => 'خودکار صارف',
 'group-sysop-member' => 'منتظم',
+'group-bureaucrat-member' => '{{GENDER:$1|مامور اداری}}',
+'group-suppress-member' => '{{GENDER:$1|نگران}}',
 
+'grouppage-user' => '{{ns:project}}:صارفین',
+'grouppage-autoconfirmed' => '{{ns:project}}:خود توثیق شدہ صارف',
+'grouppage-bot' => '{{ns:project}}:روبہ جات',
 'grouppage-sysop' => '{{ns:project}}:منتظمین',
+
+# User rights log
+'rightslog' => 'نوشتہ صارفی اختیارات',
+'rightslogtext' => 'یہ صارفی اختیارات میں تبدیلیوں کا نوشتہ ہے۔',
+'rightslogentry' => 'گروہ رکنیت میں برائے $1 از $2 تا $3 تبدیلی ہوئی',
+'rightsnone' => '(کچھ نہیں)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-edit' => 'اس صفحہ میں ترمیم کریں',
@@ -935,6 +959,7 @@ HTML tags جانچئے.',
 'recentchanges-label-newpage' => 'اِس ترمیم نے نیا صفحہ تخلیق کردیا',
 'recentchanges-label-minor' => 'یہ ایک معمولی ترمیم ہے',
 'recentchanges-label-bot' => 'یہ ایک روبالہ سے سرانجام شدہ ترمیم ہے',
+'recentchanges-label-unpatrolled' => 'اس ترمیم کی اب تک مراجعت نہیں کی گئی',
 'rcnote' => "درج ذیل گزشتہ {{PLURAL:$2|دِن|'''$2''' ایام}} میں ہونے والی {{PLURAL:$1|'''ایک''' تبدیلی ہے|آخری '''$1''' تبدیلیاں ہیں}}، $5، $4.",
 'rcnotefrom' => "ذیل میں '''$2''' سے کی گئی تبدیلیاں ہیں ('''$1''' تبدیلیاں دکھائی جارہی ہیں)۔",
 'rclistfrom' => '$1 سےنئی تبدیلیاں دکھانا شروع کریں',
@@ -942,6 +967,7 @@ HTML tags جانچئے.',
 'rcshowhidebots' => 'خودکار صارف $1',
 'rcshowhideliu' => 'داخل شدہ صارف $1',
 'rcshowhideanons' => 'گمنام صارف $1',
+'rcshowhidepatr' => '$1 مراجعت شدہ ترامیم',
 'rcshowhidemine' => 'ذاتی ترامیم $1',
 'rclinks' => 'آخری $2 روز میں ہونے والی $1 تبدیلیوں کا مشاہدہ کریں<br />$3',
 'diff' => 'فرق',
@@ -959,6 +985,9 @@ HTML tags جانچئے.',
 'recentchangeslinked-feed' => 'متعلقہ تبدیلیاں',
 'recentchangeslinked-toolbox' => 'متعلقہ تبدیلیاں',
 'recentchangeslinked-title' => '"$1" سے متعلقہ تبدیلیاں',
+'recentchangeslinked-summary' => 'یہ ان تبدیلیوں کی فہرست ہے جو حال ہی میں کسی مخصوص صفحہ سے مربوط صفحات (یا مخصوص زمرہ کے اراکین) میں کی گئی ہیںـ 
+
+[[SpecialWatchlist | آپ کی زیر نظر فہرست]] میں یہ صفحات متجل (bold) نظر آئیں گےـ',
 'recentchangeslinked-page' => 'صفحۂ منصوبہ دیکھئے',
 
 # Upload
@@ -988,18 +1017,19 @@ HTML tags جانچئے.',
 * مندرجہ بالا رموز آپ  انگریزی میں بھی درج کرسکتے ہیں، یعنی
 <nowiki>[[Image:File name|Alt.text]]</nowiki>
 * ملف کے ساتھ براہ راست رابطہ کیلیے
-کی طرز میں ربط استعمال کیجیۓ۔ '''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></tt>'''
+کی طرز میں ربط استعمال کیجیۓ۔ '''<code><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></code>'''
 * ملف کا نام ؛ حرف ابجد کے لیۓ حساس ہے لہذا اگر زبراثقال کرتے وقت ملف کا نام -- name:JPG  ہے اور آپ رابطہ رکھتے وقت name:jpg یــا Name:jpg رکھتے ہیں تو ربط کام نہیں کرے گا",
 'uploadlog' => 'نوشتۂ زبراثقال (اپ لوڈ لاگ)',
 'uploadlogpage' => 'نوشتۂ زبراثقال (اپ لوڈ لاگ)',
 'uploadlogpagetext' => 'درج ذیل میں حالیہ زبراثقال (اپ لوڈ) کی گئی املاف (فائلوں) کی فہرست دی گئی ہے۔',
 'filedesc' => 'خلاصہ',
 'fileuploadsummary' => 'خلاصہ :',
+'filesource' => 'ذرائع',
 'uploadedfiles' => 'زبراثقال ملف (فائل اپ لوڈ)',
 'ignorewarning' => 'انتباہ نظرانداز کرتے ہوۓ بہرصورت ملف (فائل) کو محفوظ کرلیا جاۓ۔',
 'ignorewarnings' => 'ہر انتباہ نظرانداز کردیا جاۓ۔',
 'badfilename' => 'ملف (فائل) کا نام "$1" ، تبدیل کردیا گیا۔',
-'fileexists' => "اس نام سے ایک ملف (فائل) پہلے ہی موجود ہے، اگر آپ کو یقین نہ ہو کہ اسے حذف کردیا جانا چاہیۓ تو براہ کرم  '''<tt>[[:$1]]</tt>''' کو ایک نظر دیکھ لیجیۓ۔ [[$1|thumb]]",
+'fileexists' => 'اس نام سے ایک ملف (فائل) پہلے ہی موجود ہے، اگر آپ کو یقین نہ ہو کہ اسے حذف کردیا جانا چاہیۓ تو براہ کرم  <strong>[[:$1]]</strong> کو ایک نظر دیکھ لیجیۓ۔ [[$1|thumb]]',
 'uploadwarning' => 'انتباہ بہ سلسلۂ زبراثقال',
 'savefile' => 'فائل محفوظ کریں',
 'uploadedimage' => 'زبراثقال (اپ لوڈ) براۓ "[[$1]]"',
@@ -1045,6 +1075,7 @@ HTML tags جانچئے.',
 'statistics-header-users' => 'ارکان کے اعداد و شمار',
 
 'disambiguations' => 'ضد ابہام صفحات',
+'disambiguationspage' => 'سانچہ:ضدابہام',
 
 'doubleredirects' => 'دوہرے متبادل ربط',
 
@@ -1184,10 +1215,17 @@ Also see [[Special:WantedCategories|wanted categories]].',
 # Undelete
 'undelete' => 'ضائع کردہ صفحات دیکھیں',
 'undeletepage' => 'معائنہ خذف شدہ صفحات',
+'undeletepagetitle' => "'''ذیل میں [[:$1|$1]] کے حذف شدہ ترامیم درج ہیں۔'''",
 'viewdeletedpage' => 'حذف شدہ صفحات دیکھیے',
+'undelete-fieldset-title' => 'ترامیم بحال کریں',
+'undeletehistory' => 'اگر آپ اس صفحہ کو بحال کرتے ہیں، تو اس صفحہ کے تاریخچہ میں تمام ترامیم بھی بحال ہوجائیگی۔
+اگر حذف شدگی کے بعد کوئی نیا صفحہ اسی نام سے تخلیق کیا گیا ہو، تو تمام بحال شدہ ترامیم گذشتہ تاریخچہ میں ظاہر ہوگی۔',
+'undeleterevdel' => 'بحالیٔ صفحہ کا اقدام مکمل نہیں ہوگا اگر اس کا تنیجہ صفحہ کے اوپر کے حصہ کی ترمیم یا ملف کا اعادہ جزوی طور پر حذف کیا جارہا ہو۔
+ایسی صورت میں لازمی طور آپ حالیہ حذف شدہ اعادے کو ظاہر کریں۔',
 'undeletebtn' => 'بحال',
 'undeletelink' => 'دیکھو/بحال کرو',
 'undeleteviewlink' => 'دکھاؤ',
+'undeleteinvert' => 'انتخاب بالعکس',
 'undeletecomment' => 'وجہ:',
 
 # Namespace form on various pages
@@ -1223,6 +1261,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'nolinkshere' => "'''[[:$1]]''' سے کوئی روابط نہیں۔",
 'isredirect' => 'لوٹایا گیا صفحہ',
 'isimage' => 'ربطِ ملف',
+'whatlinkshere-links' => 'روابط',
 'whatlinkshere-hideredirs' => 'رجوع مکررات $1',
 'whatlinkshere-hidelinks' => 'روابط $1',
 'whatlinkshere-hideimages' => 'روابطِ تصویر $1',
@@ -1243,6 +1282,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'proxyblocksuccess' => 'کردیا.',
 
 # Move page
+'move-page' => 'منتقلی',
 'move-page-legend' => 'منتقلئ صفحہ',
 'movepagetext' => "نیچے دیا گیا تشکیلہ (فـارم) استعمال کرکے اس صفحہ کا عنوان دوبارہ منتخب کیا جاسکتا ہے، ساتھ ہی اس سے منسلک تاریخچہ بھی نۓ نام پر منتقل ہوجاۓ گا۔ اسکے بعد سے اس صفحے کا پرانا نام ، نۓ نام کی جانب -- لوٹایا گیا صفحہ -- کی حیثیت اختیار کرلے گا۔ لیکن یادآوری کرلیجیۓ دیگر صفحات پر ، پرانے صفحہ کی جانب دیۓ گۓ روابط (لنکس) تبدیل نہیں ہونگے؛ اس بات کو یقینی بنانا ضروری ہے کہ کوئی دوہرا یا شکستہ -- پلٹایا گیا ربط -- نہ رہ جاۓ۔
 
@@ -1252,6 +1292,18 @@ Also see [[Special:WantedCategories|wanted categories]].',
 
 ''' انـتـبـاہ !'''
  کسی اہم اور مقبول صفحہ کی منتقلی ، غیرمتوقع اور پریشان کن بھی ہی ہوسکتی ہے اس لیۓ ؛ منتقلی سے قبل براہ کرم یقین کرلیجۓ کہ آپ اسکے منطقی نتائج سے باخبر ہیں۔",
+'movepagetext-noredirectfixer' => "درج ذیل ورقہ کے ذریعہ صفحہ کو نیا نام دیا جاسکتا ہے، اس کے ساتھ صفحہ کا تاریخچہ بھی منتقل ہوجائیگا۔
+نئے عنوان کے جانب قدیم عنوان کو رجوع مکرر کردیا جائیگا۔
+
+یقین کرلیں کہ [[Special:DoubleRedirects|مکرر]] یا [[Special:BrokenRedirects|شکستہ رجوع مکررات]] موجود نہیں ہیں۔
+آپ اس بات کو یقینی بنانے کے ذمہ دار ہیں کہ روابط انہیں جگہوں سے مربوط ہیں جن کو فرض کیا گیا ہے۔
+
+خیال رہے کہ یہ صفحہ منتقل '''نہیں''' ہوگا اگر نئے عنوان کے ساتھ صفحہ پہلے سے موجود ہو، سوائے اس کے کہ صفحہ خالی ہو اور اس کا گذشتہ ترمیمی تاریخچہ موجود نہ ہو۔
+اس کا مطلب ہے آپ سے اگر غلطی ہوجائے تو آپ صفحہ کو اسی جگہ لوٹا سکتے ہیں، تاہم موجود صفحہ پر برتحریر (overwrite) نہیں کرسکتے۔
+
+'''انتباہ!'''
+کسی اہم اور مقبول صفحہ کی منتقلی، غیرمتوقع اور پریشان کن بھی ہی ہوسکتی ہے اس لیۓ؛ 
+منتقلی سے قبل براہ کرم یقین کرلیجۓ کہ آپ اسکے منطقی نتائج سے باخبر ہیں۔",
 'movearticle' => 'مـنـتـقـل کـریں',
 'newtitle' => 'نـیــا عـنــوان',
 'move-watch' => 'صفحہ زیر نظر',
@@ -1339,11 +1391,15 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'tooltip-diff' => 'دیکھئے کہ اپنے متن میں کیا تبدیلیاں کیں',
 'tooltip-compareselectedversions' => 'اِس صفحہ کی دو منتخب نظرثانیوں میں فرق دیکھئے',
 'tooltip-watch' => 'اِس صفحہ کو اپنی زیرِنظرفہرست میں شامل کریں',
+'tooltip-undo' => "''استرجع'' اس ترمیم کو پچھلی ترمیم کے جانب واپس کردیگا اور نمائشی انداز میں خانہ ترمیم کھول دے گا۔ آپ مختصراً سبب بیان کرنے کے بھی مجاز ہونگے۔",
 'tooltip-summary' => 'مختصر خلاصہ درج کریں',
 
 # Attribution
 'anonymous' => '{{SITENAME}} گمنام صارف',
 'others' => 'دیگر',
+
+# Patrolling
+'markaspatrolledtext' => 'اس صفحہ کو بطور مراجعت شدہ نشان زد کریں',
 
 # Image deletion
 'deletedrevision' => 'حذف شدہ پرانی ترمیم $1۔',
@@ -1351,6 +1407,10 @@ Also see [[Special:WantedCategories|wanted categories]].',
 # Browsing diffs
 'previousdiff' => '← پُرانی تدوین',
 'nextdiff' => 'صفحہ کا نام:',
+
+# Media information
+'file-nohires' => 'اس سے بڑی تصمیم دستیاب نہیں۔',
+'show-big-image' => 'مکمل تصمیم',
 
 # Special:NewFiles
 'newimages' => 'نئی فائلوں کی گیلری',
@@ -1392,10 +1452,41 @@ Also see [[Special:WantedCategories|wanted categories]].',
 'watchlisttools-edit' => 'زیرِنظرفہرست دیکھیں اور تدوین کریں',
 'watchlisttools-raw' => 'خام زیرِنظرفہرست تدوین کریں',
 
+# Iranian month names
+'iranian-calendar-m1' => 'فروردین',
+'iranian-calendar-m2' => 'اردیبهشت',
+'iranian-calendar-m3' => 'خرداد',
+'iranian-calendar-m4' => 'تیر',
+'iranian-calendar-m5' => 'مرداد',
+'iranian-calendar-m6' => 'شهریور',
+'iranian-calendar-m7' => 'مهر',
+'iranian-calendar-m8' => 'آبان',
+'iranian-calendar-m9' => 'آذر',
+'iranian-calendar-m10' => 'دی',
+'iranian-calendar-m11' => 'بهمن',
+'iranian-calendar-m12' => 'اسفند',
+
+# Hijri month names
+'hijri-calendar-m1' => 'محرم',
+'hijri-calendar-m2' => 'صفر',
+'hijri-calendar-m3' => 'ربیع الاول',
+'hijri-calendar-m4' => 'ربیع الثانی',
+'hijri-calendar-m5' => 'جمادی الاول',
+'hijri-calendar-m6' => 'جمادی الثانی',
+'hijri-calendar-m7' => 'رجب',
+'hijri-calendar-m8' => 'شعبان',
+'hijri-calendar-m9' => 'رمضان',
+'hijri-calendar-m10' => 'شوال',
+'hijri-calendar-m11' => 'ذوالقعدہ',
+'hijri-calendar-m12' => 'ذوالحجہ',
+
 # Special:Version
 'version' => 'ورژن',
 
 # Special:SpecialPages
 'specialpages' => 'خصوصی صفحات',
+
+# Search suggestions
+'searchsuggest-search' => 'تلاش',
 
 );

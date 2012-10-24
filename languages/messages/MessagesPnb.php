@@ -166,7 +166,6 @@ $messages = array(
 'qbbrowse' => 'لبو',
 'qbedit' => 'لکھو',
 'qbpageoptions' => 'اے صفہ',
-'qbpageinfo' => 'محول',
 'qbmyoptions' => 'میرے صفے',
 'qbspecialpages' => 'خاص صفے',
 'faq' => 'FAQ',
@@ -411,8 +410,8 @@ $messages = array(
 
 # Login and logout pages
 'logouttext' => "'''تسی لاگ آؤٹ ہوگۓ او.'''
-تسی   {{SITENAME}} نوں گمنامی چ ورت سکدے او یا تسی [[Special:UserLogin|لاگ ان دوبارہ]] ہوجاؤ اوسے ناں توں یا وکھرے ورتن والے توں۔ اے گل چیتے رکھنا جے کج صفیاں تے تسی لاگ ان دسے جاؤگے جدوں تک تسی اپنے براؤزر دے کاشے نوں صاف ناں کرلو۔
-You can continue to use {{SITENAME}} anonymously, or you can [[Special:UserLogin|log in again]] as the same or as a different user.
+تسی   {{SITENAME}} نوں گمنامی چ ورت سکدے او یا تسی <span class='plainlinks'>[$1 لاگ ان دوبارہ]</span> ہوجاؤ اوسے ناں توں یا وکھرے ورتن والے توں۔ اے گل چیتے رکھنا جے کج صفیاں تے تسی لاگ ان دسے جاؤگے جدوں تک تسی اپنے براؤزر دے کاشے نوں صاف ناں کرلو۔
+You can continue to use {{SITENAME}} anonymously, or you can <span class='plainlinks'>[$1 log in again]</span> as the same or as a different user.
 Note that some pages may continue to be displayed as if you were still logged in, until you clear your browser cache.",
 'welcomecreation' => '== جی آیاں نوں, $1! ==
 تواڈا کھاتا بن گیا اے۔
@@ -1002,8 +1001,6 @@ $1",
 'search-interwiki-caption' => 'رلدے ویونت',
 'search-interwiki-default' => '$1 نتارے:',
 'search-interwiki-more' => '(اور)',
-'search-mwsuggest-enabled' => 'صلاع دے نال',
-'search-mwsuggest-disabled' => 'کوئی صلاع نئیں',
 'search-relatedarticle' => 'جڑیاں',
 'mwsuggest-disable' => 'اجاکس مشورے نکارہ کرو',
 'searcheverything-enable' => 'ہر ناں چ لبو',
@@ -1376,9 +1373,9 @@ $1",
 
 اک فائل نوں اک صفے تے لیان لئی تھلے دتے گۓ فارم ورتو:
 
-*'''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></tt>''' فائل دا پورا ورین ورتن لئی
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|alt text]]</nowiki></tt>''' 200 پکسل چوڑا ورتنا
-*'''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></tt>''' سدا سدا فائل جوڑنا بنا فائل دسے",
+*'''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></code>''' فائل دا پورا ورین ورتن لئی
+* '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|alt text]]</nowiki></code>''' 200 پکسل چوڑا ورتنا
+*'''<code><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></code>''' سدا سدا فائل جوڑنا بنا فائل دسے",
 'upload-permitted' => 'جناں فائلاں دی اجازت اے: $1۔',
 'upload-preferred' => 'جیہڑیاں فائلاں دوجیاں نالوں ودیا: $1۔',
 'upload-prohibited' => 'روکیاں گیاں فائلاں: $1',
@@ -1426,22 +1423,22 @@ $1",
 اے ہوسکدا اے فائل ناں چ کسے ٹائپو توں ہووے۔
 مہربانی کرکے چیک کرو تسیں اصل چ ایس فائل نون چڑھاناں جاندے او؟',
 'windows-nonascii-filename' => 'اے وکی فائل ناں جناں چ کوئی خاص کیریکٹر ہووے سپورٹ نئیں کردا۔',
-'fileexists' => "اک فائل ایس ناں نال پہلے ای ہے مہربانی کرکے '''<tt>[[:$1]]</tt>'''  ویکھو
+'fileexists' => 'اک فائل ایس ناں نال پہلے ای ہے مہربانی کرکے <strong>[[:$1]]</strong>  ویکھو
 اگر تھانوں یقین نئیں اگ تسیں اینون بدلنا چاندے اوہ۔
-[[$1|thumb]]",
-'filepageexists' => "ایس فائل دا دسن والا صفہ پہلے ای '''<tt>[[:$1]]</tt>''' تے بنایا جاچکیا اے، پر این ناں دی کوئی فائل ایس ویلے نئیں ہیگی۔
+[[$1|thumb]]',
+'filepageexists' => 'ایس فائل دا دسن والا صفہ پہلے ای <strong>[[:$1]]</strong> تے بنایا جاچکیا اے، پر این ناں دی کوئی فائل ایس ویلے نئیں ہیگی۔
 سمری جیہڑی تسیں لکھو گے اوہ دسن والے صفے تے نئیں دسے گی۔
 اپنی سموری اوتھے دیکھن لئی توانوں اپنے ہتھیں اینون تبدیل کرنا پوے گا۔
-[[$1|thumb]]",
-'fileexists-extension' => "ایس ناں دی شائل ہیگی اے: [[$2|thumb]]
-* چڑھائی گئی فائل دا ناں: '''<tt>[[:$1]]</tt>'''
-* ہیگی فائل دا ناں: '''<tt>[[:$2]]</tt>'''
-مہربانی کرکے وکھرا ناں چنو.",
+[[$1|thumb]]',
+'fileexists-extension' => 'ایس ناں دی شائل ہیگی اے: [[$2|thumb]]
+* چڑھائی گئی فائل دا ناں: <strong>[[:$1]]</strong>
+* ہیگی فائل دا ناں: <strong>[[:$2]]</strong>
+مہربانی کرکے وکھرا ناں چنو.',
 'fileexists-thumbnail-yes' => "ایہ اک ناپ دی مورت دی فائل دسدی اے ''(تھمبنیل)''.
 [[$1|thumb]]
-مہربانی کرکے فائل ویکھو '''<tt>[[:$1]]</tt>'''.
+مہربانی کرکے فائل ویکھو <strong>[[:$1]]</strong>.
 اگر ویکھی فائل اوسے مورت دے اصل ناپ دی اے تے فیر ایہ ضروری نئیں جے اک فالتو تھمبنیل چڑھائی جاۓ۔.",
-'file-thumbnail-no' => "فائل ناں '''<tt>$1</tt>''' توں شروع ہوندا اے۔
+'file-thumbnail-no' => "فائل ناں <strong>$1</strong> توں شروع ہوندا اے۔
 اے اک نکے ناپ دی مورت لگدی اے ''(تھمبنیل)''۔
 اگر تواڈے کول ایہ مورت پورے وڈے ناپ چ اے تسیں اینوں چڑھا سکدے او، نئیں تے فیر ایس فائل دا ناں بدلو۔",
 'fileexists-forbidden' => 'ایس ناں دی فائل پہلے ای ہیگی اے تے اودے اتے نئیں لکھیا جاسکدا۔
@@ -1682,7 +1679,7 @@ $1",
 # MIME search
 'mimesearch' => 'MIME کھوج',
 'mimesearch-summary' => 'ایہ صفہ فاغلاں نوں اوناں دی مائم ٹائپ  لئی نتارا قابل کردا اے.
-انپٹ: contenttype/subtype, e.g. <tt>مورت/jpeg</tt>.',
+انپٹ: contenttype/subtype, e.g. <code>مورت/jpeg</code>.',
 'mimetype' => 'مائم ٹائپ',
 'download' => 'فائل کاپی کرو',
 
@@ -1877,7 +1874,7 @@ $1",
 'linksearch-ok' => 'کھوج',
 'linksearch-text' => 'وائلڈکارڈز جیویں کہ "*.wikipedia.org" ورتے جاسکدے نیں۔
 "*.org".<br /> دی لوڑ
-منے گۓ پروٹوکول: <tt>$1</tt>',
+منے گۓ پروٹوکول: <code>$1</code>',
 'linksearch-line' => '$1 نوں $2 نال جوڑیا',
 'linksearch-error' => 'وکیکارڈو میزبان دے ناں دے شروع چ دس سکدے نیں۔',
 
@@ -2616,7 +2613,6 @@ $1',
 
 # JavaScriptTest
 'javascripttest' => 'JavaScript ٹیسٹنگ',
-'javascripttest-disabled' => 'ایس وکی تے ایہ کم نئیں چلدا۔',
 'javascripttest-title' => 'ٹیسٹ  $1 چلدا اے۔',
 'javascripttest-pagetext-noframework' => 'ایہ صفہ JavaScript  ٹیسٹاں لئی بچایا گیا اے۔',
 'javascripttest-pagetext-unknownframework' => '"$1" انجانا ٹیسٹنگ فریمورک۔',
@@ -2724,15 +2720,10 @@ $1',
 # Info page
 'pageinfo-title' => '"$1" لئی جانکاری',
 'pageinfo-header-edits' => 'تبدیلیاں',
-'pageinfo-header-watchlist' => 'اکھ تھلے رکھی لسٹ',
-'pageinfo-header-views' => 'وکھالے',
-'pageinfo-subjectpage' => 'صفہ',
-'pageinfo-talkpage' => 'گل بات صفہ',
+'pageinfo-views' => 'را‎ ۓ گنتی',
 'pageinfo-watchers' => 'ویکھن والے',
 'pageinfo-edits' => 'تبدیلیاں گنتی',
 'pageinfo-authors' => 'وکھرے لکھاریاں دی گنتی',
-'pageinfo-views' => 'را‎ ۓ گنتی',
-'pageinfo-viewsperedit' => 'تبدیلی سعاب نال وکھالے',
 
 # Patrolling
 'markaspatrolleddiff' => 'ویکھے گۓ دا نشان لاؤ',
@@ -3566,6 +3557,10 @@ the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 
 'feedback-bugcheck' => 'بعوت ودیا ! صرف ایہ ویکھو جے کیا ایہ پہلے لبے ہوۓ [$1 known bugs] چو اک تے نئیں۔',
 'feedback-bugnew' => 'میں ویکھیا اے۔ نویں بگ دی رپورٹ کرو۔',
 
+# Search suggestions
+'searchsuggest-search' => 'کھوج',
+'searchsuggest-containing' => 'بند کر ریا اے۔۔۔',
+
 # API errors
 'api-error-badaccess-groups' => 'تھوانوں ایس وکی تے فائلاں چڑھان دی اجازت نئیں۔',
 'api-error-badtoken' => 'اندر دی غلطی: برا ٹوکن',
@@ -3580,6 +3575,7 @@ the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 
 'api-error-file-too-large' => 'جیڑی فائل تسی دسی اے اوہ بوت وڈی اے۔',
 'api-error-filename-tooshort' => 'اس فائل دا ناں بوت چھوٹا اے۔',
 'api-error-filetype-banned' => 'اس قسم دی فائل تے پابندی اے۔',
+'api-error-filetype-banned-type' => '$1 {{PLURAL:$4|اینج دی فائل دی اجازت نئیں|اینج دیاں فائلاں دی اجازت نئیں}} اجازت دتی {{PLURAL:$3|فائل ٹائپ اے|فائل ٹائپ نیں}} $2۔',
 'api-error-filetype-missing' => 'فائل چ ایکسٹنشن نئیں اے۔',
 'api-error-hookaborted' => 'جیڑی تبدیلی تسی کرنا چاہی اے، اونوں اک ایکسٹنشن کنڈے نیں بند کردتا اے۔',
 'api-error-http' => 'انٹرنیٹ ئلطی: سرور نال کوئی جوڑ نئیں۔',

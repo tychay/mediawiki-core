@@ -268,8 +268,8 @@ $1",
 'mainpage' => 'Hauptseiten',
 'mainpage-description' => 'Hauptseiten',
 'policy-url' => 'Project:Richtlinien',
-'portal' => 'Gmoahschoftsportoi',
-'portal-url' => 'Project:Gmoahschoftsportoi',
+'portal' => 'Autornportal',
+'portal-url' => 'Project:Autornportal',
 'privacy' => 'Daatenschutz',
 'privacypage' => 'Project:Daatenschutz',
 
@@ -413,7 +413,7 @@ $2",
 # Login and logout pages
 'logouttext' => "'''Iatzerd bist obgmödt.'''
 
-Du kåst {{SITENAME}} iatzerd anónym weiderdoah, óder di danaid unterm söwing óder am åndern Benutzernåm [[Special:UserLogin|åmöden]].
+Du kåst {{SITENAME}} iatzerd anónym weiderdoah, óder di danaid unterm söwing óder am åndern Benutzernåm <span class='plainlinks'>[$1 åmöden]</span>.
 Beochtt ower, daas oanige Seiten noh åzoang kennern, daas du ågmödt bist, sólång du néd deih Browsercache glaard host.",
 'welcomecreation' => '== Servas, $1! ==
 
@@ -652,7 +652,7 @@ Details stehen im [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 
 'lineno' => 'Zeiln $1:',
 'compareselectedversions' => 'Gwöde Versionen vagleichen',
 'editundo' => 'ryckgängig',
-'diff-multi' => '({{PLURAL:$1|A dazwischenliegerte Versión|$1 dazwischenliegende Versiónen}} vohram {{PLURAL:$2|Benutzer|$2 Benutzern}} {{PLURAL:$1|werd|wern}} néd åzoagt)',
+'diff-multi' => '({{PLURAL:$1|A dazwischenliegerte Versión|$1 dazwischenliegende Versiónen}} {{PLURAL:$2|vohram Benutzer|vo $2 Benutzern}} {{PLURAL:$1|werd|wern}} néd åzoagt)',
 
 # Search results
 'searchresults' => 'Suachergebniss',
@@ -688,8 +688,6 @@ Details stehen im [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} 
 'search-interwiki-caption' => 'Schwesterprojekte',
 'search-interwiki-default' => '$1 Eagebnisse:',
 'search-interwiki-more' => '(mea)',
-'search-mwsuggest-enabled' => 'mid Vurschleg',
-'search-mwsuggest-disabled' => 'koane Vurschleg',
 'searchrelated' => 'vawåndt',
 'searchall' => 'olle',
 'showingresultsheader' => "{{PLURAL:$5|Ergebnis '''$1''' voh '''$3'''|Ergebniss '''$1–$2''' voh '''$3'''}} fyr '''$4'''",
@@ -914,7 +912,7 @@ A [[Special:WhatLinksHere/$2|voiständige Listn]] gibt's aa.",
 'filedelete-intro' => "Du léschst dé Daatei '''„[[Media:$1|$1]]“'''.",
 
 # MIME search
-'mimesearch-summary' => 'Auf dieser Spezialseite können die Dateien nach dem MIME-Typ gefiltert werden. Die Eingabe muss immer den Medien- und Subtyp beinhalten: <tt>image/jpeg</tt> (siehe Bildbeschreibungsseite).',
+'mimesearch-summary' => 'Auf dieser Spezialseite können die Dateien nach dem MIME-Typ gefiltert werden. Die Eingabe muss immer den Medien- und Subtyp beinhalten: <code>image/jpeg</code> (siehe Bildbeschreibungsseite).',
 'download' => 'Owerlooden',
 
 # Unused templates
@@ -1039,7 +1037,7 @@ Links as Naumensraim wern do néd afglistt.",
 'linksearch-pat' => 'Suachmuster:',
 'linksearch-ns' => 'Nåmensraum:',
 'linksearch-ok' => 'Suacher',
-'linksearch-text' => "Dé Speziaalseiten do daméglicht d' Suach noch Seiten, in dénen bstimmte Weblinks enthoiden san. Dodabei kennern Blootzhoiter wia beispüsweis  <tt>*.beispü.at</tt> hergnummer wern. Es muass mindastens a Top-Level-Domain, z. Bsp. „*.org“. auhgeem wern. <br />Unterstytzde Protokói: <tt>$1</tt> (Dé bittscheh bei da Suachauhgob auhgeem.)",
+'linksearch-text' => "Dé Speziaalseiten do daméglicht d' Suach noch Seiten, in dénen bstimmte Weblinks enthoiden san. Dodabei kennern Blootzhoiter wia beispüsweis  <code>*.beispü.at</code> hergnummer wern. Es muass mindastens a Top-Level-Domain, z. Bsp. „*.org“. auhgeem wern. <br />Unterstytzde Protokói: <code>$1</code> (Dé bittscheh bei da Suachauhgob auhgeem.)",
 'linksearch-line' => '$1 is valinkt voh $2',
 
 # Special:ListUsers
@@ -1494,9 +1492,6 @@ Bsuach bittschee de Saiten [//www.mediawiki.org/wiki/Localisation MediaWiki-Loka
 'othercontribs' => 'Basiard auf da Orweid voh $1',
 'creditspage' => 'Seiteninformaziónen',
 
-# Info page
-'pageinfo-subjectpage' => 'Seiten',
-
 # Patrolling
 'markedaspatrollederrortext' => 'Du muasst a Seitenänderrung auswön',
 
@@ -1724,5 +1719,9 @@ Bittscheh d' noraale Vurschau bnutzen.",
 'htmlform-submit' => 'Speichern',
 'htmlform-reset' => 'Änderrungen ryckgängég mochen',
 'htmlform-selectorother-other' => 'Åndre',
+
+# Search suggestions
+'searchsuggest-search' => 'Suach',
+'searchsuggest-containing' => 'Voitextsuach noch ...',
 
 );

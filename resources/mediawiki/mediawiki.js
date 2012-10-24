@@ -1,5 +1,3 @@
-/*jslint browser: true, continue: true, white: true, forin: true*/
-/*global jQuery*/
 /*
  * Core MediaWiki JavaScript Library
  */
@@ -9,7 +7,9 @@ var mw = ( function ( $, undefined ) {
 
 	/* Private Members */
 
-	var hasOwn = Object.prototype.hasOwnProperty;
+	var hasOwn = Object.prototype.hasOwnProperty,
+		slice = Array.prototype.slice;
+
 	/* Object constructors */
 
 	/**
@@ -45,7 +45,7 @@ var mw = ( function ( $, undefined ) {
 			var results, i;
 
 			if ( $.isArray( selection ) ) {
-				selection = $.makeArray( selection );
+				selection = slice.call( selection );
 				results = {};
 				for ( i = 0; i < selection.length; i += 1 ) {
 					results[selection[i]] = this.get( selection[i], fallback );
@@ -130,7 +130,7 @@ var mw = ( function ( $, undefined ) {
 		this.format = 'plain';
 		this.map = map;
 		this.key = key;
-		this.parameters = parameters === undefined ? [] : $.makeArray( parameters );
+		this.parameters = parameters === undefined ? [] : slice.call( parameters );
 		return this;
 	}
 
@@ -141,7 +141,7 @@ var mw = ( function ( $, undefined ) {
 		 *
 		 * This function will not be called for nonexistent messages.
 		 */
-		parser: function() {
+		parser: function () {
 			var parameters = this.parameters;
 			return this.map.get( this.key ).replace( /\$(\d+)/g, function ( str, match ) {
 				var index = parseInt( match, 10 ) - 1;
@@ -168,7 +168,7 @@ var mw = ( function ( $, undefined ) {
 		 *
 		 * @return string Message as a string in the current form or <key> if key does not exist.
 		 */
-		toString: function() {
+		toString: function () {
 			var text;
 
 			if ( !this.exists() ) {
@@ -205,7 +205,7 @@ var mw = ( function ( $, undefined ) {
 		 *
 		 * @return {string} String form of parsed message
 		 */
-		parse: function() {
+		parse: function () {
 			this.format = 'parse';
 			return this.toString();
 		},
@@ -215,7 +215,7 @@ var mw = ( function ( $, undefined ) {
 		 *
 		 * @return {string} String form of plain message
 		 */
-		plain: function() {
+		plain: function () {
 			this.format = 'plain';
 			return this.toString();
 		},
@@ -225,7 +225,7 @@ var mw = ( function ( $, undefined ) {
 		 *
 		 * @return {string} String form of html escaped message
 		 */
-		escaped: function() {
+		escaped: function () {
 			this.format = 'escaped';
 			return this.toString();
 		},
@@ -235,7 +235,7 @@ var mw = ( function ( $, undefined ) {
 		 *
 		 * @return {string} String form of parsed message
 		 */
-		exists: function() {
+		exists: function () {
 			return this.map.exists( this.key );
 		}
 	};
@@ -247,7 +247,7 @@ var mw = ( function ( $, undefined ) {
 		 * Dummy function which in debug mode can be replaced with a function that
 		 * emulates console.log in console-less environments.
 		 */
-		log: function() { },
+		log: function () { },
 
 		/**
 		 * @var constructor Make the Map constructor publicly available.
@@ -298,7 +298,7 @@ var mw = ( function ( $, undefined ) {
 			var parameters;
 			// Support variadic arguments
 			if ( parameter_1 !== undefined ) {
-				parameters = $.makeArray( arguments );
+				parameters = slice.call( arguments );
 				parameters.shift();
 			} else {
 				parameters = [];
@@ -307,7 +307,7 @@ var mw = ( function ( $, undefined ) {
 		},
 
 		/**
-		 * Gets a message string, similar to wfMsg()
+		 * Gets a message string, similar to wfMessage()
 		 *
 		 * @param key string Key of message to get
 		 * @param parameters mixed First argument in a list of variadic arguments,
@@ -341,7 +341,7 @@ var mw = ( function ( $, undefined ) {
 			 *	{
 			 *		'moduleName': {
 			 *			'version': ############## (unix timestamp),
-			 *			'dependencies': ['required.foo', 'bar.also', ...], (or) function() {}
+			 *			'dependencies': ['required.foo', 'bar.also', ...], (or) function () {}
 			 *			'group': 'somegroup', (or) null,
 			 *			'source': 'local', 'someforeignwiki', (or) null
 			 *			'state': 'registered', 'loading', 'loaded', 'ready', 'error' or 'missing'
@@ -351,7 +351,7 @@ var mw = ( function ( $, undefined ) {
 			 *		}
 			 *	}
 			 */
-			var	registry = {},
+			var registry = {},
 				/**
 				 * Mapping of sources, keyed by source-id, values are objects.
 				 * Format:
@@ -368,16 +368,8 @@ var mw = ( function ( $, undefined ) {
 				queue = [],
 				// List of callback functions waiting for modules to be ready to be called
 				jobs = [],
-				// Flag indicating that document ready has occured
-				ready = false,
 				// Selector cache for the marker element. Use getMarker() to get/use the marker!
 				$marker = null;
-
-			/* Cache document ready status */
-
-			$(document).ready( function () {
-				ready = true;
-			} );
 
 			/* Private methods */
 
@@ -401,48 +393,82 @@ var mw = ( function ( $, undefined ) {
 			 * Create a new style tag and add it to the DOM.
 			 *
 			 * @param text String: CSS text
-			 * @param $nextnode mixed: [optional] An Element or jQuery object for an element where
+			 * @param nextnode mixed: [optional] An Element or jQuery object for an element where
 			 * the style tag should be inserted before. Otherwise appended to the <head>.
 			 * @return HTMLStyleElement
 			 */
-			function addStyleTag( text, $nextnode ) {
+			function addStyleTag( text, nextnode ) {
 				var s = document.createElement( 'style' );
-				s.type = 'text/css';
-				s.rel = 'stylesheet';
 				// Insert into document before setting cssText (bug 33305)
-				if ( $nextnode ) {
-					// If a raw element, create a jQuery object, otherwise use directly
-					if ( $nextnode.nodeType ) {
-						$nextnode = $( $nextnode );
+				if ( nextnode ) {
+					// Must be inserted with native insertBefore, not $.fn.before.
+					// When using jQuery to insert it, like $nextnode.before( s ),
+					// then IE6 will throw "Access is denied" when trying to append
+					// to .cssText later. Some kind of weird security measure.
+					// http://stackoverflow.com/q/12586482/319266
+					// Works: jsfiddle.net/zJzMy/1
+					// Fails: jsfiddle.net/uJTQz
+					// Works again: http://jsfiddle.net/Azr4w/ (diff: the next 3 lines)
+					if ( nextnode.jquery ) {
+						nextnode = nextnode.get( 0 );
 					}
-					$nextnode.before( s );
+					nextnode.parentNode.insertBefore( s, nextnode );
 				} else {
-					document.getElementsByTagName('head')[0].appendChild( s );
+					document.getElementsByTagName( 'head' )[0].appendChild( s );
 				}
 				if ( s.styleSheet ) {
-					s.styleSheet.cssText = text; // IE
+					// IE
+					s.styleSheet.cssText = text;
 				} else {
-					// Safari sometimes borks on null
+					// Other browsers.
+					// (Safari sometimes borks on non-string values,
+					// play safe by casting to a string, just in case.)
 					s.appendChild( document.createTextNode( String( text ) ) );
 				}
 				return s;
 			}
 
-			function addInlineCSS( css ) {
-				var $style, style, $newStyle;
+			/**
+			 * Checks if certain cssText is safe to append to
+			 * a stylesheet.
+			 *
+			 * Right now it only makes sure that cssText containing @import
+			 * rules will end up in a new stylesheet (as those only work when
+			 * placed at the start of a stylesheet; bug 35562).
+			 * This could later be extended to take care of other bugs, such as
+			 * the IE cssRules limit - not the same as the IE styleSheets limit).
+			 */
+			function canExpandStylesheetWith( $style, cssText ) {
+				return cssText.indexOf( '@import' ) === -1;
+			}
+
+			function addEmbeddedCSS( cssText ) {
+				var $style, styleEl;
 				$style = getMarker().prev();
-				// Disable <style> tag recycling/concatenation because of bug 34669
-				if ( false && $style.is( 'style' ) && $style.data( 'ResourceLoaderDynamicStyleTag' ) === true ) {
-					// There's already a dynamic <style> tag present, append to it. This recycling of
-					// <style> tags is for bug 31676 (can't have more than 32 <style> tags in IE)
-					style = $style.get( 0 );
-					if ( style.styleSheet ) {
-						style.styleSheet.cssText += css; // IE
+				// Re-use <style> tags if possible, this to try to stay
+				// under the IE stylesheet limit (bug 31676).
+				// Also verify that the the element before Marker actually is one
+				// that came from ResourceLoader, and not a style tag that some
+				// other script inserted before our marker, or, more importantly,
+				// it may not be a style tag at all (could be <meta> or <script>).
+				if (
+					$style.data( 'ResourceLoaderDynamicStyleTag' ) === true &&
+					canExpandStylesheetWith( $style, cssText )
+				) {
+					// There's already a dynamic <style> tag present and
+					// canExpandStylesheetWith() gave a green light to append more to it.
+					styleEl = $style.get( 0 );
+					if ( styleEl.styleSheet ) {
+						try {
+							styleEl.styleSheet.cssText += cssText; // IE
+						} catch ( e ) {
+							log( 'addEmbeddedCSS fail\ne.message: ' + e.message, e );
+						}
 					} else {
-						style.appendChild( document.createTextNode( String( css ) ) );
+						styleEl.appendChild( document.createTextNode( String( cssText ) ) );
 					}
 				} else {
-					$newStyle = $( addStyleTag( css, getMarker() ) )
+					$( addStyleTag( cssText, getMarker() ) )
 						.data( 'ResourceLoaderDynamicStyleTag', true );
 				}
 			}
@@ -637,10 +663,12 @@ var mw = ( function ( $, undefined ) {
 				var console = window.console;
 				if ( console && console.log ) {
 					console.log( msg );
-					// console.error triggers the proper handling of exception objects in
-					// consoles that support it. Fallback to passing as plain object to log().
-					if ( e ) {
-						(console.error || console.log).call( console, e );
+					// If we have an exception object, log it through .error() to trigger
+					// proper stacktraces in browsers that support it. There are no (known)
+					// browsers that don't support .error(), that do support .log() and
+					// have useful exception handling through .log().
+					if ( e && console.error ) {
+						console.error( e );
 					}
 				}
 			}
@@ -697,7 +725,7 @@ var mw = ( function ( $, undefined ) {
 								} catch ( ex ) {
 									// A user-defined operation raised an exception. Swallow to protect
 									// our state machine!
-									log( 'mw.loader::handlePending> Exception thrown by job.error()', ex );
+									log( 'Exception thrown by job.error()', ex );
 								}
 							}
 						}
@@ -723,8 +751,13 @@ var mw = ( function ( $, undefined ) {
 			 * @param callback Function: Optional callback which will be run when the script is done
 			 */
 			function addScript( src, callback, async ) {
-				var done = false, script, head;
-				if ( ready || async ) {
+				/*jshint evil:true */
+				var script, head,
+					done = false;
+
+				// Using isReady directly instead of storing it locally from
+				// a $.fn.ready callback (bug 31895).
+				if ( $.isReady || async ) {
 					// jQuery's getScript method is NOT better than doing this the old-fashioned way
 					// because jQuery will eval the script's code, and errors will not have sane
 					// line numbers.
@@ -733,7 +766,7 @@ var mw = ( function ( $, undefined ) {
 					script.setAttribute( 'type', 'text/javascript' );
 					if ( $.isFunction( callback ) ) {
 						// Attach handlers for all browsers (based on jQuery.ajax)
-						script.onload = script.onreadystatechange = function() {
+						script.onload = script.onreadystatechange = function () {
 
 							if (
 								!done
@@ -770,7 +803,7 @@ var mw = ( function ( $, undefined ) {
 						// scripts only start loading after  the document has been rendered,
 						// but so be it. Opera users don't deserve faster web pages if their
 						// browser makes it impossible
-						$( function() { document.body.appendChild( script ); } );
+						$( function () { document.body.appendChild( script ); } );
 					} else {
 						// IE-safe way of getting the <head> . document.documentElement.head doesn't
 						// work in scripts that run in the <head>
@@ -795,7 +828,7 @@ var mw = ( function ( $, undefined ) {
 			 * @param module string module name to execute
 			 */
 			function execute( module ) {
-				var style, media, i, script, markModuleReady, nestedAddScript;
+				var key, value, media, i, urls, script, markModuleReady, nestedAddScript;
 
 				if ( registry[module] === undefined ) {
 					throw new Error( 'Module has not been registered yet: ' + module );
@@ -807,32 +840,81 @@ var mw = ( function ( $, undefined ) {
 					throw new Error( 'Module has already been loaded: ' + module );
 				}
 
-				// Add styles
+				/**
+				 * Define loop-function here for efficiency
+				 * and to avoid re-using badly scoped variables.
+				 */
+				function addLink( media, url ) {
+					var el = document.createElement( 'link' );
+					getMarker().before( el ); // IE: Insert in dom before setting href
+					el.rel = 'stylesheet';
+					if ( media && media !== 'all' ) {
+						el.media = media;
+					}
+					el.href = url;
+				}
+
+				// Process styles (see also mw.loader.implement)
+				// * back-compat: { <media>: css }
+				// * back-compat: { <media>: [url, ..] }
+				// * { "css": [css, ..] }
+				// * { "url": { <media>: [url, ..] } }
 				if ( $.isPlainObject( registry[module].style ) ) {
-					// 'media' type ignored, see documentation of mw.loader.implement
-					for ( media in registry[module].style ) {
-						style = registry[module].style[media];
-						if ( $.isArray( style ) ) {
-							for ( i = 0; i < style.length; i += 1 ) {
-								getMarker().before( mw.html.element( 'link', {
-									'type': 'text/css',
-									'rel': 'stylesheet',
-									'href': style[i]
-								} ) );
+					for ( key in registry[module].style ) {
+						value = registry[module].style[key];
+						media = undefined;
+
+						if ( key !== 'url' && key !== 'css' ) {
+							// Backwards compatibility, key is a media-type
+							if ( typeof value === 'string' ) {
+								// back-compat: { <media>: css }
+								// Ignore 'media' because it isn't supported (nor was it used).
+								// Strings are pre-wrapped in "@media". The media-type was just ""
+								// (because it had to be set to something).
+								// This is one of the reasons why this format is no longer used.
+								addEmbeddedCSS( value );
+							} else {
+								// back-compat: { <media>: [url, ..] }
+								media = key;
+								key = 'bc-url';
 							}
-						} else if ( typeof style === 'string' ) {
-							addInlineCSS( style );
+						}
+
+						// Array of css strings in key 'css',
+						// or back-compat array of urls from media-type
+						if ( $.isArray( value ) ) {
+							for ( i = 0; i < value.length; i += 1 ) {
+								if ( key === 'bc-url' ) {
+									// back-compat: { <media>: [url, ..] }
+									addLink( media, value[i] );
+								} else if ( key === 'css' ) {
+									// { "css": [css, ..] }
+									addEmbeddedCSS( value[i] );
+								}
+							}
+						// Not an array, but a regular object
+						// Array of urls inside media-type key
+						} else if ( typeof value === 'object' ) {
+							// { "url": { <media>: [url, ..] } }
+							for ( media in value ) {
+								urls = value[media];
+								for ( i = 0; i < urls.length; i += 1 ) {
+									addLink( media, urls[i] );
+								}
+							}
 						}
 					}
 				}
+
 				// Add localizations to message system
 				if ( $.isPlainObject( registry[module].messages ) ) {
 					mw.messages.set( registry[module].messages );
 				}
+
 				// Execute script
 				try {
 					script = registry[module].script;
-					markModuleReady = function() {
+					markModuleReady = function () {
 						registry[module].state = 'ready';
 						handlePending( module );
 					};
@@ -845,7 +927,7 @@ var mw = ( function ( $, undefined ) {
 							return;
 						}
 
-						addScript( arr[i], function() {
+						addScript( arr[i], function () {
 							nestedAddScript( arr, callback, async, i + 1 );
 						}, async );
 					};
@@ -854,13 +936,14 @@ var mw = ( function ( $, undefined ) {
 						registry[module].state = 'loading';
 						nestedAddScript( script, markModuleReady, registry[module].async, 0 );
 					} else if ( $.isFunction( script ) ) {
+						registry[module].state = 'ready';
 						script( $ );
-						markModuleReady();
+						handlePending( module );
 					}
 				} catch ( e ) {
 					// This needs to NOT use mw.log because these errors are common in production mode
 					// and not in debug mode, such as when a symbol that should be global isn't exported
-					log('mw.loader::execute> Exception thrown by ' + module + ': ' + e.message, e);
+					log( 'Exception thrown by ' + module + ': ' + e.message, e );
 					registry[module].state = 'error';
 					handlePending( module );
 				}
@@ -882,15 +965,6 @@ var mw = ( function ( $, undefined ) {
 				// Allow calling by single module name
 				if ( typeof dependencies === 'string' ) {
 					dependencies = [dependencies];
-					if ( registry[dependencies[0]] !== undefined ) {
-						// Cache repetitively accessed deep level object member
-						regItemDeps = registry[dependencies[0]].dependencies;
-						// Cache to avoid looped access to length property
-						regItemDepLen = regItemDeps.length;
-						for ( n = 0; n < regItemDepLen; n += 1 ) {
-							dependencies[dependencies.length] = regItemDeps[n];
-						}
-					}
 				}
 
 				// Add ready and error callbacks if they were given
@@ -1191,17 +1265,20 @@ var mw = ( function ( $, undefined ) {
 				 *
 				 * All arguments are required.
 				 *
-				 * @param module String: Name of module
-				 * @param script Mixed: Function of module code or String of URL to be used as the src
-				 *  attribute when adding a script element to the body
-				 * @param style Object: Object of CSS strings keyed by media-type or Object of lists of URLs
-				 *  keyed by media-type. Media-type should be "all" or "", actual types are not supported
-				 *  right now due to the way execute() processes the stylesheets (they are concatenated
-				 *  into a single <style> tag). In the past these weren't concatenated together (which is
-				 *  these are keyed by media-type),  but bug 31676 forces us to. In practice this is not a
-				 *  problem because ResourceLoader only generates stylesheets for media-type all (e.g. print
-				 *  stylesheets are wrapped in @media print {} and concatenated with the others).
-				 * @param msgs Object: List of key/value pairs to be passed through mw.messages.set
+				 * @param {String} module Name of module
+				 * @param {Function|Array} script Function with module code or Array of URLs to
+				 *  be used as the src attribute of a new <script> tag.
+				 * @param {Object} style Should follow one of the following patterns:
+				 *  { "css": [css, ..] }
+				 *  { "url": { <media>: [url, ..] } }
+				 *  And for backwards compatibility (needs to be supported forever due to caching):
+				 *  { <media>: css }
+				 *  { <media>: [url, ..] }
+				 *
+				 *  The reason css strings are not concatenated anymore is bug 31676. We now check
+				 *  whether it's safe to extend the stylesheet (see canExpandStylesheetWith).
+				 *
+				 * @param {Object} msgs List of key/value pairs to be passed through mw.messages.set
 				 */
 				implement: function ( module, script, style, msgs ) {
 					// Validate input
@@ -1336,7 +1413,7 @@ var mw = ( function ( $, undefined ) {
 						}
 					}
 
-					if (filtered.length === 0) {
+					if ( filtered.length === 0 ) {
 						return;
 					}
 					// Resolve entire dependency map

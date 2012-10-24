@@ -226,8 +226,9 @@ class SpecialMergeHistory extends SpecialPage {
 			$out->addWikiMsg( 'mergehistory-empty' );
 		}
 
-		# Show relevant lines from the deletion log:
-		$out->addHTML( '<h2>' . htmlspecialchars( LogPage::logName( 'merge' ) ) . "</h2>\n" );
+		# Show relevant lines from the merge log:
+		$mergeLogPage = new LogPage( 'merge' );
+		$out->addHTML( '<h2>' . $mergeLogPage->getName()->escaped() . "</h2>\n" );
 		LogEventsList::showLogExtract( $out, 'merge', $this->mTargetObj );
 
 		# When we submit, go by page ID to avoid some nasty but unlikely collisions.
@@ -372,26 +373,32 @@ class SpecialMergeHistory extends SpecialPage {
 					$destTitle->getPrefixedText()
 				)->inContentLanguage()->text();
 			}
-			$mwRedir = MagicWord::get( 'redirect' );
-			$redirectText = $mwRedir->getSynonym( 0 ) . ' [[' . $destTitle->getPrefixedText() . "]]\n";
-			$redirectPage = WikiPage::factory( $targetTitle );
-			$redirectRevision = new Revision( array(
-				'page'    => $this->mTargetID,
-				'comment' => $comment,
-				'text'    => $redirectText ) );
-			$redirectRevision->insertOn( $dbw );
-			$redirectPage->updateRevisionOn( $dbw, $redirectRevision );
 
-			# Now, we record the link from the redirect to the new title.
-			# It should have no other outgoing links...
-			$dbw->delete( 'pagelinks', array( 'pl_from' => $this->mDestID ), __METHOD__ );
-			$dbw->insert( 'pagelinks',
-				array(
-					'pl_from'      => $this->mDestID,
-					'pl_namespace' => $destTitle->getNamespace(),
-					'pl_title'     => $destTitle->getDBkey() ),
-				__METHOD__
-			);
+			$contentHandler = ContentHandler::getForTitle( $targetTitle );
+			$redirectContent = $contentHandler->makeRedirectContent( $destTitle );
+
+			if ( $redirectContent ) {
+				$redirectPage = WikiPage::factory( $targetTitle );
+				$redirectRevision = new Revision( array(
+					'page'    => $this->mTargetID,
+					'comment' => $comment,
+					'content' => $redirectContent ) );
+				$redirectRevision->insertOn( $dbw );
+				$redirectPage->updateRevisionOn( $dbw, $redirectRevision );
+
+				# Now, we record the link from the redirect to the new title.
+				# It should have no other outgoing links...
+				$dbw->delete( 'pagelinks', array( 'pl_from' => $this->mDestID ), __METHOD__ );
+				$dbw->insert( 'pagelinks',
+					array(
+						'pl_from'      => $this->mDestID,
+						'pl_namespace' => $destTitle->getNamespace(),
+						'pl_title'     => $destTitle->getDBkey() ),
+					__METHOD__
+				);
+			} else {
+				// would be nice to show a warning if we couldn't create a redirect
+			}
 		} else {
 			$targetTitle->invalidateCache(); // update histories
 		}

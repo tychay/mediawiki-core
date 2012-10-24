@@ -18,11 +18,18 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  *
+ * @file
  * @ingroup Maintenance
  */
 
-require_once( dirname( __FILE__ ) . '/Maintenance.php' );
+require_once( __DIR__ . '/Maintenance.php' );
 
+/**
+ * Maintenance script that fills the rev_sha1 and ar_sha1 columns of revision
+ * and archive tables for revisions created before MW 1.19.
+ *
+ * @ingroup Maintenance
+ */
 class PopulateRevisionSha1 extends LoggedUpdateMaintenance {
 	public function __construct() {
 		parent::__construct();
@@ -136,14 +143,14 @@ class PopulateRevisionSha1 extends LoggedUpdateMaintenance {
 			$rev = ( $table === 'archive' )
 				? Revision::newFromArchiveRow( $row )
 				: new Revision( $row );
-			$text = $rev->getRawText();
+			$text = $rev->getSerializedData();
 		} catch ( MWException $e ) {
-			$this->output( "Text of revision with {$idCol}={$row->$idCol} unavailable!\n" );
+			$this->output( "Data of revision with {$idCol}={$row->$idCol} unavailable!\n" );
 			return false; // bug 22624?
 		}
 		if ( !is_string( $text ) ) {
 			# This should not happen, but sometimes does (bug 20757)
-			$this->output( "Text of revision with {$idCol}={$row->$idCol} unavailable!\n" );
+			$this->output( "Data of revision with {$idCol}={$row->$idCol} unavailable!\n" );
 			return false;
 		} else {
 			$db->update( $table,
@@ -167,10 +174,10 @@ class PopulateRevisionSha1 extends LoggedUpdateMaintenance {
 			$this->output( "Text of revision with timestamp {$row->ar_timestamp} unavailable!\n" );
 			return false; // bug 22624?
 		}
-		$text = $rev->getRawText();
+		$text = $rev->getSerializedData();
 		if ( !is_string( $text ) ) {
 			# This should not happen, but sometimes does (bug 20757)
-			$this->output( "Text of revision with timestamp {$row->ar_timestamp} unavailable!\n" );
+			$this->output( "Data of revision with timestamp {$row->ar_timestamp} unavailable!\n" );
 			return false;
 		} else {
 			# Archive table as no PK, but (NS,title,time) should be near unique.

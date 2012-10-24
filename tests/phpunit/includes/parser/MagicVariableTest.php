@@ -29,12 +29,14 @@ class MagicVariableTest extends MediaWikiTestCase {
 	);
 
 	/** setup a basic parser object */
-	function setUp() {
-		global $wgContLang;
-		$wgContLang = Language::factory( 'en' );
+	protected function setUp() {
+		parent::setUp();
+
+		$contLang = Language::factory( 'en' );
+		$this->setMwGlobals( 'wgContLang', $contLang );
 
 		$this->testParser = new Parser();
-		$this->testParser->Options( new ParserOptions() );
+		$this->testParser->Options( ParserOptions::newFromUserAndLang( new User, $contLang ) );
 
 		# initialize parser output
 		$this->testParser->clearState();
@@ -47,8 +49,10 @@ class MagicVariableTest extends MediaWikiTestCase {
 	}
 
 	/** destroy parser (TODO: is it really neded?)*/
-	function tearDown() {
+	protected function tearDown() {
 		unset( $this->testParser );
+
+		parent::tearDown();
 	}
 
 	############### TESTS #############################################

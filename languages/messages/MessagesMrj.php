@@ -1,5 +1,5 @@
 <?php
-/** Hill Mari (Кырык мары)
+/** Hill Mari (кырык мары)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -371,8 +371,6 @@ $messages = array(
 'search-interwiki-caption' => 'Техеньок проектвлӓ',
 'search-interwiki-default' => '$1 результ.:',
 'search-interwiki-more' => '(эче)',
-'search-mwsuggest-enabled' => 'согоньвлӓ доно',
-'search-mwsuggest-disabled' => 'согоньвлӓдеок',
 'nonefound' => "'''Шотыш нӓлдӓ.''' Нимат ак лиӓлт гӹнь, керӓл шамакым цилӓ вӓреок кӹчӓлӓш ак тӹнгӓл. Кӹчӓлжӹ манын,   ''all:'' префиксӹм кычылтда.  Тенге тӓ лӹмвлӓм мода (кӱ тишкӹ сирӓ, нӹнӹн Кӓнгӓшӹмӓшвлӓштӹмӓт, шаблонвлӓмӓт дӓ молымат), уке гӹнь, шукырак лӹмӹм анжыктыда",
 'powersearch' => 'Кымдан кӹчӓлмӓш',
 'powersearch-legend' => 'Кымдан кӹчӓлмӓш',

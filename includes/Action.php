@@ -272,7 +272,7 @@ abstract class Action {
 	 * must throw subclasses of ErrorPageError
 	 *
 	 * @param $user User: the user to check, or null to use the context user
-	 * @throws ErrorPageError
+	 * @throws UserBlockedError|ReadOnlyError|PermissionsError
 	 * @return bool True on success
 	 */
 	protected function checkCanExecute( User $user ) {
@@ -341,7 +341,7 @@ abstract class Action {
 	 * @return String
 	 */
 	protected function getDescription() {
-		return wfMsgHtml( strtolower( $this->getName() ) );
+		return $this->msg( strtolower( $this->getName() ) )->escaped();
 	}
 
 	/**
@@ -397,7 +397,7 @@ abstract class FormAction extends Action {
 		// Give hooks a chance to alter the form, adding extra fields or text etc
 		wfRunHooks( 'ActionModifyFormFields', array( $this->getName(), &$this->fields, $this->page ) );
 
-		$form = new HTMLForm( $this->fields, $this->getContext() );
+		$form = new HTMLForm( $this->fields, $this->getContext(), $this->getName() );
 		$form->setSubmitCallback( array( $this, 'onSubmit' ) );
 
 		// Retain query parameters (uselang etc)
@@ -546,6 +546,7 @@ abstract class FormlessAction extends Action {
 	 * forms, they probably won't have any data, but some (eg rollback) may do
 	 * @param $data Array values that would normally be in the GET request
 	 * @param $captureErrors Bool whether to catch exceptions and just return false
+	 * @throws ErrorPageError
 	 * @return Bool whether execution was successful
 	 */
 	public function execute( array $data = null, $captureErrors = true ) {

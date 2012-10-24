@@ -156,7 +156,7 @@ class Http {
 	 *
 	 * file:// should not be allowed here for security purpose (r67684)
 	 *
-	 * @fixme this is wildly inaccurate and fails to actually check most stuff
+	 * @todo FIXME this is wildly inaccurate and fails to actually check most stuff
 	 *
 	 * @param $uri Mixed: URI to check for validity
 	 * @return Boolean
@@ -212,7 +212,7 @@ class MWHttpRequest {
 	 * @param $url String: url to use. If protocol-relative, will be expanded to an http:// URL
 	 * @param $options Array: (optional) extra params to pass (see Http::request())
 	 */
-	function __construct( $url, $options = array() ) {
+	protected function __construct( $url, $options = array() ) {
 		global $wgHTTPTimeout;
 
 		$this->url = wfExpandUrl( $url, PROTO_HTTP );
@@ -265,6 +265,7 @@ class MWHttpRequest {
 	 * Generate a new request object
 	 * @param $url String: url to use
 	 * @param $options Array: (optional) extra params to pass (see Http::request())
+	 * @throws MWException
 	 * @return CurlHttpRequest|PhpHttpRequest
 	 * @see MWHttpRequest::__construct
 	 */
@@ -393,6 +394,7 @@ class MWHttpRequest {
 	 * will be aborted.
 	 *
 	 * @param $callback Callback
+	 * @throws MWException
 	 */
 	public function setCallback( $callback ) {
 		if ( !is_callable( $callback ) ) {

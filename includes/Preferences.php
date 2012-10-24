@@ -879,7 +879,7 @@ class Preferences {
 		global $wgUseRCPatrol, $wgEnableAPI, $wgRCMaxAge;
 
 		$watchlistdaysMax = ceil( $wgRCMaxAge / ( 3600 * 24 ) );
-		
+
 		## Watchlist #####################################
 		$defaultPreferences['watchlistdays'] = array(
 			'type' => 'float',
@@ -939,7 +939,7 @@ class Preferences {
 
 		if ( $wgEnableAPI ) {
 			# Some random gibberish as a proposed default
-			// @fixme This should use CryptRand but we may not want to read urandom on every view
+			// @todo Fixme: this should use CryptRand but we may not want to read urandom on every view
 			$hash = sha1( mt_rand() . microtime( true ) );
 
 			$defaultPreferences['watchlisttoken'] = array(
@@ -978,7 +978,7 @@ class Preferences {
 	 * @param $defaultPreferences Array
 	 */
 	static function searchPreferences( $user, IContextSource $context, &$defaultPreferences ) {
-		global $wgContLang, $wgEnableMWSuggest, $wgVectorUseSimpleSearch;
+		global $wgContLang, $wgVectorUseSimpleSearch;
 
 		## Search #####################################
 		$defaultPreferences['searchlimit'] = array(
@@ -988,21 +988,20 @@ class Preferences {
 			'min' => 0,
 		);
 
-		if ( $wgEnableMWSuggest ) {
-			$defaultPreferences['disablesuggest'] = array(
-				'type' => 'toggle',
-				'label-message' => 'mwsuggest-disable',
-				'section' => 'searchoptions/displaysearchoptions',
-			);
-		}
 
 		if ( $wgVectorUseSimpleSearch ) {
 			$defaultPreferences['vector-simplesearch'] = array(
 				'type' => 'toggle',
 				'label-message' => 'vector-simplesearch-preference',
-				'section' => 'searchoptions/displaysearchoptions'
+				'section' => 'searchoptions/displaysearchoptions',
 			);
 		}
+
+		$defaultPreferences['disablesuggest'] = array(
+			'type' => 'toggle',
+			'label-message' => 'mwsuggest-disable',
+			'section' => 'searchoptions/displaysearchoptions',
+		);
 
 		$defaultPreferences['searcheverything'] = array(
 			'type' => 'toggle',
@@ -1587,7 +1586,7 @@ class PreferencesForm extends HTMLForm {
 	}
 
 	/**
-	 * Get the <legend> for a given section key. Normally this is the
+	 * Get the "<legend>" for a given section key. Normally this is the
 	 * prefs-$key message but we'll allow extensions to override it.
 	 * @param $key string
 	 * @return string

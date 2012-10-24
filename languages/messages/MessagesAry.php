@@ -57,7 +57,6 @@ $messages = array(
 'tog-watchlisthideliu' => 'khbi tadilat lmostkhdimin lmsjlin mn qaaimat lmoraqaba',
 'tog-watchlisthideanons' => 'khbi taadilat lmostkhdimin lmjholin mn qaaimat lmoraqaba',
 'tog-watchlisthidepatrolled' => 'khbi tadilat lmorajaaa  mn qaaimat lmoraqaba',
-'tog-nolangconversion' => 'attl thwil lahajat',
 'tog-ccmeonemails' => 'sift liya noskha mn rasaail lbarid lelectroni likansiftha lmostkhdimin lkhrin',
 'tog-diffonly' => 'matbiynch mohtawa sfha tht lforoqat',
 'tog-showhiddencats' => 'biyn tsnifat lmkhfiya',
@@ -419,7 +418,7 @@ ossabab lli ĝtah hwwa "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext' => "''' nta daba kharj.'''
 
-ila bghiti tqdr tstamr tstaml {{SITENAME}}  kamjhol , olla ila bghiti [[Special:UserLogin|tdkhl aawtani]] bnafs smiya ola bsmiya khra.
+ila bghiti tqdr tstamr tstaml {{SITENAME}}  kamjhol , olla ila bghiti <span class='plainlinks'>[$1 tdkhl aawtani]</span> bnafs smiya ola bsmiya khra.
 
 tqdr tchof baad sfahi bhal ila msjl hta tfrgh lcache dyalk",
 'welcomecreation' => '== mrhba bik, $1! ==
@@ -958,8 +957,6 @@ $1",
 'search-interwiki-caption' => 'Maċariĝ ĥĥoṫ',
 'search-interwiki-default' => 'N-Naṫija dyal $1:',
 'search-interwiki-more' => '(z-zyada)',
-'search-mwsuggest-enabled' => 'be qṫiraḫaṫ',
-'search-mwsuggest-disabled' => 'bla qṫiraḫaṫ',
 'search-relatedarticle' => 'mortabita',
 'mwsuggest-disable' => 'attl liqtirahat dyal AJAX',
 'searcheverything-enable' => 'qlleb f-gaĝ n-nitaqaṫ',
@@ -2129,15 +2126,10 @@ Imken lek ṫċof l-ĝin dyalha.',
 # Info page
 'pageinfo-title' => 'mĝlomaṫ l-"$1"',
 'pageinfo-header-edits' => 'ṫĝdilaṫ',
-'pageinfo-header-watchlist' => "qa'imaṫ l-ṃoṛaqaba",
-'pageinfo-header-views' => 'moċahadaṫ',
-'pageinfo-subjectpage' => 'ṣfḫa',
-'pageinfo-talkpage' => 'ṣfḫṫ n-niqaċ',
+'pageinfo-views' => 'ĝadad l-moċahadaṫ',
 'pageinfo-watchers' => 'ĝadad l-moraqibin',
 'pageinfo-edits' => 'ĝadad ṫ-ṫĝdilaṫ',
 'pageinfo-authors' => "ĝadad l-mo'llifin l-mĥṫalfin",
-'pageinfo-views' => 'ĝadad l-moċahadaṫ',
-'pageinfo-viewsperedit' => 'l-moċahadaĝ l-koll ṫĝdil',
 
 # Patrolling
 'markaspatrolleddiff' => 'marki kamorajaaa',

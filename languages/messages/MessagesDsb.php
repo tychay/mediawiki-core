@@ -1,5 +1,5 @@
 <?php
-/** Lower Sorbian (Dolnoserbski)
+/** Lower Sorbian (dolnoserbski)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -162,29 +162,29 @@ $messages = array(
 # User preference toggles
 'tog-underline' => 'Wótkaze pódšmarnuś:',
 'tog-justify' => 'Tekst do bloka zrownaś',
-'tog-hideminor' => 'Małe změny schowaś',
+'tog-hideminor' => 'Małe změny w aktualnych změnach schowaś',
 'tog-hidepatrolled' => 'Doglědowane změny w aktualnych změnach schowaś',
 'tog-newpageshidepatrolled' => 'Doglědowane boki z lisćiny nowych bokow schowaś',
 'tog-extendwatchlist' => 'Wobglědowańku wócyniś, aby wšě změny pokazał, nic jano nejnowše',
-'tog-usenewrc' => 'Rozšyrjonu lisćinu aktualnych změnow (JavaScript trěbny) wužywaś',
+'tog-usenewrc' => 'Kupkowe změny pó boku w aktualnych změnach a wobglědowanjach (trjeba JavaScript)',
 'tog-numberheadings' => 'Nadpisma awtomatiski numerěrowaś',
-'tog-showtoolbar' => 'Wobźěłańsku lejstwu pokazaś (JavaScript)',
-'tog-editondblclick' => 'Boki z dwójnym kliknjenim wobźěłaś (JavaScript)',
+'tog-showtoolbar' => 'Wobźěłańsku lejstwu pokazaś (pótrjebujo JavaScript)',
+'tog-editondblclick' => 'Boki z dwójnym kliknjenim wobźěłaś (pótrjebujo JavaScript)',
 'tog-editsection' => 'Wobźěłanje wótstawkow pśez wótkaze [wobźěłaś] zmóžniś',
 'tog-editsectiononrightclick' => 'Wobźěłanje wótstawkow pśez kliknjenje z pšaweju tastu myški zmóžniś (JavaScript)',
 'tog-showtoc' => 'Wopśimjeśe pokazaś, jolic ma bok wěcej nježli 3 nadpisma',
 'tog-rememberpassword' => 'Z toś tym wobglědowakom pśizjawjony wóstaś (za maksimalnje $1 {{PLURAL:$1|źeń|dnja|dny|dnjow}})',
-'tog-watchcreations' => 'Boki, kótarež załožyjom, awtomatiski wobglědowaś',
-'tog-watchdefault' => 'Boki, kótarež změnijom, awtomatiski wobglědowaś',
-'tog-watchmoves' => 'Boki, kótarež som pśesunuł, awtomatiski wobglědowaś',
-'tog-watchdeletion' => 'Boki, kótarež som wulašował, awtomatiski wobglědowaś',
+'tog-watchcreations' => 'Boki, kótarež napórajom a dataje, kótarež nagrawam, wobglědowaś',
+'tog-watchdefault' => 'Boki a dataje , kótarež změnijom, wobglědowaś',
+'tog-watchmoves' => 'Boki a dataje, kótarež som pśesunuł, wobglědowaś',
+'tog-watchdeletion' => 'Boki a dataje, kótarež som wulašował, wobglědowaś',
 'tog-minordefault' => 'Wšykne móje změny ako małe markěrowaś',
 'tog-previewontop' => 'Zespominanje wušej wobźěłowańskego póla pokazaś',
 'tog-previewonfirst' => 'Pśi prědnem wobźěłanju pśecej zespominanje pokazaś',
 'tog-nocache' => 'Cache bokow wobglědowaka znjemóžniś',
-'tog-enotifwatchlistpages' => 'E-mail pósłaś, jolic se wobglědowany bok změnja',
+'tog-enotifwatchlistpages' => 'E-mail pósłaś, jolic se wobglědowany bok abo wobglědowana dataja  změnja',
 'tog-enotifusertalkpages' => 'E-mail pósłaś, změnijo-lic se mój diskusijny bok',
-'tog-enotifminoredits' => 'E-mail teke małych změnow dla pósłaś',
+'tog-enotifminoredits' => 'E-mail teke małych změnow bokow a datajow dla pósłaś',
 'tog-enotifrevealaddr' => 'Móju e-mailowu adresu w e-mailowych pówěźeńkach pokazaś',
 'tog-shownumberswatching' => 'Licbu wobglědujucych wužywarjow pokazaś',
 'tog-oldsig' => 'Eksistěrujuca signatura:',
@@ -200,7 +200,6 @@ $messages = array(
 'tog-watchlisthideliu' => 'Změny pśizjawjonych wužywarjow z wobglědowańki schowaś',
 'tog-watchlisthideanons' => 'Změny anonymnych wužywarjow z wobglědowańki schowaś',
 'tog-watchlisthidepatrolled' => 'Doglědowane změny we wobglědowańce schowaś',
-'tog-nolangconversion' => 'Konwertěrowanje rěcnych wariantow znjemóžniś',
 'tog-ccmeonemails' => 'Kopije e-mailow dostaś, kótarež drugim wužywarjam pósćelom',
 'tog-diffonly' => 'Pśi pśirownowanju wersijow jano rozdźěle pokazaś',
 'tog-showhiddencats' => 'Schowane kategorije pokazaś',
@@ -304,7 +303,6 @@ $messages = array(
 'qbbrowse' => 'Pśeběraś',
 'qbedit' => 'Pśeměniś',
 'qbpageoptions' => 'Toś ten bok',
-'qbpageinfo' => 'Kontekst',
 'qbmyoptions' => 'Móje boki',
 'qbspecialpages' => 'Specialne boki',
 'faq' => 'FAQ (pšašanja a wótegrona)',
@@ -317,7 +315,7 @@ $messages = array(
 'vector-action-protect' => 'Šćitaś',
 'vector-action-undelete' => 'Wótnowiś',
 'vector-action-unprotect' => 'Šćit změniś',
-'vector-simplesearch-preference' => 'Pólěpšone pytańske naraźenja zmóžniś (jano suknja Vector)',
+'vector-simplesearch-preference' => 'Zjadnorjonu pytańsku lejstwu zmóžniś (jano drastwa Vector)',
 'vector-view-create' => 'Napóraś',
 'vector-view-edit' => 'Wobźěłaś',
 'vector-view-history' => 'Wersije a awtory',
@@ -423,6 +421,10 @@ $1',
 'youhavenewmessages' => 'Maš $1 ($2).',
 'newmessageslink' => 'nowe powěsći',
 'newmessagesdifflink' => 'slědna změna',
+'youhavenewmessagesfromusers' => 'Maš $1 wót {{PLURAL:$3|drugego wužywarja|$3 wužywarjowu|$3 wužywarjow|$3 wužywarjow}} ($2).',
+'youhavenewmessagesmanyusers' => 'Maš $1 wót wjele wužywarjow ($2).',
+'newmessageslinkplural' => '{{PLURAL:$1|nowa powěsć|nowej powěsći|nowe powěsći|nowe powěsći}}',
+'newmessagesdifflinkplural' => '{{PLURAL:$1|slědna změna|slědnej změnje|slědne změny|slědne změny}}',
 'youhavenewmessagesmulti' => 'Maš nowe powěsći: $1',
 'editsection' => 'wobźěłaś',
 'editold' => 'wobźěłaś',
@@ -477,9 +479,9 @@ Płaśece specialne boki namakaju se pód [[Special:SpecialPages|lisćinu specia
 'dberrortext' => 'Syntaktiska zmólka pśi wótpšašowanju datoweje banki nastata.
 To by mógło zmólki w softwarje byś.
 Slědne wótpšašowanje jo było:
-<blockquote><tt>$1</tt></blockquote>
-z funkcije "<tt>$2</tt>".
-Datowa banka jo zmólku "<tt>$3: $4</tt>" wrośiła.',
+<blockquote><code>$1</code></blockquote>
+z funkcije "<code>$2</code>".
+Datowa banka jo zmólku "<samp>$3: $4</samp>" wrośiła.',
 'dberrortextcl' => 'Syntaktiska zmólka pśi wótpšašowanju datoweje banki nastata.
 Slědne wopytane wótpšašowanje jo było:
 "$1"
@@ -515,6 +517,8 @@ Pšosym daj to a pśisłušny URL [[Special:ListUsers/sysop|administratoroju]] k
 'badarticleerror' => 'Akcija njedajo se na toś tom boku wuwjasć.',
 'cannotdelete' => 'Njejo móžno było bok abo dataju "$1" wulašowaś. Snaź jo to južo něchten drugi cynił.',
 'cannotdelete-title' => 'Bok "$1" njedajo se lašowaś',
+'delete-hook-aborted' => 'Wulašowanje pśez kokulu pśetergnjone.
+Njejo žedno wujasnjenje.',
 'badtitle' => 'Njepłaśecy nadpis',
 'badtitletext' => 'Nadpis pominanego boka jo był njepłaśecy, prozny abo njekorektny nadpis, póchadajucy z mjazyrěcnego abo interwikijowego wótkaza. Snaź wopśimjejo jadno abo wěcej znamuškow, kótarež njejsu w nadpisach dowólone.',
 'perfcached' => 'Toś te daty póchadaju z pufrowaka a mógu snaź njeaktualne byś. Maksimalnje {{PLURAL:$1|jaden wuslědk stoj|$1 wuslědka stojtej|$1 wuslědki stoje|$1 wuslědkow stoj}} w pufrowaku k dispoziciji.',
@@ -530,8 +534,10 @@ Wótpšašanje: $2',
 'protectedpagetext' => 'Wobźěłanje toś togo boka jo se znjemóžniło.',
 'viewsourcetext' => 'Žrědłowy tekst togo boka móžoš se woglědaś a kopěrowaś:',
 'viewyourtext' => "Móžoš se žrědłowy tekst '''swójich změnow''' woglědaś a do toś togo bok kopěrowaś:",
-'protectedinterface' => 'Toś ten bok wopśimujo tekst za rěcny zwjerch softwary. Jogo wobźěłowanje jo se znjemóžniło, aby se znjewužywanjeju zadorało.',
-'editinginterface' => "'''Warnowanje:''' Wobźěłujoš bok, kótaryž se wužywa, aby se tekst za pówjerch software MediaWiki k dispoziciji stajił. Změny na toś tom boku buźo wuglědanje wužywarskego pówjercha za drugich wužywarjow wobwliwowaś. Wužywaj pšosym za pśełožki [//translatewiki.net/wiki/Main_Page?setlang=dsb translatewiki.net], projekt MediaWiki za lokalizacije.",
+'protectedinterface' => 'Toś ten bok wopśimujo tekst za rěcny zwjerch softwary na toś tom wikiju a šćita se, aby se znjewužywanjeju zadorało.
+Aby pśełožki za wšykne wikije pśidał abo změnił, wužyj pšosym [//translatewiki.net/ translatewiki.net], lokalizěrowański projekt MediaWiki.',
+'editinginterface' => "'''Warnowanje:''' Wobźěłujoš bok, kótaryž se wužywa, aby se tekst za pówjerch software MediaWiki k dispoziciji stajił. Změny na toś tom boku buźo wuglědanje wužywarskego pówjercha za drugich wužywarjow na toś tom wikiju wobwliwowaś.
+Aby pśełožki za wšykne wikije pśidał abo změnił, wužywaj pšosym [//translatewiki.net/ translatewiki.net], projekt MediaWiki za lokalizacije.",
 'sqlhidden' => '(Wótpšašanje SQL schowane)',
 'cascadeprotected' => 'Za toś ten bok jo se wobźěłowanje znjemóžniło, dokulaž jo zawězany do {{PLURAL:$1|slědujucego boka|slědujuceju bokowu|slědujucych bokow}}, {{PLURAL:$1|kótaryž jo|kótarejž stej|kótarež su}} pśez kaskadowu opciju {{PLURAL:$1|šćitany|šćitanej|šćitane}}: $2',
 'namespaceprotected' => "Njejsy wopšawnjony, boki w rumje: '''$1''' wobźěłaś.",
@@ -544,6 +550,8 @@ Wótpšašanje: $2',
 Administrator, kenž jo jen zastajił, jo toś tu pśicynu pódał: "$3".',
 'invalidtitle-knownnamespace' => 'Njepłaśiwy titel z mjenjowym rumom "$2" a tekstom "$3"',
 'invalidtitle-unknownnamespace' => 'Njepłaśiwy titel z njeznatym mjenjowym rumom $1 a tekstom "$2"',
+'exception-nologin' => 'Njejsy se pśizjawił',
+'exception-nologin-text' => 'Toś ten bok abo toś ta akcija pomina, až sy na toś tom wikiju pśizjawjony.',
 
 # Virus scanner
 'virus-badscanner' => "Špatna konfiguracija: njeznaty wirusowy scanner: ''$1''",
@@ -553,7 +561,7 @@ Administrator, kenž jo jen zastajił, jo toś tu pśicynu pódał: "$3".',
 # Login and logout pages
 'logouttext' => "'''Sy se něnto wótzjawił.'''
 
-Móžoš {{SITENAME}} anomymnje dalej wužywaś abo móžoš [[Special:UserLogin|se znowego pśizjawiś]] ako samski abo hynakšy wužywaŕ.
+Móžoš {{SITENAME}} anomymnje dalej wužywaś abo móžoš <span class='plainlinks'>[$1 se znowego pśizjawiś]</span> ako samski abo hynakšy wužywaŕ.
 Źiwaj na to, až někotare boki se dalej tak zwobraznjuju ako by hyšći pśizjawjeny był, až njewuproznijoš cache swójego wobglědowaka.",
 'welcomecreation' => '== Witaj, $1! ==
 
@@ -564,6 +572,7 @@ Twójo konto jo se załožyło. Njezabydni změniś swóje [[Special:Preferences
 'remembermypassword' => 'Na toś tom licadle pśizjawjony wóstaś (za maksimalnje $1 {{PLURAL:$1|źeń|dnja|dny|dnjow}})',
 'securelogin-stick-https' => 'Pó pśizjawjenju z HTTPS zwězany wóstaś',
 'yourdomainname' => 'Twója domejna',
+'password-change-forbidden' => 'Njamóžoš gronidła w toś tom wikiju změniś.',
 'externaldberror' => 'Abo jo wustupiła eksterna zmólka awtentifikacije datoweje banki, abo njesmějoš swójo eksterne wužywarske konto aktualizěrowaś.',
 'login' => 'Pśizjawiś se',
 'nav-login-createaccount' => 'Pśizjawiś se/Konto załožyś',
@@ -789,7 +798,11 @@ Aby bok napórał, zapiš do kašćika dołojce (glědaj [[{{MediaWiki:Helppage}
 'noarticletext' => 'Dotychměst toś ten bok hyšći njewopśimujo žeden tekst. Móžoš w drugich bokach [[Special:Search/{{PAGENAME}}|titel togo boka pytaś]], <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} wótpowědne protokole pytaś] abo [{{fullurl:{{FULLPAGENAME}}|action=edit}} toś ten bok wobźěłaś]</span>.',
 'noarticletext-nopermission' => 'Tuchylu njejo žeden tekst na toś tom boku.
 Móžoš [[Special:Search/{{PAGENAME}}|toś ten bokowy titel]] na drugich bokach pytaś
-abo <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} wótpowědne protokole pytaś]</span>.',
+abo <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} wótpowědne protokole pytaś]</span>, ale njamaš pšawo, toś ten bok napóraś.',
+'missing-revision' => 'Wersija #$1 boka z mjenim "{{PAGENAME}}" njeeksistěrujo.
+
+Pśicyna jo zwětšego zestarjony wótkaz w historiji k bokoju, kótaryž jo se wulašował.
+Drobnostki móžoš w  [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} protokolu wulašowanjow] namakaś.',
 'userpage-userdoesnotexist' => 'Wužywarske konto "<nowiki>$1</nowiki>" njejo zregistrěrowane. Pšosym pśeglědaj, lěc coš toś ten bok wopšawdu napóraś/wobźěłaś.',
 'userpage-userdoesnotexist-view' => 'Wužywarske konto "$1" njejo zregistrowane.',
 'blocked-notice-logextract' => 'Toś ten wužywaŕ jo tuchylu blokěrowany.
@@ -798,7 +811,6 @@ Nejnowšy zapisk blokěrowańskego protokola pódawa se dołojce ako referenca:'
 * '''Firefox/Safari:''' Źarź ''Umsch'' tłocony, mjaztym až kliknjoš na ''Znowego'' abo tłoc pak ''Strg-F5'' pak ''Strg-R'' (''⌘-R'' na Makintošu)
 * '''Google Chrome:''' Tłoc na ''Strg-Umsch-R'' ('⌘-Umsch-R'' na Makintošu)
 * '''Internet Explorer:''' Źarź ''Strg'' tłocony, mjaztym až kliknjoš na ''Aktualisieren'' abo tłoc ''Strg-F5''
-* '''Konqueror:''' Klikni na ''Aktualisieren'' abo tłoc ''F5''
 * '''Opera:''' Wuprozni cache w ''Extras → Einstellungen''",
 'usercssyoucanpreview' => "'''Pokazka:''' Wužywaj tłocašk '{{int:showpreview}}', aby swój nowy css testował, nježli až jen składujoš.",
 'userjsyoucanpreview' => "'''Pokazka:''' Wužywaj tłocašk \"{{int:showpreview}}\", aby swój nowy JavaScript testował, nježli až jen składujoš.",
@@ -876,7 +888,7 @@ Pšosym pśespytuj kradosćiwje, lěc jo gódnje z wobźěłowanim boka pokšaco
 Protokol wulašowanjow a pśesunjenjow za toś ten bok so how za informaciju pódawa:",
 'moveddeleted-notice' => 'Toś ten bok jo se wulašował. Protokol wulašowanjow a pśesunjenjow za toś ten bok pódawa se dołojce ako referenca.',
 'log-fulllog' => 'Dopołny protokol se woglědaś',
-'edit-hook-aborted' => 'Wobźěłanje pśez kokulu pśetergnjony.
+'edit-hook-aborted' => 'Wobźěłanje pśez kokulu pśetergnjone.
 Njejo žedno wujasnjenje.',
 'edit-gone-missing' => 'Njejo móžno było bok aktualizěrowaś.
 Zda sem až jo wulašowany.',
@@ -885,6 +897,15 @@ Zda sem až jo wulašowany.',
 'edit-already-exists' => 'Njejo móžno było nowy bok napóraś.
 Eksistěrujo južo.',
 'defaultmessagetext' => 'Standardny tekst powěźeńki',
+'content-failed-to-parse' => 'Parsowanje wopśimjeśa $2 za model $1 jo se njeraźiło: $3',
+'invalid-content-data' => 'Njepłaśiwe wopśimjeśowe daty',
+'content-not-allowed-here' => 'Wopśimjeśe "$1" njejo na boku [[$2]] dowólone',
+
+# Content models
+'content-model-wikitext' => 'wikitekst',
+'content-model-text' => 'lutny tekst',
+'content-model-javascript' => 'JavaScript',
+'content-model-css' => 'CSS',
 
 # Parser/template warnings
 'expensive-parserfunction-warning' => 'Warnowanje: Toś ten bok wopśimujo pśewjele wołanjow parserowych funkcijow wupominajucych wusoke wugbaśe.
@@ -904,6 +925,7 @@ Njesmějo daś wěcej nježli $2 {{PLURAL:$2|wołanja|wołanjowu|wołanjow|woła
 'expansion-depth-exceeded-warning' => 'Bok jo ekspansisku dłymokosć pśekšocył',
 'parser-unstrip-loop-warning' => 'Njeskóńcna kokula namakana',
 'parser-unstrip-recursion-limit' => 'Rekursiska granica pśekšocona ($1)',
+'converter-manual-rule-error' => 'Zmólka w manuelnem pšawidle rěcnego konwertěrowanja namakana',
 
 # "Undo" feature
 'undo-success' => 'Wobźěłanje móžo se wótpóraś. Pšosym pśeglěduj dołojcne pśirownowanje aby se wěsty był, až to wót wěrnosći coš, a pón składuj změny, aby se wobźěłanje doskóńcnje wótpórało.',
@@ -1039,7 +1061,9 @@ Pšosym pśeglědaj protokole.',
 'revdelete-only-restricted' => 'Zmólka pśi chowanju zapiska wót $2, $1; njamóžoš zapiski pśed wócami administratorow  pódtłocyś, mimo až teke wuběraš jadnu z drugich wiźobnosćowych opcijow.',
 'revdelete-reason-dropdown' => '*Zwucone pśicyny za wulašowanje
 ** Pśestupjenje awtorskego pšawa
-** Njegóźece se wósobinske informacije',
+** Njegóźece se komentary abo wósobinske informacije
+** Njegóźece se wužywarske mě
+** Potencielnje kśiwźece informacije',
 'revdelete-otherreason' => 'Druga/pśidatna pśicyna:',
 'revdelete-reasonotherlist' => 'Druga pśicyna',
 'revdelete-edit-reasonlist' => 'Pśicyny za lašowanje wobźěłaś',
@@ -1089,6 +1113,10 @@ Zaruc, až historija wersijow nastawka jo njepśetergnjona.',
 'editundo' => 'wótwrośiś',
 'diff-multi' => '({{PLURAL:$1|Jadna mjazywersija|$1 mjazywersiji|$1 mjazywersije|$1 mjazywersijow}} wót {{PLURAL:$2|jadnogo wužywarja|$2 wužywarjowu|$2 wužywarjow|$2 wužywarjow}} {{PLURAL:$1|njepokazana|njepokazanej|njepokazane|njepokazane}})',
 'diff-multi-manyusers' => '({{PLURAL:$1|Jadna mjazywersija|$1 mjazywersiji|$1 mjazywersije|$1 mjazywersijow}} wót wěcej ako {{PLURAL:$2|jadnogo wužywarja|$2 wužywarjowu|$2 wužywarjow|$2 wužywarjow}} {{PLURAL:$1|njepokazana|njepokazanej|njepokazane|njepokazane}})',
+'difference-missing-revision' => '{{PLURAL:$2|Jadna wersija|$2 wersiji|$2 wersije|$2 wersijow}} toś togo rozdźěla ($1) {{PLURAL:$2|njejo se namakała|njejstej se namakałej|njejsu namakali|njejo se namakało}}.
+
+Pśicyna jo zwětšego zestarjony diferencny wótkaz k bokoju, kótaryž jo se wulašował.
+Drobnostki móžoš w [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} protokolu wulašowanjow] namakaś.',
 
 # Search results
 'searchresults' => 'Wuslědki pytanja',
@@ -1131,8 +1159,6 @@ Zaruc, až historija wersijow nastawka jo njepśetergnjona.',
 'search-interwiki-caption' => 'Sotšine projekty',
 'search-interwiki-default' => '$1 wuslědki:',
 'search-interwiki-more' => '(wěcej)',
-'search-mwsuggest-enabled' => 'z naraźenjami',
-'search-mwsuggest-disabled' => 'žedne naraźenja',
 'search-relatedarticle' => 'swójźbne',
 'mwsuggest-disable' => 'Naraźenja pśez AJAX znjemóžniś',
 'searcheverything-enable' => 'We wšych mjenjowych rumach pytaś',
@@ -1228,7 +1254,7 @@ How jo pśipadnje napórana gódnota, kótaruž móžoš wužywaś: $1',
 'timezoneregion-indian' => 'Indiski ocean',
 'timezoneregion-pacific' => 'Pacifiski ocean',
 'allowemail' => 'Dostawanje e-mailow drugich wužywarjow zmóžniś.',
-'prefs-searchoptions' => 'Pytańske opcije',
+'prefs-searchoptions' => 'Pytaś',
 'prefs-namespaces' => 'Mjenjowe rumy',
 'defaultns' => 'Howac w toś tych mjenjowych rumach pytaś:',
 'default' => 'Standard',
@@ -1353,6 +1379,7 @@ Móžoš toś ten bok wužywaś, aby slědk stajił swóje nastajenja na standar
 'right-writeapi' => 'writeAPI wužywaś',
 'right-delete' => 'Boki wulašowaś',
 'right-bigdelete' => 'lašowaś boki, kótarež maju wjelike stawizny',
+'right-deletelogentry' => 'Jadnotliwe protokolowe zapiski wulašowaś a wótnowiś',
 'right-deleterevision' => 'Specifiske boki lašowaś a wótnowiś',
 'right-deletedhistory' => 'Wulašowane wersiji w stawiznach se bśez pśisłušnego teksta wobglědaś',
 'right-deletedtext' => 'Wulašowany tekst a změny mjazy wulašowanymi wersijami se woglědaś',
@@ -1498,9 +1525,9 @@ Protokola wulašowanjow a pśesunjenjow za toś ten bok stej how k twójej dispo
 Źi na [[Special:FileList|lisćinu nagratych datajow]], aby mógł južo nagrate dataje se wobglědaś abo pytaś, nagraśa protokolěruju se w [[Special:Log/upload|protokolu nagraśow]], wulašowanja w [[Special:Log/delete|protokolu wulašowanjow]].
 
 Aby dataju do boka zapśimjeł, wužyj wótkaz slědujuceje formy
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Dataja.jpg]]</nowiki></tt>''', aby wužywał połnu wersiju dataje
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Dataja.png|200px|thumb|left|alternatiwny tekst]]</nowiki></tt>''', aby wužywał wobraz we wjelikosću 200 pikselow w kašćiku na lěwej kšomje z alternatiwnym tekstom ako wopisanje
-* '''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:Dataja.ogg]]</nowiki></tt>''', aby direktnje na dataju wótkazował, bźez togo až dataja se zwobraznijo.",
+* '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Dataja.jpg]]</nowiki></code>''', aby wužywał połnu wersiju dataje
+* '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Dataja.png|200px|thumb|left|alternatiwny tekst]]</nowiki></code>''', aby wužywał wobraz we wjelikosću 200 pikselow w kašćiku na lěwej kšomje z alternatiwnym tekstom ako wopisanje
+* '''<code><nowiki>[[</nowiki>{{ns:media}}<nowiki>:Dataja.ogg]]</nowiki></code>''', aby direktnje na dataju wótkazował, bźez togo až dataja se zwobraznijo.",
 'upload-permitted' => 'Dowolone datajowe typy: $1.',
 'upload-preferred' => 'Preferěrowane datajowe typy: $1.',
 'upload-prohibited' => 'Njedowolone datajowe typy: $1.',
@@ -1544,20 +1571,20 @@ Glědaj [[Special:NewFiles|galeriju nowych datajow]] za wizuelny pśeglěd.',
 'largefileserver' => 'Dataja jo wětša ako serwer dopušćijo.',
 'emptyfile' => 'Dataja, kótaruž sy nagrał, jo prozna. Pśicyna móžo byś zmólka w mjenju dataje. Kontrolěruj pšosym, lěc coš dataju napšawdu nagraś.',
 'windows-nonascii-filename' => 'Toś ten wiki njepódpěra datajowe mjenja z wósebnymi znamuškami.',
-'fileexists' => "Dataja z toś tym mjenim južo eksistěrujo.
-Tłocyš-lic na \"Dataju składowaś\", ga se dataja pśepišo.
-Pšosym kontrolěruj '''<tt>[[:\$1]]</tt>''', gaž njejsy se kradu wěsty.
-[[\$1|thumb]]",
-'filepageexists' => "Wopisański bok za toś tu dataju bu južo na '''<tt>[[:$1]]</tt>''' napórany, ale dataja z toś tym mjenim tuchylu njeeksistěrujo. Zespominanje, kótarež zapódawaš, njezjawijo se na wopisańskem boku. Aby se twóje zespominanje tam zjawiło, dejš jen manuelnje wobźěłaś.
-[[$1|thumb]]",
-'fileexists-extension' => "Eksistěrujo južo dataja z pódobnym mjenim: [[$2|thumb]]
-* Mě dataje, kótaraž dej se nagraś: '''<tt>[[:$1]]</tt>'''
-* Mě eksistěrujuceje dataje: '''<tt>[[:$2]]</tt>'''
-Pšosym wubjeŕ druge mě.",
+'fileexists' => 'Dataja z toś tym mjenim južo eksistěrujo.
+Tłocyš-lic na "Dataju składowaś", ga se dataja pśepišo.
+Pšosym kontrolěruj <strong>[[:$1]]</strong>, gaž njejsy se kradu wěsty.
+[[$1|thumb]]',
+'filepageexists' => 'Wopisański bok za toś tu dataju bu južo na <strong>[[:$1]]</strong> napórany, ale dataja z toś tym mjenim tuchylu njeeksistěrujo. Zespominanje, kótarež zapódawaš, njezjawijo se na wopisańskem boku. Aby se twóje zespominanje tam zjawiło, dejš jen manuelnje wobźěłaś.
+[[$1|thumb]]',
+'fileexists-extension' => 'Eksistěrujo južo dataja z pódobnym mjenim: [[$2|thumb]]
+* Mě dataje, kótaraž dej se nagraś: <strong>[[:$1]]</strong>
+* Mě eksistěrujuceje dataje: <strong>[[:$2]]</strong>
+Pšosym wubjeŕ druge mě.',
 'fileexists-thumbnail-yes' => "Zazdaśim ma dataja reducěrowanu wjelikosć ''(thumbnail)''. [[$1|thumb]]
-Kontrolěruj pšosym dataju '''<tt>[[:$1]]</tt>'''.
+Kontrolěruj pšosym dataju <strong>[[:$1]]</strong>.
 Jolic skontrolěrowana dataja jo ten samy wobraz w originalnej wjelikosći, pón njejo notne, separatny pśeglědowy wobraz nagraś.",
-'file-thumbnail-no' => "Mě dataje zachopijo z '''<tt>$1</tt>'''. Zda se, až to jo wobraz z reducěrowaneju wjelikosću. ''(thumbnail)''.
+'file-thumbnail-no' => "Mě dataje zachopijo z <strong>$1</strong>. Zda se, až to jo wobraz z reducěrowaneju wjelikosću. ''(thumbnail)''.
 Jolic maš toś ten wobraz w połnem rozeznaśu, nagraj jen, howac změń pšosym mě dataje.",
 'fileexists-forbidden' => 'Dataja z toś tym mjenim južo eksistěrujo a njedajo se pśepisaś. Jolic coš hyšći swóju dataju nagraś, źi pšosym slědk a wuž nowe mě. [[File:$1|thumb|center|$1]]',
 'fileexists-shared-forbidden' => 'Dataja z toś tym mjenim južo eksistěrujo w zgromadnej chowarni. Jolic hyšći coš nagraś swóju dataju, źi pšosym slědk a wužyj nowe mě.
@@ -1646,7 +1673,7 @@ $1',
 'backend-fail-internal' => 'W składowańskem backenźe "$1" jo njeznata zmólka nastała.',
 'backend-fail-contenttype' => 'Wopśimjeśowy typ dataje, kótaraž ma se na "$1" składowaś, njedajo se zwěsćiś.',
 'backend-fail-batchsize' => 'Štapjelowa dataja, kótaraž wopśimujo {{PLURAL:$1|jadnu operaciju|$1 operaciji|$1 operacije|$1 operacijow}},  jo se  na składowański backend pósłała; limit jo $2 {{PLURAL:$1|operaciju|operaciji|operacije|operacijow}}.',
-'backend-fail-usable' => 'Dataja $1 njedajo se dla njedosegajucych  abo felujucych zapisow pisaś.',
+'backend-fail-usable' => 'Dataja "$1" njedajo se dla njedosegajucych  pšawow abo felujucych zapisow daniž cytaś daniž pisaś.',
 
 # File journal errors
 'filejournal-fail-dbconnect' => 'Njejo žeden zwisk ze žurnaloweju datoweju banku za składowański backend "$1" móžno.',
@@ -1661,6 +1688,7 @@ $1',
 'lockmanager-fail-releaselock' => 'Zastajenje za "$1" njedajo se dopušćiś.',
 'lockmanager-fail-db-bucket' => 'W zběrniku $1 njedajo se dosć zastajeńskich datowych bankow kontaktěrowaś',
 'lockmanager-fail-db-release' => 'Zastajenja na datowu banku $1 njedaju se dopušćiś.',
+'lockmanager-fail-svr-acquire' => 'Zastajenja na serwer $1 njedaju se wótwołaś.',
 'lockmanager-fail-svr-release' => 'Zastajenja na serwer $1 njedaju se dopušćiś.',
 
 # ZipDirectoryReader
@@ -1775,6 +1803,7 @@ Snaź coš wopisanje na jeje [$2 boku datajowego wopisanja] wobźěłaś.',
 'uploadnewversion-linktext' => 'Nowu wersiju toś teje dataje nagraś',
 'shared-repo-from' => 'z $1',
 'shared-repo' => 'zgromadny repozitorium',
+'upload-disallowed-here' => 'Njamóžoš toś tu dataju pśepisaś.',
 
 # File reversion
 'filerevert' => 'Slědk wześ $1',
@@ -1808,7 +1837,7 @@ Snaź coš wopisanje na jeje [$2 boku datajowego wopisanja] wobźěłaś.',
 
 # MIME search
 'mimesearch' => 'MIME-typ pytaś',
-'mimesearch-summary' => 'Na toś tom specialnem boku mógu se dataje pó MIME-typu filtrowaś. Zapódaśe dej wopśimjeś stawnje typ medija a subtyp: <tt>image/jpeg</tt>.',
+'mimesearch-summary' => 'Na toś tom specialnem boku mógu se dataje pó MIME-typu filtrowaś. Zapódaśe dej wopśimjeś stawnje typ medija a subtyp: <code>image/jpeg</code>.',
 'mimetype' => 'Typ MIME:',
 'download' => 'Ześěgnuś',
 
@@ -1854,9 +1883,8 @@ Snaź coš wopisanje na jeje [$2 boku datajowego wopisanja] wobźěłaś.',
 
 'disambiguations' => 'Boki, kótarež wótkazuju na boki wěcejzmysłowosći',
 'disambiguationspage' => 'Template:Rozjasnjenje zapśimjeśow',
-'disambiguations-text' => 'Slědujuce boki wótkazuju na bok za rozjasnjenje zapśimjeśow.
-Wótkazujśo lubjej na pótrjefjony bok.<br />
-Bok wobjadnawa se ako bok wujasnjenja zapśimjeśa, gaž wótkazujo na nju [[MediaWiki:Disambiguationspage]].',
+'disambiguations-text' => 'Slědujuce boki wopśimuju nanejmjenjej jaden wótkaz k bokoju rozjasnjenja zapśimjeśow. Wóne by dejali město togo ku gódnjejšemu bokoju wótkazaś.<br />
+Maju bok za  bok rozjasnjenja zapśimjeśow, gaž wužywa pśedłogu, na kótaruž wótkazujo se wót [[MediaWiki:Disambiguationspage]].',
 
 'doubleredirects' => 'Dwójne dalejpósrědnjenja',
 'doubleredirectstext' => 'Toś ten bok nalicujo boki, kótarež dalej pósrědnjaju na druge dalejpósrědnjenja.
@@ -1880,6 +1908,7 @@ Kužda smužka wopśimjejo wótkaze na prědne a druge dalejpósrědnjenje a tek
 # Miscellaneous special pages
 'nbytes' => '$1 {{PLURAL:$1|byte|byta|byty}}',
 'ncategories' => '$1 {{PLURAL:$1|kategorija|kategoriji|kategorije}}',
+'ninterwikis' => '$1 {{PLURAL:$1|mjazyrěcny wótkaz|mjazyrěcnej wótkaza|mjazyrěcne wótkaze|mjazyrěcnych wótkazow}}',
 'nlinks' => '$1 {{PLURAL:$1|wótkaz|wótkaza|wótkaze}}',
 'nmembers' => '$1 {{PLURAL:$1|zapis|zapisa|zapise}}',
 'nrevisions' => '$1 {{PLURAL:$1|wobźěłanje|wobźěłani|wobźěłanja}}',
@@ -1909,6 +1938,7 @@ Kužda smužka wopśimjejo wótkaze na prědne a druge dalejpósrědnjenje a tek
 'mostlinkedtemplates' => 'Nejcesćej wužywane psedłogi',
 'mostcategories' => 'Boki z nejwěcej kategorijami',
 'mostimages' => 'Nejcesćej wótkazane dataje',
+'mostinterwikis' => 'Boki z nejwěcej mjazyrěcnymi wótkazami',
 'mostrevisions' => 'Boki z nejwěcej wersijami',
 'prefixindex' => 'Wšykne boki z prefiksom',
 'prefixindex-namespace' => 'Wšykne boki z prefiksom (mjenjowy rum $1)',
@@ -2007,7 +2037,7 @@ Glědaj teke [[Special:WantedCategories|póžedane kategorije]].',
 'linksearch-ok' => 'Pytaś',
 'linksearch-text' => 'Jo móžno zastupne znamuška kaž "*.wikipedia.org" wužywaś. 
 Jo nanejmjenjej głowna domena trěbna, na pśikład "*.org"<br />
-Pódpěrane protokole: <tt>$1</tt> (pšosym njepódaj je w swójom pytanju).',
+Pódpěrane protokole: <code>$1</code> (pšosym njepódaj je w swójom pytanju).',
 'linksearch-line' => '$1 wótkazany z $2',
 'linksearch-error' => 'Zasupne znamješko daju se jano na zachopjeńku URL wužywaś.',
 
@@ -2052,6 +2082,8 @@ Pódpěrane protokole: <tt>$1</tt> (pšosym njepódaj je w swójom pytanju).',
 'mailnologin' => 'Njejo móžno e-mailku pósłaś.',
 'mailnologintext' => 'Dejš [[Special:UserLogin|pśizjawjony]] byś a płaśiwu e-mailowu adresu w swójich [[Special:Preferences|nastajenjach]] měś, aby drugim wužywarjam e-mail pósłał.',
 'emailuser' => 'Toś tomu wužywarjeju e-mail pósłaś',
+'emailuser-title-target' => 'E-mail na {{GENDER:$1|toś tomu wužywarjeju|toś tej wužywarce}} pósłaś',
+'emailuser-title-notarget' => 'E-mail wužywarjeju',
 'emailpage' => 'E-mail wužywarjeju',
 'emailpagetext' => 'Móžoš slědujucy formular wužywaś, aby toś tomu wužywarjeju e-mail pósłał.
 E-mailowa adresa, kótaruž sy zapódał w [[Special:Preferences|swójich wužywarskich nastajenjach]], zjawi se ako adresa w pólu "Wót" e-maile, aby dostawaŕ móžo śi direktnje wótegroniś.',
@@ -2192,6 +2224,8 @@ póstupujśo z glědanim.',
 'rollback' => 'Wobźěłanja slědk wześ',
 'rollback_short' => 'anulěrowaś',
 'rollbacklink' => 'anulěrowaś',
+'rollbacklinkcount' => '$1 {{PLURAL:$1|změnu|změnje|změny|změnow}} slědk wześ',
+'rollbacklinkcount-morethan' => 'wěcej ako $1 {{PLURAL:$1|změnu|změnje|změny|změnow}} slědk wześ',
 'rollbackfailed' => 'Slědkwześe njejo se raźiło.',
 'cantrollback' => 'Njejo móžno změnu slědk wześ, slědny pśinosowaŕ jo jadnučki awtor boka.',
 'alreadyrolled' => 'Njejo móžno slědnu změnu w nastawku [[:$1]] wót [[User:$2|$2]] ([[User talk:$2|diskusija]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]) slědk wześ; drugi wužywaŕ jo mjaztym bok změnił abo južo slědk stajił .
@@ -2298,7 +2332,8 @@ W takich padach dejš nejnowše wulašowane wersije markěroanje abo schowanje w
 'undeletedrevisions' => '{{PLURAL:$1|1 wersija jo se nawrośiła|$1 wersiji stej se nawrośiłej|$1 wersije su se nawrośili}}.',
 'undeletedrevisions-files' => '{{PLURAL:$1|1 wersija|$1 wersiji|$1 wersije}} a {{PLURAL:$2|1 dataja|$2 dataji|$2 dataje}} {{PLURAL:$2|jo se nawrośiła|stej se nawrośiłej|su se nawrośili}}.',
 'undeletedfiles' => '{{PLURAL:$1|1 dataja jo se nawrośiła|$1 dataji stej se nawrośiłej|$1 dataje su se nawrośili}}.',
-'cannotundelete' => 'Nawrośenje njejo se zglucyło; něchten drugi jo bok južo nawrośił.',
+'cannotundelete' => 'Wótnowjenje jo se njeraźiło:
+$1',
 'undeletedpage' => "Bok '''$1''' jo se nawrośił.
 
 W [[Special:Log/delete|log-lisćinje wulašowanjow]] namakajoš pśeglěd wulašowanych a nawrośonych bokow.",
@@ -2588,6 +2623,7 @@ Bok „[[:$1]]“ južo eksistěrujo. Coš jen wulašowaś, aby mógał toś ten
 'immobile-target-namespace-iw' => 'Interwiki-wótkaz njejo płaśiwy cel za pśesunjenja bokow.',
 'immobile-source-page' => 'Toś ten bok njedajo se pśesunuś.',
 'immobile-target-page' => 'Njejo móžno na toś ten celowy bok pśesunuś.',
+'bad-target-model' => 'Póžedany cel wužywa drugi wopśimjeśowy model. $1 njedajo se do $2 konwertěrowaś.',
 'imagenocrossnamespace' => 'Dataja njedajo se pśesunuś do mjenjowego ruma, kótarež njejo za dataje.',
 'nonfile-cannot-move-to-file' => 'Njedataje njedaje se do datajowego mjenjowego ruma pśesunuś',
 'imagetypemismatch' => 'Nowy datajowy sufiks swójomu typoju njewótpowědujo',
@@ -2666,6 +2702,7 @@ Wšykne transwiki-importowe akcije protokolěruju se w [[Special:Log/import|log-
 'import-interwiki-templates' => 'Wše pśedłogi zapśěgnuś',
 'import-interwiki-submit' => 'Importěrowaś',
 'import-interwiki-namespace' => 'Celowy mjenjowy rum:',
+'import-interwiki-rootpage' => 'Celowy kórjenjowy bok (opcionalny):',
 'import-upload-filename' => 'Datajowe mě:',
 'import-comment' => 'Komentar:',
 'importtext' => 'Eksportěruj pšosym dataju ze žredlowego wikija z pomocu [[Special:Export|eksporteje funkcije]]. Składuj ju na swójom licadle a nagraj ju sem.',
@@ -2697,6 +2734,9 @@ Wšykne transwiki-importowe akcije protokolěruju se w [[Special:Log/import|log-
 'import-error-interwiki' => 'Bok "$1" se njeimportěrujo, dokulaž jogo mě jo za eksterne wótkazowanje (interwiki) wuměnjone.',
 'import-error-special' => 'Bok "$1" se njeimportěrujo, dokulaž słuša k wósebnemu mjenjowemu rumoju, kótaryž njedowólujo boki.',
 'import-error-invalid' => 'Bok "$1" se njeimportěrujo, dokulaž jogo mě jo njepłaśiwe.',
+'import-options-wrong' => '{{PLURAL:$2|Wopacna opcija|Wopacnej opciji|Wopacne opcije|Wopacne opcije}}: <nowiki>$1</nowiki>',
+'import-rootpage-invalid' => 'Pódany kórjenjowy bok jo njepłaśiwy.',
+'import-rootpage-nosubpage' => 'Mjenjowy rum "$1" kórjenjowego boka njedowólujo pódboki.',
 
 # Import log
 'importlogpage' => 'Log-lisćinu importěrowaś',
@@ -2708,7 +2748,6 @@ Wšykne transwiki-importowe akcije protokolěruju se w [[Special:Log/import|log-
 
 # JavaScriptTest
 'javascripttest' => 'JavaScriptowy test',
-'javascripttest-disabled' => 'Toś ta funkcija njejo na toś tom wikiju zmóžnjona.',
 'javascripttest-title' => 'Testy $1 se pśewjeduju',
 'javascripttest-pagetext-noframework' => 'Toś ten bok jo pśewjedowanjeju javascriptowych testow pśewóstajony.',
 'javascripttest-pagetext-unknownframework' => 'Njeznaty wobłuk "$1".',
@@ -2821,16 +2860,43 @@ W zespominanju dajo se pśicyna pódaś.',
 
 # Info page
 'pageinfo-title' => 'Informacije za bok "$1"',
-'pageinfo-header-edits' => 'Změny',
-'pageinfo-header-watchlist' => 'Wobglědowańka',
-'pageinfo-header-views' => 'Zwobraznjenja',
-'pageinfo-subjectpage' => 'Bok',
-'pageinfo-talkpage' => 'Diskusijny bok',
-'pageinfo-watchers' => 'Licba  wobglědowarjow',
-'pageinfo-edits' => 'Licba wobźěłanjow:',
-'pageinfo-authors' => 'Licba wšakich awtorow',
+'pageinfo-not-current' => 'Informacije daju se jano za aktualnu wersiju zwobrazniś.',
+'pageinfo-header-basic' => 'Zakładne informacije',
+'pageinfo-header-edits' => 'Historiju wobźěłaś',
+'pageinfo-header-restrictions' => 'Šćit boka',
+'pageinfo-header-properties' => 'Kakosći boka',
+'pageinfo-display-title' => 'Zwobraznjeński titel',
+'pageinfo-default-sort' => 'Standardny sortěrowański kluc',
+'pageinfo-length' => 'Dłujkosć boka (w bajtach)',
+'pageinfo-article-id' => 'ID boka',
+'pageinfo-robot-policy' => 'Status pytawy',
+'pageinfo-robot-index' => 'Indeksěrujobny',
+'pageinfo-robot-noindex' => 'Njeindeksěrujobny',
 'pageinfo-views' => 'Licba zwobraznjenjow',
-'pageinfo-viewsperedit' => 'Zwobraznjenja na změnu',
+'pageinfo-watchers' => 'Licba  wobglědowarjow boka',
+'pageinfo-redirects-name' => 'Dalejpósrědnjenja k toś tomu bokoju',
+'pageinfo-redirects-value' => '$1',
+'pageinfo-subpages-name' => 'Pódboki toś togo boka',
+'pageinfo-subpages-value' => '$1 ($2 {{PLURAL:$2|dalejpósrědnjenja|dalejpósrědnjeni|dalejpósrědnjenja|dalejpósrědnjenjow}}; $3 {{PLURAL:$3|njedalejpósrědnjenja|njedalejpósrědnjeni|njedalejpósrědnjenja|njedalejpósrědnjenjow}})',
+'pageinfo-firstuser' => 'Awtor boka',
+'pageinfo-firsttime' => 'Datum napóranja boka',
+'pageinfo-lastuser' => 'Slědny wobźěłaŕ',
+'pageinfo-lasttime' => 'Datum slědneje změny',
+'pageinfo-edits' => 'Cełkowna licba změnow:',
+'pageinfo-authors' => 'Cełkowna licba wšakich awtorow',
+'pageinfo-recent-edits' => 'Licba nejnowšych změnow (za zachadnych $1)',
+'pageinfo-recent-authors' => 'Nejnowša licba rozdźělnych awtorow',
+'pageinfo-magic-words' => '{{PLURAL:$1|Magiske słowo|Magiskej słowje|Magiske słowa|Magiske słowa}} ($1)',
+'pageinfo-hidden-categories' => '{{PLURAL:$1|Schowana kategorija|Schowanej kategoriji|Schowane kategorije|Schowane kategorije}} ($1)',
+'pageinfo-templates' => '{{PLURAL:$1|Zapśěgnjona pśedłoga|Zapśěgnjonej pśedłoze|Zapśěgnjone pśedłogi|Zapśěgnjone pśedłogi}} ($1)',
+'pageinfo-toolboxlink' => 'Informacije wó boku',
+'pageinfo-redirectsto' => 'Pósrědnja dalej k',
+'pageinfo-redirectsto-info' => 'Info',
+'pageinfo-contentpage' => 'Licy se ako wopśimjeśowy bok',
+'pageinfo-contentpage-yes' => 'Jo',
+'pageinfo-protect-cascading' => 'Kaskadowy šćit wót how',
+'pageinfo-protect-cascading-yes' => 'Jo',
+'pageinfo-protect-cascading-from' => 'Kaskadowy šćit wót',
 
 # Skin names
 'skinname-standard' => 'Klasiski',
@@ -2883,6 +2949,7 @@ $1',
 'file-info-size-pages' => '$1 × $2 pikselow, wjelikosć dataje: $3, MIME-typ: $4, $5 {{PLURAL:$5|bok|boka|boki|bokow}}',
 'file-nohires' => 'Wuše wótgranicowanje njeeksistěrujo.',
 'svg-long-desc' => 'dataja SVG, nominalnje: $1 × $2 piksele, wjelikosć dataje: $3',
+'svg-long-desc-animated' => 'Animěrowana SVG-dataja, zakładnej wótměra $1 × $2 pikselow, datajowa wjelikosć: $3',
 'show-big-image' => 'Połne optiske wótgranicowanje.',
 'show-big-image-preview' => 'Wjelikosć toś togo pśeglěda: $1.',
 'show-big-image-other' => '{{PLURAL:$2|Druge rozeznaśe||Drugej rozeznaśi|Druge rozeznaśa|Druge rozeznaśa}}: $1.',
@@ -2892,6 +2959,8 @@ $1',
 'file-info-png-looped' => 'šlejfa',
 'file-info-png-repeat' => '{{PLURAL:$1|$1 raz|dwójcy|$1 raze|$1 razow}} wótegrata',
 'file-info-png-frames' => '$1 {{PLURAL:$1|wobłuk|wobłuka|wobłuki|wobłukow}}',
+'file-no-thumb-animation' => "'''Glědaj: Techniskich wobgranicowanjow dla pśeglědne wobrazki toś teje dataje se njeaniměruju.'''",
+'file-no-thumb-animation-gif' => "'''Glědaj: Techniskich wobgranicowanjow dla pśeglědne wobrazki wusokego rozeznaśa GIF-wobrazow ako toś togo njebudu se animěrowaś.'''",
 
 # Special:NewFiles
 'newimages' => 'Nowe dataje',
@@ -3396,6 +3465,7 @@ Toś ten wobkšuśeński kod płaśi až do $4.',
 # Scary transclusion
 'scarytranscludedisabled' => '[Pśidawanje interwiki jo deaktiwěrowane]',
 'scarytranscludefailed' => '[Zapśěgnjenje pśedłogi za $1 njejo se raźiło]',
+'scarytranscludefailed-httpstatus' => '[Wótwołanje pśedłogi za $1 jo se njeraźiło: HTTP $2]',
 'scarytranscludetoolong' => '[URL jo pśedłujki]',
 
 # Delete conflict
@@ -3554,7 +3624,7 @@ Wobraze se w połnym wótgranicowanju pokazuju, druge datajowe typy se ze zwěza
 * <span class="mw-specialpagerestricted">Specialne boki z wobgranicowanym pśistupom.</span>',
 'specialpages-group-maintenance' => 'Wótwardowańske lisćiny',
 'specialpages-group-other' => 'Druge specialne boki',
-'specialpages-group-login' => 'Pśizjawjenje',
+'specialpages-group-login' => 'Pśizjawiś/Konto załožyś',
 'specialpages-group-changes' => 'Slědne změny a protokole',
 'specialpages-group-media' => 'Medije',
 'specialpages-group-users' => 'Wužywarje a pšawa',
@@ -3677,6 +3747,10 @@ Hować móžoš slědujucy jadnory formular wužywaś. Twój komentar pśidajo s
 'feedback-bugcheck' => 'Wjelicnje! Pśekontrolěruj jano, lěc to njejo jadna z [$1 znatych zmólkow].',
 'feedback-bugnew' => 'Som pśekontrolěrował. Nowu zmólku k wěsći daś',
 
+# Search suggestions
+'searchsuggest-search' => 'Pytaś',
+'searchsuggest-containing' => 'wopśimujo...',
+
 # API errors
 'api-error-badaccess-groups' => 'Njamaš pšawo dataje do toś togo wikija nagraś.',
 'api-error-badtoken' => 'Nutśikowna zmólka: Wopacny token',
@@ -3688,9 +3762,12 @@ Hować móžoš slědujucy jadnory formular wužywaś. Twój komentar pśidajo s
 'api-error-empty-file' => 'Dataja, kótaruž sy nagrał, jo prozna była.',
 'api-error-emptypage' => 'Napóranje nowych, proznych bokow njejo dowólone.',
 'api-error-fetchfileerror' => 'Nutśikowna zmólka: Pśii wobstarowanju dataje jo se něco njeraźiło.',
+'api-error-fileexists-forbidden' => 'Dataja z mjenim "$1" južo eksistěrujo, a njedajo se pśepisaś.',
+'api-error-fileexists-shared-forbidden' => 'Dataja z mjenim "$1" južo eksistěrujo w zgromadnem datajowem repozitoriumje a njedajo se pśepisaś.',
 'api-error-file-too-large' => 'Dataja, kótaruž sy nagrał, jo pśewjelika była.',
 'api-error-filename-tooshort' => 'Datajowe mě jo pśekrotke.',
 'api-error-filetype-banned' => 'Toś ten datajowy typ jo zakazany.',
+'api-error-filetype-banned-type' => '$1 {{PLURAL:$4|njejo dowólony datajowy typ|njejstej dowólenej datajowej typa|njejsu dowólone datajowe typy|njejsu dowólone datajowe typy}}. {{PLURAL:$3|Dowólony datajowy typ jo|Dowólenej datajowej typa stej|Dowólone datajowe typy su}} $2.',
 'api-error-filetype-missing' => 'Dataja njama datajowu kóńcowku.',
 'api-error-hookaborted' => 'Změna, kótaruž sy wopytał pśewjasć, jo se pśetergnuła pśez rozšyrjenje.',
 'api-error-http' => 'Nutśikowna zmólka: Zwisk ze serwerom njemóžno.',
@@ -3726,6 +3803,4 @@ Hować móžoš slědujucy jadnory formular wužywaś. Twój komentar pśidajo s
 'duration-centuries' => '$1 {{PLURAL:$1|stolěśe|stolěśi|stolěśa|stolěśow}}',
 'duration-millennia' => '$1 {{PLURAL:$1|lěttysac|lěttysaca|lěttysace|lěttysacow}}',
 
-# Unknown messages
-'lockmanager-fail-svr-acquire' => 'Zastajenja na serwer $1 njedaju se wótwołaś.',
 );

@@ -22,9 +22,9 @@ $messages = array(
 'tog-usenewrc' => 'Tihdanglam thar belhchhan hmang rawh (JavaScript a ngai)',
 'tog-numberheadings' => 'A thupuite amahin nambar inpêktir rawh',
 'tog-showtoolbar' => 'Siamţhatna hmanraw-liang tilang rawh (JavaScript a ngai)',
-'tog-editondblclick' => 'Vawihnih klikin phêk siamţha rawh (JavaScript a ngai)',
+'tog-editondblclick' => 'Hmehphìrin phêk siamţha rawh (JavaScript a ngai)',
 'tog-editsection' => 'Hlawm hrang siamţhatna [siamţhatna] zawmna hmangin awmtir rawh',
-'tog-editsectiononrightclick' => 'Hlawm thupui ding-klik hmangin hlawm siamţhat theihna awmtir rawh (JavaScript a ngai)',
+'tog-editsectiononrightclick' => 'Hlawm thupui ding-hmeh hmangin hlawm siamţhat theihna awmtir rawh (JavaScript a ngai)',
 'tog-showtoc' => 'A chhunga thu awm te tilang rawh (thupui 3 aia tam phêk tan)',
 'tog-rememberpassword' => 'He ka rangpuifannaah hian min hre reng rawh (a rei berah ni $1  {{PLURAL:$1}})',
 'tog-watchcreations' => 'Ka phêk siamte ka ralvèn zing-ah telh rawh',
@@ -156,7 +156,6 @@ $messages = array(
 'qbbrowse' => 'Fangvêl rawh',
 'qbedit' => 'Siamţhatna',
 'qbpageoptions' => 'He phêk hi',
-'qbpageinfo' => 'Thukhawchang',
 'qbmyoptions' => 'Ka phêkte',
 'qbspecialpages' => 'Phêk vohbîkte',
 'faq' => 'Zawhzin',
@@ -394,7 +393,7 @@ $2',
 
 # Login and logout pages
 'logouttext' => "'''I chhuak fel ta.'''
-Inziaklût kher lovin {{SITENAME}} hi i hmang chhunzawm thei ang, a nih loh vëk pawhin hmangtu hming pangngai emaw, a hming dang emawin [[Special:UserLogin|lût leh]] thei ang.
+Inziaklût kher lovin {{SITENAME}} hi i hmang chhunzawm thei ang, a nih loh vëk pawhin hmangtu hming pangngai emaw, a hming dang emawin <span class='plainlinks'>[$1 lût leh]</span> thei ang.
 I fangtu cache i thenfai hma chu phêk ţhenkhat intar lang a awm reng mai thei, i la  chhuak lo emaw tih mai tùrin.",
 'welcomecreation' => '==Kan lo lawm a che, $1!==
 I siangchan siam a ni ta.
@@ -402,7 +401,7 @@ I [[Special:Preferences|{{SITENAME}}duhdàn]] siam danglam theihnghilh suh ang c
 'yourname' => 'Hmangtuhming:',
 'yourpassword' => 'Thurûk:',
 'yourpasswordagain' => 'Thurûk ziak nawn leh rawh le:',
-'remembermypassword' => 'He ka rangpuifanna hman mék (browser)-ah hian ka luhna (a rei berah ni {{PLURAL:$1||}}) min vawnsak rawh, thurûk ziah nawn ngai lo tùrin.',
+'remembermypassword' => 'He ka rangpuifanna hman mék (browser)-ah hian ka luhna (a rei berah ni {{PLURAL:$1||}}$1) min vawnsak rawh, thurûk ziah nawn ngai lo tùrin.',
 'securelogin-stick-https' => 'Luh hnuah HTTPS-ah hian chëng reng rawh.',
 'yourdomainname' => 'I ram:',
 'externaldberror' => 'Insawifiahna felfai lo a awm lo a nih loh vëk pawhin i pawnlam siangchan tihdanglam phalsak i ni lo a ni ang.',
@@ -731,8 +730,6 @@ Lamtawi hmante: '''({{int:cur}})'''= ennawnna thar ber nena danglamna, '''({{int
 'search-interwiki-caption' => 'Hmachhawppuite',
 'search-interwiki-default' => 'Chhuak $1:',
 'search-interwiki-more' => '(tam)',
-'search-mwsuggest-enabled' => 'rawtna telin',
-'search-mwsuggest-disabled' => 'rawtna tel lovin',
 'search-relatedarticle' => 'Laichin',
 'mwsuggest-disable' => 'AJAX rawtna tithi rawh',
 'searcheverything-enable' => 'Hminghmun zawng zawngah zawng rawh',
@@ -1039,9 +1036,9 @@ I ràwnah paihna leh sawnna chhinchhiahna thuziak kan rawn chhawpchhuak e:",
 Ahmaa taksa hlankaisaho en tùr emaw zawng tùr chuan [[Special:FileList|taksa hlankai tawh zawng zawng tlarna]] tihah hian kal rawh; hlankai (nawn)ho pawh [[Special:Log/upload|hlankai chhinchhiahna]]-ah vawnfel an ni a, paih tawhho pawh [[Special:Log/delete|paihho chhinchhiahna]]-ah chhinchhiah fel vek an ni.
 
 Phêka taksa hmang tùrin ahnuaia tihphung engemaw ni ber hmang khuan zawmna i siam thei ang:
-*A taksa pumpui hmang tùr chuan '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></tt>''' tiin. Heti hi chuan taksa hi i sezawl chhuah a ni.
-*Phêk veilam síra 'Sawifiahna' hmanga 200px-a liana i tàrlan duh chuan '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|Sawifiahna]]</nowiki></tt>'''  tiin.
-*A taksa tárlang lova zawm ringawt i duh chuan '''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></tt>''' tiin.",
+*A taksa pumpui hmang tùr chuan '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></code>''' tiin. Heti hi chuan taksa hi i sezawl chhuah a ni.
+*Phêk veilam síra 'Sawifiahna' hmanga 200px-a liana i tàrlan duh chuan '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|Sawifiahna]]</nowiki></code>'''  tiin.
+*A taksa tárlang lova zawm ringawt i duh chuan '''<code><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></code>''' tiin.",
 'upload-permitted' => 'Taksa phal chiho: $1.',
 'upload-preferred' => 'Taksa duh deuh bîk: $1.',
 'upload-prohibited' => 'Taksa khap: $1.',
@@ -1153,7 +1150,7 @@ Hmangtu azira i thliarhran erawh chuan a hmangtuina a hlankai hnuhnüng ber taks
 Ahnuaih hian {{PLURAL:$1|zawmtu hmasa ber|zawmtu hmasa $1-te}} kan rawn tlar chhuak e.
 Zawmtu zawng zawng [[Special:WhatLinksHere/$2|tlarchhuahna hetah hian a awm]] e.',
 'nolinkstoimage' => 'He taksa zawmtu/hmanna phêk pakhat mah a awm lo.',
-'morelinkstoimage' => 'Hemi taksa zawmpui dang [[Special:WhatLinksHere/$1|enna}}.',
+'morelinkstoimage' => 'Hemi taksa zawmpui dang [[Special:WhatLinksHere/$1|enna]].',
 'linkstoimage-redirect' => '$1 (taksa hruailuhna) $2',
 'duplicatesoffile' => 'A hnuaia taksa{{PLURAL:$1||te}} khu hë taksa nihpui{{PLURAL:$1||te}} a{{PLURAL:$1||n}} ni ([[Special:FileDuplicateSearch/$2|chanchin kimchang]]):',
 'sharedupload' => 'Hë taksa hi $1-a mi a ni a, hna-hmachhawp dangin a hmang vè mai thei.',
@@ -1748,15 +1745,10 @@ A hnar i en thei ang.',
 # Info page
 'pageinfo-title' => '"$1" chungchanga hriattirna',
 'pageinfo-header-edits' => 'Siamţhatnate',
-'pageinfo-header-watchlist' => 'Ralvèn',
-'pageinfo-header-views' => 'En zât',
-'pageinfo-subjectpage' => 'Phêk',
-'pageinfo-talkpage' => 'Sawihona phêk',
+'pageinfo-views' => 'Thlir/en tawh zât',
 'pageinfo-watchers' => 'Thlirtu zât',
 'pageinfo-edits' => 'Siamţhat zât',
 'pageinfo-authors' => 'Ziaktu hrang zât',
-'pageinfo-views' => 'Thlir/en tawh zât',
-'pageinfo-viewsperedit' => 'Siamţhat pakhat zel en zât',
 
 # Patrolling
 'markaspatrolleddiff' => 'Vil angah chhiar rawh',
@@ -1938,5 +1930,9 @@ A bak zawng chu thuhrûk sa vek a ni ang.
 'feedback-subject' => 'Thupui:',
 'feedback-message' => 'Thu',
 'feedback-cancel' => 'Sûtna',
+
+# Search suggestions
+'searchsuggest-search' => 'Zawnna',
+'searchsuggest-containing' => 'hemi thu telna hi...',
 
 );

@@ -28,7 +28,7 @@
  *
  * First implemented with MediaWiki 1.17, the Message class is intented to
  * replace the old wfMsg* functions that over time grew unusable.
- * @see https://www.mediawiki.org/wiki/New_messages_API for equivalences
+ * @see https://www.mediawiki.org/wiki/Manual:Messages_API for equivalences
  * between old and new functions.
  *
  * You should use the wfMessage() global function which acts as a wrapper for
@@ -203,12 +203,18 @@ class Message {
 	protected $title = null;
 
 	/**
+	 * Content object representing the message
+	 */
+	protected $content = null;
+
+	/**
 	 * @var string
 	 */
 	protected $message;
 
 	/**
 	 * Constructor.
+	 * @since 1.17
 	 * @param $key: message key, or array of message keys to try and use the first non-empty message for
 	 * @param $params Array message parameters
 	 * @return Message: $this
@@ -224,6 +230,7 @@ class Message {
 	 * Factory function that is just wrapper for the real constructor. It is
 	 * intented to be used instead of the real constructor, because it allows
 	 * chaining method calls, while new objects don't.
+	 * @since 1.17
 	 * @param $key String: message key
 	 * @param Varargs: parameters as Strings
 	 * @return Message: $this
@@ -238,6 +245,7 @@ class Message {
 	 * Factory function accepting multiple message keys and returning a message instance
 	 * for the first message which is non-empty. If all messages are empty then an
 	 * instance of the first message key is returned.
+	 * @since 1.18
 	 * @param Varargs: message keys (or first arg as an array of all the message keys)
 	 * @return Message: $this
 	 */
@@ -257,6 +265,7 @@ class Message {
 
 	/**
 	 * Adds parameters to the parameter list of this message.
+	 * @since 1.17
 	 * @param Varargs: parameters as Strings, or a single argument that is an array of Strings
 	 * @return Message: $this
 	 */
@@ -275,6 +284,7 @@ class Message {
 	 * In other words the parsing process cannot access the contents
 	 * of this type of parameter, and you need to make sure it is
 	 * sanitized beforehand.  The parser will see "$n", instead.
+	 * @since 1.17
 	 * @param Varargs: raw parameters as Strings (or single argument that is an array of raw parameters)
 	 * @return Message: $this
 	 */
@@ -292,6 +302,7 @@ class Message {
 	/**
 	 * Add parameters that are numeric and will be passed through
 	 * Language::formatNum before substitution
+	 * @since 1.18
 	 * @param Varargs: numeric parameters (or single argument that is array of numeric parameters)
 	 * @return Message: $this
 	 */
@@ -308,7 +319,7 @@ class Message {
 
 	/**
 	 * Set the language and the title from a context object
-	 *
+	 * @since 1.19
 	 * @param $context IContextSource
 	 * @return Message: $this
 	 */
@@ -324,7 +335,9 @@ class Message {
 	 * Request the message in any language that is supported.
 	 * As a side effect interface message status is unconditionally
 	 * turned off.
+	 * @since 1.17
 	 * @param $lang Mixed: language code or Language object.
+	 * @throws MWException
 	 * @return Message: $this
 	 */
 	public function inLanguage( $lang ) {
@@ -347,6 +360,7 @@ class Message {
 	/**
 	 * Request the message in the wiki's content language,
 	 * unless it is disabled for this message.
+	 * @since 1.17
 	 * @see $wgForceUIMsgAsContentMsg
 	 * @return Message: $this
 	 */
@@ -376,6 +390,7 @@ class Message {
 
 	/**
 	 * Enable or disable database use.
+	 * @since 1.17
 	 * @param $value Boolean
 	 * @return Message: $this
 	 */
@@ -386,7 +401,7 @@ class Message {
 
 	/**
 	 * Set the Title object to use as context when transforming the message
-	 *
+	 * @since 1.18
 	 * @param $title Title object
 	 * @return Message: $this
 	 */
@@ -396,7 +411,20 @@ class Message {
 	}
 
 	/**
+	 * Returns the message as a Content object.
+	 * @return Content
+	 */
+	public function content() {
+		if ( !$this->content ) {
+			$this->content = new MessageContent( $this->key );
+		}
+
+		return $this->content;
+	}
+
+	/**
 	 * Returns the message parsed from wikitext to HTML.
+	 * @since 1.17
 	 * @return String: HTML
 	 */
 	public function toString() {
@@ -408,6 +436,15 @@ class Message {
 				return '<' . $key . '>';
 			}
 			return '&lt;' . $key . '&gt;';
+		}
+
+		# Replace $* with a list of parameters for &uselang=qqx.
+		if ( strpos( $string, '$*' ) !== false ) {
+			$paramlist = '';
+			if ( $this->parameters !== array() ) {
+				$paramlist = ': $' . implode( ', $', range( 1, count( $this->parameters ) ) );
+			}
+			$string = str_replace( '$*', $paramlist, $string );
 		}
 
 		# Replace parameters before text parsing
@@ -439,6 +476,7 @@ class Message {
 	 * Magic method implementation of the above (for PHP >= 5.2.0), so we can do, eg:
 	 *     $foo = Message::get($key);
 	 *     $string = "<abbr>$foo</abbr>";
+	 * @since 1.18
 	 * @return String
 	 */
 	public function __toString() {
@@ -447,6 +485,7 @@ class Message {
 
 	/**
 	 * Fully parse the text from wikitext to HTML
+	 * @since 1.17
 	 * @return String parsed HTML
 	 */
 	public function parse() {
@@ -456,6 +495,7 @@ class Message {
 
 	/**
 	 * Returns the message text. {{-transformation is done.
+	 * @since 1.17
 	 * @return String: Unescaped message text.
 	 */
 	public function text() {
@@ -465,6 +505,7 @@ class Message {
 
 	/**
 	 * Returns the message text as-is, only parameters are subsituted.
+	 * @since 1.17
 	 * @return String: Unescaped untransformed message text.
 	 */
 	public function plain() {
@@ -474,6 +515,7 @@ class Message {
 
 	/**
 	 * Returns the parsed message text which is always surrounded by a block element.
+	 * @since 1.17
 	 * @return String: HTML
 	 */
 	public function parseAsBlock() {
@@ -484,6 +526,7 @@ class Message {
 	/**
 	 * Returns the message text. {{-transformation is done and the result
 	 * is escaped excluding any raw parameters.
+	 * @since 1.17
 	 * @return String: Escaped message text.
 	 */
 	public function escaped() {
@@ -493,6 +536,7 @@ class Message {
 
 	/**
 	 * Check whether a message key has been defined currently.
+	 * @since 1.17
 	 * @return Bool: true if it is and false if not.
 	 */
 	public function exists() {
@@ -501,6 +545,7 @@ class Message {
 
 	/**
 	 * Check whether a message does not exist, or is an empty string
+	 * @since 1.18
 	 * @return Bool: true if is is and false if not
 	 * @todo FIXME: Merge with isDisabled()?
 	 */
@@ -511,7 +556,8 @@ class Message {
 
 	/**
 	 * Check whether a message does not exist, is an empty string, or is "-"
-	 * @return Bool: true if is is and false if not
+	 * @since 1.18
+	 * @return Bool: true if it is and false if not
 	 */
 	public function isDisabled() {
 		$message = $this->fetchMessage();
@@ -519,6 +565,7 @@ class Message {
 	}
 
 	/**
+	 * @since 1.17
 	 * @param $value
 	 * @return array
 	 */
@@ -527,6 +574,7 @@ class Message {
 	}
 
 	/**
+	 * @since 1.18
 	 * @param $value
 	 * @return array
 	 */
@@ -536,6 +584,7 @@ class Message {
 
 	/**
 	 * Substitutes any paramaters into the message text.
+	 * @since 1.17
 	 * @param $message String: the message text
 	 * @param $type String: either before or after
 	 * @return String
@@ -554,6 +603,7 @@ class Message {
 
 	/**
 	 * Extracts the parameter type and preprocessed the value if needed.
+	 * @since 1.18
 	 * @param $param String|Array: Parameter as defined in this class.
 	 * @return Tuple(type, value)
 	 * @throws MWException
@@ -568,12 +618,13 @@ class Message {
 		} elseif ( !is_array( $param ) ) {
 			return array( 'before', $param );
 		} else {
-			throw new MWException( "Invalid message parameter" );
+			throw new MWException( "Invalid message parameter: " . serialize( $param ) );
 		}
 	}
 
 	/**
 	 * Wrapper for what ever method we use to parse wikitext.
+	 * @since 1.17
 	 * @param $string String: Wikitext message contents
 	 * @return string Wikitext parsed into HTML
 	 */
@@ -583,6 +634,7 @@ class Message {
 
 	/**
 	 * Wrapper for what ever method we use to {{-transform wikitext.
+	 * @since 1.17
 	 * @param $string String: Wikitext message contents
 	 * @return string Wikitext with {{-constructs replaced with their values.
 	 */
@@ -592,7 +644,8 @@ class Message {
 
 	/**
 	 * Wrapper for what ever method we use to get message contents
-	 *
+	 * @since 1.17
+	 * @throws MWException
 	 * @return string
 	 */
 	protected function fetchMessage() {

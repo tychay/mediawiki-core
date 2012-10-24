@@ -1,6 +1,6 @@
 <?php
 /**
- * Creates a sitemap for the site
+ * Creates a sitemap for the site.
  *
  * Copyright © 2005, Ævar Arnfjörð Bjarmason, Jens Frank <jeluf@gmx.de> and
  * Brion Vibber <brion@pobox.com>
@@ -26,8 +26,13 @@
  * @see http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd
  */
 
-require_once( dirname( __FILE__ ) . '/Maintenance.php' );
+require_once( __DIR__ . '/Maintenance.php' );
 
+/**
+ * Maintenance script that generates a sitemap for the site.
+ *
+ * @ingroup Maintenance
+ */
 class GenerateSitemap extends Maintenance {
 	const GS_MAIN = -2;
 	const GS_TALK = -1;
@@ -39,7 +44,7 @@ class GenerateSitemap extends Maintenance {
 	 *
 	 * @var int
 	 */
-	var $url_limit;
+	public $url_limit;
 
 	/**
 	 * The maximum size of a sitemap file
@@ -48,77 +53,77 @@ class GenerateSitemap extends Maintenance {
 	 *
 	 * @var int
 	 */
-	var $size_limit;
+	public $size_limit;
 
 	/**
 	 * The path to prepend to the filename
 	 *
 	 * @var string
 	 */
-	var $fspath;
+	public $fspath;
 
 	/**
 	 * The URL path to prepend to filenames in the index; should resolve to the same directory as $fspath
 	 *
 	 * @var string
 	 */
-	var $urlpath;
+	public $urlpath;
 
 	/**
 	 * Whether or not to use compression
 	 *
 	 * @var bool
 	 */
-	var $compress;
+	public $compress;
 
 	/**
 	 * Whether or not to include redirection pages
 	 *
 	 * @var bool
 	 */
-	var $skipRedirects;
+	public $skipRedirects;
 
 	/**
 	 * The number of entries to save in each sitemap file
 	 *
 	 * @var array
 	 */
-	var $limit = array();
+	public $limit = array();
 
 	/**
 	 * Key => value entries of namespaces and their priorities
 	 *
 	 * @var array
 	 */
-	var $priorities = array();
+	public $priorities = array();
 
 	/**
 	 * A one-dimensional array of namespaces in the wiki
 	 *
 	 * @var array
 	 */
-	var $namespaces = array();
+	public $namespaces = array();
 
 	/**
 	 * When this sitemap batch was generated
 	 *
 	 * @var string
 	 */
-	var $timestamp;
+	public $timestamp;
 
 	/**
 	 * A database slave object
 	 *
 	 * @var object
 	 */
-	var $dbr;
+	public $dbr;
 
 	/**
 	 * A resource pointing to the sitemap index file
 	 *
 	 * @var resource
 	 */
-	var $findex;
+	public $findex;
 
 
 	/**
@@ -126,7 +131,7 @@ class GenerateSitemap extends Maintenance {
 	 *
 	 * @var resource
 	 */
-	var $file;
+	public $file;
 
 	/**
 	 * Identifier to use in filenames, default $wgDBname

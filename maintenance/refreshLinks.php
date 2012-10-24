@@ -17,11 +17,17 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
  *
+ * @file
  * @ingroup Maintenance
  */
 
-require_once( dirname( __FILE__ ) . '/Maintenance.php' );
+require_once( __DIR__ . '/Maintenance.php' );
 
+/**
+ * Maintenance script to refresh link tables.
+ *
+ * @ingroup Maintenance
+ */
 class RefreshLinks extends Maintenance {
 	public function __construct() {
 		parent::__construct();
@@ -210,18 +216,16 @@ class RefreshLinks extends Maintenance {
 			return;
 		}
 
-		$text = $page->getRawText();
-		if ( $text === false ) {
+		$content = $page->getContent( REVISION::RAW );
+		if ( null === false ) {
 			return;
 		}
 
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin( __METHOD__ );
 
-		$options = ParserOptions::newFromUserAndLang( new User, $wgContLang );
-		$parserOutput = $wgParser->parse( $text, $page->getTitle(), $options, true, true, $page->getLatest() );
-		$update = new LinksUpdate( $page->getTitle(), $parserOutput, false );
-		$update->doUpdate();
+		$updates = $content->getSecondaryDataUpdates( $page->getTitle() );
+		DataUpdate::runUpdates( $updates );
 
 		$dbw->commit( __METHOD__ );
 	}

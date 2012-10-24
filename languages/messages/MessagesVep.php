@@ -1,5 +1,5 @@
 <?php
-/** Veps (Vepsän kel’)
+/** Veps (vepsän kel’)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -70,20 +70,20 @@ $specialPageAliases = array(
 );
 
 $magicWords = array(
-	'img_right'               => array( '1', 'oiged', 'paremal', 'right' ),
-	'img_left'                => array( '1', 'hura', 'vasakul', 'left' ),
-	'img_none'                => array( '1', 'eile', 'tühi', 'none' ),
-	'img_width'               => array( '1', '$1piks', '$1px' ),
-	'img_border'              => array( '1', 'röun', 'ääris', 'border' ),
-	'img_top'                 => array( '1', 'üläh', 'top' ),
-	'img_middle'              => array( '1', 'kesk', 'middle' ),
-	'img_bottom'              => array( '1', 'ala', 'bottom' ),
-	'sitename'                => array( '1', 'SAITANNIMI', 'KOHANIMI', 'SITENAME' ),
-	'grammar'                 => array( '0', 'GRAMMATIK:', 'GRAMMAR:' ),
-	'gender'                  => array( '0', 'SUGU:', 'GENDER:' ),
-	'plural'                  => array( '0', 'ÄILUGU:', 'PLURAL:' ),
-	'fullurl'                 => array( '0', 'TÄUZ\'URL:', 'KOGUURL:', 'FULLURL:' ),
-	'index'                   => array( '1', '__INDEKS__', 'INDEKSIGA', '__INDEX__' ),
+	'img_right'                 => array( '1', 'oiged', 'paremal', 'right' ),
+	'img_left'                  => array( '1', 'hura', 'vasakul', 'left' ),
+	'img_none'                  => array( '1', 'eile', 'tühi', 'none' ),
+	'img_width'                 => array( '1', '$1piks', '$1px' ),
+	'img_border'                => array( '1', 'röun', 'ääris', 'border' ),
+	'img_top'                   => array( '1', 'üläh', 'top' ),
+	'img_middle'                => array( '1', 'kesk', 'middle' ),
+	'img_bottom'                => array( '1', 'ala', 'bottom' ),
+	'sitename'                  => array( '1', 'SAITANNIMI', 'KOHANIMI', 'SITENAME' ),
+	'grammar'                   => array( '0', 'GRAMMATIK:', 'GRAMMAR:' ),
+	'gender'                    => array( '0', 'SUGU:', 'GENDER:' ),
+	'plural'                    => array( '0', 'ÄILUGU:', 'PLURAL:' ),
+	'fullurl'                   => array( '0', 'TÄUZ\'URL:', 'KOGUURL:', 'FULLURL:' ),
+	'index'                     => array( '1', '__INDEKS__', 'INDEKSIGA', '__INDEX__' ),
 );
 
 $messages = array(
@@ -128,7 +128,6 @@ $messages = array(
 'tog-watchlisthideliu' => 'Peitta sistemha tulnuziden kävutajiden redakcijad kaclendnimikirjutesespäi',
 'tog-watchlisthideanons' => 'Peitta anonimoiden redakcijad kaclendnimikirjutesespäi',
 'tog-watchlisthidepatrolled' => 'Peitta patruliruidud redakcijad kaclendnimikirjutesespäi',
-'tog-nolangconversion' => 'Saubata kirjutandsistemoiden toižetand',
 'tog-ccmeonemails' => 'Oigeta minei kaikiden minai kirjutadud kirjeižiden kopijad',
 'tog-diffonly' => 'Ala ozuta lehtpolen süadäimištod versijoiden rindatandan al',
 'tog-showhiddencats' => 'Ozutada peittud kategorijad',
@@ -232,7 +231,6 @@ $messages = array(
 'qbbrowse' => 'Kacelta',
 'qbedit' => 'Redaktiruida',
 'qbpageoptions' => 'Necen lehtpolen järgendused',
-'qbpageinfo' => 'Andmused lehtpoles',
 'qbmyoptions' => 'Minun järgendused',
 'qbspecialpages' => 'Specialižed lehtpoled',
 'faq' => 'PPK',
@@ -472,7 +470,7 @@ Sü om "\'\'$2\'\'".',
 # Login and logout pages
 'logouttext' => "'''Tö olet lähtnuded sistemaspäi.'''
 
-Sab jatkta rad {{SITENAME}}-saital anonimižikš, vai [[Special:UserLogin|kirjutagatoiš udes]] sil-žo vai toižel kävutajan nimel.
+Sab jatkta rad {{SITENAME}}-saital anonimižikš, vai <span class='plainlinks'>[$1 kirjutagatoiš udes]</span> sil-žo vai toižel kävutajan nimel.
 Otkat sil'mnägubale, miše erasid lehtpolid ozutaškatas mugažo, kut i edel teiden lähtendad sistemaspäi. Miše vajehtada niiden nägu, puhtastagat teiden kaclimen keš.",
 'welcomecreation' => '== Tulgat tervhen, $1! ==
 Teiden registracii om loptud.
@@ -955,8 +953,6 @@ Tö ei voigoi kävutada sidä.',
 'search-interwiki-caption' => 'Heimolaižed projektad',
 'search-interwiki-default' => "$1 rezul'tatad:",
 'search-interwiki-more' => '(völ)',
-'search-mwsuggest-enabled' => 'ozuta taričendad',
-'search-mwsuggest-disabled' => 'taričendoita',
 'search-relatedarticle' => 'Sidotud lehtpoled',
 'mwsuggest-disable' => 'Ala ozuta AJAX-taričendoid',
 'searcheverything-enable' => 'Ectä kaikiš nimiavarusiš',
@@ -1344,8 +1340,8 @@ Lasktud {{PLURAL:$3|failantip om|failantipad oma}} $2.',
 Voib olda, necen sü om vär failannimen kirjutamine.
 Olgat hüväd, kodvgat, todeks-ik tö tahtoit jügutoitta nece fail.",
 'windows-nonascii-filename' => 'Neche vikihe ei sa tehta failannimid specialižiden znamoidenke.',
-'fileexists' => "Fail mugoman nimenke om jo olmas, olgat hüväd, kodvgat '''<tt>[[:$1]]</tt>''' ku teil ei ole varmdust, tahtoižit-ik tö toižetada sidä.
-[[$1|thumb]]",
+'fileexists' => 'Fail mugoman nimenke om jo olmas, olgat hüväd, kodvgat <strong>[[:$1]]</strong> ku teil ei ole varmdust, tahtoižit-ik tö toižetada sidä.
+[[$1|thumb]]',
 'file-exists-duplicate' => 'Nece fail om {{PLURAL:$1|necen failan|neniden failoiden}} dublikat:',
 'uploadwarning' => 'Varutuz jügutoitmižes',
 'savefile' => 'Kirjutada fail',
@@ -2283,7 +2279,6 @@ Ei ole pordaigašt failhodrad.',
 
 # JavaScriptTest
 'javascripttest' => 'JavaScriptan kodvmine',
-'javascripttest-disabled' => 'Nece funkcii ei ole kävutamas neciš vikiš.',
 
 # Tooltip help for the actions
 'tooltip-pt-userpage' => "Teiden kävutajan lehtpol'",
@@ -2376,14 +2371,10 @@ Voib olda, necil lehtpolel om kosketuz irdsaitale, kudamb om mustas nimikirjutes
 
 # Info page
 'pageinfo-header-edits' => 'Redakcijad',
-'pageinfo-header-watchlist' => 'Kaclendnimikirjutez',
-'pageinfo-header-views' => 'Kacundad',
-'pageinfo-subjectpage' => 'Lehtpol’',
-'pageinfo-talkpage' => "Lodulehtpol'",
+'pageinfo-views' => 'Kacundoiden lugu',
 'pageinfo-watchers' => 'Kaclijoiden lugu',
 'pageinfo-edits' => 'Redakcijoiden lugumär',
 'pageinfo-authors' => 'Erazvuiččiden avtoroiden lugu',
-'pageinfo-views' => 'Kacundoiden lugu',
 
 # Skin names
 'skinname-standard' => 'Klassine',
@@ -3066,10 +3057,15 @@ Kävutagat normaline ezikacund.',
 'feedback-error3' => 'Petuz. API ei anda vastust',
 'feedback-close' => 'Vaumiž',
 
+# Search suggestions
+'searchsuggest-search' => 'Ectä',
+'searchsuggest-containing' => 'mülütajad...',
+
 # API errors
 'api-error-empty-file' => "Teil oigetud fail om pall'az.",
 'api-error-filename-tooshort' => 'Lühudahk failannimi.',
 'api-error-filetype-banned' => "Nece failtip om kel'tud.",
+'api-error-filetype-banned-type' => '$1 {{PLURAL:$4|om laskmatoi failantip|oma laskmatomad failantipad}}. Lasktud {{PLURAL:$3|failantip om|failantipad oma}} $2.',
 'api-error-illegal-filename' => "Kel'tud failannimi.",
 'api-error-unclassified' => 'Tundmatoi petuz.',
 'api-error-unknown-code' => 'Tundmatoi petuz: "$1"',

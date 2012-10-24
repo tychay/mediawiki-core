@@ -62,6 +62,7 @@ class UserrightsPage extends SpecialPage {
 	 * Depending on the submit button used, call a form or a save function.
 	 *
 	 * @param $par Mixed: string if any subpage provided, else null
+	 * @throws UserBlockedError|PermissionsError
 	 */
 	public function execute( $par ) {
 		// If the visitor doesn't have permissions to assign or remove
@@ -449,7 +450,7 @@ class UserrightsPage extends SpecialPage {
 			$this->msg( 'userrights-groups-help', $user->getName() )->parse() .
 			$grouplist .
 			Xml::tags( 'p', null, $this->groupCheckboxes( $groups, $user ) ) .
-			Xml::openElement( 'table', array( 'border' => '0', 'id' => 'mw-userrights-table-outer' ) ) .
+			Xml::openElement( 'table', array( 'id' => 'mw-userrights-table-outer' ) ) .
 				"<tr>
 					<td class='mw-label'>" .
 						Xml::label( $this->msg( 'userrights-reason' )->text(), 'wpReason' ) .
@@ -534,7 +535,7 @@ class UserrightsPage extends SpecialPage {
 		}
 
 		# Build the HTML table
-		$ret .=	Xml::openElement( 'table', array( 'border' => '0', 'class' => 'mw-userrights-groups' ) ) .
+		$ret .=	Xml::openElement( 'table', array( 'class' => 'mw-userrights-groups' ) ) .
 			"<tr>\n";
 		foreach( $columns as $name => $column ) {
 			if( $column === array() )
@@ -605,7 +606,8 @@ class UserrightsPage extends SpecialPage {
 	 * @param $output OutputPage to use
 	 */
 	protected function showLogFragment( $user, $output ) {
-		$output->addHTML( Xml::element( 'h2', null, LogPage::logName( 'rights' ) . "\n" ) );
+		$rightsLogPage = new LogPage( 'rights' );
+		$output->addHTML( Xml::element( 'h2', null, $rightsLogPage->getName()->text() ) );
 		LogEventsList::showLogExtract( $output, 'rights', $user->getUserPage() );
 	}
 }

@@ -40,14 +40,15 @@ class Cookie {
 
 	/**
 	 * Sets a cookie.  Used before a request to set up any individual
-	 * cookies.	 Used internally after a request to parse the
+	 * cookies. Used internally after a request to parse the
 	 * Set-Cookie headers.
 	 *
 	 * @param $value String: the value of the cookie
 	 * @param $attr Array: possible key/values:
-	 *		expires	 A date string
-	 *		path	 The path this cookie is used on
-	 *		domain	 Domain this cookie is used on
+	 *        expires A date string
+	 *        path    The path this cookie is used on
+	 *        domain  Domain this cookie is used on
+	 * @throws MWException
 	 */
 	public function set( $value, $attr ) {
 		$this->value = $value;
@@ -80,8 +81,8 @@ class Cookie {
 	 * A better method might be to use a blacklist like
 	 * http://publicsuffix.org/
 	 *
-	 * @fixme fails to detect 3-letter top-level domains
-	 * @fixme fails to detect 2-letter top-level domains for single-domain use (probably not a big problem in practice, but there are test cases)
+	 * @todo fixme fails to detect 3-letter top-level domains
+	 * @todo fixme fails to detect 2-letter top-level domains for single-domain use (probably not a big problem in practice, but there are test cases)
 	 *
 	 * @param $domain String: the domain to validate
 	 * @param $originDomain String: (optional) the domain the cookie originates from

@@ -32,9 +32,9 @@ class ObjectCache {
 	/**
 	 * Get a cached instance of the specified type of cache object.
 	 *
-	 * @param $id
+	 * @param $id string
 	 *
-	 * @return object
+	 * @return ObjectCache
 	 */
 	static function getInstance( $id ) {
 		if ( isset( self::$instances[$id] ) ) {
@@ -56,8 +56,9 @@ class ObjectCache {
 	/**
 	 * Create a new cache object of the specified type.
 	 *
-	 * @param $id
+	 * @param $id string
 	 *
+	 * @throws MWException
 	 * @return ObjectCache
 	 */
 	static function newFromId( $id ) {
@@ -76,6 +77,7 @@ class ObjectCache {
 	 *
 	 * @param $params array
 	 *
+	 * @throws MWException
 	 * @return ObjectCache
 	 */
 	static function newFromParams( $params ) {
@@ -99,6 +101,8 @@ class ObjectCache {
 	 * be an alias to the configured cache choice for that.
 	 * If no cache choice is configured (by default $wgMainCacheType is CACHE_NONE),
 	 * then CACHE_ANYTHING will forward to CACHE_DB.
+	 * @param $params array
+	 * @return ObjectCache
 	 */
 	static function newAnything( $params ) {
 		global $wgMainCacheType, $wgMessageCacheType, $wgParserCacheType;
@@ -114,6 +118,8 @@ class ObjectCache {
 	/**
 	 * Factory function referenced from DefaultSettings.php for CACHE_ACCEL.
 	 *
+	 * @param $params array
+	 * @throws MWException
 	 * @return ObjectCache
 	 */
 	static function newAccelerator( $params ) {
@@ -133,8 +139,8 @@ class ObjectCache {
 	/**
 	 * Factory function that creates a memcached client object.
 	 *
-	 * This always uses the PHP client, since the PECL client has a different 
-	 * hashing scheme and a different interpretation of the flags bitfield, so 
+	 * This always uses the PHP client, since the PECL client has a different
+	 * hashing scheme and a different interpretation of the flags bitfield, so
 	 * switching between the two clients randomly would be disasterous.
 	 *
 	 * @param $params array

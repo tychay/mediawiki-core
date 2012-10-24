@@ -101,6 +101,8 @@ class PostgresUpdater extends DatabaseUpdater {
 			array( 'addPgField', 'archive',       'ar_len',               'INTEGER' ),
 			array( 'addPgField', 'archive',       'ar_page_id',           'INTEGER' ),
 			array( 'addPgField', 'archive',       'ar_parent_id',         'INTEGER' ),
+			array( 'addPgField', 'archive',       'ar_content_model',     'TEXT' ),
+			array( 'addPgField', 'archive',       'ar_content_format',    'TEXT' ),
 			array( 'addPgField', 'categorylinks', 'cl_sortkey_prefix',    "TEXT NOT NULL DEFAULT ''"),
 			array( 'addPgField', 'categorylinks', 'cl_collation',         "TEXT NOT NULL DEFAULT 0"),
 			array( 'addPgField', 'categorylinks', 'cl_type',              "TEXT NOT NULL DEFAULT 'page'"),
@@ -114,6 +116,7 @@ class PostgresUpdater extends DatabaseUpdater {
 			array( 'addPgField', 'ipblocks',      'ipb_enable_autoblock', 'SMALLINT NOT NULL DEFAULT 1' ),
 			array( 'addPgField', 'ipblocks',      'ipb_parent_block_id',            'INTEGER DEFAULT NULL REFERENCES ipblocks(ipb_id) ON DELETE SET NULL DEFERRABLE INITIALLY DEFERRED' ),
 			array( 'addPgField', 'filearchive',   'fa_deleted',           'SMALLINT NOT NULL DEFAULT 0' ),
+			array( 'addPgField', 'filearchive',   'fa_sha1',              "TEXT NOT NULL DEFAULT ''" ),
 			array( 'addPgField', 'logging',       'log_deleted',          'SMALLINT NOT NULL DEFAULT 0' ),
 			array( 'addPgField', 'logging',       'log_id',               "INTEGER NOT NULL PRIMARY KEY DEFAULT nextval('logging_log_id_seq')" ),
 			array( 'addPgField', 'logging',       'log_params',           'TEXT' ),
@@ -125,6 +128,7 @@ class PostgresUpdater extends DatabaseUpdater {
 			array( 'addPgField', 'oldimage',      'oi_metadata',          "BYTEA NOT NULL DEFAULT ''" ),
 			array( 'addPgField', 'oldimage',      'oi_minor_mime',        "TEXT NOT NULL DEFAULT 'unknown'" ),
 			array( 'addPgField', 'oldimage',      'oi_sha1',              "TEXT NOT NULL DEFAULT ''" ),
+			array( 'addPgField', 'page',          'page_content_model',   'TEXT' ),
 			array( 'addPgField', 'page_restrictions', 'pr_id',            "INTEGER NOT NULL UNIQUE DEFAULT nextval('page_restrictions_pr_id_seq')" ),
 			array( 'addPgField', 'profiling',     'pf_memory',            'NUMERIC(18,10) NOT NULL DEFAULT 0' ),
 			array( 'addPgField', 'recentchanges', 'rc_deleted',           'SMALLINT NOT NULL DEFAULT 0' ),
@@ -139,6 +143,8 @@ class PostgresUpdater extends DatabaseUpdater {
 			array( 'addPgField', 'revision',      'rev_deleted',          'SMALLINT NOT NULL DEFAULT 0' ),
 			array( 'addPgField', 'revision',      'rev_len',              'INTEGER' ),
 			array( 'addPgField', 'revision',      'rev_parent_id',        'INTEGER DEFAULT NULL' ),
+			array( 'addPgField', 'revision',      'rev_content_model',    'TEXT' ),
+			array( 'addPgField', 'revision',      'rev_content_format',   'TEXT' ),
 			array( 'addPgField', 'site_stats',    'ss_active_users',      "INTEGER DEFAULT '-1'" ),
 			array( 'addPgField', 'user_newtalk',  'user_last_timestamp',  'TIMESTAMPTZ' ),
 			array( 'addPgField', 'logging',       'log_user_text',        "TEXT NOT NULL DEFAULT ''" ),
@@ -222,6 +228,7 @@ class PostgresUpdater extends DatabaseUpdater {
 			array( 'addPgIndex', 'logging',       'logging_page_id_time',   '(log_page,log_timestamp)' ),
 			array( 'addPgIndex', 'iwlinks',       'iwl_prefix_title_from',  '(iwl_prefix, iwl_title, iwl_from)' ),
 			array( 'addPgIndex', 'job',           'job_timestamp_idx',      '(job_timestamp)' ),
+			array( 'addPgIndex', 'filearchive',   'fa_sha1',                '(fa_sha1)' ),
 
 			array( 'checkIndex', 'pagelink_unique', array(
 				array('pl_from', 'int4_ops', 'btree', 0),
@@ -613,11 +620,11 @@ END;
 		if ( $this->db->indexExists( $table, $index ) ) {
 			$this->output( "...index '$index' on table '$table' already exists\n" );
 		} else {
-			$this->output( "Creating index '$index' on table '$table'\n" );
 			if ( preg_match( '/^\(/', $type ) ) {
+				$this->output( "Creating index '$index' on table '$table'\n" );
 				$this->db->query( "CREATE INDEX $index ON $table $type" );
 			} else {
-				$this->applyPatch( $type, true );
+				$this->applyPatch( $type, true, "Creating index '$index' on table '$table'" );
 			}
 		}
 	}
@@ -647,7 +654,6 @@ END;
 
 	protected function convertArchive2() {
 		if ( $this->db->tableExists( "archive2" ) ) {
-			$this->output( "Converting 'archive2' back to normal archive table\n" );
 			if ( $this->db->ruleExists( 'archive', 'archive_insert' ) ) {
 				$this->output( "Dropping rule 'archive_insert'\n" );
 				$this->db->query( 'DROP RULE archive_insert ON archive' );
@@ -656,7 +662,7 @@ END;
 				$this->output( "Dropping rule 'archive_delete'\n" );
 				$this->db->query( 'DROP RULE archive_delete ON archive' );
 			}
-			$this->applyPatch( 'patch-remove-archive2.sql' );
+			$this->applyPatch( 'patch-remove-archive2.sql', false, "Converting 'archive2' back to normal archive table" );
 		} else {
 			$this->output( "...obsolete table 'archive2' does not exist\n" );
 		}
@@ -691,14 +697,13 @@ END;
 
 	protected function checkPageDeletedTrigger() {
 		if ( !$this->db->triggerExists( 'page', 'page_deleted' ) ) {
-			$this->output( "Adding function and trigger 'page_deleted' to table 'page'\n" );
-			$this->applyPatch( 'patch-page_deleted.sql' );
+			$this->applyPatch( 'patch-page_deleted.sql', false, "Adding function and trigger 'page_deleted' to table 'page'" );
 		} else {
 			$this->output( "...table 'page' has 'page_deleted' trigger\n" );
 		}
 	}
 
-	protected function dropIndex( $table, $index ) {
+	protected function dropIndex( $table, $index, $patch = '', $fullpath = false ) {
 		if ( $this->db->indexExists( $table, $index ) ) {
 			$this->output( "Dropping obsolete index '$index'\n" );
 			$this->db->query( "DROP INDEX \"". $index ."\"" );
@@ -727,35 +732,30 @@ END;
 		if ( $this->fkeyDeltype( 'revision_rev_user_fkey' ) == 'r' ) {
 			$this->output( "...constraint 'revision_rev_user_fkey' is ON DELETE RESTRICT\n" );
 		} else {
-			$this->output( "Changing constraint 'revision_rev_user_fkey' to ON DELETE RESTRICT\n" );
-			$this->applyPatch( 'patch-revision_rev_user_fkey.sql' );
+			$this->applyPatch( 'patch-revision_rev_user_fkey.sql', false, "Changing constraint 'revision_rev_user_fkey' to ON DELETE RESTRICT" );
 		}
 	}
 
 	protected function checkIwlPrefix() {
 		if ( $this->db->indexExists( 'iwlinks', 'iwl_prefix' ) ) {
-			$this->output( "Replacing index 'iwl_prefix' with 'iwl_prefix_from_title'...\n" );
-			$this->applyPatch( 'patch-rename-iwl_prefix.sql' );
+			$this->applyPatch( 'patch-rename-iwl_prefix.sql', false, "Replacing index 'iwl_prefix' with 'iwl_prefix_from_title'" );
 		}
 	}
 
 	protected function addInterwikiType() {
-		$this->output( "Refreshing add_interwiki()...\n" );
-		$this->applyPatch( 'patch-add_interwiki.sql' );
+		$this->applyPatch( 'patch-add_interwiki.sql', false, "Refreshing add_interwiki()" );
 	}
 
 	protected function tsearchFixes() {
 		# Tweak the page_title tsearch2 trigger to filter out slashes
 		# This is create or replace, so harmless to call if not needed
-		$this->output( "Refreshing ts2_page_title()...\n" );
-		$this->applyPatch( 'patch-ts2pagetitle.sql' );
+		$this->applyPatch( 'patch-ts2pagetitle.sql', false, "Refreshing ts2_page_title()" );
 
 		# If the server is 8.3 or higher, rewrite the tsearch2 triggers
 		# in case they have the old 'default' versions
 		# Gather version numbers in case we need them
 		if ( $this->db->getServerVersion() >= 8.3 ) {
-			$this->output( "Rewriting tsearch2 triggers...\n" );
-			$this->applyPatch( 'patch-tsearch2funcs.sql' );
+			$this->applyPatch( 'patch-tsearch2funcs.sql', false, "Rewriting tsearch2 triggers" );
 		}
 	}
 }

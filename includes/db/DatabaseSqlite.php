@@ -79,11 +79,12 @@ class DatabaseSqlite extends DatabaseBase {
 	/** Open an SQLite database and return a resource handle to it
 	 *  NOTE: only $dbName is used, the other parameters are irrelevant for SQLite databases
 	 *
-	 * @param $server
-	 * @param $user
-	 * @param $pass
-	 * @param $dbName
+	 * @param string $server
+	 * @param string $user
+	 * @param string $pass
+	 * @param string $dbName
 	 *
+	 * @throws DBConnectionError
 	 * @return PDO
 	 */
 	function open( $server, $user, $pass, $dbName ) {
@@ -103,6 +104,7 @@ class DatabaseSqlite extends DatabaseBase {
 	 *
 	 * @param $fileName string
 	 *
+	 * @throws DBConnectionError
 	 * @return PDO|bool SQL connection or false if failed
 	 */
 	function openFile( $fileName ) {
@@ -176,7 +178,7 @@ class DatabaseSqlite extends DatabaseBase {
 		}
 		$cachedResult = false;
 		$table = 'dummy_search_test';
-		
+
 		$db = new DatabaseSqliteStandalone( ':memory:' );
 
 		if ( $db->query( "CREATE VIRTUAL TABLE $table USING FTS3(dummy_field)", __METHOD__, true ) ) {
@@ -313,7 +315,7 @@ class DatabaseSqlite extends DatabaseBase {
 
 	/**
 	 * @param $res ResultWrapper
-	 * @param $n 
+	 * @param $n
 	 * @return bool
 	 */
 	function fieldName( $res, $n ) {
@@ -622,7 +624,7 @@ class DatabaseSqlite extends DatabaseBase {
 	 * @return string User-friendly database information
 	 */
 	public function getServerInfo() {
-		return wfMsg( self::getFulltextSearchModule() ? 'sqlite-has-fts' : 'sqlite-no-fts', $this->getServerVersion() );
+		return wfMessage( self::getFulltextSearchModule() ? 'sqlite-has-fts' : 'sqlite-no-fts', $this->getServerVersion() )->text();
 	}
 
 	/**
@@ -645,7 +647,7 @@ class DatabaseSqlite extends DatabaseBase {
 		return false;
 	}
 
-	function begin( $fname = '' ) {
+	protected function doBegin( $fname = '' ) {
 		if ( $this->mTrxLevel == 1 ) {
 			$this->commit( __METHOD__ );
 		}
@@ -653,7 +655,7 @@ class DatabaseSqlite extends DatabaseBase {
 		$this->mTrxLevel = 1;
 	}
 
-	function commit( $fname = '' ) {
+	protected function doCommit( $fname = '' ) {
 		if ( $this->mTrxLevel == 0 ) {
 			return;
 		}
@@ -661,21 +663,12 @@ class DatabaseSqlite extends DatabaseBase {
 		$this->mTrxLevel = 0;
 	}
 
-	function rollback( $fname = '' ) {
+	protected function doRollback( $fname = '' ) {
 		if ( $this->mTrxLevel == 0 ) {
 			return;
 		}
 		$this->mConn->rollBack();
 		$this->mTrxLevel = 0;
-	}
-
-	/**
-	 * @param  $sql
-	 * @param  $num
-	 * @return string
-	 */
-	function limitResultForUpdate( $sql, $num ) {
-		return $this->limitResult( $sql, $num );
 	}
 
 	/**
@@ -827,8 +820,8 @@ class DatabaseSqlite extends DatabaseBase {
 		}
 		return $this->query( $sql, $fname );
 	}
-	
-	
+
+
 	/**
 	 * List all tables on the database
 	 *
@@ -843,21 +836,21 @@ class DatabaseSqlite extends DatabaseBase {
 			'name',
 			"type='table'"
 		);
-		
+
 		$endArray = array();
-		
-		foreach( $result as $table ) {	
+
+		foreach( $result as $table ) {
 			$vars = get_object_vars($table);
 			$table = array_pop( $vars );
-			
+
 			if( !$prefix || strpos( $table, $prefix ) === 0 ) {
 				if ( strpos( $table, 'sqlite_' ) !== 0 ) {
 					$endArray[] = $table;
 				}
-				
+
 			}
 		}
-		
+
 		return $endArray;
 	}
 

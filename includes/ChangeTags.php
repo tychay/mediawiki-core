@@ -35,6 +35,8 @@ class ChangeTags {
 	 *
 	 */
 	static function formatSummaryRow( $tags, $page ) {
+		global $wgLang;
+
 		if( !$tags )
 			return array( '', array() );
 
@@ -51,7 +53,7 @@ class ChangeTags {
 			);
 			$classes[] = Sanitizer::escapeClass( "mw-tag-$tag" );
 		}
-		$markers = '(' . implode( ', ', $displayTags ) . ')';
+		$markers = wfMessage( 'parentheses' )->rawParams( $wgLang->commaList( $displayTags ) )->text();
 		$markers = Xml::tags( 'span', array( 'class' => 'mw-tag-markers' ), $markers );
 
 		return array( $markers, $classes );
@@ -79,6 +81,7 @@ class ChangeTags {
 	 * @param $log_id int: log_id of the change to add the tags to
 	 * @param $params String: params to put in the ct_params field of tabel 'change_tag'
 	 *
+	 * @throws MWException
 	 * @return bool: false if no changes are made, otherwise true
 	 *
 	 * @exception MWException when $rc_id, $rev_id and $log_id are all null
@@ -162,10 +165,9 @@ class ChangeTags {
 	 * @param $conds String|Array: conditions used in query, see DatabaseBase::select
 	 * @param $join_conds Array: join conditions, see DatabaseBase::select
 	 * @param $options Array: options, see Database::select
-	 * @param $filter_tag String: tag to select on
+	 * @param bool|string $filter_tag Tag to select on
 	 *
-	 * @exception MWException when unable to determine appropriate JOIN condition for tagging
-	 *
+	 * @throws MWException When unable to determine appropriate JOIN condition for tagging
 	 */
 	static function modifyDisplayQuery( &$tables, &$fields,  &$conds,
 										&$join_conds, &$options, $filter_tag = false ) {
@@ -222,10 +224,11 @@ class ChangeTags {
 	public static function buildTagFilterSelector( $selected='', $fullForm = false, Title $title = null ) {
 		global $wgUseTagFilter;
 
-		if ( !$wgUseTagFilter || !count( self::listDefinedTags() ) )
+		if ( !$wgUseTagFilter || !count( self::listDefinedTags() ) ) {
 			return $fullForm ? '' : array();
+		}
 
-		$data = array( Html::rawElement( 'label', array( 'for' => 'tagfilter' ), wfMsgExt( 'tag-filter', 'parseinline' ) ),
+		$data = array( Html::rawElement( 'label', array( 'for' => 'tagfilter' ), wfMessage( 'tag-filter' )->parse() ),
 			Xml::input( 'tagfilter', 20, $selected, array( 'class' => 'mw-tagfilter-input' ) ) );
 
 		if ( !$fullForm ) {
@@ -233,7 +236,7 @@ class ChangeTags {
 		}
 
 		$html = implode( '&#160;', $data );
-		$html .= "\n" . Xml::element( 'input', array( 'type' => 'submit', 'value' => wfMsg( 'tag-filter-submit' ) ) );
+		$html .= "\n" . Xml::element( 'input', array( 'type' => 'submit', 'value' => wfMessage( 'tag-filter-submit' )->text() ) );
 		$html .= "\n" . Html::hidden( 'title', $title->getPrefixedText() );
 		$html = Xml::tags( 'form', array( 'action' => $title->getLocalURL(), 'class' => 'mw-tagfilter-form', 'method' => 'get' ), $html );
 

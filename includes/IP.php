@@ -18,7 +18,7 @@
  * http://www.gnu.org/copyleft/gpl.html
  *
  * @file
- * @author Antoine Musso <hashar at free dot fr>, Aaron Schulz
+ * @author Antoine Musso "<hashar at free dot fr>", Aaron Schulz
  */
 
 // Some regex definition to "play" with IP address and IP address blocks
@@ -714,6 +714,7 @@ class IP {
 	 * @return String: valid dotted quad IPv4 address or null
 	 */
 	public static function canonicalize( $addr ) {
+		$addr = preg_replace( '/\%.*/','', $addr ); // remove zone info (bug 35738)
 		if ( self::isValid( $addr ) ) {
 			return $addr;
 		}

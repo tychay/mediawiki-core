@@ -1,5 +1,5 @@
 <?php
-/** Aragonese (Aragonés)
+/** Aragonese (aragonés)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -47,16 +47,16 @@ $namespaceAliases = array(
 $namespaceGenderAliases = array();
 
 $magicWords = array(
-	'redirect'                => array( '0', '#ENDRECERA', '#REENDRECERA', '#REDIRECCIÓN', '#REDIRECCION', '#REDIRECT' ),
-	'namespace'               => array( '1', 'ESPACIODENOMBRES', 'ESPACIODENOMBRE', 'NAMESPACE' ),
-	'namespacee'              => array( '1', 'ESPACIODENOMBRESE', 'ESPACIODENOMBREC', 'NAMESPACEE' ),
-	'img_right'               => array( '1', 'dreita', 'derecha', 'dcha', 'der', 'right' ),
-	'img_left'                => array( '1', 'cucha', 'zurda', 'izquierda', 'izda', 'izq', 'left' ),
-	'ns'                      => array( '0', 'EN:', 'EDN:', 'NS:' ),
-	'displaytitle'            => array( '1', 'TÍTOL', 'MOSTRARTÍTULO', 'MOSTRARTITULO', 'DISPLAYTITLE' ),
-	'currentversion'          => array( '1', 'BERSIÓNAUTUAL', 'BERSIONAUTUAL', 'REVISIÓNACTUAL', 'VERSIONACTUAL', 'VERSIÓNACTUAL', 'CURRENTVERSION' ),
-	'language'                => array( '0', '#LUENGA:', '#IDIOMA:', '#LANGUAGE:' ),
-	'special'                 => array( '0', 'especial', 'espezial', 'special' ),
+	'redirect'                  => array( '0', '#ENDRECERA', '#REENDRECERA', '#REDIRECCIÓN', '#REDIRECCION', '#REDIRECT' ),
+	'namespace'                 => array( '1', 'ESPACIODENOMBRES', 'ESPACIODENOMBRE', 'NAMESPACE' ),
+	'namespacee'                => array( '1', 'ESPACIODENOMBRESE', 'ESPACIODENOMBREC', 'NAMESPACEE' ),
+	'img_right'                 => array( '1', 'dreita', 'derecha', 'dcha', 'der', 'right' ),
+	'img_left'                  => array( '1', 'cucha', 'zurda', 'izquierda', 'izda', 'izq', 'left' ),
+	'ns'                        => array( '0', 'EN:', 'EDN:', 'NS:' ),
+	'displaytitle'              => array( '1', 'TÍTOL', 'MOSTRARTÍTULO', 'MOSTRARTITULO', 'DISPLAYTITLE' ),
+	'currentversion'            => array( '1', 'BERSIÓNAUTUAL', 'BERSIONAUTUAL', 'REVISIÓNACTUAL', 'VERSIONACTUAL', 'VERSIÓNACTUAL', 'CURRENTVERSION' ),
+	'language'                  => array( '0', '#LUENGA:', '#IDIOMA:', '#LANGUAGE:' ),
+	'special'                   => array( '0', 'especial', 'espezial', 'special' ),
 );
 
 $specialPageAliases = array(
@@ -172,7 +172,6 @@ $messages = array(
 'tog-watchlisthideliu' => 'Amagar en a lista de seguimiento as edicions feitas por usuarios rechistratos',
 'tog-watchlisthideanons' => 'Amagar en a lista de seguimiento as edicions feitas por usuarios anonimos.',
 'tog-watchlisthidepatrolled' => 'Amagar as edicions patrullatas en a lista de seguimiento',
-'tog-nolangconversion' => 'Desautibar conversión de bariants',
 'tog-ccmeonemails' => 'Recibir copias de os correus que ninvío ta atros usuarios',
 'tog-diffonly' => "No amostrar o conteniu d'a pachina debaixo d'as esferencias",
 'tog-showhiddencats' => 'Amostrar categorías amagatas',
@@ -277,7 +276,6 @@ $messages = array(
 'qbbrowse' => 'Navegar',
 'qbedit' => 'Editar',
 'qbpageoptions' => 'Ista pachina',
-'qbpageinfo' => 'Contexto',
 'qbmyoptions' => 'Pachinas propias',
 'qbspecialpages' => 'Pachinas especials',
 'faq' => 'Preguntas freqüents (FAQ)',
@@ -523,7 +521,7 @@ A razón data ye ''$2''.",
 # Login and logout pages
 'logouttext' => "'''Ha rematato a sesión.'''
 
-Puede continar navegando por {{SITENAME}} anonimament, u puede [[Special:UserLogin|encetar]] una nueva sesión con o mesmo nombre d'usuario u bell atro diferent. Pare cuenta que, entre que se limpia a caché d'o navegador, puet estar que bellas pachinas s'amuestren como si encara continase en a sesión anterior.",
+Puede continar navegando por {{SITENAME}} anonimament, u puede <span class='plainlinks'>[$1 encetar]</span> una nueva sesión con o mesmo nombre d'usuario u bell atro diferent. Pare cuenta que, entre que se limpia a caché d'o navegador, puet estar que bellas pachinas s'amuestren como si encara continase en a sesión anterior.",
 'welcomecreation' => "== ¡Bienveniu(da), $1! ==
 S'ha creyato a suya cuenta.
 No xublide de presonalizar [[Special:Preferences|as suyas preferencias en {{SITENAME}}]].",
@@ -1086,8 +1084,6 @@ Asegure-se que iste cambio no trencará a continidat de l'historial d'a pachina.
 'search-interwiki-caption' => 'Prochectos chermans',
 'search-interwiki-default' => '$1 resultaus:',
 'search-interwiki-more' => '(más)',
-'search-mwsuggest-enabled' => 'con socherencias',
-'search-mwsuggest-disabled' => 'garra socherencia',
 'search-relatedarticle' => 'Relacionato',
 'mwsuggest-disable' => "Desactivar as socherencias d'AJAX",
 'searcheverything-enable' => 'Mirar en totz os espacios de nombres',
@@ -1452,9 +1448,9 @@ T'a suya conveniencia s'su conveniencia se muestra aquí el registro de supresio
 Ta veyer u mirar fichers cargatas denantes vaiga t'a [[Special:FileList|lista de fichers cargatos]]. As cargas y recargas tamién se rechistran en o [[Special:Log/upload|rechistro de cargas]], y os borraus en o [[Special:Log/delete|rechistro de borraus]].
 
 Ta incluyir un fichero en una pachina, emplegue un vinclo d'una d'istas trazas
-*'''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Fichero.jpg]]</nowiki></tt>''' ta fer servir a version completa d'o fichero,
-*'''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Fichero.png|200px|thumb|left|texto alternativo]]</nowiki></tt>''' ta fer serivr una versión de 200 píxels d'amplaria en una caixa a la marguin cucha con 'texto alternativo' como descripción
-*'''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:Fichero.ogg]]</nowiki></tt>''' ta fer un vinclo dreitament ta o fichero sin amostrar-lo.",
+*'''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Fichero.jpg]]</nowiki></code>''' ta fer servir a version completa d'o fichero,
+*'''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Fichero.png|200px|thumb|left|texto alternativo]]</nowiki></code>''' ta fer serivr una versión de 200 píxels d'amplaria en una caixa a la marguin cucha con 'texto alternativo' como descripción
+*'''<code><nowiki>[[</nowiki>{{ns:media}}<nowiki>:Fichero.ogg]]</nowiki></code>''' ta fer un vinclo dreitament ta o fichero sin amostrar-lo.",
 'upload-permitted' => 'Tipos de fichero premititos: $1.',
 'upload-preferred' => 'Tipos de fichero preferitos: $1.',
 'upload-prohibited' => 'Tipos de fichero vedatos: $1.',
@@ -1495,20 +1491,20 @@ Ta incluyir un fichero en una pachina, emplegue un vinclo d'una d'istas trazas
 'largefileserver' => "A grandaria d'iste fichero ye mayor d'a que a confeguración d'iste servidor premite.",
 'emptyfile' => 'Parixe que o fichero que se miraba de cargar ye buedo; por favor, comprebe que ixe ye reyalment o fichero que quereba cargar.',
 'windows-nonascii-filename' => 'Iste wiki no admite nombres de fichero con caracters especials.',
-'fileexists' => "Ya bi ha un fichero con ixe nombre.
-Por favor, Por favor mire-se o fichero existent '''<tt>[[:$1]]</tt>''' si no ye seguro de querer sustituyir-lo.
-[[$1|thumb]]",
-'filepageexists' => "A pachina de descripción d'iste fichero ya s'ha creyau en '''<tt>[[:$1]]</tt>''', pero no i hai garra fichero con iste nombre. O resumen que escriba no amaneixerá en a pachina de descripción.
+'fileexists' => 'Ya bi ha un fichero con ixe nombre.
+Por favor, Por favor mire-se o fichero existent <strong>[[:$1]]</strong> si no ye seguro de querer sustituyir-lo.
+[[$1|thumb]]',
+'filepageexists' => "A pachina de descripción d'iste fichero ya s'ha creyau en <strong>[[:$1]]</strong>, pero no i hai garra fichero con iste nombre. O resumen que escriba no amaneixerá en a pachina de descripción.
 Si quiere que o suyo resumen amaneixca aquí, habrá d'editar-lo manualment.
 [[$1|thumb]]",
 'fileexists-extension' => "Ya bi ha un fichero con un nombre pareixiu: [[$2|thumb]]
-* Nombre d'o fichero que ye cargando: '''<tt>[[:$1]]</tt>'''
-* Nombre d'o fichero ya existent: '''<tt>[[:$2]]</tt>'''
+* Nombre d'o fichero que ye cargando: <strong>[[:$1]]</strong>
+* Nombre d'o fichero ya existent: <strong>[[:$2]]</strong>
 Por favor, trigue un nombre diferent.",
 'fileexists-thumbnail-yes' => "Pareix que o fichero ye una imachen chicota ''(miniatura)''. [[$1|thumb]]
-Comprebe por favor o fichero '''<tt>[[:$1]]</tt>'''.
+Comprebe por favor o fichero <strong>[[:$1]]</strong>.
 Si o fichero comprebato ye a mesma imachen en tamanyo orichinal no cal cargar una nueva miniatura.",
-'file-thumbnail-no' => "O nombre d'o fichero prencipia con '''<tt>$1</tt>'''.
+'file-thumbnail-no' => "O nombre d'o fichero prencipia con <strong>$1</strong>.
 Pareix que estase una imachen achiquida ''(thumbnail)''.
 Si tiene ista imachen a toda resolución, cargue-la, si no, por favor, cambee o nombre d'o fichero.",
 'fileexists-forbidden' => 'Ya bi ha un fichero con iste nombre, y no se puet sobrescribir.
@@ -1753,7 +1749,7 @@ Debaixo s'amuestra a descripción d'a suya [$2 pachina de descripción].",
 
 # MIME search
 'mimesearch' => 'Mirar por tipo MIME',
-'mimesearch-summary' => 'Ista pachina premite filtrar fichers seguntes o suyo tipo MIME. Escribir: tipodeconteniu/subtipo, por exemplo <tt>image/jpeg</tt>.',
+'mimesearch-summary' => 'Ista pachina premite filtrar fichers seguntes o suyo tipo MIME. Escribir: tipodeconteniu/subtipo, por exemplo <code>image/jpeg</code>.',
 'mimetype' => 'Tipo MIME:',
 'download' => 'descargar',
 
@@ -1945,7 +1941,7 @@ Se veigan tamién as [[Special:WantedCategories|categorías requiestas]].",
 'linksearch-ok' => 'Mirar',
 'linksearch-text' => 'Pueden usar-se carácters comodín como "*.wikipedia.org".
 A lo menos aprecisa un dominio de maximo libel, como "*.org".<br />
-Protocolos suportados: <tt>$1</tt> (no los adhiba en a suya busca).',
+Protocolos suportados: <code>$1</code> (no los adhiba en a suya busca).',
 'linksearch-line' => '$1 tiene un vinclo dende $2',
 'linksearch-error' => "Os carácters comodín nomás pueden apareixer en o prencipio d'o nombre d'o sitio.",
 
@@ -2078,7 +2074,7 @@ Contacto con l\'editor:
 correu-e: $PAGEEDITOR_EMAIL
 wiki: $PAGEEDITOR_WIKI
 
-Si no visita a pachina, no recibirá mas notificacions de futuros cambios cambios.
+Si no visita a pachina, no recibirá mas notificacions de futuros cambios cambios. 
 Tamién puet cambiar o modo de notificación d\'as pachinas que cosira en a suya lista de seguimiento.
 Atentament,
 O servicio de notificacions d\'o prochecto {{SITENAME}}
@@ -2148,7 +2144,7 @@ Torne t'a pachina anterior, recargue a pachina y torne a prebar alavez.",
 
 # Protect
 'protectlogpage' => 'Rechistro de proteccions de pachinas',
-'protectlogtext' => "Contino s'amuestra una lista de cambios en a protección d'as pachinas.
+'protectlogtext' => "Contino s'amuestra una lista de cambios en a protección d'as pachinas. 
 Se veiga a [[Special:ProtectedPages|lista de pachinas protechitas]] ta conoixer a lista de proteccions de pachinas actualment operacional.",
 'protectedarticle' => "s'ha protechito [[$1]]",
 'modifiedarticleprotection' => 's\'ha cambiato o livel de protección de "[[$1]]"',
@@ -2652,7 +2648,6 @@ Alce-lo en o suyo ordenador y cargue-lo aquí.",
 
 # JavaScriptTest
 'javascripttest' => 'Prebatinas de JavaScript',
-'javascripttest-disabled' => 'Ista función ye desactivata.',
 'javascripttest-title' => 'Fendo as prebas de $1',
 'javascripttest-pagetext-noframework' => 'Ista pachina ye reservada ta fer as prebas de JavaScrip.',
 'javascripttest-pagetext-unknownframework' => 'Bastida de prebas "$1" desconoixida.',
@@ -2792,15 +2787,10 @@ Puede veyer-ne, manimenos, o codigo fuent.',
 # Info page
 'pageinfo-title' => 'Información ta «$1»',
 'pageinfo-header-edits' => 'Edicions',
-'pageinfo-header-watchlist' => 'Lista de seguimiento',
-'pageinfo-header-views' => 'Vistas',
-'pageinfo-subjectpage' => 'Pachina',
-'pageinfo-talkpage' => 'Pachina de descusión',
+'pageinfo-views' => 'Numero de vistas',
 'pageinfo-watchers' => "Numero d'usuarios que la cosiran",
 'pageinfo-edits' => "Numero d'edicions",
 'pageinfo-authors' => "Numero d'autors diferents",
-'pageinfo-views' => 'Numero de vistas',
-'pageinfo-viewsperedit' => 'Vistas por edición',
 
 # Skin names
 'skinname-standard' => 'Clasica (Classic)',
@@ -3481,7 +3471,7 @@ Tamién puede fer servir o [[Special:EditWatchlist|editor estándar]].",
 'version-license' => 'Licencia',
 'version-poweredby-credits' => "Iste wiki funciona gracias a '''[//www.mediawiki.org/ MediaWiki]''', copyright © 2001-$1 $2.",
 'version-poweredby-others' => 'atros',
-'version-license-info' => "MediaWiki ye software libre, puet redistribuyir-lo y/u modificar-lo baixo os terminos d'a Licencia Publica Cheneral GNU publicada por a Free Software Foundation, ya siga d'a suya versión 2 u (a la suya esleción) qualsiquier versión posterior.
+'version-license-info' => "MediaWiki ye software libre, puet redistribuyir-lo y/u modificar-lo baixo os terminos d'a Licencia Publica Cheneral GNU publicada por a Free Software Foundation, ya siga d'a suya versión 2 u (a la suya esleción) qualsiquier versión posterior. 
 
 MediaWiki se distribuye con l'asperanza d'estar d'utilidat, pero SIN GARRA GUARANCIA; nian a guarancia implicita de COMERCIALIZACIÓN u ADEQUACIÓN TA UNA FINALIDAT DETERMINADA. En trobará más detalles en a Licencia Publica General GNU.
 
@@ -3639,6 +3629,10 @@ Si no, puet usar o siguient formulario. O suyo comentario será adhibiu a la pac
 'feedback-bugcheck' => 'Perfecto! Comprebe nomás que no sía un [$1 fallo conoixiu].',
 'feedback-bugnew' => "L'he comprebau. Informar d'un nuevo fallo.",
 
+# Search suggestions
+'searchsuggest-search' => 'Mirar',
+'searchsuggest-containing' => 'que contién...',
+
 # API errors
 'api-error-badaccess-groups' => 'No puetz cargar fichers en iste wiki.',
 'api-error-badtoken' => 'Error interna: Simbolo incorrecto.',
@@ -3653,6 +3647,7 @@ Si no, puet usar o siguient formulario. O suyo comentario será adhibiu a la pac
 'api-error-file-too-large' => 'O fichero que ninvió yera masiau gran.',
 'api-error-filename-tooshort' => 'O nombre de fichero ye masiau corto.',
 'api-error-filetype-banned' => 'Iste tipo de fichero ye vedau.',
+'api-error-filetype-banned-type' => "{{PLURAL:$4|Os fichers de tipo $1|Os fichers d'os tipos $1}} no se permiten. {{PLURAL:$3|Nomás s'admeten os fichers d'o tipo|Nomás s'admeten os fichers d'os tipos}} $2.",
 'api-error-filetype-missing' => 'O fichero no tiene extensión de fichero.',
 'api-error-hookaborted' => "A modificación que intentés fer estió cancelada por un gancho d'extensión.",
 'api-error-http' => 'Error interna: No se puede connectar ta o servidor.',

@@ -1,5 +1,5 @@
 <?php
-/** Kashubian (Kaszëbsczi)
+/** Kashubian (kaszëbsczi)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -79,7 +79,6 @@ $messages = array(
 'tog-watchlisthideliu' => 'Zatacë edicëje wlogòwónych brëkòwników na lësce ùzérónych artiklów',
 'tog-watchlisthideanons' => 'Zatacë edicëje anonimòwich brëkòwników na lësce ùzérónych artiklów',
 'tog-watchlisthidepatrolled' => 'Zatacë sprôwdzoné edicëje z lëstë ùzérónych artiklów',
-'tog-nolangconversion' => 'Wëłączë kònwersëjã wariantów',
 'tog-ccmeonemails' => 'Sélôj do mie kòpije e-mailów, chtërné sélóm do jinych brëkòwników',
 'tog-diffonly' => 'Nie wëskrzëniôj zamkłoscë starnë niżi przërónaniô zjinaków',
 'tog-showhiddencats' => 'Wëskrzëni zataconé kategòrëje',
@@ -355,7 +354,7 @@ Przemëszlë dolmaczënié na [//translatewiki.net/wiki/Main_Page?setlang=csb tr
 
 # Login and logout pages
 'logouttext' => "'''Jes wëlogòwóny.'''
-Mòżesz robic dali na {{SITENAME}} jakno anonimòwi brëkòwnik abò sã [[Special:UserLogin|wlogòwac]] znowa jakno równy, a bò jinszi brëkòwnik.
+Mòżesz robic dali na {{SITENAME}} jakno anonimòwi brëkòwnik abò sã <span class='plainlinks'>[$1 wlogòwac]</span> znowa jakno równy, a bò jinszi brëkòwnik.
 Bôczë, że do czasu wëczëszczenia pòdrãczny pamiãcë przezérnika, niejedné starnë bãdą wëzdrzëc jakbë të bëł wlogòwóny.",
 'welcomecreation' => ' == Witôj, $1! ==
 Twòjé kònto òstało prawie ùsôdzoné.
@@ -579,8 +578,6 @@ Administrator, chtëren jã zablokòwôł, pòdôł przëczënã: $1",
 'search-interwiki-caption' => 'Sosterné ùdbë',
 'search-interwiki-default' => 'Skùtczi dlô $1:',
 'search-interwiki-more' => '(wicy)',
-'search-mwsuggest-enabled' => 'z sugestëjama',
-'search-mwsuggest-disabled' => 'bez sugestëjów',
 'searchall' => 'wszëtczé',
 'nonefound' => "'''Bôczënk''':Dlô szëkbë są domëslno przistãpné blós niejedné rumë mionów.
 Spróbùjë szëkbë z przëdôwkã ''all:'' dlô całowny zamkłoscë starnów (zamëkający w se starnë diskùsëji, szablónë, ëtp), abò ùżëje przëdôwka wëbrónegò ruma mionów.",
@@ -768,9 +765,9 @@ Starnë z [[Special:Watchlist|lëstë ùzérónëch artiklów]] są '''pògrëbi
 Jeżlë chcesz przezdrzec abò szëkac w dotenczas wladowónëch lopkach, biéj do [[Special:FileList|lësta lopków]]. Kòżdi wladënk je registrowóny w [[Special:Log/upload|registrze wladënkù]], a rëmniãcé w [[Special:Log/delete|registrze rëmaniô]].
 
 Abë dodac lopk do starnë, ùżëjë ùniższegò lënka wedle nôslédnëch mùstrów:
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Lopk.jpg]]</nowiki></tt>''' wëskrzëni całi lopk
-* '''<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Lopk.png|200px|thumb|left|pòdpisënk òbrôzka]]</nowiki></tt>''' wëskrzëni z lewi starnë, przë ùbrzégù, miniaturkã w szérzë 200 pikslów w ramie, z nôdpisã 'pòdpisënk òbrôzka'
-* '''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:Lopk.ogg]]</nowiki></tt>''' òtemknie prosti lënk do lopka bez wëskrzënianiô sómegò lopka",
+* '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Lopk.jpg]]</nowiki></code>''' wëskrzëni całi lopk
+* '''<code><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Lopk.png|200px|thumb|left|pòdpisënk òbrôzka]]</nowiki></code>''' wëskrzëni z lewi starnë, przë ùbrzégù, miniaturkã w szérzë 200 pikslów w ramie, z nôdpisã 'pòdpisënk òbrôzka'
+* '''<code><nowiki>[[</nowiki>{{ns:media}}<nowiki>:Lopk.ogg]]</nowiki></code>''' òtemknie prosti lënk do lopka bez wëskrzënianiô sómegò lopka",
 'uploadlog' => 'Lësta wladënków',
 'uploadlogpage' => 'Dołączoné',
 'uploadlogpagetext' => 'Hewò je lësta slédno wladowónëch lopków.

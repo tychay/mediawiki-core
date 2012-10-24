@@ -6,6 +6,11 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 	public $runDisabled = false;
 
 	/**
+	 * @var Array of TestUser
+	 */
+	public static $users;
+
+	/**
 	 * @var DatabaseBase
 	 */
 	protected $db;
@@ -24,6 +29,13 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 	 */
 	private $tmpfiles = array();
 
+	/**
+	 * Holds original values of MediaWiki configuration settings
+	 * to be restored in tearDown().
+	 * See also setMwGlobal().
+	 * @var array
+	 */
+	private $mwGlobals = array();
 
 	/**
 	 * Table name prefixes. Oracle likes it shorter.
@@ -114,8 +126,25 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 		return $fname;
 	}
 
-	protected function tearDown() {
-		// Cleaning up temoporary files
+	/**
+	 * setUp and tearDown should (where significant)
+	 * happen in reverse order.
+	 */
+	protected function setUp() {
+		parent::setUp();
+
+		/*
+		//@todo: global variables to restore for *every* test
+		array(
+			'wgLang',
+			'wgContLang',
+			'wgLanguageCode',
+			'wgUser',
+			'wgTitle',
+		);
+		*/
+
+		// Cleaning up temporary files
 		foreach ( $this->tmpfiles as $fname ) {
 			if ( is_file( $fname ) || ( is_link( $fname ) ) ) {
 				unlink( $fname );
@@ -124,7 +153,111 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 			}
 		}
 
+		// Clean up open transactions
+		if ( $this->needsDB() && $this->db ) {
+			while( $this->db->trxLevel() > 0 ) {
+				$this->db->rollback();
+			}
+		}
+	}
+
+	protected function tearDown() {
+		// Cleaning up temporary files
+		foreach ( $this->tmpfiles as $fname ) {
+			if ( is_file( $fname ) || ( is_link( $fname ) ) ) {
+				unlink( $fname );
+			} elseif ( is_dir( $fname ) ) {
+				wfRecursiveRemoveDir( $fname );
+			}
+		}
+
+		// Clean up open transactions
+		if ( $this->needsDB() && $this->db ) {
+			while( $this->db->trxLevel() > 0 ) {
+				$this->db->rollback();
+			}
+		}
+
+		// Restore mw globals
+		foreach ( $this->mwGlobals as $key => $value ) {
+			$GLOBALS[$key] = $value;
+		}
+		$this->mwGlobals = array();
+
 		parent::tearDown();
+	}
+
+	/**
+	 * Individual test functions may override globals (either directly or through this
+	 * setMwGlobals() function), however one must call this method at least once for
+	 * each key within the setUp().
+	 * That way the key is added to the array of globals that will be reset afterwards
+	 * in the tearDown(). And, equally important, that way all other tests are executed
+	 * with the same settings (instead of using the unreliable local settings for most
+	 * tests and fix it only for some tests).
+	 *
+	 * @example
+	 * <code>
+	 *     protected function setUp() {
+	 *         $this->setMwGlobals( 'wgRestrictStuff', true );
+	 *     }
+	 *
+	 *     function testFoo() {}
+	 *
+	 *     function testBar() {}
+	 *         $this->assertTrue( self::getX()->doStuff() );
+	 *
+	 *         $this->setMwGlobals( 'wgRestrictStuff', false );
+	 *         $this->assertTrue( self::getX()->doStuff() );
+	 *     }
+	 *
+	 *     function testQuux() {}
+	 * </code>
+	 *
+	 * @param array|string $pairs Key to the global variable, or an array
+	 *  of key/value pairs.
+	 * @param mixed $value Value to set the global to (ignored
+	 *  if an array is given as first argument).
+	 */
+	protected function setMwGlobals( $pairs, $value = null ) {
+		if ( !is_array( $pairs ) ) {
+			$key = $pairs;
+			$this->mwGlobals[$key] = $GLOBALS[$key];
+			$GLOBALS[$key] = $value;
+		} else {
+			foreach ( $pairs as $key => $value ) {
+				$this->mwGlobals[$key] = $GLOBALS[$key];
+				$GLOBALS[$key] = $value;
+			}
+		}
+	}
+
+	/**
+	 * Merges the given values into a MW global array variable.
+	 * Useful for setting some entries in a configuration array, instead of
+	 * setting the entire array.
+	 *
+	 * @param String $name The name of the global, as in wgFooBar
+	 * @param Array $values The array containing the entries to set in that global
+	 *
+	 * @throws MWException if the designated global is not an array.
+	 */
+	protected function mergeMwGlobalArrayValue( $name, $values ) {
+		if ( !isset( $GLOBALS[$name] ) ) {
+			$merged = $values;
+		} else {
+			if ( !is_array( $GLOBALS[$name] ) ) {
+				throw new MWException( "MW global $name is not an array." );
+			}
+
+			//NOTE: do not use array_merge, it screws up for numeric keys.
+			$merged = $GLOBALS[$name];
+			foreach ( $values as $k => $v ) {
+				$merged[$k] = $v;
+			}
+		}
+
+		$this->setMwGlobals( $name, $merged );
 	}
 
 	function dbPrefix() {
@@ -200,11 +333,12 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 		//Make 1 page with 1 revision
 		$page = WikiPage::factory( Title::newFromText( 'UTPage' ) );
 		if ( !$page->getId() == 0 ) {
-			$page->doEdit( 'UTContent',
-							'UTPageSummary',
-							EDIT_NEW,
-							false,
-							User::newFromName( 'UTSysop' ) );
+			$page->doEditContent(
+				new WikitextContent( 'UTContent' ),
+				'UTPageSummary',
+				EDIT_NEW,
+				false,
+				User::newFromName( 'UTSysop' ) );
 		}
 	}
 
@@ -326,10 +460,6 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 
 	}
 
-	public static function disableInterwikis( $prefix, &$data ) {
-		return false;
-	}
-
 	/**
 	 * Don't throw a warning if $function is deprecated and called later
 	 *
@@ -348,6 +478,8 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 	 * the values given in the order of the columns in the $fields parameter.
 	 * Note that the rows are sorted by the columns given in $fields.
 	 *
+	 * @since 1.20
+	 *
 	 * @param $table String|Array the table(s) to query
 	 * @param $fields String|Array the columns to include in the result (and to sort by)
 	 * @param $condition String|Array "where" condition(s)
@@ -358,7 +490,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 	 *         or list the tables under testing in $this->tablesUsed, or override the
 	 *         needsDB() method.
 	 */
-	protected function assertSelect( $table, $fields, $condition, Array $expectedRows ) {
+	protected function assertSelect( $table, $fields, $condition, array $expectedRows ) {
 		if ( !$this->needsDB() ) {
 			throw new MWException( 'When testing database state, the test cases\'s needDB()' .
 				' method should return true. Use @group Database or $this->tablesUsed.');
@@ -388,18 +520,223 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Utility method taking an array of elements and wrapping
+	 * each element in it's own array. Useful for data providers
+	 * that only return a single argument.
+	 *
+	 * @since 1.20
+	 *
+	 * @param array $elements
+	 *
+	 * @return array
+	 */
+	protected function arrayWrap( array $elements ) {
+		return array_map(
+			function( $element ) {
+				return array( $element );
+			},
+			$elements
+		);
+	}
+
+	/**
+	 * Assert that two arrays are equal. By default this means that both arrays need to hold
+	 * the same set of values. Using additional arguments, order and associated key can also
+	 * be set as relevant.
+	 *
+	 * @since 1.20
+	 *
+	 * @param array $expected
+	 * @param array $actual
+	 * @param boolean $ordered If the order of the values should match
+	 * @param boolean $named If the keys should match
+	 */
+	protected function assertArrayEquals( array $expected, array $actual, $ordered = false, $named = false ) {
+		if ( !$ordered ) {
+			$this->objectAssociativeSort( $expected );
+			$this->objectAssociativeSort( $actual );
+		}
+
+		if ( !$named ) {
+			$expected = array_values( $expected );
+			$actual = array_values( $actual );
+		}
+
+		call_user_func_array(
+			array( $this, 'assertEquals' ),
+			array_merge( array( $expected, $actual ), array_slice( func_get_args(), 4 ) )
+		);
+	}
+
+	/**
+	 * Put each HTML element on its own line and then equals() the results
+	 *
+	 * Use for nicely formatting of PHPUnit diff output when comparing very
+	 * simple HTML
+	 *
+	 * @since 1.20
+	 *
+	 * @param String $expected HTML on oneline
+	 * @param String $actual HTML on oneline
+	 * @param String $msg Optional message
+	 */
+	protected function assertHTMLEquals( $expected, $actual, $msg='' ) {
+		$expected = str_replace( '>', ">\n", $expected );
+		$actual   = str_replace( '>', ">\n", $actual   );
+
+		$this->assertEquals( $expected, $actual, $msg );
+	}
+
+	/**
+	 * Does an associative sort that works for objects.
+	 *
+	 * @since 1.20
+	 *
+	 * @param array $array
+	 */
+	protected function objectAssociativeSort( array &$array ) {
+		uasort(
+			$array,
+			function( $a, $b ) {
+				return serialize( $a ) > serialize( $b ) ? 1 : -1;
+			}
+		);
+	}
+
+	/**
 	 * Utility function for eliminating all string keys from an array.
 	 * Useful to turn a database result row as returned by fetchRow() into
 	 * a pure indexed array.
 	 *
-	 * @static
+	 * @since 1.20
+	 *
 	 * @param $r mixed the array to remove string keys from.
 	 */
 	protected static function stripStringKeys( &$r ) {
-		if ( !is_array( $r ) ) return;
+		if ( !is_array( $r ) ) {
+			return;
+		}
 
 		foreach ( $r as $k => $v ) {
-			if ( is_string( $k ) ) unset( $r[$k] );
+			if ( is_string( $k ) ) {
+				unset( $r[$k] );
+			}
 		}
+	}
+
+	/**
+	 * Asserts that the provided variable is of the specified
+	 * internal type or equals the $value argument. This is useful
+	 * for testing return types of functions that return a certain
+	 * type or *value* when not set or on error.
+	 *
+	 * @since 1.20
+	 *
+	 * @param string $type
+	 * @param mixed $actual
+	 * @param mixed $value
+	 * @param string $message
+	 */
+	protected function assertTypeOrValue( $type, $actual, $value = false, $message = '' ) {
+		if ( $actual === $value ) {
+			$this->assertTrue( true, $message );
+		}
+		else {
+			$this->assertType( $type, $actual, $message );
+		}
+	}
+
+	/**
+	 * Asserts the type of the provided value. This can be either
+	 * in internal type such as boolean or integer, or a class or
+	 * interface the value extends or implements.
+	 *
+	 * @since 1.20
+	 *
+	 * @param string $type
+	 * @param mixed $actual
+	 * @param string $message
+	 */
+	protected function assertType( $type, $actual, $message = '' ) {
+		if ( class_exists( $type ) || interface_exists( $type ) ) {
+			$this->assertInstanceOf( $type, $actual, $message );
+		}
+		else {
+			$this->assertInternalType( $type, $actual, $message );
+		}
+	}
+
+	/**
+	 * Returns true iff the given namespace defaults to Wikitext
+	 * according to $wgNamespaceContentModels
+	 *
+	 * @param int $ns The namespace ID to check
+	 *
+	 * @return bool
+	 * @since 1.21
+	 */
+	protected function isWikitextNS( $ns ) {
+		global $wgNamespaceContentModels;
+
+		if ( isset( $wgNamespaceContentModels[$ns] ) ) {
+			return $wgNamespaceContentModels[$ns] === CONTENT_MODEL_WIKITEXT;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Returns the ID of a namespace that defaults to Wikitext.
+	 * Throws an MWException if there is none.
+	 *
+	 * @return int the ID of the wikitext Namespace
+	 * @since 1.21
+	 */
+	protected function getDefaultWikitextNS() {
+		global $wgNamespaceContentModels;
+
+		static $wikitextNS = null; // this is not going to change
+		if ( $wikitextNS !== null ) {
+			return $wikitextNS;
+		}
+
+		// quickly short out on most common case:
+		if ( !isset( $wgNamespaceContentModels[NS_MAIN] ) ) {
+			return NS_MAIN;
+		}
+
+		// NOTE: prefer content namespaces
+		$namespaces = array_unique( array_merge(
+			MWNamespace::getContentNamespaces(),
+			array( NS_MAIN, NS_HELP, NS_PROJECT ), // prefer these
+			MWNamespace::getValidNamespaces()
+		) );
+
+		$namespaces = array_diff( $namespaces, array(
+			NS_FILE, NS_CATEGORY, NS_MEDIAWIKI, NS_USER // don't mess with magic namespaces
+		));
+
+		$talk = array_filter( $namespaces, function ( $ns ) {
+			return MWNamespace::isTalk( $ns );
+		} );
+
+		// prefer non-talk pages
+		$namespaces = array_diff( $namespaces, $talk );
+		$namespaces = array_merge( $namespaces, $talk );
+
+		// check default content model of each namespace
+		foreach ( $namespaces as $ns ) {
+			if ( !isset( $wgNamespaceContentModels[$ns] ) ||
+				$wgNamespaceContentModels[$ns] === CONTENT_MODEL_WIKITEXT ) {
+
+				$wikitextNS = $ns;
+				return $wikitextNS;
+			}
+		}
+
+		// give up
+		// @todo: Inside a test, we could skip the test as incomplete.
+		//        But frequently, this is used in fixture setup.
+		throw new MWException( "No namespace defaults to wikitext!" );
 	}
 }

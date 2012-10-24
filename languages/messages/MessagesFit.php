@@ -1,5 +1,5 @@
 <?php
-/** Meänkieli (Meänkieli)
+/** meänkieli (meänkieli)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -44,7 +44,7 @@ $messages = array(
 'tog-shownumberswatching' => 'Näytä kuinka moni käyttäjä valvoo sivua',
 'tog-oldsig' => 'Nykynen allekirjotus',
 'tog-fancysig' => 'Mookkaamaton allekirjotus ilman auttomaattista linkkiä',
-'tog-externaleditor' => 'Käytä ekterniä tekstiedituuria stantartina. Vain kokenheile käyttäjile, vaatii taattorin asetuksitten muuttamista. Käytä eksterniä tekstiedituuria oletuksena. Vain kokeneille käyttäjille, vaatii selaimen asetusten muuttamista. (<span class="plainlinks">[[//www.mediawiki.org/wiki/Manual:External_editors Ohje]</span>)',
+'tog-externaleditor' => 'Käytä ekterniä tekstiedituuria stantartina. Vain kokenheile käyttäjile, vaatii taattorin asetuksitten muuttamista. Käytä eksterniä tekstiedituuria oletuksena. Vain kokeneille käyttäjille, vaatii selaimen asetusten muuttamista. ([//www.mediawiki.org/wiki/Manual:External_editors Ohje])',
 
 # Dates
 'sunday' => 'pyhä',
@@ -120,7 +120,6 @@ $messages = array(
 # Cologne Blue skin
 'qbedit' => 'Mookkaa',
 'qbpageoptions' => 'Tämä sivu',
-'qbpageinfo' => 'Sisältö',
 'qbmyoptions' => 'Minun inställninkit',
 'qbspecialpages' => 'Spesiaali sivut',
 'faq' => 'Useasti kysytyt kysymykset',
