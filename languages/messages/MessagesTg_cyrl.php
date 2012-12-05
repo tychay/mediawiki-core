@@ -445,10 +445,6 @@ $1',
 
 Шумо метавонед гумном аз {{SITENAME}} истифодабариро идома диҳед, ё метавонед бо ҳамин номи корбариатон ва ё номи корбарии дигаре <span class='plainlinks'>[$1 боз вуруд кунед]</span>.
 Тавваҷӯҳ кунед, ки баъзе аз саҳифаҳо қаблан чи тавре намоиш шуда будан ҳамин тавр намоиш дода мешаванд, то даме ки шумо ҳофизаи мурургаратонро пок кунед.",
-'welcomecreation' => '== Хуш омадед, $1! ==
-
-Ҳисоби шумо эҷод шуд.
-Танзим кардани [[Special:Preferences|тарҷиҳоти {{SITENAME}}]] худро фаромӯш накунед.',
 'yourname' => 'Номи корбар',
 'yourpassword' => 'Калимаи убур\\пароль',
 'yourpasswordagain' => 'Калимаи убурро боз нависед',
@@ -1451,11 +1447,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 
 'enotif_mailer' => '{{SITENAME}} Иттилорасонӣ почтаи электронӣ',
 'enotif_reset' => 'Аломатрасони ҳамаи саҳифаҳо ба унвони боздидшуда',
-'enotif_newpagetext' => 'Ин саҳифаи нав аст',
 'enotif_impersonal_salutation' => 'Корбари {{SITENAME}}',
-'changed' => 'тағйирёфта',
-'created' => 'эҷод шуд',
-'enotif_subject' => 'Саҳифаи {{SITENAME}} $PAGETITLE аз тарафи $PAGEEDITOR $CHANGEDORCREATED шуд',
 'enotif_lastvisited' => 'Барои дидани ҳамаи тағйирот аз охирин боре, ки сар задаед $1ро бубинед.',
 'enotif_lastdiff' => 'Барои намоиши ин тағйир $1ро бубинед.',
 'enotif_anon_editor' => 'корбари ношинос $1',

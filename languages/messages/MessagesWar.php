@@ -11,6 +11,7 @@
  * @author Harvzsf
  * @author JinJian
  * @author Kaganer
+ * @author Wiki indio
  * @author לערי ריינהארט
  */
 
@@ -350,6 +351,7 @@ $1',
 'viewdeleted' => '¿Kitaa in $1?',
 'restorelink' => '{{PLURAL:$1|usa nga ginpara nga pagliwat|$1 ka ginpara nga mga pagliwat}}',
 'feedlinks' => 'Igsulod:',
+'feed-invalid' => 'Inbalido nga pagpapaabot',
 'site-rss-feed' => '$1 RSS nga feed',
 'site-atom-feed' => '$1 Atom nga feed',
 'page-rss-feed' => '"$1" RSS nga feed',
@@ -453,17 +455,15 @@ An katadungan nga ginhatag amo in "\'\'$2\'\'".',
 'filereadonlyerror' => 'Diri maliliwat ini nga paypay "$1" tungod an ginsusudlan han paypay nga "$2" in aada la ha pagbasa-la nga kahimtang.
 
 An magdudurmara nga nagtrangka hini in naghatag hini nga eksplenasyon: "$3".',
+'invalidtitle-knownnamespace' => 'Titulo nga inbalido nga may pan-ngaran "$2 ngan teksto nga "$3"',
 'exception-nologin' => 'Diri nakalog-in',
 'exception-nologin-text' => 'Ini nga pakli o pagbuhat in nagkikinahanglan nga ikaw in mag-log-in ha dinhi nga wiki.',
 
 # Virus scanner
-'virus-scanfailed' => 'Nagpalya an pag-scan (kodigo $1)',
+'virus-scanfailed' => 'Pakyas an pag-scan (kodigo $1)',
 'virus-unknownscanner' => 'diri-nasasabtan nga antivirus:',
 
 # Login and logout pages
-'welcomecreation' => '== ¡Uswag ngan Dayon, $1! ==
-Ginhimo an imo akawnt.
-Ayaw paghingalimot hin pagbalyo han imo [[Special:Preferences|{{SITENAME}} mga ginpipili]].',
 'yourname' => 'Agnay hit gumaramit:',
 'yourpassword' => 'Tigaman-pagsulod:',
 'yourpasswordagain' => 'Utroha pagbutang an tigaman-han-pagsakob:',
@@ -555,7 +555,7 @@ Ikaw in naglalog-in yana...',
 Temporaryo nga tigaman han pagsakob: $2',
 'passwordreset-emailsent' => 'Ginpadara hin usa ka pahinumdom nga e-mail.',
 'passwordreset-emailsent-capture' => 'Mayda pahinumdom nga ginpadangat ha im e-mail, kun diin ini in ginpapakita ha ubos.',
-'passwordreset-emailerror-capture' => 'Mayda pahinumdom nga e-mail han nahimo, kun diin ini in ginpapakita ha ubos, pero an pagpadangat ngada ha gumaramit in nagpalya: $1',
+'passwordreset-emailerror-capture' => 'Mayda pahinumdom nga e-mail han nahimo, kun diin ini in ginpapakita ha ubos, pero pakyas an pagpadangat ngada ha gumaramit: $1',
 
 # Special:ChangeEmail
 'changeemail' => 'Igliwan an e-mail address',
@@ -1403,10 +1403,7 @@ An paglaladawan han iya [$2 fayl han paglaladawan nga pakli] didto in ginpapakit
 'wlshowlast' => 'Igpakita an katapusan nga $1 nga mga oras $2 nga mga adlaw $3',
 'watchlist-options' => 'Mga pirilian han talaan han binabantayan',
 
-'enotif_newpagetext' => 'Ini in bag-o nga pakli.',
 'enotif_impersonal_salutation' => 'gumaramit han {{SITENAME}}',
-'changed' => 'naliwanan',
-'created' => 'nahimo',
 'enotif_anon_editor' => 'waray magpakilala nga gumaramit $1',
 
 # Delete
@@ -1469,7 +1466,7 @@ Kitaa an $2 para hin talaan han mga gibag-ohi nga mga ginpamara.',
 'undeletelink' => 'igpakita/igbalik',
 'undeleteviewlink' => 'kitaa',
 'undeletecomment' => 'Katadungan:',
-'cannotundelete' => 'Nagpalya an pabalik han pinara:
+'cannotundelete' => 'Pakyas an pagpabalik han pinara:
 $1',
 'undelete-search-title' => 'Pamiling hin mga ginpara nga mga pakli',
 'undelete-search-box' => 'Pamiling hin mga ginpara nga mga pakli',
@@ -2212,7 +2209,7 @@ An iba in daan nakatago.
 'feedback-subject' => 'Himangrawon:',
 'feedback-message' => 'Mensahe:',
 'feedback-cancel' => 'Pasagdi',
-'feedback-error2' => 'Sayop: Nagpalya an pagliwat',
+'feedback-error2' => 'Sayop: Pakyas an pagliwat',
 'feedback-close' => 'Human na.',
 
 # Search suggestions

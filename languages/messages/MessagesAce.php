@@ -301,7 +301,6 @@ $messages = array(
 'qbbrowse' => 'Lop',
 'qbedit' => 'Andam',
 'qbpageoptions' => 'Ôn nyoe',
-'qbpageinfo' => 'Asoe ôn',
 'qbmyoptions' => 'Ôn lôn',
 'qbspecialpages' => 'Ôn kusuih',
 'faq' => 'FAQ',
@@ -497,9 +496,6 @@ Meunyo kön nyoë sababjih, Droëneuh kadang ka neuteumèë saboh bug lam softwa
 'viewsourcetext' => 'Droëneuh  jeuët neu’eu',
 
 # Login and logout pages
-'welcomecreation' => '== Seulamat trok teuka, $1! ==
-
-Nan Droeneuh ka teupeugot. Neuato laju [[Special:Preferences|peue nyang neugalak {{SITENAME}}]].',
 'yourname' => 'Ureuëng nguy:',
 'yourpassword' => 'Lageuëm:',
 'yourpasswordagain' => 'Pasoë lom lageuëm:',

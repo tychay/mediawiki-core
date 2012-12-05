@@ -186,8 +186,8 @@ $messages = array(
 'newwindow' => '(yíò sí nínú fèrèsè tuntun)',
 'cancel' => 'Fagilé',
 'moredotdotdot' => 'Ẹ̀kúnrẹ́rẹ́...',
-'mypage' => 'Ojúewé mi',
-'mytalk' => 'Ọ̀rọ̀ mi',
+'mypage' => 'Ojúewé',
+'mytalk' => 'Ọ̀rọ̀',
 'anontalk' => 'Ọ̀rọ̀ fún IP yí',
 'navigation' => 'Atọ́ka',
 'and' => '&#32;àti',
@@ -449,10 +449,6 @@ Láti ṣ'àfikún tàbí ṣ'àyípadà àwọn ìyédèpadà fún gbogbo àw�
 
 Ẹ le tẹ̀síwájú sí ní lo {{SITENAME}} láìmorúkọ yín, tàbí kí ẹ <span class='plainlinks'>[$1 padà wọlé]</span> bí ẹnikanan tàbí ẹlòmíràn.
 Àkíyèsí wípé àwọn ojúewé kan le hàn b'ígbà tójẹ́pé ẹ sì wọlé títí tí ẹ ó fi jọ̀wọ́ cache browser yín.",
-'welcomecreation' => "== Ẹ kú àbọ̀, $1! ==
-
-A ti ṣ'èdá àpamọ́ yín.
-Ẹ mọ́ gbàgbé l'áti ṣ'àtúnṣe àwọn [[Special:Preferences|{{SITENAME}} ìfẹ́ràn]] yín.",
 'yourname' => 'Orúkọ oníṣe:',
 'yourpassword' => 'Ọ̀rọ̀ìpamọ́:',
 'yourpasswordagain' => 'Kọ ọ̀rọ̀ìpamọ́ lẹ́ẹ̀kansí:',
@@ -1095,7 +1091,7 @@ Ní báyìí ná ẹ le ṣàwárí lọ́dọ̀ Google.
 
 # Preferences page
 'preferences' => 'Àwọn ìfẹ́ràn',
-'mypreferences' => 'Àwọn ìfẹ́ràn mi',
+'mypreferences' => 'Àwọn ìfẹ́ràn',
 'prefs-edits' => 'Iye àwọn àtúnṣe:',
 'prefsnologin' => 'Ẹ kò tíì wọlé',
 'prefsnologintext' => 'Ẹ gbọ́dọ̀ <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} wọlé]</span> láti to àwọn ìfẹ́ràn oníṣe.',
@@ -1985,7 +1981,7 @@ Bákannáà ẹ wo [[Special:WantedCategories|àwọn ẹ̀ka wíwá]].',
 
 # Watchlist
 'watchlist' => 'Ìmójútó mi',
-'mywatchlist' => 'Ìmójútó mi',
+'mywatchlist' => 'Ìmójútó',
 'watchlistfor2' => 'Fún $1 $2',
 'nowatchlist' => 'Ẹ kò ní ohun kankan nínú ìmójútó yín.',
 'watchlistanontext' => 'Ẹ jọ̀wọ́ $1 láti wò tàbí ṣàtúnṣe àwọn ohun inú ìmójútó yín.',
@@ -2021,11 +2017,7 @@ A óò ṣ'àkójọ àwọn àtúnṣe ọjọ́wajú sí ojúewé yìí àti o
 
 'enotif_mailer' => 'Olùránṣẹ́ ìfitọ́nilétí {{SITENAME}}',
 'enotif_reset' => 'Fàlà sí gbogbo àwọn ojúewé bíi bíbẹ̀wò',
-'enotif_newpagetext' => 'Ojúewé tuntun nìyí.',
 'enotif_impersonal_salutation' => 'Oníṣe {{SITENAME}}',
-'changed' => 'títúnṣẹ',
-'created' => 'dídá',
-'enotif_subject' => '$PAGEEDITOR $CHANGEDORCREATED ojúewé $PAGETITLE lórí {{SITENAME}}',
 'enotif_lastvisited' => 'Ẹ wo $1 fún gbogbo àwọn àtúnṣe látìgbà ìbẹ̀wò yín gbẹ̀yìn.',
 'enotif_lastdiff' => 'Ẹ wo $1 láti wo àtúnṣe yìí.',
 'enotif_anon_editor' => 'oníṣe aláìlórúkọ $1',
@@ -2226,9 +2218,9 @@ $1',
 'blanknamespace' => '(Gbangba)',
 
 # Contributions
-'contributions' => 'Àwọn àfikún ẹnitínṣe',
+'contributions' => 'Àwọn àfikún {{GENDER:$1|oníṣe}}',
 'contributions-title' => 'Àwọn àfikún oníṣe fún $1',
-'mycontris' => 'Àwọn àfikún mi',
+'mycontris' => 'Àwọn àfikún',
 'contribsub2' => 'Fún $1 ($2)',
 'uctop' => '(lókè)',
 'month' => 'Láti osù (àti sẹ́yìn):',
@@ -2268,7 +2260,7 @@ $1',
 'whatlinkshere-hideredirs' => '$1 àtúnjúwe',
 'whatlinkshere-hidetrans' => '$1 ìkómọ́ra',
 'whatlinkshere-hidelinks' => '$1 ìjápọ̀',
-'whatlinkshere-hideimages' => '$1 àwọn ìjápọ̀ àwòrán',
+'whatlinkshere-hideimages' => '$1 àwọn ìjápọ̀ fáìlì',
 'whatlinkshere-filters' => 'Ajọ̀',
 
 # Block/unblock

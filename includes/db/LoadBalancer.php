@@ -501,8 +501,7 @@ class LoadBalancer {
 			if ( $i === false ) {
 				$this->mLastError = 'No working slave server: ' . $this->mLastError;
 				wfProfileOut( __METHOD__ );
-				$this->reportConnectionError( $this->mErrorConnection );
-				return false;
+				return $this->reportConnectionError( $this->mErrorConnection );
 			}
 		}
 
@@ -510,7 +509,7 @@ class LoadBalancer {
 		$conn = $this->openConnection( $i, $wiki );
 		if ( !$conn ) {
 			wfProfileOut( __METHOD__ );
-			$this->reportConnectionError( $this->mErrorConnection );
+			return $this->reportConnectionError( $this->mErrorConnection );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -745,8 +744,9 @@ class LoadBalancer {
 		} else {
 			$server = $conn->getProperty( 'mServer' );
 			wfLogDBError( "Connection error: {$this->mLastError} ({$server})\n" );
-			$conn->reportConnectionError( "{$this->mLastError} ({$server})" );
+			$conn->reportConnectionError( "{$this->mLastError} ({$server})" ); // throws DBConnectionError
 		}
+		return false; /* not reached */
 	}
 
 	/**
@@ -926,7 +926,7 @@ class LoadBalancer {
 				continue;
 			}
 			foreach ( $conns2[$masterIndex] as $conn ) {
-				if ( $conn->trxLevel() && $conn->doneWrites() ) {
+				if ( $conn->trxLevel() && $conn->writesOrCallbacksPending() ) {
 					$conn->commit( __METHOD__, 'flush' );
 				}
 			}

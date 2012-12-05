@@ -388,9 +388,6 @@ $2",
 
 አሁንም በቁጥር መታወቂያዎ ማዘጋጀት ይቻላል። ወይም ደግሞ እንደገና በብዕር ስምዎ መግባት ይችላሉ።
 በጥቂት ሴኮንድ ውስጥ ወደሚከተለው ገጽ በቀጥታ ይመለሳል፦",
-'welcomecreation' => '== ሰላምታ፣ $1! ==
-
-የብዕር ስምዎ ተፈጥሯል። ምርጫዎችዎን ለማስተካከል ይችላሉ።',
 'yourname' => 'Username / የብዕር ስም:',
 'yourpassword' => 'Password / መግቢያ ቃል',
 'yourpasswordagain' => 'መግቢያ ቃልዎን ዳግመኛ ይስጡ',
@@ -1361,11 +1358,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 
 'enotif_mailer' => 'የ{{SITENAME}} ኢሜል-ማስታወቂያ',
 'enotif_reset' => 'ገጾች ሁሉ የተጎበኙ ሆነው ለማመልከት',
-'enotif_newpagetext' => 'ይህ አዲስ ገጽ ነው።',
 'enotif_impersonal_salutation' => '{{SITENAME}} ተጠቃሚ',
-'changed' => 'ተለወጠ',
-'created' => 'ተፈጠረ',
-'enotif_subject' => 'የ{{SITENAME}} ገጽ $PAGETITLE  በ$PAGEEDITOR $CHANGEDORCREATED',
 'enotif_lastvisited' => 'መጨረሻ ከጎበኙ ጀምሮ ለውጦችን ሁሉ ለመመልከት $1 ይዩ።',
 'enotif_lastdiff' => 'ይህን ለውጥ ለማመልከት $1 ይዩ።',
 'enotif_anon_editor' => 'ቁጥር አድራሻ $1',
@@ -1834,6 +1827,16 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 'spamprotectiontitle' => 'የስፓም መከላከል ማጣሪያ',
 'spambot_username' => 'MediaWiki የስፓም ማፅዳት',
 'spam_reverting' => 'ወደ $1 የሚወስድ መያያዣ ወደሌለበት መጨረሻ ዕትም መለሰው',
+
+# Info page
+'pageinfo-firstuser' => 'የገጹ ፈጣሪ',
+'pageinfo-firsttime' => 'የተፈጠረበት ቀን',
+'pageinfo-lastuser' => 'የመጨረሻው አራሚ',
+'pageinfo-lasttime' => 'የመጨረሻው ዕትም ቀን',
+'pageinfo-edits' => 'ጠቅላላ የእርማት ቁጥር',
+'pageinfo-toolboxlink' => 'የዚህ ገጽ መረጃ',
+'pageinfo-contentpage-yes' => 'አዎ',
+'pageinfo-protect-cascading-yes' => 'አዎ',
 
 # Patrolling
 'markaspatrolleddiff' => 'የተሳለፈ ሆኖ ማመልከት',

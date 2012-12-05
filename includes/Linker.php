@@ -1075,6 +1075,9 @@ class Linker {
 	public static function userLink( $userId, $userName, $altUserName = false ) {
 		if ( $userId == 0 ) {
 			$page = SpecialPage::getTitleFor( 'Contributions', $userName );
+			if ( $altUserName === false ) {
+				$altUserName = IP::prettifyIP( $userName );
+			}
 		} else {
 			$page = Title::makeTitle( NS_USER, $userName );
 		}
@@ -1373,7 +1376,18 @@ class Linker {
 		self::$commentContextTitle = $title;
 		self::$commentLocal = $local;
 		$html = preg_replace_callback(
-			'/\[\[:?(.*?)(\|(.*?))*\]\]([^[]*)/',
+			'/
+				\[\[
+				:? # ignore optional leading colon
+				([^\]|]+) # 1. link target; page names cannot include ] or |
+				(?:\|
+					# 2. a pipe-separated substring; only the last is captured
+					# Stop matching at | and ]] without relying on backtracking.
+					((?:]?[^\]|])*+)
+				)*
+				\]\]
+				([^[]*) # 3. link trail (the text up until the next link)
+			/x',
 			array( 'Linker', 'formatLinksInCommentCallback' ),
 			$comment );
 		self::$commentContextTitle = null;
@@ -1399,8 +1413,8 @@ class Linker {
 		}
 
 		# Handle link renaming [[foo|text]] will show link as "text"
-		if ( $match[3] != "" ) {
-			$text = $match[3];
+		if ( $match[2] != "" ) {
+			$text = $match[2];
 		} else {
 			$text = $match[1];
 		}
@@ -1415,7 +1429,7 @@ class Linker {
 			}
 		} else {
 			# Other kind of link
-			if ( preg_match( $wgContLang->linkTrail(), $match[4], $submatch ) ) {
+			if ( preg_match( $wgContLang->linkTrail(), $match[3], $submatch ) ) {
 				$trail = $submatch[1];
 			} else {
 				$trail = "";
@@ -2136,7 +2150,7 @@ class Linker {
 	}
 
 	/**
-	 * @deprecated since 1.16 Use link()
+	 * @deprecated since 1.16 Use link(); warnings since 1.21
 	 *
 	 * Make a link for a title which may or may not be in the database. If you need to
 	 * call this lots of times, pre-fill the link cache with a LinkBatch, otherwise each
@@ -2153,7 +2167,7 @@ class Linker {
 	 * @return string
 	 */
 	static function makeLinkObj( $nt, $text = '', $query = '', $trail = '', $prefix = '' ) {
-		# wfDeprecated( __METHOD__, '1.16' ); // See r105985 and it's revert. Somewhere still used.
+		wfDeprecated( __METHOD__, '1.21' );
 
 		wfProfileIn( __METHOD__ );
 		$query = wfCgiToArray( $query );
@@ -2169,7 +2183,7 @@ class Linker {
 	}
 
 	/**
-	 * @deprecated since 1.16 Use link()
+	 * @deprecated since 1.16 Use link(); warnings since 1.21
 	 *
 	 * Make a link for a title which definitely exists. This is faster than makeLinkObj because
 	 * it doesn't have to do a database query. It's also valid for interwiki titles and special
@@ -2187,7 +2201,7 @@ class Linker {
 	static function makeKnownLinkObj(
 		$title, $text = '', $query = '', $trail = '', $prefix = '' , $aprops = '', $style = ''
 	) {
-		# wfDeprecated( __METHOD__, '1.16' ); // See r105985 and it's revert. Somewhere still used.
+		wfDeprecated( __METHOD__, '1.21' );
 
 		wfProfileIn( __METHOD__ );
 

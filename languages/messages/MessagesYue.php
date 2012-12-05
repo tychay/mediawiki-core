@@ -157,7 +157,6 @@ $specialPageAliases = array(
 	'Recentchanges'             => array( '最近修改' ),
 	'Recentchangeslinked'       => array( '外鏈修改' ),
 	'Revisiondelete'            => array( '修訂版本刪除' ),
-	'RevisionMove'              => array( '修訂版本移動' ),
 	'Search'                    => array( '搜索' ),
 	'Shortpages'                => array( '短版' ),
 	'Specialpages'              => array( '特別頁' ),
@@ -614,9 +613,6 @@ $1',
 
 你重可以用匿名身份用{{SITENAME}}，又或者<span class='plainlinks'>[$1 重新登入]</span>。
 但係留意某啲頁面可能會繼續話你未登入，除非等你清除瀏覽器嘅快取儲存。",
-'welcomecreation' => '== 歡迎， $1！ ==
-
-你個戶口已經起好。唔好唔記得去改改你嘅[[Special:Preferences|{{SITENAME}}喜好設定]]喎。',
 'yourname' => '用戶名:',
 'yourpassword' => '密碼:',
 'yourpasswordagain' => '再輸入密碼:',
@@ -2040,11 +2036,7 @@ Template:搞清楚',
 
 'enotif_mailer' => '{{SITENAME}}通知郵遞員',
 'enotif_reset' => '將所有頁面標成已視察',
-'enotif_newpagetext' => '呢個係一個新頁面。',
 'enotif_impersonal_salutation' => '{{SITENAME}}用戶',
-'changed' => '修改過',
-'created' => '建立過',
-'enotif_subject' => '{{SITENAME}}嘅頁面$PAGETITLE已由$PAGEEDITOR$CHANGEDORCREATED',
 'enotif_lastvisited' => '你上次視察以嚟嘅修改請睇$1。',
 'enotif_lastdiff' => '睇$1去睇吓呢一次更改。',
 'enotif_anon_editor' => '匿名用戶$1',

@@ -70,6 +70,10 @@ textarea {
 	display: inline;
 }
 
+#cb-ca-edit {
+	font-weight: bold;
+}
+
 #pagestats {
 	font-family: Verdana, Arial, sans-serif;
 	color: black;
@@ -93,7 +97,13 @@ textarea {
 	color: #446688;
 }
 
-#quickbar h6 {
+/* Hide, but keep accessible for screen-readers */
+#mw-navigation h2 {
+	position: absolute;
+	top: -9999px;
+}
+
+#quickbar h3 {
 	font-family: Verdana, Arial, sans-serif;
 	font-size: 10pt;
 	font-weight: bold;
@@ -108,6 +118,14 @@ textarea {
 #quickbar form {
 	padding: 0;
 	margin-top: 0;
+}
+
+#quickbar .portlet ul,
+#quickbar .portlet li {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	line-height: inherit;
 }
 
 h1 {
@@ -156,7 +174,7 @@ a.stub, #quickbar a.stub {
 	text-decoration: none;
 }
 
-a.new, #quickbar a.new {
+a.new, #quickbar span.new a, #footer span.new a {
 	color: #CC2200;
 }
 

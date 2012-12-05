@@ -42,7 +42,7 @@ interface Content {
 	/**
 	 * @since 1.21
 	 *
-	 * @return string The wikitext to include when another page includes this
+	 * @return string|false The wikitext to include when another page includes this
 	 * content, or false if the content is not includable in a wikitext page.
 	 *
 	 * @todo allow native handling, bypassing wikitext representation, like
@@ -241,7 +241,6 @@ interface Content {
 	 */
 	public function isCountable( $hasLinks = null );
 
-
 	/**
 	 * Parse the Content object and generate a ParserOutput from the result.
 	 * $result->getText() can be used to obtain the generated HTML. If no HTML
@@ -262,7 +261,7 @@ interface Content {
 	public function getParserOutput( Title $title,
 		$revId = null,
 		ParserOptions $options = null, $generateHtml = true );
-	# TODO: make RenderOutput and RenderOptions base classes
+	// TODO: make RenderOutput and RenderOptions base classes
 
 	/**
 	 * Returns a list of DataUpdate objects for recording information about this
@@ -381,7 +380,7 @@ interface Content {
 	 *
 	 * @since 1.21
 	 *
-	 * @param $section Empty/null/false or a section number (0, 1, 2, T1, T2...), or "new"
+	 * @param $section null/false or a section number (0, 1, 2, T1, T2...), or "new"
 	 * @param $with Content: new content of the section
 	 * @param $sectionTitle String: new section's subject, only if $section is 'new'
 	 * @return string Complete article text, or null if error
@@ -396,10 +395,10 @@ interface Content {
 	 *
 	 * @param $title Title
 	 * @param $user User
-	 * @param $popts null|ParserOptions
+	 * @param $parserOptions null|ParserOptions
 	 * @return Content
 	 */
-	public function preSaveTransform( Title $title, User $user, ParserOptions $popts );
+	public function preSaveTransform( Title $title, User $user, ParserOptions $parserOptions );
 
 	/**
 	 * Returns a new WikitextContent object with the given section heading
@@ -420,10 +419,10 @@ interface Content {
 	 * @since 1.21
 	 *
 	 * @param $title Title
-	 * @param $popts null|ParserOptions
+	 * @param $parserOptions null|ParserOptions
 	 * @return Content
 	 */
-	public function preloadTransform( Title $title, ParserOptions $popts );
+	public function preloadTransform( Title $title, ParserOptions $parserOptions );
 
 	/**
 	 * Prepare Content for saving. Called before Content is saved by WikiPage::doEditContent() and in
@@ -482,9 +481,22 @@ interface Content {
 	 */
 	public function matchMagicWord( MagicWord $word );
 
-	# TODO: ImagePage and CategoryPage interfere with per-content action handlers
-	# TODO: nice&sane integration of GeSHi syntax highlighting
-	#   [11:59] <vvv> Hooks are ugly; make CodeHighlighter interface and a
-	#   config to set the class which handles syntax highlighting
-	#   [12:00] <vvv> And default it to a DummyHighlighter
+	/**
+	 * Converts this content object into another content object with the given content model,
+	 * if that is possible.
+	 *
+	 * @param String  $toModel the desired content model, use the CONTENT_MODEL_XXX flags.
+	 * @param String  $lossy flag, set to "lossy" to allow lossy conversion. If lossy conversion is
+	 * not allowed, full round-trip conversion is expected to work without losing information.
+	 *
+	 * @return Content|bool A content object with the content model $toModel, or false if
+	 * that conversion is not supported.
+	 */
+	public function convert( $toModel, $lossy = '' );
+
+		// TODO: ImagePage and CategoryPage interfere with per-content action handlers
+	// TODO: nice&sane integration of GeSHi syntax highlighting
+	//   [11:59] <vvv> Hooks are ugly; make CodeHighlighter interface and a
+	//   config to set the class which handles syntax highlighting
+	//   [12:00] <vvv> And default it to a DummyHighlighter
 }

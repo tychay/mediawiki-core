@@ -50,6 +50,7 @@
  * @author TTMTT
  * @author Tarawneh
  * @author TheEgyptian
+ * @author Tux-tn
  * @author Uwe a
  * @author Zack wadghiri
  * @author Zanatos
@@ -194,7 +195,6 @@ $magicWords = array(
 	'forcetoc'                  => array( '0', '__لصق_فهرس__', '__FORCETOC__' ),
 	'toc'                       => array( '0', '__فهرس__', '__TOC__' ),
 	'noeditsection'             => array( '0', '__لاتحريرقسم__', '__NOEDITSECTION__' ),
-	'noheader'                  => array( '0', '__لاعنوان__', '__NOHEADER__' ),
 	'currentmonth'              => array( '1', 'شهر_حالي', 'شهر_حالي2', 'CURRENTMONTH', 'CURRENTMONTH2' ),
 	'currentmonth1'             => array( '1', 'شهر_حالي1', 'CURRENTMONTH1' ),
 	'currentmonthname'          => array( '1', 'اسم_الشهر_الحالي', 'CURRENTMONTHNAME' ),
@@ -421,7 +421,6 @@ $specialPageAliases = array(
 	'Recentchanges'             => array( 'أحدث_التغييرات' ),
 	'Recentchangeslinked'       => array( 'أحدث_التغييرات_الموصولة', 'تغييرات_مرتبطة' ),
 	'Revisiondelete'            => array( 'حذف_مراجعة' ),
-	'RevisionMove'              => array( 'نقل_مراجعة' ),
 	'Search'                    => array( 'بحث' ),
 	'Shortpages'                => array( 'صفحات_قصيرة' ),
 	'Specialpages'              => array( 'صفحات_خاصة' ),
@@ -732,7 +731,7 @@ $1',
 'youhavenewmessages' => 'توجد لديك $1 ($2).',
 'newmessageslink' => 'رسائل جديدة',
 'newmessagesdifflink' => 'آخر تغيير',
-'youhavenewmessagesfromusers' => 'لديك $1 من {{PLURAL:$3|مستخدم آخر|$3 مستخدمين}} ($2).',
+'youhavenewmessagesfromusers' => 'لديك $1 من {{PLURAL:$3||مستخدم واحد|مستخدمين اثنين|$3 مستخدمين|$3 مستخدماً|$3 مستخدم}} ($2).',
 'youhavenewmessagesmanyusers' => 'لديك $1 من مستخدمين كثر ($2).',
 'newmessageslinkplural' => '{{PLURAL:$1|رسالة جديدة|رسائل جديدة}}',
 'newmessagesdifflinkplural' => 'آخر {{PLURAL:$1|تغيير|تغييرات}}',
@@ -883,9 +882,6 @@ $2',
 
 تستطيع المتابعة باستعمال {{SITENAME}} كمجهول، أو <span class='plainlinks'>[$1 الدخول مرة أخرى]</span> بنفس الاسم أو باسم آخر.
 من الممكن أن ترى بعض الصفحات كما لو أنك مسجل الدخول، وذلك حتى تقوم بإفراغ الصفحات المختزنة في المتصفح لديك.",
-'welcomecreation' => '== مرحبا، $1! ==
-تم إنشاء حسابك.
-لا تنس أن تغير [[Special:Preferences|تفضيلاتك في {{SITENAME}}]].',
 'yourname' => 'اسم المستخدم:',
 'yourpassword' => 'كلمة السر:',
 'yourpasswordagain' => 'أعد كتابة كلمة السر:',
@@ -964,7 +960,7 @@ $2',
 'emailauthenticated' => 'تم تأكيد بريدك الإلكتروني في $2 الساعة $3.',
 'emailnotauthenticated' => 'لم يتم التحقق من بريدك الإلكتروني.
 لن يتم إرسال رسائل لأي من الميزات التالية.',
-'noemailprefs' => 'حدد عنوان بريد إلكتروني في تفضيلاتك لهذه الخصائص لتعمل.',
+'noemailprefs' => 'حدد عنوان بريد إلكتروني في تفضيلاتك لتفعيل هذه الخصائص.',
 'emailconfirmlink' => 'أكد عنوان بريدك الإلكتروني',
 'invalidemailaddress' => 'لا يمكن قبول عنوان البريد الإلكتروني حيث تبدو صيغته خاطئة.
 ضع عنوانا مضبوطا أو أفرغ هذا الحقل.',
@@ -1264,6 +1260,10 @@ $2
 'content-failed-to-parse' => 'فشل في تحليل $2 محتوى لـ $1 نموذج: $3',
 'invalid-content-data' => 'بيانات المحتوى غير صالحة',
 'content-not-allowed-here' => '"$1" المحتوى غير مسموح على صفحة [[$2]]',
+
+# Content models
+'content-model-text' => 'نص عادي',
+'content-model-javascript' => 'جافاسكربت',
 
 # Parser/template warnings
 'expensive-parserfunction-warning' => "'''تحذير:''' هذه الصفحة تحتوي على استدعاءات دالة محلل كثيرة مكلفة.
@@ -1655,8 +1655,8 @@ $1",
 'email' => 'البريد الإلكتروني',
 'prefs-help-realname' => 'الاسم الحقيقي اختياري.
 لو اخترت أن توفره، فسيستخدم في الإشارة إلى عملك.',
-'prefs-help-email' => 'عنوان البريد الإلكتروني هو أمر اختياري، ولكن ستحتاج لإعادة تعيين كلمة المرور، إن نسيت كلمة المرور الخاصة بك.',
-'prefs-help-email-others' => 'يمكنك أيضا اختيار للسماح للآخرين الاتصال بك عن طريق صفحة المستخدم أو نقاش المستخدم الخاص بك دون الحاجة إلى الكشف عن الهوية الخاصة بك.',
+'prefs-help-email' => 'تحديد عنوان البريد الإلكتروني اختياري، ولكنه يلزم لإعادة تعيين كلمة المرور في حال نسيت كلمة المرور الخاصة بك.',
+'prefs-help-email-others' => 'يمكنك أيضا أن {{GENDER:$1|تسمح|تسمحي}} للآخرين الاتصال بك عن طريق وصلة في صفحة المستخدم أو نقاش المستخدم الخاصة بك. لا يكشف بريدك الإلكتروني عندما يراسلك أحد بهذه الطريقة، ولكن إذا راسلت أحداً سيرى بريدك الإلكتروني.',
 'prefs-help-email-required' => 'عنوان البريد الإلكتروني مطلوب.',
 'prefs-info' => 'المعلومات الأساسية',
 'prefs-i18n' => 'الترجمة',
@@ -2547,11 +2547,7 @@ $1',
 
 'enotif_mailer' => 'نظام {{SITENAME}} البريدي للإخطارات',
 'enotif_reset' => 'علم على كل الصفحات كمزارة',
-'enotif_newpagetext' => 'هذه صفحة جديدة.',
 'enotif_impersonal_salutation' => 'مستخدم {{SITENAME}}',
-'changed' => 'غيرت',
-'created' => 'أنشئت',
-'enotif_subject' => 'صفحة {{SITENAME}} $PAGETITLE $CHANGEDORCREATED بواسطة $PAGEEDITOR',
 'enotif_lastvisited' => 'انظر $1 لكل التغييرات منذ زيارتك الأخيرة.',
 'enotif_lastdiff' => 'انظر $1 لرؤية هذا التغيير.',
 'enotif_anon_editor' => 'مستخدم مجهول $1',
@@ -2740,7 +2736,7 @@ $UNWATCHURL
 'undeletedrevisions-files' => 'أسترجعت {{PLURAL:$1||مراجعة واحدة|مراجعتان|$1 مراجعات|$1 مراجعة}}  و{{PLURAL:$2||ملف واحد|ملفان|$2 ملفات|$2 ملفًا|$2 ملف}}',
 'undeletedfiles' => 'أسترجع {{PLURAL:$1||ملف واحد|ملفان|$1 ملفات|$1 ملفًا|$1 ملف}}',
 'cannotundelete' => 'فشل الاسترجاع؛
-ربما قام شخص آخر باسترجاع الصفحة بالفعل.',
+$1',
 'undeletedpage' => "'''تم استرجاع $1'''
 
 راجع [[Special:Log/delete|سجل الحدف]] لمعاينة عمليات الحذف والاسترجاعات الحديثة.",
@@ -3329,6 +3325,7 @@ $1',
 'pageinfo-default-sort' => 'مفتاح الترتيب الافتراضي',
 'pageinfo-length' => 'حجم الصفحة (بالبايت)',
 'pageinfo-article-id' => 'معرف الصفحة (ID)',
+'pageinfo-language' => 'لغة محتوى الصفحة',
 'pageinfo-robot-policy' => 'الصفة في محرك البحث',
 'pageinfo-robot-index' => 'قابلة للفهرسة',
 'pageinfo-robot-noindex' => 'غير قابلة للفهرسة',
@@ -4388,7 +4385,7 @@ $5
 # Durations
 'duration-seconds' => '{{PLURAL:$1|أقل من ثانية|ثانية واحدة|ثانيتان|$1 ثوانٍ|$1 ثانية}}',
 'duration-minutes' => '{{PLURAL:$1|أقل من دقيقة|دقيقة واحدة|دقيقتان|$1 دقائق|$1 دقيقة}}',
-'duration-hours' => '({{PLURAL:$1||ساعة واحد|ساعتان|$1 ساعات|$1 ساعة}})',
+'duration-hours' => '({{PLURAL:$1||ساعة واحدة|ساعتان|$1 ساعات|$1 ساعة}})',
 'duration-days' => '{{PLURAL:$1||يوم واحد|يومان|$1 أيام|$1 يومًا|$1 يوم}}',
 'duration-weeks' => '{{PLURAL:$1||أسبوع واحد|أسبوعان|$1 أسابيع|$1 أسبوعًا|$1 أسبوع}}',
 'duration-years' => '{{PLURAL: $1||سنة واحدة|سنتان|$1 سنين|$1 سنة}}',

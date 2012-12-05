@@ -157,10 +157,23 @@ class SiteObject extends ORMRow implements Site {
 		$path = $this->getLinkPath();
 
 		if ( $path === false ) {
-			return false;
+			return '';
 		}
 
-		return parse_url( $path, PHP_URL_SCHEME );
+		$protocol = parse_url( $path, PHP_URL_SCHEME );
+
+		// Malformed URL
+		if ( $protocol === false ) {
+			throw new MWException( "failed to parse URL $path" );
+		}
+
+		// No schema
+		if ( $protocol === null ) {
+			// Used for protocol relative URLs
+			$protocol = '';
+		}
+
+		return $protocol;
 	}
 
 	/**

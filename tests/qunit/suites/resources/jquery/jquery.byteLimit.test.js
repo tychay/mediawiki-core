@@ -15,12 +15,13 @@
 	// Basic sendkey-implementation
 	function addChars( $input, charstr ) {
 		var c, len;
+		function x( $input, i ) {
+			// Add character to the value
+			return $input.val() + charstr.charAt( i );
+		}
 		for ( c = 0, len = charstr.length; c < len; c += 1 ) {
 			$input
-				.val( function ( i, val ) {
-					// Add character to the value
-					return val + charstr.charAt( c );
-				} )
+				.val( x( $input, c ) )
 				.trigger( 'change' );
 		}
 	}
@@ -229,6 +230,28 @@
 		assert.strictEqual( $el.length, 2, 'Verify that there are no other elements clashing with this test suite' );
 
 		$el.byteLimit();
+	});
+
+	QUnit.test( 'Trim from insertion when limit exceeded', 2, function ( assert ) {
+		var $el;
+
+		// Use a new <input /> because the bug only occurs on the first time
+		// the limit it reached (bug 40850)
+		$el = $( '<input type="text"/>' )
+			.appendTo( '#qunit-fixture' )
+			.byteLimit( 3 )
+			.val( 'abc' ).trigger( 'change' )
+			.val( 'zabc' ).trigger( 'change' );
+
+		assert.strictEqual( $el.val(), 'abc', 'Trim from the insertion point (at 0), not the end' );
+
+		$el = $( '<input type="text"/>' )
+			.appendTo( '#qunit-fixture' )
+			.byteLimit( 3 )
+			.val( 'abc' ).trigger( 'change' )
+			.val( 'azbc' ).trigger( 'change' );
+
+		assert.strictEqual( $el.val(), 'abc', 'Trim from the insertion point (at 1), not the end' );
 	});
 
 }( jQuery, mediaWiki ) );

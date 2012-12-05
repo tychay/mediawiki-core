@@ -994,8 +994,10 @@ CREATE TABLE /*_*/uploadstash (
   -- chunk counter starts at 0, current offset is stored in us_size
   us_chunk_inx int unsigned NULL,
 
-  -- file properties from File::getPropsFromPath.  these may prove unnecessary.
-  --
+  -- Serialized file properties from File::getPropsFromPath
+  us_props blob,
+
+  -- file size in bytes
   us_size int unsigned NOT NULL,
   -- this hash comes from File::sha1Base36(), and is 31 characters
   us_sha1 varchar(31) NOT NULL,
@@ -1242,7 +1244,8 @@ CREATE TABLE /*_*/logging (
   -- Freeform text. Interpreted as edit history comments.
   log_comment varchar(255) NOT NULL default '',
 
-  -- LF separated list of miscellaneous parameters
+  -- miscellaneous parameters:
+  -- LF separated list (old system) or serialized PHP array (new system)
   log_params blob NOT NULL,
 
   -- rev_deleted for logs
@@ -1291,8 +1294,11 @@ CREATE TABLE /*_*/job (
   -- Stored as a PHP serialized array, or an empty string if there are no parameters
   job_params blob NOT NULL,
 
-  -- Random, non-unique, number used for concurrent job acquisition
+  -- Random, non-unique, number used for job acquisition (for lock concurrency)
   job_random integer unsigned NOT NULL default 0,
+
+  -- The number of times this job has been locked
+  job_attempts integer unsigned NOT NULL default 0,
 
   -- Field that conveys process locks on rows via process UUIDs
   job_token varbinary(32) NOT NULL default '',
@@ -1306,6 +1312,7 @@ CREATE TABLE /*_*/job (
 
 CREATE INDEX /*i*/job_sha1 ON /*_*/job (job_sha1);
 CREATE INDEX /*i*/job_cmd_token ON /*_*/job (job_cmd,job_token,job_random);
+CREATE INDEX /*i*/job_cmd_token_id ON /*_*/job (job_cmd,job_token,job_id);
 CREATE INDEX /*i*/job_cmd ON /*_*/job (job_cmd, job_namespace, job_title, job_params(128));
 CREATE INDEX /*i*/job_timestamp ON /*_*/job (job_timestamp);
 
@@ -1506,16 +1513,6 @@ CREATE TABLE /*_*/module_deps (
   md_deps mediumblob NOT NULL
 ) /*$wgDBTableOptions*/;
 CREATE UNIQUE INDEX /*i*/md_module_skin ON /*_*/module_deps (md_module, md_skin);
-
--- Table for holding configuration changes
-CREATE TABLE /*_*/config (
-  -- Config var name
-  cf_name varbinary(255) NOT NULL PRIMARY KEY,
-  -- Config var value
-  cf_value blob NOT NULL
-) /*$wgDBTableOptions*/;
--- Should cover *most* configuration - strings, ints, bools, etc.
-CREATE INDEX /*i*/cf_name_value ON /*_*/config (cf_name,cf_value(255));
 
 -- Holds all the sites known to the wiki.
 CREATE TABLE /*_*/sites (

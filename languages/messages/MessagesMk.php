@@ -163,7 +163,6 @@ $specialPageAliases = array(
 	'Recentchanges'             => array( 'СкорешниПромени' ),
 	'Recentchangeslinked'       => array( 'ПоврзаниПромени' ),
 	'Revisiondelete'            => array( 'БришењеРевизија' ),
-	'RevisionMove'              => array( 'ПреместиРевизија' ),
 	'Search'                    => array( 'Барај' ),
 	'Shortpages'                => array( 'КраткиСтраници' ),
 	'Specialpages'              => array( 'СпецијалниСтраници' ),
@@ -202,7 +201,6 @@ $magicWords = array(
 	'forcetoc'                  => array( '0', '__СОСОДРЖИНА__', '__FORCETOC__' ),
 	'toc'                       => array( '0', '__СОДРЖИНА__', '__TOC__' ),
 	'noeditsection'             => array( '0', '__БЕЗ_УРЕДУВАЊЕ_НА_ПОДНАСЛОВИ__', '__NOEDITSECTION__' ),
-	'noheader'                  => array( '0', '__БЕЗНАСЛОВ__', '__NOHEADER__' ),
 	'currentmonth'              => array( '1', 'ТЕКОВЕНМЕСЕЦ', 'CURRENTMONTH', 'CURRENTMONTH2' ),
 	'currentmonth1'             => array( '1', 'ТЕКОВЕНМЕСЕЦ1', 'CURRENTMONTH1' ),
 	'currentmonthname'          => array( '1', 'ТЕКОВЕНМЕСЕЦИМЕ', 'CURRENTMONTHNAME' ),
@@ -241,6 +239,7 @@ $magicWords = array(
 	'basepagename'              => array( '1', 'ИМЕНАОСНОВНАСТРАНИЦА', 'BASEPAGENAME' ),
 	'talkpagename'              => array( '1', 'СТРАНИЦАЗАРАЗГОВОР', 'TALKPAGENAME' ),
 	'subjectpagename'           => array( '1', 'ИМЕНАСТАТИЈА', 'SUBJECTPAGENAME', 'ARTICLEPAGENAME' ),
+	'msg'                       => array( '0', 'ПОР:', 'MSG:' ),
 	'subst'                     => array( '0', 'ЗАМЕНИ:', 'SUBST:' ),
 	'safesubst'                 => array( '0', 'БЕЗБЗАМЕНИ', 'SAFESUBST:' ),
 	'msgnw'                     => array( '0', 'ИЗВЕШТNW:', 'MSGNW:' ),
@@ -294,6 +293,9 @@ $magicWords = array(
 	'revisionuser'              => array( '1', 'КОРИСНИКНАНАРЕВИЗИЈА', 'REVISIONUSER' ),
 	'plural'                    => array( '0', 'МНОЖИНА:', 'PLURAL:' ),
 	'fullurl'                   => array( '0', 'ПОЛНАURL:', 'FULLURL:' ),
+	'fullurle'                  => array( '0', 'ПОЛНАURLE:', 'FULLURLE:' ),
+	'canonicalurl'              => array( '0', 'КАНОНСКАURL:', 'CANONICALURL:' ),
+	'canonicalurle'             => array( '0', 'КАНОНСКАURLE:', 'CANONICALURLE:' ),
 	'lcfirst'                   => array( '0', 'ПРВОМБ', 'LCFIRST:' ),
 	'ucfirst'                   => array( '0', 'ПРВОГБ', 'UCFIRST:' ),
 	'lc'                        => array( '0', 'МБ', 'LC:' ),
@@ -393,7 +395,7 @@ $messages = array(
 
 'underline-always' => 'Секогаш',
 'underline-never' => 'Никогаш',
-'underline-default' => 'Според нагодувањата на прелистувачот',
+'underline-default' => 'Според рувото или прелистувачот',
 
 # Font style option in Special:Preferences
 'editfont-style' => 'Фонт во полето за уредување:',
@@ -480,8 +482,8 @@ $messages = array(
 'newwindow' => '(се отвора во нов прозорец)',
 'cancel' => 'Откажи',
 'moredotdotdot' => 'Повеќе...',
-'mypage' => 'Моја страница',
-'mytalk' => 'мои разговори',
+'mypage' => 'Страница',
+'mytalk' => 'Разговор',
 'anontalk' => 'Разговор за оваа IP-адреса',
 'navigation' => 'Навигација',
 'and' => '&#32;и',
@@ -513,6 +515,7 @@ $messages = array(
 'namespaces' => 'Именски простори',
 'variants' => 'Варијанти',
 
+'navigation-heading' => 'Навигационо мени',
 'errorpagetitle' => 'Грешка',
 'returnto' => 'Назад на $1.',
 'tagline' => 'Од {{SITENAME}}',
@@ -727,7 +730,7 @@ $1',
 'actionthrottled' => 'Дејството е успорено',
 'actionthrottledtext' => 'Како анти-спам мерка, ограничени сте од вршење на ова дејство премногу пати во краток временски период, а го преминавте ограничувањето.
 Ве молиме обидете се повторно за неколку минути.',
-'protectedpagetext' => 'Оваа страница е заклучена за уредувања.',
+'protectedpagetext' => 'Оваа страница е заклучена за уредувања и други дејства.',
 'viewsourcetext' => 'Можете да го погледнете и копирате кодот на оваа страница:',
 'viewyourtext' => "Можете да го погледнете и копирате кодот на '''вашите уредувања''' на оваа страница:",
 'protectedinterface' => 'Оваа страница содржи текст од посредникот на софтверот на ова вики и е превентивно заштитена поради можна злоупотреба.
@@ -762,9 +765,9 @@ $2',
 
 Можете да продолжите со користење на {{SITENAME}} анонимно или можете <span class='plainlinks'>[$1 повторно да се најавите]</span> под исто или различно корисничко име.
 Да напоменеме дека некои страници може да продолжат да се прикажуваат како да сте најавени, се додека не го исчистите кешот на вашиот прелистувач.",
-'welcomecreation' => '== Добредојдовте, $1! ==
-Вашата корисничка сметка е создадена.
-Не заборавајте да ги [[Special:Preferences|наместите вашите нагодувања]].',
+'welcomeuser' => 'Добредојдовте, $1!',
+'welcomecreation-msg' => 'Вашата корисничка сметка е создадена.
+Не заборавајте да ги измените вашите [[Special:Preferences|{{SITENAME}} нагодувања]].',
 'yourname' => 'Корисничко име:',
 'yourpassword' => 'Лозинка:',
 'yourpasswordagain' => 'Повторете ја лозинката:',
@@ -969,7 +972,7 @@ $2
 'missingsummary' => "'''Потсетник:''' Не внесовте опис на измените. Ако притиснете Зачувај повторно, вашите измени ќе се зачуваат без опис.",
 'missingcommenttext' => 'Ве молиме внесете коментар подолу.',
 'missingcommentheader' => "'''Потсетување:''' Не внесовте наслов за овој коментар.
-Ако повторно кликнете на „{{int:savearticle}}“, уредувањето ќе биде зачувано без наслов.",
+Ако повторно стиснете на „{{int:savearticle}}“, уредувањето ќе биде зачувано без наслов.",
 'summary-preview' => 'Изглед на описот:',
 'subject-preview' => 'Преглед на предметот/насловот:',
 'blockedtitle' => 'Корисникот е блокиран',
@@ -1057,7 +1060,7 @@ $2
 'note' => "'''Напомена:'''",
 'previewnote' => "'''Имајте предвид дека ова е само преглед.'''
 Промените сè уште не се зачувани!",
-'continue-editing' => 'Продолжете со уредување',
+'continue-editing' => 'Оди на полето за уредување',
 'previewconflict' => 'Овој преглед прикажува како ќе изгледа текстот внесен во горниот дел откако ќе се зачува страницата.',
 'session_fail_preview' => "'''Жалиме! Не можевме да го обработиме вашето уредување поради загуба на сесиски податоци.'''
 Обидете се повторно.
@@ -1201,7 +1204,7 @@ $2
 'last' => 'посл',
 'page_first' => 'прв',
 'page_last' => 'последен',
-'histlegend' => "Разлика помеѓу ревизии: означете ги ревизиите кои сакате да ги споредите и притиснете Enter или копчето на дното од страницата.<br />
+'histlegend' => "Разлика помеѓу ревизии: Означете ги ревизиите што сакате да ги споредите и притиснете на Enter или копчето на дното од страницата.<br />
 Легенда: '''({{int:cur}})''' = разлика со последна ревизија, '''({{int:last}})''' = разлика со претходна ревизија, '''{{int:minoreditletter}}''' = ситна промена.",
 'history-fieldset-title' => 'Прелистување на историја',
 'history-show-deleted' => 'Само избришани',
@@ -1438,7 +1441,7 @@ $1",
 
 # Preferences page
 'preferences' => 'Нагодувања',
-'mypreferences' => 'мои нагодувања',
+'mypreferences' => 'Нагодувања',
 'prefs-edits' => 'Број на уредувања:',
 'prefsnologin' => 'Не сте најавени',
 'prefsnologintext' => 'Мора да бидете <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} најавени]</span> за да ги менувате вашите кориснички нагодувања.',
@@ -1452,7 +1455,7 @@ $1",
 'prefs-user-pages' => 'Кориснички страници',
 'prefs-personal' => 'Кориснички профил',
 'prefs-rc' => 'Скорешни промени',
-'prefs-watchlist' => 'Список на набљудувања',
+'prefs-watchlist' => 'Набљудувања',
 'prefs-watchlist-days' => 'Број на денови за приказ во списокот на набљудувања:',
 'prefs-watchlist-days-max' => 'Највеќе $1 {{PLURAL:$1|ден|дена}}',
 'prefs-watchlist-edits' => 'Максимален број на прикажани промени во проширениот список на набљудувања:',
@@ -1672,6 +1675,9 @@ $1",
 'rightslogtext' => 'Ова е дневник на промени на кориснички права.',
 'rightslogentry' => 'Променето членство во група за $1 од $2 во $3',
 'rightslogentry-autopromote' => 'е автоматски унапреден од $2 во $3',
+'logentry-rights-rights' => '$1 го смени групното членство за $3 од $4 во $5',
+'logentry-rights-rights-legacy' => '$1 го смени групното членство за $3',
+'logentry-rights-autopromote' => '$1 е автоматски унапреден од $4 во $5',
 'rightsnone' => '(нема)',
 
 # Associated actions - in the sentence "You do not have permission to X"
@@ -1919,6 +1925,7 @@ $1',
 'backend-fail-notsame' => 'Веќе постои неистоветна податотека - $1.',
 'backend-fail-invalidpath' => '$1 не е важечка патека за складирање.',
 'backend-fail-delete' => 'Не можев да ја избришам податотеката $1.',
+'backend-fail-describe' => 'Не можев да ги изменам метаподатоците за податотеката „$1“.',
 'backend-fail-alreadyexists' => 'Податотеката $1 веќе постои.',
 'backend-fail-store' => 'Не можев да ја складирам податотеката $1 во $2.',
 'backend-fail-copy' => 'Не можев да ја ископирам податотеката $1 во $2.',
@@ -2033,7 +2040,7 @@ $1',
 # File description page
 'file-anchor-link' => 'Податотека',
 'filehist' => 'Историја на податотеката',
-'filehist-help' => 'Кликнете на датум/време за да ја видите податотеката како изгледала тогаш.',
+'filehist-help' => 'Стиснете на датум/време за да ја видите податотеката како изгледала тогаш.',
 'filehist-deleteall' => 'избриши ги сите',
 'filehist-deleteone' => 'избриши',
 'filehist-revert' => 'врати',
@@ -2312,13 +2319,13 @@ $1',
 'linksearch-ns' => 'Именски простор:',
 'linksearch-ok' => 'Барај',
 'linksearch-text' => 'Може да се користат џокери, како на „*.wikipedia.org“.
-Бара највисок домен, како на пр. „*.org“.<br />
-Поддржани протоколи: <code>$1</code> (не ги ставајте во пребарувањето).',
+Бара барем највисок домен, како на пр. „*.org“.<br />
+Поддржани протоколи: <code>$1</code> (задава http:// ако не укажете протокол).',
 'linksearch-line' => '$1 врска во $2',
 'linksearch-error' => 'Џокер-знаците може да се користат само на почетокот во името на домаќинот.',
 
 # Special:ListUsers
-'listusersfrom' => 'Прикажни корисници почнувајќи од:',
+'listusersfrom' => 'Прикажи корисници почнувајќи од:',
 'listusers-submit' => 'Прикажи',
 'listusers-noresult' => 'Не е пронајден корисник.',
 'listusers-blocked' => '(блокиран)',
@@ -2327,7 +2334,7 @@ $1',
 'activeusers' => 'Список на активни корисници',
 'activeusers-intro' => 'Ова е список на корисници кои биле на некој начин активни во последните $1 {{PLURAL:$1|ден|дена}}.',
 'activeusers-count' => '$1 {{PLURAL:$1|уредување|уредувања}} {{PLURAL:$3|денес|во последните $3 дена}}',
-'activeusers-from' => 'Прикажува корисници кои почнуваат на:',
+'activeusers-from' => 'Прикажи корисници почнувајќи од:',
 'activeusers-hidebots' => 'Скриј ботови',
 'activeusers-hidesysops' => 'Скриј администратори',
 'activeusers-noresult' => 'Нема пронајдено корисници.',
@@ -2362,8 +2369,8 @@ $1',
 'emailuser-title-target' => 'Составување на е-пошта за {{GENDER:$1|корисникот}}',
 'emailuser-title-notarget' => 'Е-пошта за корисникот',
 'emailpage' => 'Е-пошта',
-'emailpagetext' => 'Можете да го користите следниов образец за праќање на е-поштенска порака до овој корисник.
-Е-поштенската адреса која ја имате наведено во [[Special:Preferences|вашите нагодувања]] ќе се прикаже во „Од“ полето на е-пораката, со што примачот ќе може да ви одговори директно вам.',
+'emailpagetext' => 'Можете да го употребите следниов образец за да му испратите е-пошта на овој {{GENDER:$1|корисник}}.
+Адреса која ја имате наведено во [[Special:Preferences|вашите нагодувања]] ќе се прикаже во полето „Од“ на пораката, со што примачот ќе може да ви одговори директно вам.',
 'usermailererror' => 'Настана следната грешка при праќање е-пошта:',
 'defemailsubject' => '{{SITENAME}} — писмо од корисникот „$1“',
 'usermaildisabled' => 'Корисничката е-пошта е оневозможена',
@@ -2394,7 +2401,7 @@ $1',
 
 # Watchlist
 'watchlist' => 'мои набљудувања',
-'mywatchlist' => 'мои набљудувања',
+'mywatchlist' => 'Набљудувања',
 'watchlistfor2' => 'За $1 $2',
 'nowatchlist' => 'Немате ништо во списокот на набљудувања.',
 'watchlistanontext' => 'Се бара $1 за да можете да го прегледувате и уредувате списокот на набљудувања.',
@@ -2430,18 +2437,23 @@ $1',
 
 'enotif_mailer' => '{{SITENAME}} Систем за известување',
 'enotif_reset' => 'Означи ги сите страници како посетени',
-'enotif_newpagetext' => 'Ова е нова страница.',
 'enotif_impersonal_salutation' => 'Википедија корисник',
-'changed' => 'изменета',
-'created' => 'создадена',
-'enotif_subject' => 'Страницата $PAGETITLE на {{SITENAME}} беше $CHANGEDORCREATED од $PAGEEDITOR',
+'enotif_subject_deleted' => 'Страницата $1 на {{SITENAME}} е избришана од {{gender:$2|$2}}',
+'enotif_subject_created' => 'Страницата $1 на {{SITENAME}} е создадена од {{gender:$2|$2}}',
+'enotif_subject_moved' => 'Страницата $1 на {{SITENAME}} е преместена од {{gender:$2|$2}}',
+'enotif_subject_restored' => 'Страницата $1 на {{SITENAME}} е повратена од {{gender:$2|$2}}',
+'enotif_subject_changed' => 'Страницата $1 на {{SITENAME}} е изменета од {{gender:$2|$2}}',
+'enotif_body_intro_deleted' => 'Страницата $1 на {{SITENAME}} е избришана на $PAGEEDITDATE од {{gender:$2|$2}}. Тековната ревизија ќе ја најдете на $3.',
+'enotif_body_intro_created' => 'Страницата $1 на {{SITENAME}} е создадена на $PAGEEDITDATE од {{gender:$2|$2}}. Тековната ревизија ќе ја најдете на $3.',
+'enotif_body_intro_moved' => 'Страницата $1 на {{SITENAME}} е преместена на $PAGEEDITDATE од {{gender:$2|$2}}. Тековната ревизија ќе ја најдете на $3.',
+'enotif_body_intro_restored' => 'Страницата $1 на {{SITENAME}} е повратена на $PAGEEDITDATE од {{gender:$2|$2}}. Тековната ревизија ќе ја најдете на $3.',
+'enotif_body_intro_changed' => 'Страницата $1 на {{SITENAME}} е изменета на $PAGEEDITDATE од {{gender:$2|$2}}. Тековната ревизија ќе ја најдете на $3.',
 'enotif_lastvisited' => 'Видете $1 за сите промени од вашата последна посета.',
 'enotif_lastdiff' => 'Видете $1 за да ја видите оваа промена.',
 'enotif_anon_editor' => 'анонимен корисник $1',
 'enotif_body' => 'Почитуван(а) $WATCHINGUSERNAME,
 
-
-На $PAGEEDITDATE е $CHANGEDORCREATED страницата „$PAGETITLE“ на проектот {{SITENAME}}. Измената ја изврши $PAGEEDITOR. Погледајте ја тековната верзија на $PAGETITLE_URL.
+$PAGEINTRO $NEWPAGE
 
 $NEWPAGE
 
@@ -2454,7 +2466,7 @@ $NEWPAGE
 Повеќе нема да добивате известувања во случај на други понатамошни промени, освен ако не ја посетите оваа страница.
 Можете и да ги поништите ознаките за известување за сите набљудувани страници на вашиот список на набљудувања.
 
-             Системот за известување на {{SITENAME}}
+Известителниот систем на {{SITENAME}}
 
 --
 Ако сакате да ги измените нагодувањата за известување по е-пошта, посетете ја страницата
@@ -2466,7 +2478,7 @@ $NEWPAGE
 За да ја избришете страницата од списокот на набљудувања, посетете ја страницата
 $UNWATCHURL
 
-Повратни информации и помош:
+Ваши мислења, прашања и повеќе помош:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
 
 # Delete
@@ -2658,9 +2670,9 @@ $1',
 'blanknamespace' => '(Главен)',
 
 # Contributions
-'contributions' => 'Кориснички придонеси',
+'contributions' => '{{GENDER:$1|Кориснички}} придонеси',
 'contributions-title' => 'Придонеси на корисникот $1',
-'mycontris' => 'мои придонеси',
+'mycontris' => 'Придонеси',
 'contribsub2' => 'За $1 ($2)',
 'nocontribs' => 'Не се пронајдени промени што одговараат на овој критериум.',
 'uctop' => ' (врв)',
@@ -2700,7 +2712,7 @@ $1',
 'whatlinkshere-hideredirs' => '$1 пренасочувања',
 'whatlinkshere-hidetrans' => '$1 превметнувања',
 'whatlinkshere-hidelinks' => '$1 врски',
-'whatlinkshere-hideimages' => '$1 врски кон слика',
+'whatlinkshere-hideimages' => '$1 врски кон податотека',
 'whatlinkshere-filters' => 'Филтри',
 
 # Block/unblock
@@ -3213,6 +3225,7 @@ $1',
 'pageinfo-default-sort' => 'Основен подредбен клуч',
 'pageinfo-length' => 'Должина на страницата (во бајти)',
 'pageinfo-article-id' => 'Назнака на страницата',
+'pageinfo-language' => 'Јазик на содржината на страницата',
 'pageinfo-robot-policy' => 'Статус на прелистувачот',
 'pageinfo-robot-index' => 'Се индексира',
 'pageinfo-robot-noindex' => 'Не се индексира',
@@ -3263,6 +3276,8 @@ $1',
 'markedaspatrollederror' => 'Не можам да означам како проверена',
 'markedaspatrollederrortext' => 'Морате да внесете верзија за да ја означите како проверена.',
 'markedaspatrollederror-noautopatrol' => 'Не можете да ги означите своите промени како проверени.',
+'markedaspatrollednotify' => 'Оваа измена на $1 е означена како испатролирана.',
+'markedaspatrollederrornotify' => 'Означувањето како испатролирано не успеа.',
 
 # Patrol log
 'patrol-log-page' => 'Дневник на патролирања',
@@ -3332,6 +3347,7 @@ $1',
 'hours' => '{{PLURAL:$1|$1 час|$1 часа}}',
 'days' => '{{PLURAL:$1|$1 ден|$1 дена}}',
 'ago' => 'пред $1',
+'just-now' => 'Штотуку',
 
 # Bad image list
 'bad_image_list' => 'Форматот е следниот:
@@ -4093,6 +4109,7 @@ $5
 'version-license' => 'Лиценца',
 'version-poweredby-credits' => "Ова вики работи на '''[//www.mediawiki.org/ МедијаВики]''', авторски права © 2001-$1 $2.",
 'version-poweredby-others' => 'други',
+'version-credits-summary' => 'Би сакале да им се заблагодариме на следниве лица за нивните придонеси кон [[Special:Version|МедијаВики]].',
 'version-license-info' => 'МедијаВики е слободна програмска опрема; можете да ја редистрибуирате и/или менувате под условите на ГНУ-овата општа јавна лиценца на Фондацијата за слободна програмска опрема; или верзија 2 на Лиценцата, или некоја понова верзија (по ваш избор).
 
 МедијаВики се нуди со надеж дека ќе биде од корист, но БЕЗ БИЛО КАКВА ГАРАНЦИЈА; дури и без подразбраната гаранција за ПРОДАЖНА ВРЕДНОСТ или ПОГОДНОСТ ЗА ДАДЕНА ЦЕЛ. За повеќе информации, погледајте ја ГНУ-овата општа јавна лиценца.
@@ -4233,9 +4250,9 @@ $5
 'logentry-move-move_redir-noredirect' => '$1 ја премести страницата $3 на $4 презапишувајќи врз пренасочување без да остави пренасочување',
 'logentry-patrol-patrol' => '$1 ја означи ревизијата $4 на страницата $3 како испатролирана',
 'logentry-patrol-patrol-auto' => '$1 автоматски ја означи ревизијата $4 на страницата $3 како испатролирана',
-'logentry-newusers-newusers' => '$1 направи корисничка сметка',
-'logentry-newusers-create' => '$1 направи корисничка сметка',
-'logentry-newusers-create2' => '$1 направи корисничка сметка $3',
+'logentry-newusers-newusers' => 'Направена е корисничката сметка $1',
+'logentry-newusers-create' => 'Направена е корисничката сметка $1',
+'logentry-newusers-create2' => 'Направена е корисничката сметка $3; создавач: $1',
 'logentry-newusers-autocreate' => 'Сметката $1 е создадена автоматски',
 'newuserlog-byemail' => 'испратена лозинка по е-пошта',
 
@@ -4311,4 +4328,6 @@ $5
 'duration-centuries' => '$1 {{PLURAL:$1|век|века}}',
 'duration-millennia' => '$1 {{PLURAL:$1|милениум|милениуми}}',
 
+# Unknown messages
+'svg-long-error' => 'Неважечка SVG-податотека: $1',
 );

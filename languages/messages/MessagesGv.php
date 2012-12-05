@@ -164,7 +164,6 @@ $messages = array(
 'qbbrowse' => 'Ronsee',
 'qbedit' => 'Reagh',
 'qbpageoptions' => 'Yn duillag shoh',
-'qbpageinfo' => 'Co-hecks',
 'qbmyoptions' => 'My ghuillagyn',
 'qbspecialpages' => 'Duillagyn er lheh',
 'faq' => 'FC',
@@ -343,9 +342,6 @@ Cur coontey jeh da [[Special:ListUsers/sysop|reireyder]], as goaill stiagh yn UR
 'virus-unknownscanner' => 'ronseyder noi-veerys gyn enney',
 
 # Login and logout pages
-'welcomecreation' => '== Failt ort, $1! ==
-Ta dty choontys crooit nish.<br />
-Ny jean jarrood dty [[Special:Preferences|hosheeaghtyn {{SITENAME}}]] y chaghlaa.',
 'yourname' => "Dt'ennym ymmydeyr:",
 'yourpassword' => 'Fockle yn arrey:',
 'yourpasswordagain' => "Aascreeu d'ockle arrey:",
@@ -1000,10 +996,7 @@ Bee caghlaaghyn jeant er y duillag shoh as e ghuillag resoonaght ry-akin ayns y 
 'watching' => 'Jannoo arrey...',
 'unwatching' => 'Stap y chur er arrey...',
 
-'enotif_newpagetext' => 'She duillag noa eh shoh.',
 'enotif_impersonal_salutation' => '{{SITENAME}} ymmydeyr',
-'changed' => 'ceaghlit',
-'created' => 'crooit',
 'enotif_anon_editor' => 'ymmydeyr $1 neuenmyssit',
 'enotif_body' => '$WATCHINGUSERNAME veen,
 

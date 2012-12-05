@@ -1256,9 +1256,18 @@ function wfLogProfilingData() {
 	if ( $wgUser->isItemLoaded( 'id' ) && $wgUser->isAnon() ) {
 		$forward .= ' anon';
 	}
+
+	// Command line script uses a FauxRequest object which does not have
+	// any knowledge about an URL and throw an exception instead.
+	try {
+		$requestUrl = $wgRequest->getRequestURL();
+	} catch ( MWException $e ) {
+		$requestUrl = 'n/a';
+	}
+
 	$log = sprintf( "%s\t%04.3f\t%s\n",
 		gmdate( 'YmdHis' ), $elapsed,
-		urldecode( $wgRequest->getRequestURL() . $forward ) );
+		urldecode( $requestUrl . $forward ) );
 
 	wfErrorLog( $log . $profiler->getOutput(), $wgDebugLogFile );
 }
@@ -2937,11 +2946,15 @@ function wfMerge( $old, $mine, $yours, &$result ) {
 	$mytextFile = fopen( $mytextName = tempnam( $td, 'merge-mine-' ), 'w' );
 	$yourtextFile = fopen( $yourtextName = tempnam( $td, 'merge-your-' ), 'w' );
 
-	fwrite( $oldtextFile, $old );
+	# NOTE: diff3 issues a warning to stderr if any of the files does not end with
+	#       a newline character. To avoid this, we normalize the trailing whitespace before
+	#       creating the diff.
+
+	fwrite( $oldtextFile, rtrim( $old ) . "\n" );
 	fclose( $oldtextFile );
-	fwrite( $mytextFile, $mine );
+	fwrite( $mytextFile, rtrim( $mine ) . "\n" );
 	fclose( $mytextFile );
-	fwrite( $yourtextFile, $yours );
+	fwrite( $yourtextFile, rtrim( $yours ) . "\n" );
 	fclose( $yourtextFile );
 
 	# Check for a conflict
@@ -3299,6 +3312,18 @@ function wfHttpOnlySafe() {
 }
 
 /**
+ * Check if there is sufficent entropy in php's built-in session generation
+ * @return bool true = there is sufficient entropy
+ */
+function wfCheckEntropy() {
+	return (
+			( wfIsWindows() && version_compare( PHP_VERSION, '5.3.3', '>=' ) )
+			|| ini_get( 'session.entropy_file' )
+		)
+		&& intval( ini_get( 'session.entropy_length' ) ) >= 32;
+}
+
+/**
  * Override session_id before session startup if php's built-in
  * session generation code is not secure.
  */
@@ -3312,11 +3337,7 @@ function wfFixSessionID() {
 	// - entropy_file is set or you're on Windows with php 5.3.3+
 	// - AND entropy_length is > 0
 	// We treat it as disabled if it doesn't have an entropy length of at least 32
-	$entropyEnabled = (
-			( wfIsWindows() && version_compare( PHP_VERSION, '5.3.3', '>=' ) )
-			|| ini_get( 'session.entropy_file' )
-		)
-		&& intval( ini_get( 'session.entropy_length' ) ) >= 32;
+	$entropyEnabled = wfCheckEntropy();
 
 	// If built-in entropy is not enabled or not sufficient override php's built in session id generation code
 	if ( !$entropyEnabled ) {

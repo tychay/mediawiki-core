@@ -9,6 +9,8 @@
  *
  * @author Cekli829
  * @author Don Alessandro
+ * @author E THP
+ * @author Ebrahimi-amir
  * @author Emperyan
  * @author Erdemaslancan
  * @author Gulmammad
@@ -474,9 +476,6 @@ Göstərilən səbəb: "\'\'$2\'\'".',
 'logouttext' => "'''Sistemdən çıxdınız.'''
 
 Siz {{SITENAME}} saytını anonim olaraq istifadə etməyə davam edə bilər və ya eyni, yaxud başqa istifadəçi adı ilə <span class='plainlinks'>[$1 yenidən daxil ola]</span> bilərsiniz. Veb-brauzerin keş yaddaşını təmizləyənədək bəzi səhifələr hələ də sistemdə imişsiniz kimi görünə bilər.",
-'welcomecreation' => '== $1, xoş gəlmişsiniz! ==
-Hesabınız yaradıldı.
-[[Special:Preferences|{{SITENAME}} nizamlamalarınızı]] dəyişdirməyi unutmayın.',
 'yourname' => 'İstifadəçi adı',
 'yourpassword' => 'Parol:',
 'yourpasswordagain' => 'Parolu təkrar yazın:',
@@ -956,7 +955,7 @@ $1",
 
 # Preferences page
 'preferences' => 'Nizamlamalar',
-'mypreferences' => 'Nizamlamalarım',
+'mypreferences' => 'Nizamlamalar',
 'prefs-edits' => 'Redaktələrin sayı:',
 'prefsnologin' => 'Daxil olmamısınız',
 'prefsnologintext' => 'Nizamlamaları dəyişmək üçün <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} daxil olmaq]</span> zəruridir.',
@@ -1740,11 +1739,7 @@ Fərdi hüquqlar haqqında əlavə məlumatı [[{{MediaWiki:Listgrouprights-help
 
 'enotif_mailer' => '{{SITENAME}} Bildiriş Xidməti',
 'enotif_reset' => 'Baxılmış bütün səhifələri işarələ.',
-'enotif_newpagetext' => 'Bu səhifə yeni səhifədir.',
 'enotif_impersonal_salutation' => '{{SITENAME}} istifadəçisi',
-'changed' => 'dəyişdi',
-'created' => 'yaradıldı',
-'enotif_subject' => '{{SITENAME}} saytındakı $PAGETITLE səhifəsi $PAGEEDITOR tərəfindən $CHANGEDORCREATED',
 'enotif_lastvisited' => 'Sonuncu ziyarətinizdən indiyədək olan bütün dəyişiklikləri görmək üçün baxın: $1.',
 'enotif_lastdiff' => 'Bu dəyişikliyi görmək üçün $1 səhifəsinə baxın.',
 'enotif_anon_editor' => 'qeydiyyatsız istifadəçi $1',
@@ -2328,9 +2323,16 @@ Zəhmət olmasa başqa ad seçin.',
 
 # Info page
 'pageinfo-title' => '"$1" üçün məlumat',
+'pageinfo-header-basic' => 'Əsas məlumatlar',
 'pageinfo-header-edits' => 'Redaktələr',
+'pageinfo-header-restrictions' => 'Səhifə mühafizəsi',
+'pageinfo-header-properties' => 'Səhifə xüsusiyyətləri',
 'pageinfo-views' => 'Göstərmə səhifəsi',
 'pageinfo-watchers' => 'Baxış sayı',
+'pageinfo-firstuser' => 'Səhifəni yaradan',
+'pageinfo-firsttime' => 'Səhifənin yaranma tarixi',
+'pageinfo-lastuser' => 'Sonuncu redaktor',
+'pageinfo-lasttime' => 'Sonuncu redaktənin tarixi',
 'pageinfo-edits' => 'Redaktələrin sayı',
 'pageinfo-authors' => 'Fərqli müəlliflərin sayı',
 
@@ -2552,7 +2554,7 @@ Variants for Chinese language
 'exif-objectname' => 'Qısa başlıq',
 'exif-specialinstructions' => 'Xüsusi instruksiyalar',
 'exif-headline' => 'Başlıq',
-'exif-credit' => 'Credit/Provider',
+'exif-credit' => 'Təmin edici',
 'exif-source' => 'Mənbə',
 'exif-editstatus' => 'Şəklin redaktə statusu',
 'exif-urgency' => 'Zərurilik',

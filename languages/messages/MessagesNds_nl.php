@@ -1,5 +1,5 @@
 <?php
-/** Nedersaksisch (Nedersaksisch)
+/** Nedersaksies (Nedersaksies)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -80,7 +80,6 @@ $magicWords = array(
 	'forcetoc'                  => array( '0', '__FORSEERONDERWARPEN__', '__INHOUD_DWINGEN__', '__FORCEERINHOUD__', '__FORCETOC__' ),
 	'toc'                       => array( '0', '__ONDERWARPEN__', '__INHOUD__', '__TOC__' ),
 	'noeditsection'             => array( '0', '__GIENBEWARKSEKSIE__', '__NIETBEWERKBARESECTIE__', '__NOEDITSECTION__' ),
-	'noheader'                  => array( '0', '__GIENKOPJEN__', '__GEENKOP__', '__NOHEADER__' ),
 	'currentmonth'              => array( '1', 'DISSEMAOND', 'HUIDIGEMAAND', 'HUIDIGEMAAND2', 'CURRENTMONTH', 'CURRENTMONTH2' ),
 	'currentmonthname'          => array( '1', 'DISSEMAONDNAAM', 'HUIDIGEMAANDNAAM', 'CURRENTMONTHNAME' ),
 	'currentmonthnamegen'       => array( '1', 'DISSEMAONDGEN', 'HUIDIGEMAANDGEN', 'CURRENTMONTHNAMEGEN' ),
@@ -147,7 +146,7 @@ $magicWords = array(
 	'img_middle'                => array( '1', 'midden', 'middle' ),
 	'img_bottom'                => array( '1', 'benejen', 'beneden', 'bottom' ),
 	'img_text_bottom'           => array( '1', 'tekste-benejen', 'tekst-beneden', 'text-bottom' ),
-	'img_link'                  => array( '1', 'verwiezing=$', 'verwijzing=$1', 'link=$1' ),
+	'img_link'                  => array( '1', 'verwiezing=$1', 'verwijzing=$1', 'link=$1' ),
 	'sitename'                  => array( '1', 'WEBSTEENAAM', 'SITENAAM', 'SITENAME' ),
 	'ns'                        => array( '0', 'NR:', 'NS:' ),
 	'localurl'                  => array( '0', 'LOKALEURL', 'LOCALURL:' ),
@@ -274,7 +273,6 @@ $specialPageAliases = array(
 	'Recentchanges'             => array( 'Leste_wiezigingen' ),
 	'Recentchangeslinked'       => array( 'Volg_verwiezingen' ),
 	'Revisiondelete'            => array( 'Versie_vortdoon' ),
-	'RevisionMove'              => array( 'Versie_verplaotsen' ),
 	'Search'                    => array( 'Zeuken' ),
 	'Shortpages'                => array( 'Korte_artikels' ),
 	'Specialpages'              => array( 'Spesiale_pagina\'s' ),
@@ -715,9 +713,6 @@ De beheerder gaf hierveur de volgende reden: "$3".',
 
 Je kunnen {{SITENAME}} noen anoniem gebruken of je eigen <span class='plainlinks'>[$1 opniej anmelden]</span> onder disse of n aandere gebrukersnaam.
 t Kan ween dat der wat ziejen bin die weeregeven wörden asof je an-emeld bin totda'j t tussengeheugen van joew webkieker leegmaken.",
-'welcomecreation' => '== Welkom, $1! ==
-Joew gebrukersnaam is an-emaakt.
-Vergeet niet joew [[Special:Preferences|veurkeuren veur {{SITENAME}}]] in te stellen.',
 'yourname' => 'Gebrukersnaam',
 'yourpassword' => 'Wachtwoord',
 'yourpasswordagain' => 'Opniej invoeren',
@@ -2322,11 +2317,7 @@ Toekomstige wiezigingen op disse zied en de overlegzied zullen hier vermeld wör
 
 'enotif_mailer' => '{{SITENAME}}-berichgevingssysteem',
 'enotif_reset' => 'Markeer alle ziejen as bezöcht.',
-'enotif_newpagetext' => 'Dit is n nieje zied.',
 'enotif_impersonal_salutation' => '{{SITENAME}}-gebruker',
-'changed' => 'ewiezigd',
-'created' => 'an-emaakt',
-'enotif_subject' => '{{SITENAME}}-zied $PAGETITLE is $CHANGEDORCREATED deur $PAGEEDITOR',
 'enotif_lastvisited' => 'Zie $1 veur alle wiezigingen sinds joew leste bezeuk.',
 'enotif_lastdiff' => 'Zie $1 um disse wieziging te bekieken.',
 'enotif_anon_editor' => 'anonieme gebruker $1',

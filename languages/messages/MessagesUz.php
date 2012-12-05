@@ -12,6 +12,7 @@
  * @author Casual
  * @author CoderSI
  * @author Lyncos
+ * @author Nataev
  * @author Sociologist
  * @author Urhixidur
  * @author Xexdof
@@ -167,7 +168,7 @@ $messages = array(
 'newwindow' => '(yangi oynada ochiladi)',
 'cancel' => 'Bekor qilish',
 'moredotdotdot' => 'Batafsil...',
-'mypage' => 'Shaxsiy sahifa',
+'mypage' => 'Sahifa',
 'mytalk' => 'Suhbatim',
 'anontalk' => 'Bu IP uchun suhbat',
 'navigation' => 'Saytda harakatlanish',
@@ -372,9 +373,6 @@ Ushbu xabar tarjimasini qo'shish yoki o'zgartirish uchun, iltimos, MediaWikining
 
 {{SITENAME}} saytidan anonim holda foydalanishda davom etishindiz mumkin. Yoki siz yana hozirgi yoki boshqa foydalanuvchi nomi bilan qaytadan tizimga kirishingiz mumkin.
 Shuni e'tiborga olingki, ayrim sahifalar siz brauzeringiz keshini tozalamaguningizga qadar xuddi tizimga kirganingizdagidek ko'rinishda davom etaverishi mumkin.",
-'welcomecreation' => '== Xush kelibsiz, $1! ==
-Siz yangi hisob yaratdingiz.
-[[Special:Preferences|{{SITENAME}}dagi shaxsiy moslamalaringizni]] oʻzgartirish yodingizdan chiqmasin.',
 'yourname' => 'Foydalanuvchi nomi',
 'yourpassword' => 'Maxfiy soʻz',
 'yourpasswordagain' => 'Maxfiy so‘zni qayta kiriting:',
@@ -510,6 +508,7 @@ Agar bu sahifaga xatolik sabab kelgan bo'lsangiz brauzeringizning '''orqaga''' t
 'note' => "'''Izoh:'''",
 'previewnote' => "'''Bu shunchaki ko‘rib chiqish. O‘zgartirishlar hali saqlangani yo‘q!'''",
 'editing' => '$1 tahrirlanmoqda',
+'creating' => '«$1» sahifasini yaratish',
 'editingsection' => '$1 (boʻlim) tahrirlanmoqda',
 'copyrightwarning' => "Iltimos, {{SITENAME}}ga yuklangan har qanday axborot $2 ostida tarqatilishiga diqqat qiling (batafsil ma'lumot uchun $1ni ko'ring).
 Agar yozganlaringiz keyinchalik tahrir qilinishi va qayta tarqatilishiga rozi bo'lmasangiz, u holda bu yerga yozmang.<br />
@@ -553,7 +552,7 @@ Ayrim andozalar qo'shilmaydi.",
 
 # History pages
 'viewpagelogs' => 'Ushbu sahifaga doir qaydlarni koʻrsat',
-'nohistory' => "Ushbu sahifa uchun o'zgarishlar tarixi mavjud emas.",
+'nohistory' => 'Ushbu sahifa uchun oʻzgarishlar tarixi mavjud emas.',
 'currentrev' => 'Hozirgi koʻrinishi',
 'currentrev-asof' => '$1dagi, joriy koʻrinishi',
 'revisionasof' => '$1 paytdagi koʻrinishi',
@@ -577,8 +576,8 @@ Bu yerda: (joriy) = hozirgi koʻrinish bilan farq,
 'historyempty' => '(boʻsh)',
 
 # Revision feed
-'history-feed-title' => "O'zgarishlar tarixi",
-'history-feed-description' => "Vikidagi mazkur sahifaning o'zgarishlar tarixi",
+'history-feed-title' => 'Oʻzgarishlar tarixi',
+'history-feed-description' => 'Vikidagi mazkur sahifaning oʻzgarishlar tarixi',
 'history-feed-item-nocomment' => '$1 $2 da',
 
 # Revision deletion
@@ -615,7 +614,7 @@ Bu yerda: (joriy) = hozirgi koʻrinish bilan farq,
 'revertmerge' => "Bo'lish",
 
 # Diffs
-'history-title' => "$1 - o'zgarishlar tarixi",
+'history-title' => '$1 - oʻzgarishlar tarixi',
 'difference-title' => '$1 — versiyalar orasidagi farq',
 'difference-title-multipage' => '"$1" va "$2" sahifalar orasidagi farq',
 'difference-multipage' => '(Sahifalar orasidagi farq)',
@@ -1085,11 +1084,7 @@ Agar siz bu sahifani kuzatuv ro'yxatingizdan o'chirmoqchi bo'lsangiz \"Kuzatmasl
 
 'enotif_mailer' => "{{SITENAME}} Pochta orqali e'lon qilish xizmati",
 'enotif_reset' => "Hamma sahifalarni ko'rib chiqilgan deb belgilash",
-'enotif_newpagetext' => 'Bu yangi sahifa',
 'enotif_impersonal_salutation' => '{{SITENAME}} ishtirokchisi',
-'changed' => 'o‘zgartirildi',
-'created' => 'yaratildi',
-'enotif_subject' => '"{{SITENAME}}" loyihasining $PAGETITLE sahifasi $PAGEEDITOR tomonidan $CHANGEDORCREATED',
 'enotif_lastvisited' => "Oxirgi tashrifingizdan buyon sodir bo'lgan barcha o'zgarishlarni ko'rish uchun $1 ga qarang.",
 'enotif_lastdiff' => "O'zgarishlar bilan tanishish uchun $1 ga qarang.",
 'enotif_anon_editor' => 'anonim ishtirokchi $1',
@@ -1228,7 +1223,7 @@ Yaqinda sodir etilgan yoʻqotishlar uchun $2ni koʻring.',
 'whatlinkshere-hideredirs' => "$1 qayta yo'naltirishlar",
 'whatlinkshere-hidetrans' => '$1 kiritmalar',
 'whatlinkshere-hidelinks' => '$1 havolalar',
-'whatlinkshere-hideimages' => '$1 rasmlar uchun havolalar',
+'whatlinkshere-hideimages' => '$1 fayllar uchun havolalar',
 'whatlinkshere-filters' => 'Filtrlar',
 
 # Block/unblock

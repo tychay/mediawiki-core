@@ -24,7 +24,7 @@ $fallback = 'ru';
 
 $namespaceNames = array(
 	NS_MEDIA            => 'Медиа',
-	NS_SPECIAL          => 'Ярҙамсы',
+	NS_SPECIAL          => 'Махсус',
 	NS_TALK             => 'Фекерләшеү',
 	NS_USER             => 'Ҡатнашыусы',
 	NS_USER_TALK        => 'Ҡатнашыусы_менән_һөйләшеү',
@@ -42,6 +42,7 @@ $namespaceNames = array(
 );
 
 $namespaceAliases = array(
+	'Ярҙамсы'                     => NS_SPECIAL,
 	'Фекер_алышыу'                => NS_TALK,
 	'Ҡатнашыусы_м-н_фекер_алышыу' => NS_USER_TALK,
 	'$1_б-са_фекер_алышыу'        => NS_PROJECT_TALK,
@@ -56,6 +57,85 @@ $namespaceAliases = array(
 
 $specialPageAliases = array(
 	'Activeusers'               => array( 'ӘүҙемҠатнашыусылар', 'АктивҠатнашыусылар' ),
+	'Allmessages'               => array( 'Система_хәбәрҙәре' ),
+	'Allpages'                  => array( 'Барлыҡ_битәр' ),
+	'Blankpage'                 => array( 'Буш_бит' ),
+	'Block'                     => array( 'Блоклау' ),
+	'Blockme'                   => array( 'Мине_блокла' ),
+	'Booksources'               => array( 'Китап_сығанаҡтары' ),
+	'BrokenRedirects'           => array( 'Өҙөлгән_йүнәлтеүҙәр' ),
+	'Categories'                => array( 'Категориялар' ),
+	'ChangeEmail'               => array( 'Email-ды_алыштырыу' ),
+	'ChangePassword'            => array( 'Паролде_алыштырыу' ),
+	'ComparePages'              => array( 'Биттәрҙе_сағыштырыу' ),
+	'Confirmemail'              => array( 'Email-ды_раҫлау' ),
+	'Contributions'             => array( 'Өлөштәр' ),
+	'CreateAccount'             => array( 'Иҫәп_яҙыуы_яһау' ),
+	'Deadendpages'              => array( 'Көрсөк_биттәр' ),
+	'DeletedContributions'      => array( 'Юйылған_өлөш' ),
+	'Disambiguations'           => array( 'Күп_мәғәнәлелек' ),
+	'DoubleRedirects'           => array( 'Икеле_йүнәлтеүҙәр' ),
+	'EditWatchlist'             => array( 'Күҙәтеү_исемлеген_мөхәррирләү' ),
+	'Emailuser'                 => array( 'Ҡатнашыусыға_хат' ),
+	'Export'                    => array( 'Экспорт' ),
+	'FileDuplicateSearch'       => array( 'Файлдың_дубликаттарын_эҙләү' ),
+	'Filepath'                  => array( 'Файл_юлы' ),
+	'Import'                    => array( 'Импорт' ),
+	'BlockList'                 => array( 'Блоклауҙар_исемлеге' ),
+	'LinkSearch'                => array( 'Һылтанмалар_эҙләү' ),
+	'Listadmins'                => array( 'Хакимдар_исемлеге' ),
+	'Listbots'                  => array( 'Боттар_исемлеге' ),
+	'Listfiles'                 => array( 'Файлдар_исемлеге' ),
+	'Listgrouprights'           => array( 'Ҡатнашыусы_төркөмдәре_хоҡуҡтары' ),
+	'Listredirects'             => array( 'Йүнәлтеүҙәр_исемлеге' ),
+	'Listusers'                 => array( 'Ҡатнашыусылар_исемлеге' ),
+	'Log'                       => array( 'Журналдар' ),
+	'Lonelypages'               => array( 'Етем_биттәр' ),
+	'Longpages'                 => array( 'Оҙон_биттәр' ),
+	'MergeHistory'              => array( 'Тарихтарҙы_берләштереү' ),
+	'Mostimages'                => array( 'Йыш_ҡулланылған_файлдар' ),
+	'Movepage'                  => array( 'Бит_исемен_үҙгәртеү' ),
+	'Mycontributions'           => array( 'Өлөшөм' ),
+	'Mypage'                    => array( 'Битем' ),
+	'Mytalk'                    => array( 'Әңгәмә_битем' ),
+	'Myuploads'                 => array( 'Тейәүҙәрем' ),
+	'Newimages'                 => array( 'Яңы_файлдар' ),
+	'Newpages'                  => array( 'Яңы_биттәр' ),
+	'PasswordReset'             => array( 'Паролде_яңыртыу' ),
+	'PermanentLink'             => array( 'Даими_һылтанма' ),
+	'Popularpages'              => array( 'Популяр_биттәр' ),
+	'Preferences'               => array( 'Көйләүҙәр' ),
+	'Protectedpages'            => array( 'Һаҡланған_биттәр' ),
+	'Protectedtitles'           => array( 'Һаҡланған_исемдәр' ),
+	'Randompage'                => array( 'Осраҡлы_мәҡәлә' ),
+	'Recentchanges'             => array( 'Һуңғы_үҙгәртеүҙәр' ),
+	'Recentchangeslinked'       => array( 'Бәйле_үҙгәртеүҙәр' ),
+	'Revisiondelete'            => array( 'Төҙәтеүҙе_юйыу' ),
+	'Search'                    => array( 'Эҙләү' ),
+	'Shortpages'                => array( 'Ҡыҫҡа_биттәр' ),
+	'Specialpages'              => array( 'Махсус_биттәр' ),
+	'Tags'                      => array( 'Билдәләр' ),
+	'Unblock'                   => array( 'Блокты_сисеү' ),
+	'Uncategorizedcategories'   => array( 'Категорияланмаған_категориялар' ),
+	'Uncategorizedimages'       => array( 'Категорияланмаған_файлдар' ),
+	'Uncategorizedpages'        => array( 'Категорияланмаған_биттәр' ),
+	'Uncategorizedtemplates'    => array( 'Категорияланмаған_ҡалыптар' ),
+	'Undelete'                  => array( 'Тергеҙеү' ),
+	'Unusedcategories'          => array( 'Ҡулланылмаған_категориялар' ),
+	'Unusedimages'              => array( 'Ҡулланылмаған_файлдар' ),
+	'Unusedtemplates'           => array( 'Ҡулланылмаған_ҡалыптар' ),
+	'Upload'                    => array( 'Тейәү' ),
+	'UploadStash'               => array( 'Йәшерен_тейәү' ),
+	'Userlogin'                 => array( 'Танылыу' ),
+	'Userlogout'                => array( 'Ултырышты_тамамлау' ),
+	'Userrights'                => array( 'Хоҡуҡтарҙы_идаралау' ),
+	'Wantedcategories'          => array( 'Кәрәкле_категориялар' ),
+	'Wantedfiles'               => array( 'Кәрәкле_файлдар' ),
+	'Wantedpages'               => array( 'Кәрәкле_биттәр' ),
+	'Wantedtemplates'           => array( 'Кәрәкле_ҡалыптар' ),
+	'Watchlist'                 => array( 'Күҙәтеү_исемлеге' ),
+	'Whatlinkshere'             => array( 'Бында_һылтанмалар' ),
+	'Withoutinterwiki'          => array( 'Интервикиһыҙ' ),
 );
 
 // Remove Russian aliases
@@ -198,7 +278,7 @@ $messages = array(
 'cancel' => 'Бөтөрөргә',
 'moredotdotdot' => 'Дауамы...',
 'mypage' => 'Шәхси бит',
-'mytalk' => 'Минең менән әңгәмә',
+'mytalk' => 'Әңгәмә',
 'anontalk' => 'Был IP-адресының фекер алышыу бите',
 'navigation' => 'Төп йүнәлештәр',
 'and' => '&#32;һәм',
@@ -241,7 +321,7 @@ $messages = array(
 'history' => 'Тарих',
 'history_short' => 'Тарих',
 'updatedmarker' => 'һуңғы кереүемдән һуң яңыртылған',
-'printableversion' => 'Ҡағыҙға баҫыу өлгөһө',
+'printableversion' => 'Баҫтырыу өлгөһө',
 'permalink' => 'Даими һылтанма',
 'print' => 'Баҫыу',
 'view' => 'Ҡарау',
@@ -474,9 +554,6 @@ $2',
 
 Һеҙ {{SITENAME}} проектында аноним рәүештә дауам итә йәки <span class='plainlinks'>[$1 яңынан таныла]</span> алаһығыҙ (үҙ йәки башҡа исем менән).
 Ҡайһы бер биттәр һеҙ системала танылған һымаҡ күренергә мөмкин, уны бөтөрөү өсөн браузер кэшын таҙартығыҙ.",
-'welcomecreation' => '== Рәхим итегеҙ, $1! ==
-Иҫәп яҙыуығыҙ яһалды.
-Шәхси [[Special:Preferences|көйләүҙәрегеҙҙе]] үҙегеҙгә уңайлы итеп үҙгәртергә онотмағыҙ.',
 'yourname' => 'Ҡатнашыусы исеме',
 'yourpassword' => 'Һеҙҙең пароль',
 'yourpasswordagain' => 'Паролде ҡабаттан яҙыу',
@@ -717,8 +794,8 @@ $2
 <span class=\"plainlinks\">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} тап килгән журнал яҙмаларын таба]
 йәки '''[{{fullurl:{{FULLPAGENAME}}|action=edit}} бындай исемле яңы бит яһай]'''</span> алаһығыҙ.",
 'noarticletext-nopermission' => 'Хәҙерге ваҡытта был биттә текст юҡ.
-Һеҙ башҡа мәҡәләләрҙә [[Special:Search/{{PAGENAME}}|был исемде]] йәки
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} журналдағы яҙмаларҙы] эҙләй алаһығыҙ.</span>',
+Һеҙ башҡа биттәрҙә [[Special:Search/{{PAGENAME}}|был исемде]] йәки
+<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} журналдағы яҙмаларҙы] эҙләй алаһығыҙ, тик һеҙҙең бит яһау хоҡуғығыҙ юҡ.</span>',
 'missing-revision' => '"{{PAGENAME}}" исемле биттең $1 номерлы өлгөһө юҡ.
 
 Был хәл, ғәҙәттә, юйылған биткә яһалған һылтанманын ваҡыты үтеүенән барлыҡҡа килә.
@@ -1112,7 +1189,7 @@ $1",
 
 # Preferences page
 'preferences' => 'Көйләүҙәр',
-'mypreferences' => 'Көйләүҙәрем',
+'mypreferences' => 'Көйләүҙәр',
 'prefs-edits' => 'Төҙәтеүҙәр һаны:',
 'prefsnologin' => 'Танылмағанһығыҙ',
 'prefsnologintext' => 'Ҡатнашыусы көйләүҙәрен үҙгәртеү өсөн, һеҙ <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}}танылырға]</span> тейешһегеҙ.',
@@ -2081,11 +2158,7 @@ $1',
 
 'enotif_mailer' => '{{SITENAME}} проектының белдереү хеҙмәте',
 'enotif_reset' => 'Бөтә биттәрҙе ҡаралған тип билдәләргә',
-'enotif_newpagetext' => 'Был яңы бит.',
 'enotif_impersonal_salutation' => '{{SITENAME}} проектының ҡатнашыусыһы',
-'changed' => 'үҙгәртелгән',
-'created' => 'булдырылды',
-'enotif_subject' => '{{SITENAME}} проектының $PAGETITLE бите $PAGEEDITOR тарафынан $CHANGEDORCREATED',
 'enotif_lastvisited' => 'Һеҙҙең аҙаҡҡы кереүегеҙҙән һуңғы үҙгәртеүҙәрҙе ҡарау өсөн, $1 ҡарағыҙ.',
 'enotif_lastdiff' => 'Был үҙгәртеүҙе ҡарау өсөн, $1 ҡарағыҙ.',
 'enotif_anon_editor' => 'танылмаған ҡатнашыусы $1',
@@ -2306,7 +2379,7 @@ $1',
 # Contributions
 'contributions' => 'Ҡатнашыусы өлөшө',
 'contributions-title' => '$1 исемле ҡулланыусының кереткән өлөшө',
-'mycontris' => 'Башҡарған эштәр',
+'mycontris' => 'Өлөш',
 'contribsub2' => '$1 ($2) өсөн',
 'nocontribs' => 'Күрһәтелгән шарттарға яуап биргән үҙгәртеүҙәр табылманы.',
 'uctop' => '(аҙаҡҡы)',
@@ -2347,7 +2420,7 @@ $1',
 'whatlinkshere-hideredirs' => 'Йүнәлтеүҙәрҙе $1',
 'whatlinkshere-hidetrans' => 'Ҡушылғандарҙы $1',
 'whatlinkshere-hidelinks' => 'Һылтанмаларҙы $1',
-'whatlinkshere-hideimages' => 'Рәсем өсөн һылтанматарҙы $1',
+'whatlinkshere-hideimages' => 'файл һылтанмаларын $1',
 'whatlinkshere-filters' => 'Һайлау',
 
 # Block/unblock
@@ -2812,10 +2885,27 @@ The wiki server cannot provide data in a format your client can read.',
 # Info page
 'pageinfo-title' => '«$1» буйынса мәғлүмәт',
 'pageinfo-header-edits' => 'Үҙгәртеүҙәр',
+'pageinfo-display-title' => 'Күренгән исем',
+'pageinfo-default-sort' => 'Ғәҙәттәге сортлау асҡысы',
+'pageinfo-length' => 'Бит оҙонлоғо (байттарҙа)',
+'pageinfo-article-id' => 'Бит идентификаторы',
+'pageinfo-language' => 'Бит эстәлегенең теле',
+'pageinfo-robot-policy' => 'Эҙләү хеҙмәттәре статусы',
+'pageinfo-robot-index' => 'Индекслана',
+'pageinfo-robot-noindex' => 'Индексланмай',
 'pageinfo-views' => 'Ҡарау һаны',
-'pageinfo-watchers' => 'Күҙәтеүселәр һаны',
-'pageinfo-edits' => 'Төҙәтеү һаны',
+'pageinfo-watchers' => 'Битте күҙәтеүселәр һаны',
+'pageinfo-redirects-name' => 'Был биткә йүнәлтеүҙәр',
+'pageinfo-subpages-name' => 'Был биттең эске биттәре',
+'pageinfo-subpages-value' => '$1 ($2 {{PLURAL:$2|йүнәлтеү}}; $3 {{PLURAL:$3|ябай}})',
+'pageinfo-firstuser' => 'Битте яһаусы',
+'pageinfo-firsttime' => 'Битте яһау датаһы',
+'pageinfo-lastuser' => 'Һуңғы мөхәррирләүсе',
+'pageinfo-lasttime' => 'Һуңғы мөхәррирләү датаһы',
+'pageinfo-edits' => 'Дөйөм төҙәтеү һаны',
 'pageinfo-authors' => 'Төрлө авторҙар һаны',
+'pageinfo-recent-edits' => 'Һуңғы ваҡыттағы төҙәтеүҙәр ($1 эсендә)',
+'pageinfo-toolboxlink' => 'Бит мәғлүмәттәре',
 
 # Skin names
 'skinname-standard' => 'Классик',
@@ -3345,16 +3435,16 @@ $1',
 'confirmemail_loggedin' => 'Һеҙҙең электрон почта адресығыҙ раҫланды.',
 'confirmemail_error' => 'Электрон почта адресын раҫлаған ваҡытта хата килеп сыҡты.',
 'confirmemail_subject' => '{{SITENAME}} электрон почта адресын раҫлау',
-'confirmemail_body' => 'Кемдер, бәлки һеҙҙер, $1 IP адресынан 
-{{SITENAME}}  проектында ошо электрон почта адресы менән "$2" иҫәп яҙмаһын теркәгән.
+'confirmemail_body' => 'Кемдер, бәлки һеҙҙер, $1 IP адресынан {{SITENAME}} проектында 
+ошо электрон почта адресы менән "$2" иҫәп яҙмаһын теркәгән.
 
-Был иҫәп яҙмаһы ысынлап та һеҙҙеке икәнен раҫлау өсөн һәм
-{{SITENAME}} проектында элетрон почта мөмкинлектәрен тоҡандырыу өсөн, браузерығыҙҙа түбәндәге һылтанманы асығыҙ:
+Был иҫәп яҙмаһы ысынлап та һеҙҙеке икәнен раҫлау өсөн һәм {{SITENAME}} проектында электрон почта 
+мөмкинлектәрен тоҡандырыу өсөн, браузерығыҙҙа түбәндәге һылтанманы асығыҙ:
 
 $3
 
-Әгәр һеҙ иҫәп яҙмаһын *булдырмағанһығыҙ* икән,
-электрон почта адресын раҫлауҙы үтҡәрмәү өсөн т үбәндәге һылтанманы асығыҙ:
+Әгәр һеҙ иҫәп яҙмаһын *булдырмағанһығыҙ* икән, электрон почта 
+адресын раҫлауҙы үткәрмәү өсөн түбәндәге һылтанманы асығыҙ:
 
 $5
 
@@ -3363,12 +3453,12 @@ $5
 {{SITENAME}}  проектында "$2" иҫәп яҙмаһының электрон почта адресын ошо адресҡа үҙгәрткән.
 
 Был иҫәп яҙмаһы ысынлап та һеҙҙеке икәнен раҫлау өсөн һәм
-{{SITENAME}} проектында элетрон почта мөмкинлектәрен яңынан тоҡандырыу өсөн, браузерығыҙҙа түбәндәге һылтанманы асығыҙ:
+{{SITENAME}} проектында электрон почта мөмкинлектәрен яңынан тоҡандырыу өсөн, браузерығыҙҙа түбәндәге һылтанманы асығыҙ:
 
 $3
 
 Әгәр һеҙ иҫәп яҙмаһын *булдырмағанһығыҙ* икән,
-электрон почта адресын раҫлауҙы үтҡәрмәү өсөн т үбәндәге һылтанманы асығыҙ:
+электрон почта адресын раҫлауҙы үткәрмәү өсөн түбәндәге һылтанманы асығыҙ:
 
 $5
 
@@ -3377,12 +3467,12 @@ $5
 {{SITENAME}}  проектында "$2" иҫәп яҙмаһының электрон почта адресын ошо адрес итеп билдәләгән.
 
 Был иҫәп яҙмаһы ысынлап та һеҙҙеке икәнен раҫлау өсөн һәм
-{{SITENAME}} проектында элетрон почта мөмкинлектәрен яңынан тоҡандырыу өсөн, браузерығыҙҙа түбәндәге һылтанманы асығыҙ:
+{{SITENAME}} проектында электрон почта мөмкинлектәрен яңынан тоҡандырыу өсөн, браузерығыҙҙа түбәндәге һылтанманы асығыҙ:
 
 $3
 
 Әгәр иҫәп яҙмаһы һеҙҙеке *түгел* икән,
-электрон почта адресын раҫлауҙы үтҡәрмәү өсөн т үбәндәге һылтанманы асығыҙ:
+электрон почта адресын раҫлауҙы үткәрмәү өсөн түбәндәге һылтанманы асығыҙ:
 
 $5
 
@@ -3477,7 +3567,7 @@ $5
 'watchlisttools-raw' => 'Текст һымаҡ үҙгәртеү',
 
 # Signatures
-'signature' => '[[{{ns:user}}:$1|$2]] ([[{{ns:user_talk}}:$1|фекер алышыу]])',
+'signature' => '[[{{ns:user}}:$1|$2]] ([[{{ns:user_talk}}:$1|әңгәмә]])',
 
 # Core parser functions
 'unknown_extension_tag' => 'Билдәһеҙ "$1" киңәйтеү тегы',

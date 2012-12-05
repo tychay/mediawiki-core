@@ -345,7 +345,7 @@ $messages = array(
 'cancel' => 'Баш тарту',
 'moredotdotdot' => 'Дәвамы…',
 'mypage' => 'Шәхси битем',
-'mytalk' => 'Бәхәсем',
+'mytalk' => 'Бәхәс',
 'anontalk' => 'Бу IP адресы өчен бәхәс бите',
 'navigation' => 'Күчү',
 'and' => '&#32;һәм',
@@ -355,7 +355,6 @@ $messages = array(
 'qbbrowse' => 'Карау',
 'qbedit' => 'Үзгәртү',
 'qbpageoptions' => 'Бу бит',
-'qbpageinfo' => 'Бит турында мәгълүматлар',
 'qbmyoptions' => 'Битләрем',
 'qbspecialpages' => 'Махсус битләр',
 'faq' => 'ЕБС',
@@ -608,9 +607,6 @@ $2',
 
 Сез {{SITENAME}} проектында аноним рәвештә кала яисә шул ук яки башка исем белән яңадан <span class='plainlinks'>[$1 керә]</span> аласыз.
 Кайбер битләр Сез кергән кебек күрсәтелергә мөмкин. Моны бетерү өчен браузер кэшын чистартыгыз.",
-'welcomecreation' => '== Рәхим итегез, $1! ==
-Сез теркәлдегез.
-Сайтның шәхси [[Special:Preferences|көйләнмәләрен]] карарга онытмагыз.',
 'yourname' => 'Кулланучы исеме:',
 'yourpassword' => 'Серсүз:',
 'yourpasswordagain' => 'Серсүзне кабат кертү:',
@@ -851,8 +847,8 @@ $2
 <span class=\"plainlinks\">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} көндәлекләрдәге язмаларны] таба
 яки '''[{{fullurl:{{FULLPAGENAME}}|action=edit}} шушындый исемле яңа бит төзи]'''</span> аласыз.",
 'noarticletext-nopermission' => 'Хәзерге вакытта бу биттә текст юк.
-Сез [[Special:Search/{{PAGENAME}}|бу исем кергән башка мәкаләләрне]],
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} көндәлекләрдәге язмаларны] таба аласыз.</span>',
+Сез [[Special:Search/{{PAGENAME}}|бу исем кергән башка мәкаләләрне]] башка битләрдә,
+яисә <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} көндәлекләрдәге язмаларны] таба аласыз.</span> Сезнең бу битне ясарга хакыгыз юк.',
 'userpage-userdoesnotexist' => '«<nowiki>$1</nowiki>» исемле хисап язмасы юк. Сез чынлап та бу битне ясарга яисә үзгәртергә телисезме?',
 'userpage-userdoesnotexist-view' => '"$1" исемле хисап язмасы юк.',
 'blocked-notice-logextract' => 'Бу кулланучы хәзергә тыелды.
@@ -1181,7 +1177,7 @@ $1",
 
 # Preferences page
 'preferences' => 'Көйләнмәләр',
-'mypreferences' => 'Көйләнмәләрем',
+'mypreferences' => 'Көйләнмәләр',
 'prefs-edits' => 'Үзгәртүләр исәбе:',
 'prefsnologin' => 'Кермәгәнсез',
 'prefsnologintext' => 'Кулланучы көйләнмәләрене үзгәртү өчен, сез <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} керергә]</span> тиешсез.',
@@ -1743,7 +1739,7 @@ PICT # төрле
 
 # Watchlist
 'watchlist' => 'Күзәтү исемлегем',
-'mywatchlist' => 'Күзәтү исемлегем',
+'mywatchlist' => 'Күзәтү исемлеге',
 'watchlistfor2' => '$1 $2 өчен',
 'nowatchlist' => 'Күзәтү исемлегегездә битләр юк.',
 'watchnologin' => 'Кермәдегез',
@@ -1764,11 +1760,7 @@ PICT # төрле
 'watching' => 'Күзәтү исемлегемә өстәүе…',
 'unwatching' => 'Күзәтү исемлегемнән чыгаруы…',
 
-'enotif_newpagetext' => 'Бу яңа бит.',
 'enotif_impersonal_salutation' => '{{SITENAME}} кулланучы',
-'changed' => 'үзгәртелде',
-'created' => 'төзергән',
-'enotif_subject' => '{{SITENAME}} проектының $PAGETITLE бите $PAGEEDITOR тарафыннан $CHANGEDORCREATED',
 'enotif_lastvisited' => 'Соңгы керүегездән соң булган барлык үзгәртүләрне күрер өчен, бу сылтама аша узыгыз: $1',
 'enotif_body' => 'Хөрмәтле $WATCHINGUSERNAME,
 
@@ -1915,7 +1907,7 @@ $1',
 # Contributions
 'contributions' => 'Кулланучының кертеме',
 'contributions-title' => '$1 исемле кулланучының кертеме',
-'mycontris' => 'Кертемем',
+'mycontris' => 'Кертем',
 'contribsub2' => '$1 ($2) өчен',
 'uctop' => '(ахыргы)',
 'month' => 'Айдан башлап (һәм элегрәк):',
@@ -1947,7 +1939,7 @@ $1',
 'whatlinkshere-hideredirs' => 'юнәлтүләрне $1',
 'whatlinkshere-hidetrans' => 'кертүләрне $1',
 'whatlinkshere-hidelinks' => 'сылтамаларны $1',
-'whatlinkshere-hideimages' => 'рәсем сылтамаларын $1',
+'whatlinkshere-hideimages' => '$1 файл сылтамалары',
 'whatlinkshere-filters' => 'Фильтрлар',
 
 # Block/unblock

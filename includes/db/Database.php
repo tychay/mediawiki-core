@@ -230,9 +230,9 @@ abstract class DatabaseBase implements DatabaseType {
 
 	/**
 	 * @since 1.20
-	 * @var array of callable
+	 * @var array of Closure
 	 */
-	protected $trxIdleCallbacks = array();
+	protected $mTrxIdleCallbacks = array();
 
 	protected $mTablePrefix;
 	protected $mFlags;
@@ -274,6 +274,13 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	private $mTrxAutomatic = false;
 
+	/**
+	 * @since 1.21
+	 * @var file handle for upgrade
+	 */
+	protected $fileHandle = null;
+
+
 # ------------------------------------------------------------------------------
 # Accessors
 # ------------------------------------------------------------------------------
@@ -288,6 +295,13 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	public function getServerInfo() {
 		return $this->getServerVersion();
+	}
+
+	/**
+	 * @return string: command delimiter used by this database engine
+	 */
+	public function getDelimiter() {
+		return $this->delimiter;
 	}
 
 	/**
@@ -377,6 +391,15 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	public function tablePrefix( $prefix = null ) {
 		return wfSetVar( $this->mTablePrefix, $prefix );
+	}
+
+ 	/**
+	 * Set the filehandle to copy write statements to.
+	 *
+	 * @param $fh filehandle
+	 */
+	public function setFileHandle( $fh ) {
+		$this->fileHandle = $fh;
 	}
 
 	/**
@@ -525,6 +548,16 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	public function doneWrites() {
 		return $this->mDoneWrites;
+	}
+
+	/**
+	 * Returns true if there is a transaction open with possible write
+	 * queries or transaction idle callbacks waiting on it to finish.
+	 *
+	 * @return bool
+	 */
+	public function writesOrCallbacksPending() {
+		return $this->mTrxLevel && ( $this->mTrxDoneWrites || $this->mTrxIdleCallbacks );
 	}
 
 	/**
@@ -750,6 +783,9 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @return Bool operation success. true if already closed.
 	 */
 	public function close() {
+		if ( count( $this->mTrxIdleCallbacks ) ) { // sanity
+			throw new MWException( "Transaction idle callbacks still pending." );
+		}
 		$this->mOpened = false;
 		if ( $this->mConn ) {
 			if ( $this->trxLevel() ) {
@@ -868,7 +904,10 @@ abstract class DatabaseBase implements DatabaseType {
 		} else {
 			$userName = '';
 		}
-		$commentedSql = preg_replace( '/\s/', " /* $fname $userName */ ", $sql, 1 );
+
+		// Add trace comment to the begin of the sql string, right after the operator.
+		// Or, for one-word queries (like "BEGIN" or COMMIT") add it to the end (bug 42598)
+		$commentedSql = preg_replace( '/\s|$/', " /* $fname $userName */ ", $sql, 1 );
 
 		# If DBO_TRX is set, start a transaction
 		if ( ( $this->mFlags & DBO_TRX ) && !$this->mTrxLevel &&
@@ -919,7 +958,7 @@ abstract class DatabaseBase implements DatabaseType {
 		if ( false === $ret && $this->wasErrorReissuable() ) {
 			# Transaction is gone, like it or not
 			$this->mTrxLevel = 0;
-			$this->trxIdleCallbacks = array(); // cancel
+			$this->mTrxIdleCallbacks = array(); // cancel
 			wfDebug( "Connection lost, reconnecting...\n" );
 
 			if ( $this->ping() ) {
@@ -1558,6 +1597,10 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @return bool|null
 	 */
 	public function indexExists( $table, $index, $fname = 'DatabaseBase::indexExists' ) {
+		if( !$this->tableExists( $table ) ) {
+			return null;
+		}
+
 		$info = $this->indexInfo( $table, $index, $fname );
 		if ( is_null( $info ) ) {
 			return null;
@@ -1670,6 +1713,10 @@ abstract class DatabaseBase implements DatabaseType {
 			$options = array( $options );
 		}
 
+		$fh = null;
+		if ( isset( $options['fileHandle'] ) ) {
+			$fh = $options['fileHandle'];
+		}
 		$options = $this->makeInsertOptions( $options );
 
 		if ( isset( $a[0] ) && is_array( $a[0] ) ) {
@@ -1695,6 +1742,12 @@ abstract class DatabaseBase implements DatabaseType {
 			}
 		} else {
 			$sql .= '(' . $this->makeList( $a ) . ')';
+		}
+
+		if ( $fh !== null && false === fwrite( $fh, $sql ) ) {
+			return false;
+		} elseif ( $fh !== null ) {
+			return true;
 		}
 
 		return (bool)$this->query( $sql, $fname );
@@ -2892,7 +2945,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	final public function onTransactionIdle( Closure $callback ) {
 		if ( $this->mTrxLevel ) {
-			$this->trxIdleCallbacks[] = $callback;
+			$this->mTrxIdleCallbacks[] = $callback;
 		} else {
 			$callback();
 		}
@@ -2904,16 +2957,20 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @since 1.20
 	 */
 	protected function runOnTransactionIdleCallbacks() {
+		$autoTrx = $this->getFlag( DBO_TRX ); // automatic begin() enabled?
+
 		$e = null; // last exception
 		do { // callbacks may add callbacks :)
-			$callbacks = $this->trxIdleCallbacks;
-			$this->trxIdleCallbacks = array(); // recursion guard
+			$callbacks = $this->mTrxIdleCallbacks;
+			$this->mTrxIdleCallbacks = array(); // recursion guard
 			foreach ( $callbacks as $callback ) {
 				try {
+					$this->clearFlag( DBO_TRX ); // make each query its own transaction
 					$callback();
+					$this->setFlag( $autoTrx ? DBO_TRX : 0 ); // restore automatic begin()
 				} catch ( Exception $e ) {}
 			}
-		} while ( count( $this->trxIdleCallbacks ) );
+		} while ( count( $this->mTrxIdleCallbacks ) );
 
 		if ( $e instanceof Exception ) {
 			throw $e; // re-throw any last exception
@@ -3030,7 +3087,7 @@ abstract class DatabaseBase implements DatabaseType {
 			wfWarn( "$fname: No transaction to rollback, something got out of sync!" );
 		}
 		$this->doRollback( $fname );
-		$this->trxIdleCallbacks = array(); // cancel
+		$this->mTrxIdleCallbacks = array(); // cancel
 	}
 
 	/**
@@ -3221,11 +3278,12 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @param bool|callable $resultCallback Optional function called for each MySQL result
 	 * @param bool|string $fname Calling function name or false if name should be
 	 *      generated dynamically using $filename
+	 * @param bool|callable $inputCallback Callback: Optional function called for each complete line sent
 	 * @throws MWException
 	 * @return bool|string
 	 */
 	public function sourceFile(
-		$filename, $lineCallback = false, $resultCallback = false, $fname = false
+		$filename, $lineCallback = false, $resultCallback = false, $fname = false, $inputCallback = false
 	) {
 		wfSuppressWarnings();
 		$fp = fopen( $filename, 'r' );
@@ -3240,7 +3298,7 @@ abstract class DatabaseBase implements DatabaseType {
 		}
 
 		try {
-			$error = $this->sourceStream( $fp, $lineCallback, $resultCallback, $fname );
+			$error = $this->sourceStream( $fp, $lineCallback, $resultCallback, $fname, $inputCallback );
 		}
 		catch ( MWException $e ) {
 			fclose( $fp );
@@ -3289,10 +3347,10 @@ abstract class DatabaseBase implements DatabaseType {
 	 * on object's error ignore settings).
 	 *
 	 * @param $fp Resource: File handle
-	 * @param $lineCallback Callback: Optional function called before reading each line
+	 * @param $lineCallback Callback: Optional function called before reading each query
 	 * @param $resultCallback Callback: Optional function called for each MySQL result
 	 * @param $fname String: Calling function name
-	 * @param $inputCallback Callback: Optional function called for each complete line (ended with ;) sent
+	 * @param $inputCallback Callback: Optional function called for each complete query sent
 	 * @return bool|string
 	 */
 	public function sourceStream( $fp, $lineCallback = false, $resultCallback = false,
@@ -3325,20 +3383,19 @@ abstract class DatabaseBase implements DatabaseType {
 
 			if ( $done || feof( $fp ) ) {
 				$cmd = $this->replaceVars( $cmd );
-				if ( $inputCallback ) {
-					call_user_func( $inputCallback, $cmd );
-				}
-				$res = $this->query( $cmd, $fname );
 
-				if ( $resultCallback ) {
-					call_user_func( $resultCallback, $res, $this );
-				}
+				if ( ( $inputCallback && call_user_func( $inputCallback, $cmd ) ) || !$inputCallback ) {
+					$res = $this->query( $cmd, $fname );
 
-				if ( false === $res ) {
-					$err = $this->lastError();
-					return "Query \"{$cmd}\" failed with error code \"$err\".\n";
-				}
+					if ( $resultCallback ) {
+						call_user_func( $resultCallback, $res, $this );
+					}
 
+					if ( false === $res ) {
+						$err = $this->lastError();
+						return "Query \"{$cmd}\" failed with error code \"$err\".\n";
+					}
+				}
 				$cmd = '';
 			}
 		}
@@ -3611,5 +3668,11 @@ abstract class DatabaseBase implements DatabaseType {
 	 */
 	public function __toString() {
 		return (string)$this->mConn;
+	}
+
+	public function __destruct() {
+		if ( count( $this->mTrxIdleCallbacks ) ) { // sanity
+			trigger_error( "Transaction idle callbacks still pending." );
+		}
 	}
 }

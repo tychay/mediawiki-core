@@ -15,6 +15,7 @@ class TestSample extends MediaWikiLangTestCase {
 		// after each test.
 		$this->setMwGlobals( array(
 			'wgContLang' => Language::factory( 'en' ),
+			'wgLanguageCode' => 'en',
 		) );
 	}
 
@@ -26,7 +27,7 @@ class TestSample extends MediaWikiLangTestCase {
 	}
 
 	/**
-	 * Name tests so that PHPUnit can turn them into sentances when
+	 * Name tests so that PHPUnit can turn them into sentences when
 	 * they run.  While MediaWiki isn't strictly an Agile Programming
 	 * project, you are encouraged to use the naming described under
 	 * "Agile Documentation" at

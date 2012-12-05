@@ -25,7 +25,7 @@
  * Class to handle enqueueing of background jobs
  *
  * @ingroup JobQueue
- * @since 1.20
+ * @since 1.21
  */
 class JobQueueGroup {
 	/** @var Array */
@@ -62,18 +62,14 @@ class JobQueueGroup {
 	public function get( $type ) {
 		global $wgJobTypeConf;
 
-		$conf = false;
+		$conf = array( 'wiki' => $this->wiki, 'type' => $type );
 		if ( isset( $wgJobTypeConf[$type] ) ) {
-			$conf = $wgJobTypeConf[$type];
+			$conf = $conf + $wgJobTypeConf[$type];
 		} else {
-			$conf = $wgJobTypeConf['default'];
+			$conf = $conf + $wgJobTypeConf['default'];
 		}
 
-		return JobQueue::factory( array(
-			'class' => $conf['class'],
-			'wiki'  => $this->wiki,
-			'type'  => $type,
-		) );
+		return JobQueue::factory( $conf );
 	}
 
 	/**
@@ -137,6 +133,17 @@ class JobQueueGroup {
 	}
 
 	/**
+	 * Register the "root job" of a given job into the queue for de-duplication.
+	 * This should only be called right *after* all the new jobs have been inserted.
+	 *
+	 * @param $job Job
+	 * @return bool
+	 */
+	public function deduplicateRootJob( Job $job ) {
+		return $this->get( $job->getType() )->deduplicateRootJob( $job );
+	}
+
+	/**
 	 * Get the list of queue types
 	 *
 	 * @return array List of strings
@@ -156,5 +163,18 @@ class JobQueueGroup {
 		global $wgJobTypesExcludedFromDefaultQueue;
 
 		return array_diff( $this->getQueueTypes(), $wgJobTypesExcludedFromDefaultQueue );
+	}
+
+	/**
+	 * @return Array List of job types that have non-empty queues
+	 */
+	public function getQueuesWithJobs() {
+		$types = array();
+		foreach ( $this->getQueueTypes() as $type ) {
+			if ( !$this->get( $type )->isEmpty() ) {
+				$types[] = $type;
+			}
+		}
+		return $types;
 	}
 }

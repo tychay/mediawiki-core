@@ -247,6 +247,13 @@ class Parser {
 	}
 
 	/**
+	 * Allow extensions to clean up when the parser is cloned
+	 */
+	function __clone() {
+		wfRunHooks( 'ParserCloned', array( $this ) );
+	}
+
+	/**
 	 * Do various kinds of initialisation on the first call of the parser
 	 */
 	function firstCallInit() {
@@ -542,7 +549,7 @@ class Parser {
 	 * Also removes comments.
 	 * @return mixed|string
 	 */
-	function preprocess( $text, Title $title, ParserOptions $options, $revid = null ) {
+	function preprocess( $text, Title $title = null, ParserOptions $options, $revid = null ) {
 		wfProfileIn( __METHOD__ );
 		$this->startParse( $title, $options, self::OT_PREPROCESS, true );
 		if ( $revid !== null ) {
@@ -1307,7 +1314,8 @@ class Parser {
 		if ( $text === false ) {
 			# Not an image, make a link
 			$text = Linker::makeExternalLink( $url,
-				$this->getConverterLanguage()->markNoConversion($url), true, 'free',
+				$this->getConverterLanguage()->markNoConversion( $url, true ),
+				true, 'free',
 				$this->getExternalLinkAttribs( $url ) );
 			# Register it in the output object...
 			# Replace unnecessary URL escape codes with their equivalent characters
@@ -1606,7 +1614,25 @@ class Parser {
 		wfProfileOut( __METHOD__ );
 		return $s;
 	}
-
+	/**
+	 * Get the rel attribute for a particular external link.
+	 *
+	 * @since 1.21
+	 * @param $url String|bool optional URL, to extract the domain from for rel =>
+	 *   nofollow if appropriate
+	 * @param $title Title optional Title, for wgNoFollowNsExceptions lookups
+	 * @return string|null rel attribute for $url
+	 */
+	public static function getExternalLinkRel( $url = false, $title = null ) {
+		global $wgNoFollowLinks, $wgNoFollowNsExceptions, $wgNoFollowDomainExceptions;
+		$ns = $title ? $title->getNamespace() : false;
+		if ( $wgNoFollowLinks && !in_array( $ns, $wgNoFollowNsExceptions ) &&
+				!wfMatchesDomainList( $url, $wgNoFollowDomainExceptions ) )
+		{
+			return 'nofollow';
+		}
+		return null;
+	}
 	/**
 	 * Get an associative array of additional HTML attributes appropriate for a
 	 * particular external link.  This currently may include rel => nofollow
@@ -1619,13 +1645,8 @@ class Parser {
 	 */
 	function getExternalLinkAttribs( $url = false ) {
 		$attribs = array();
-		global $wgNoFollowLinks, $wgNoFollowNsExceptions, $wgNoFollowDomainExceptions;
-		$ns = $this->mTitle->getNamespace();
-		if ( $wgNoFollowLinks && !in_array( $ns, $wgNoFollowNsExceptions ) &&
-				!wfMatchesDomainList( $url, $wgNoFollowDomainExceptions ) )
-		{
-			$attribs['rel'] = 'nofollow';
-		}
+		$attribs['rel'] = self::getExternalLinkRel( $url, $this->mTitle );
+
 		if ( $this->mOptions->getExternalLinkTarget() ) {
 			$attribs['target'] = $this->mOptions->getExternalLinkTarget();
 		}
@@ -2377,10 +2398,10 @@ class Parser {
 				wfProfileIn( __METHOD__."-paragraph" );
 				# No prefix (not in list)--go to paragraph mode
 				# XXX: use a stack for nestable elements like span, table and div
-				$openmatch = preg_match('/(?:<table|<blockquote|<h1|<h2|<h3|<h4|<h5|<h6|<pre|<tr|<p|<ul|<ol|<li|<\\/tr|<\\/td|<\\/th)/iS', $t );
+				$openmatch = preg_match('/(?:<table|<blockquote|<h1|<h2|<h3|<h4|<h5|<h6|<pre|<tr|<p|<ul|<ol|<dl|<li|<\\/tr|<\\/td|<\\/th)/iS', $t );
 				$closematch = preg_match(
 					'/(?:<\\/table|<\\/blockquote|<\\/h1|<\\/h2|<\\/h3|<\\/h4|<\\/h5|<\\/h6|'.
-					'<td|<th|<\\/?div|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|<\\/li|<\\/ul|<\\/ol|<\\/?center)/iS', $t );
+					'<td|<th|<\\/?div|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|<\\/li|<\\/ul|<\\/ol|<\\/dl|<\\/?center)/iS', $t );
 				if ( $openmatch or $closematch ) {
 					$paragraphStack = false;
 					# TODO bug 5718: paragraph closed
@@ -3617,7 +3638,7 @@ class Parser {
 
 			if ( $rev ) {
 				$content = $rev->getContent();
-				$text = $content->getWikitextForTransclusion();
+				$text = $content ? $content->getWikitextForTransclusion() : null;
 
 				if ( $text === false || $text === null ) {
 					$text = false;
@@ -4478,14 +4499,14 @@ class Parser {
 			'~~~' => $sigText
 		) );
 
-		# Context links: [[|name]] and [[name (context)|]]
+		# Context links ("pipe trick"): [[|name]] and [[name (context)|]]
 		$tc = '[' . Title::legalChars() . ']';
 		$nc = '[ _0-9A-Za-z\x80-\xff-]'; # Namespaces can use non-ascii!
 
-		$p1 = "/\[\[(:?$nc+:|:|)($tc+?)( ?\\($tc+\\))\\|]]/";		# [[ns:page (context)|]]
-		$p4 = "/\[\[(:?$nc+:|:|)($tc+?)( ?（$tc+）)\\|]]/";		# [[ns:page（context）|]]
-		$p3 = "/\[\[(:?$nc+:|:|)($tc+?)( ?\\($tc+\\)|)((?:, |，)$tc+|)\\|]]/";	# [[ns:page (context), context|]]
-		$p2 = "/\[\[\\|($tc+)]]/";					# [[|page]]
+		$p1 = "/\[\[(:?$nc+:|:|)($tc+?)( ?\\($tc+\\))\\|]]/";                  # [[ns:page (context)|]]
+		$p4 = "/\[\[(:?$nc+:|:|)($tc+?)( ?（$tc+）)\\|]]/";                    # [[ns:page（context）|]] (double-width brackets, added in r40257)
+		$p3 = "/\[\[(:?$nc+:|:|)($tc+?)( ?\\($tc+\\)|)((?:, |，)$tc+|)\\|]]/"; # [[ns:page (context), context|]]
+		$p2 = "/\[\[\\|($tc+)]]/";                                             # [[|page]]
 
 		# try $p1 first, to turn "[[A, B (C)|]]" into "[[A, B (C)|A, B]]"
 		$text = preg_replace( $p1, '[[\\1\\2\\3|\\2]]', $text );
@@ -4675,11 +4696,7 @@ class Parser {
 			global $wgTitle;
 			$title = $wgTitle;
 		}
-		if ( !$title ) {
-			# It's not uncommon having a null $wgTitle in scripts. See r80898
-			# Create a ghost title in such case
-			$title = Title::newFromText( 'Dwimmerlaik' );
-		}
+
 		$text = $this->preprocess( $text, $title, $options );
 
 		$executing = false;

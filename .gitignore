@@ -11,6 +11,7 @@ cscope.out
 ## NetBeans
 nbproject*
 project.index
+sublime-*
 
 # MediaWiki install & usage
 cache
@@ -29,6 +30,9 @@ maintenance/dev/data
 AdminSettings.php
 LocalSettings.php
 StartProfiler.php
+
+# Building & testing
+node_modules/
 
 # Operating systems
 ## Mac OS X

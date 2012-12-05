@@ -302,6 +302,19 @@ class FileBackendTest extends MediaWikiTestCase {
 		$this->prepare( array( 'dir' => dirname( $source ) ) );
 		$this->prepare( array( 'dir' => dirname( $dest ) ) );
 
+		if ( isset( $op['ignoreMissingSource'] ) ) {
+			$status = $this->backend->doOperation( $op );
+			$this->assertGoodStatus( $status,
+				"Move from $source to $dest succeeded without warnings ($backendName)." );
+			$this->assertEquals( array( 0 => true ), $status->success,
+				"Move from $source to $dest has proper 'success' field in Status ($backendName)." );
+			$this->assertEquals( false, $this->backend->fileExists( array( 'src' => $source ) ),
+				"Source file $source does not exist ($backendName)." );
+			$this->assertEquals( false, $this->backend->fileExists( array( 'src' => $dest ) ),
+				"Destination file $dest does not exist ($backendName)." );
+			return; // done
+		}
+
 		$status = $this->backend->doOperation(
 			array( 'op' => 'create', 'content' => 'blahblah', 'dst' => $source ) );
 		$this->assertGoodStatus( $status,
@@ -366,6 +379,14 @@ class FileBackendTest extends MediaWikiTestCase {
 			$dest, // dest
 		);
 
+		$op2 = $op;
+		$op2['ignoreMissingSource'] = true;
+		$cases[] = array(
+			$op2, // operation
+			$source, // source
+			$dest, // dest
+		);
+
 		return $cases;
 	}
 
@@ -391,6 +412,19 @@ class FileBackendTest extends MediaWikiTestCase {
 		$dest = $op['dst'];
 		$this->prepare( array( 'dir' => dirname( $source ) ) );
 		$this->prepare( array( 'dir' => dirname( $dest ) ) );
+
+		if ( isset( $op['ignoreMissingSource'] ) ) {
+			$status = $this->backend->doOperation( $op );
+			$this->assertGoodStatus( $status,
+				"Move from $source to $dest succeeded without warnings ($backendName)." );
+			$this->assertEquals( array( 0 => true ), $status->success,
+				"Move from $source to $dest has proper 'success' field in Status ($backendName)." );
+			$this->assertEquals( false, $this->backend->fileExists( array( 'src' => $source ) ),
+				"Source file $source does not exist ($backendName)." );
+			$this->assertEquals( false, $this->backend->fileExists( array( 'src' => $dest ) ),
+				"Destination file $dest does not exist ($backendName)." );
+			return; // done
+		}
 
 		$status = $this->backend->doOperation(
 			array( 'op' => 'create', 'content' => 'blahblah', 'dst' => $source ) );
@@ -451,6 +485,14 @@ class FileBackendTest extends MediaWikiTestCase {
 
 		$op2 = $op;
 		$op2['overwriteSame'] = true;
+		$cases[] = array(
+			$op2, // operation
+			$source, // source
+			$dest, // dest
+		);
+
+		$op2 = $op;
+		$op2['ignoreMissingSource'] = true;
 		$cases[] = array(
 			$op2, // operation
 			$source, // source
@@ -538,6 +580,73 @@ class FileBackendTest extends MediaWikiTestCase {
 			$op, // operation
 			false, // without source
 			true // succeeds
+		);
+
+		return $cases;
+	}
+
+	/**
+	 * @dataProvider provider_testDescribe
+	 */
+	public function testDescribe( $op, $withSource, $okStatus ) {
+		$this->backend = $this->singleBackend;
+		$this->tearDownFiles();
+		$this->doTestDescribe( $op, $withSource, $okStatus );
+		$this->tearDownFiles();
+
+		$this->backend = $this->multiBackend;
+		$this->tearDownFiles();
+		$this->doTestDescribe( $op, $withSource, $okStatus );
+		$this->tearDownFiles();
+	}
+
+	private function doTestDescribe( $op, $withSource, $okStatus ) {
+		$backendName = $this->backendClass();
+
+		$source = $op['src'];
+		$this->prepare( array( 'dir' => dirname( $source ) ) );
+
+		if ( $withSource ) {
+			$status = $this->backend->doOperation(
+				array( 'op' => 'create', 'content' => 'blahblah', 'dst' => $source ) );
+			$this->assertGoodStatus( $status,
+				"Creation of file at $source succeeded ($backendName)." );
+		}
+
+		$status = $this->backend->doOperation( $op );
+		if ( $okStatus ) {
+			$this->assertGoodStatus( $status,
+				"Describe of file at $source succeeded without warnings ($backendName)." );
+			$this->assertEquals( true, $status->isOK(),
+				"Describe of file at $source succeeded ($backendName)." );
+			$this->assertEquals( array( 0 => true ), $status->success,
+				"Describe of file at $source has proper 'success' field in Status ($backendName)." );
+		} else {
+			$this->assertEquals( false, $status->isOK(),
+				"Describe of file at $source failed ($backendName)." );
+		}
+
+		$this->assertBackendPathsConsistent( array( $source ) );
+	}
+
+	public static function provider_testDescribe() {
+		$cases = array();
+
+		$source = self::baseStorePath() . '/unittest-cont1/e/myfacefile.txt';
+
+		$op = array( 'op' => 'describe', 'src' => $source,
+			'headers' => array( 'X-Content-Length' => '91.3', 'Content-Old-Header' => '' ),
+			'disposition' => 'inline' );
+		$cases[] = array(
+			$op, // operation
+			true, // with source
+			true // succeeds
+		);
+
+		$cases[] = array(
+			$op, // operation
+			false, // without source
+			false // fails
 		);
 
 		return $cases;
@@ -1140,6 +1249,50 @@ class FileBackendTest extends MediaWikiTestCase {
 	}
 
 	/**
+	 * @dataProvider provider_testGetFileHttpUrl
+	 */
+	public function testGetFileHttpUrl( $source, $content ) {
+		$this->backend = $this->singleBackend;
+		$this->tearDownFiles();
+		$this->doTestGetFileHttpUrl( $source, $content );
+		$this->tearDownFiles();
+
+		$this->backend = $this->multiBackend;
+		$this->tearDownFiles();
+		$this->doTestGetFileHttpUrl( $source, $content );
+		$this->tearDownFiles();
+	}
+
+	private function doTestGetFileHttpUrl( $source, $content ) {
+		$backendName = $this->backendClass();
+
+		$this->prepare( array( 'dir' => dirname( $source ) ) );
+		$status = $this->backend->doOperation(
+			array( 'op' => 'create', 'content' => $content, 'dst' => $source ) );
+		$this->assertGoodStatus( $status,
+			"Creation of file at $source succeeded ($backendName)." );
+
+		$url = $this->backend->getFileHttpUrl( array( 'src' => $source ) );
+
+		if ( $url !== null ) { // supported
+			$data = Http::request( "GET", $url );
+			$this->assertEquals( $content, $data,
+				"HTTP GET of URL has right contents ($backendName)." );
+		}
+	}
+
+	function provider_testGetFileHttpUrl() {
+		$cases = array();
+
+		$base = self::baseStorePath();
+		$cases[] = array( "$base/unittest-cont1/e/a/z/some_file.txt", "some file contents" );
+		$cases[] = array( "$base/unittest-cont1/e/a/some-other_file.txt", "more file contents" );
+		$cases[] = array( "$base/unittest-cont1/e/a/\$odd&.txt", "test file contents" );
+
+		return $cases;
+	}
+
+	/**
 	 * @dataProvider provider_testPrepareAndClean
 	 */
 	public function testPrepareAndClean( $path, $isOK ) {
@@ -1203,6 +1356,8 @@ class FileBackendTest extends MediaWikiTestCase {
 
 		$base = self::baseStorePath();
 		$dirs = array(
+			"$base/unittest-cont1",
+			"$base/unittest-cont1/e",
 			"$base/unittest-cont1/e/a",
 			"$base/unittest-cont1/e/a/b",
 			"$base/unittest-cont1/e/a/b/c",
@@ -1274,6 +1429,8 @@ class FileBackendTest extends MediaWikiTestCase {
 		$this->prepare( array( 'dir' => dirname( $fileD ) ) );
 
 		$status = $this->backend->doOperations( array(
+			array( 'op' => 'describe', 'src' => $fileA,
+				'headers' => array( 'X-Content-Length' => '91.3' ), 'disposition' => 'inline' ),
 			array( 'op' => 'copy', 'src' => $fileA, 'dst' => $fileC, 'overwrite' => 1 ),
 			// Now: A:<A>, B:<B>, C:<A>, D:<empty> (file:<orginal contents>)
 			array( 'op' => 'copy', 'src' => $fileC, 'dst' => $fileA, 'overwriteSame' => 1 ),
@@ -1304,7 +1461,7 @@ class FileBackendTest extends MediaWikiTestCase {
 
 		$this->assertGoodStatus( $status, "Operation batch succeeded" );
 		$this->assertEquals( true, $status->isOK(), "Operation batch succeeded" );
-		$this->assertEquals( 13, count( $status->success ),
+		$this->assertEquals( 14, count( $status->success ),
 			"Operation batch has correct success array" );
 
 		$this->assertEquals( false, $this->backend->fileExists( array( 'src' => $fileA ) ),
@@ -1936,6 +2093,8 @@ class FileBackendTest extends MediaWikiTestCase {
 			foreach ( $iter as $file ) {
 				$this->backend->quickDelete( array( 'src' => "$base/$container/$file" ) );
 			}
+			// free the directory, to avoid Permission denied under windows on rmdir
+			unset( $iter );
 		}
 		$this->backend->clean( array( 'dir' => "$base/$container", 'recursive' => 1 ) );
 	}

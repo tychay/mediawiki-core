@@ -908,7 +908,7 @@ class Title {
 
 	/**
 	 * Is this the mainpage?
-	 * @note Title::newFromText seams to be sufficiently optimized by the title
+	 * @note Title::newFromText seems to be sufficiently optimized by the title
 	 * cache that we don't need to over-optimize by doing direct comparisons and
 	 * acidentally creating new bugs where $title->equals( Title::newFromText() )
 	 * ends up reporting something differently than $title->isMainPage();
@@ -1398,7 +1398,7 @@ class Title {
 	 *
 
 	 * @param $query string|array an optional query string,
-	 *   not used for interwiki	links. Can be specified as an associative array as well,
+	 *   not used for interwiki links. Can be specified as an associative array as well,
 	 *   e.g., array( 'action' => 'edit' ) (keys and values will be URL-escaped).
 	 *   Some query patterns will trigger various shorturl path replacements.
 	 * @param $query2 Mixed: An optional secondary query array. This one MUST
@@ -3816,6 +3816,7 @@ class Title {
 			$newid = $redirectArticle->insertOn( $dbw );
 			if ( $newid ) { // sanity
 				$redirectRevision = new Revision( array(
+					'title'   => $this, // for determining the default content model
 					'page'    => $newid,
 					'comment' => $comment,
 					'content'    => $redirectContent ) );
@@ -3980,7 +3981,7 @@ class Title {
 		$content = $rev->getContent();
 		# Does the redirect point to the source?
 		# Or is it a broken self-redirect, usually caused by namespace collisions?
-		$redirTitle = $content->getRedirectTarget();
+		$redirTitle = $content ? $content->getRedirectTarget() : null;
 
 		if ( $redirTitle ) {
 			if ( $redirTitle->getPrefixedDBkey() != $this->getPrefixedDBkey() &&
@@ -4474,7 +4475,7 @@ class Title {
 
 	/**
 	 * Update page_touched timestamps and send squid purge messages for
-	 * pages linking to this title.	May be sent to the job queue depending
+	 * pages linking to this title. May be sent to the job queue depending
 	 * on the number of links. Typically called on create and delete.
 	 */
 	public function touchLinks() {
@@ -4701,8 +4702,6 @@ class Title {
 		$contentHandler = ContentHandler::getForTitle( $this );
 		$pageLang = $contentHandler->getPageLanguage( $this );
 
-		// Hook at the end because we don't want to override the above stuff
-		wfRunHooks( 'PageContentLanguage', array( $this, &$pageLang, $wgLang ) );
 		return wfGetLangObj( $pageLang );
 	}
 
@@ -4733,5 +4732,44 @@ class Title {
 		$contentHandler = ContentHandler::getForTitle( $this );
 		$pageLang = $contentHandler->getPageViewLanguage( $this );
 		return $pageLang;
+	}
+
+	/**
+	 * Get a list of rendered edit notices for this page.
+	 *
+	 * Array is keyed by the original message key, and values are rendered using parseAsBlock, so
+	 * they will already be wrapped in paragraphs.
+	 *
+	 * @since 1.21
+	 * @return Array
+	 */
+	public function getEditNotices() {
+		$notices = array();
+
+		# Optional notices on a per-namespace and per-page basis
+		$editnotice_ns = 'editnotice-' . $this->getNamespace();
+		$editnotice_ns_message = wfMessage( $editnotice_ns );
+		if ( $editnotice_ns_message->exists() ) {
+			$notices[$editnotice_ns] = $editnotice_ns_message->parseAsBlock();
+		}
+		if ( MWNamespace::hasSubpages( $this->getNamespace() ) ) {
+			$parts = explode( '/', $this->getDBkey() );
+			$editnotice_base = $editnotice_ns;
+			while ( count( $parts ) > 0 ) {
+				$editnotice_base .= '-' . array_shift( $parts );
+				$editnotice_base_msg = wfMessage( $editnotice_base );
+				if ( $editnotice_base_msg->exists() ) {
+					$notices[$editnotice_base] = $editnotice_base_msg->parseAsBlock();
+				}
+			}
+		} else {
+			# Even if there are no subpages in namespace, we still don't want / in MW ns.
+			$editnoticeText = $editnotice_ns . '-' . str_replace( '/', '-', $this->getDBkey() );
+			$editnoticeMsg = wfMessage( $editnoticeText );
+			if ( $editnoticeMsg->exists() ) {
+				$notices[$editnoticeText] = $editnoticeMsg->parseAsBlock();
+			}
+		}
+		return $notices;
 	}
 }

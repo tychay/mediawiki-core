@@ -204,7 +204,6 @@ $magicWords = array(
 	'forcetoc'                  => array( '0', '__FORCARTDC__', '__FORCARSUMARIO__', '__FORÇARTDC__', '__FORÇARSUMÁRIO__', '__FORCETOC__' ),
 	'toc'                       => array( '0', '__TDC__', '__SUMARIO__', '__SUMÁRIO__', '__TOC__' ),
 	'noeditsection'             => array( '0', '__NAOEDITARSECAO__', '__NÃOEDITARSEÇÃO__', '__SEMEDITARSEÇÃO__', '__SEMEDITARSECAO__', '__NOEDITSECTION__' ),
-	'noheader'                  => array( '0', '__SEMCABECALHO__', '__SEMCABEÇALHO__', '__SEMTITULO__', '__SEMTÍTULO__', '__NOHEADER__' ),
 	'currentmonth'              => array( '1', 'MESATUAL', 'MESATUAL2', 'CURRENTMONTH', 'CURRENTMONTH2' ),
 	'currentmonth1'             => array( '1', 'MESATUAL1', 'CURRENTMONTH1' ),
 	'currentmonthname'          => array( '1', 'NOMEDOMESATUAL', 'CURRENTMONTHNAME' ),
@@ -447,8 +446,8 @@ $messages = array(
 'newwindow' => '(abre em uma nova janela)',
 'cancel' => 'Cancelar',
 'moredotdotdot' => 'Mais...',
-'mypage' => 'Minha página',
-'mytalk' => 'Minha discussão',
+'mypage' => 'Página',
+'mytalk' => 'Discussão',
 'anontalk' => 'Discussão para este IP',
 'navigation' => 'Navegação',
 'and' => '&#32;e',
@@ -722,9 +721,6 @@ O administrador que bloqueou ofereceu a seguinte explicação: "$3".',
 
 É possível continuar usando {{SITENAME}} anonimamente ou <span class='plainlinks'>[$1 autenticar-se novamente]</span> com o mesmo nome de usuário ou com um nome diferente.
 Note que algumas páginas podem continuar sendo exibidas como se você ainda estivesse autenticado até que você limpe a ''cache'' do seu navegador.",
-'welcomecreation' => '== Bem-vindo(a), $1! ==
-A sua conta foi criada.
-Não se esqueça de personalizar as suas [[Special:Preferences|preferências no wiki {{SITENAME}}]].',
 'yourname' => 'Nome de usuário:',
 'yourpassword' => 'Senha:',
 'yourpasswordagain' => 'Redigite sua senha',
@@ -1047,7 +1043,7 @@ A página não pode ser salva.",
 Pode, no entanto, copiar o seu texto num editor externo e guardá-lo para posterior envio.
 
 Quem bloqueou o banco de dados forneceu a seguinte justificativa: $1",
-'protectedpagewarning' => "'''Atenção: Esta página foi protegida para que apenas usuários com privilégios de administrado possam editá-la.'''
+'protectedpagewarning' => "'''Atenção: Esta página foi protegida para que apenas usuários com privilégios de administrador possam editá-la.'''
 A última entrada no histórico é fornecida abaixo como referência:",
 'semiprotectedpagewarning' => "'''Nota:''' Esta página foi protegida, sendo que apenas usuários registrados poderão editá-la.
 A última entrada no histórico é fornecida abaixo para referência:",
@@ -1375,7 +1371,7 @@ Note que os índices do sistema de busca externo poderão conter referências de
 
 # Preferences page
 'preferences' => 'Preferências',
-'mypreferences' => 'Minhas preferências',
+'mypreferences' => 'Preferências',
 'prefs-edits' => 'Número de edições:',
 'prefsnologin' => 'Não autenticado',
 'prefsnologintext' => 'É necessário estar <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} autenticado]</span> para definir as suas preferências.',
@@ -2359,11 +2355,7 @@ Modificações futuras em tal página e páginas de discussão a ela associadas 
 
 'enotif_mailer' => '{{SITENAME}} Email de Notificação',
 'enotif_reset' => 'Marcar todas páginas como visitadas',
-'enotif_newpagetext' => 'Esta é uma página nova.',
 'enotif_impersonal_salutation' => 'Usuário do projeto "{{SITENAME}}"',
-'changed' => 'alterada',
-'created' => 'criada',
-'enotif_subject' => '{{SITENAME}}: A página $PAGETITLE foi $CHANGEDORCREATED por $PAGEEDITOR',
 'enotif_lastvisited' => 'Consulte $1 para todas as alterações efetuadas desde a sua última visita.',
 'enotif_lastdiff' => 'Acesse $1 para ver esta alteração.',
 'enotif_anon_editor' => 'usuário anônimo $1',
@@ -2581,7 +2573,7 @@ $1',
 # Contributions
 'contributions' => 'Contribuições {{GENDER:{{BASEPAGENAME}}|do usuário|da usuária}}',
 'contributions-title' => 'Contribuições {{GENDER:$1|do usuário|da usuária}} $1',
-'mycontris' => 'Minhas contribuições',
+'mycontris' => 'Contribuições',
 'contribsub2' => 'Para $1 ($2)',
 'nocontribs' => 'Não foram encontradas mudanças com este critério.',
 'uctop' => '(atual)',
@@ -3111,6 +3103,16 @@ Tal bloqueio foi provavelmente causado por uma ligação para um ''website'' ext
 'pageinfo-authors' => 'Número total de autores distintos',
 'pageinfo-recent-edits' => 'Número de edições recentes (nos últimos $1)',
 'pageinfo-recent-authors' => 'Número recente de autores distintos',
+'pageinfo-magic-words' => '{{PLURAL:$1|Palavra mágica|Palavras mágicas}} ($1)',
+'pageinfo-hidden-categories' => '{{PLURAL:$1|Categoria oculta|Categorias ocultas}} ($1)',
+'pageinfo-templates' => '{{PLURAL:$1|predefinição transcluída|predefinições transcluídas}}',
+'pageinfo-toolboxlink' => 'Informações da página',
+'pageinfo-redirectsto' => 'Redirecionar para',
+'pageinfo-redirectsto-info' => 'informações',
+'pageinfo-contentpage' => 'Contado como uma página de conteúdo',
+'pageinfo-contentpage-yes' => 'Sim',
+'pageinfo-protect-cascading' => 'Proteção em cascata ativada',
+'pageinfo-protect-cascading-yes' => 'Sim',
 
 # Skin names
 'skinname-standard' => 'Clássico',
@@ -3124,7 +3126,7 @@ Tal bloqueio foi provavelmente causado por uma ligação para um ''website'' ext
 
 # Patrolling
 'markaspatrolleddiff' => 'Marcar como patrulhada',
-'markaspatrolledtext' => 'Marcar esta página como verificada',
+'markaspatrolledtext' => 'Marcar esta página como patrulhada',
 'markedaspatrolled' => 'Marcado como verificado',
 'markedaspatrolledtext' => 'A revisão selecionada de [[:$1]] foi marcada como patrulhada.',
 'rcpatroldisabled' => 'Edições verificadas nas Mudanças Recentes desativadas',

@@ -241,7 +241,7 @@ $messages = array(
 
 'underline-always' => 'සැමවිටම කරන්න',
 'underline-never' => 'කිසිවිටෙක නොකරන්න',
-'underline-default' => 'බ්‍රවුසරයෙහි පෙරනිමිය අනුවය',
+'underline-default' => 'සම හෝ ගවේෂකයෙහි පෙරනිමිය',
 
 # Font style option in Special:Preferences
 'editfont-style' => 'අකුරු විලාසයන් සංස්කරණ පෙදෙස:',
@@ -328,8 +328,8 @@ $messages = array(
 'newwindow' => '(නව කවුළුවක විවෘතවේ)',
 'cancel' => 'අත් හරින්න',
 'moredotdotdot' => 'තවත්...',
-'mypage' => 'මගේ පිටුව',
-'mytalk' => 'මගේ සාකච්ඡා',
+'mypage' => 'පිටුව',
+'mytalk' => 'සාකච්ඡාව',
 'anontalk' => 'මෙම අයිපී ලිපිනය සඳහා සාකච්ඡාව',
 'navigation' => 'යාත්‍රණය',
 'and' => '&#32;සහ',
@@ -351,7 +351,7 @@ $messages = array(
 'vector-action-protect' => 'ආරක්‍ෂණය',
 'vector-action-undelete' => 'මකාදැමීම අවලංගු කරන්න',
 'vector-action-unprotect' => 'ආරක්ෂණ තත්වය වෙනස් කරන්න',
-'vector-simplesearch-preference' => 'වැඩිදියුණුකළ සෙවුම් යෝජනා සක්‍රීය කරන්න (වෙක්ටර් තීමය සඳහා පමණි)',
+'vector-simplesearch-preference' => 'සුළු කළ සෙවුම් බාරය (වෙක්ටර් තීමය සඳහා පමණි)',
 'vector-view-create' => 'තනන්න',
 'vector-view-edit' => 'සංස්කරණය',
 'vector-view-history' => 'ඉතිහාසය නරඹන්න',
@@ -603,10 +603,6 @@ $2',
 
 ඔබට නිර්නාමිකව {{SITENAME}} කටයුතු කරගෙන යාහැක, නැතහොත් පෙර පරිශීලක ලෙස හෝ වෙනත් පරිශීලකයෙකු ලෙස <span class='plainlinks'>[$1 නැවත ගිණුමක‍ට පිවිසිය හැක]</span>.
 ඔබගේ බ්‍රවුසරයෙහි පූර්වාපේක්‍ෂී සංචිතය (කෑෂය) පිරිසිදුකරන තෙක්, සමහරක් පිටු විසින් ඔබ තවදුරටත් පිවිසී ඇති බවක් දිගටම පෙන්නුම් කිරීමට ඉඩ ඇත.",
-'welcomecreation' => '== ආයුබෝවන්, $1! ==
-
-ඔබ‍ගේ ගිණුම තනන ලදී.
-ඔබ‍ගේ [[Special:Preferences|{{SITENAME}} අභිරුචි ]] වෙනස් කිරීම අමතක නොකරන්න.',
 'yourname' => 'පරිශීලක නාමය:',
 'yourpassword' => 'මුරපදය:',
 'yourpasswordagain' => 'මුරපදය යළි ඇතුළු කරන්න:',
@@ -882,7 +878,7 @@ $2
 'note' => "'''සටහන:'''",
 'previewnote' => "'''මෙය පෙරදසුනක් පමණක් බව සිහිතබාගන්න.'''
 ඔබගේ වෙනස්කිරීම් තවමත් සුරැකීමට ලක් කොට නොමැත!",
-'continue-editing' => 'සංස්කරණය කරගෙනයන්න',
+'continue-editing' => 'සංස්කරණ කලාපය වෙත යන්න',
 'previewconflict' => 'ඔබ විසින් සුරැකීම තෝරාගත්තොත්,  ඉහළ පෙළ සංස්කරණ සරියෙහි,  පෙළ දර්ශනය විය හැකි අයුර මෙම පෙර-දසුනෙන් ආවර්ජනය වේ.',
 'session_fail_preview' => "'''කණගාටුයි! සැසි දත්ත හානියක් හේතුවෙන් අප විසින් ඔබගේ  සංස්කරණය ක්‍රියායයනය කිරීමට නොහැකි වී ඇත.
 කරුණාකර නැවත උත්සාහ කරන්න.
@@ -1242,7 +1238,7 @@ $1",
 
 # Preferences page
 'preferences' => 'අභිරුචි',
-'mypreferences' => 'මගේ අභිරුචි',
+'mypreferences' => 'අභිරුචීන්',
 'prefs-edits' => 'සංස්කරණයන් සංඛ්‍යාව:',
 'prefsnologin' => 'පිවිසී නැත (Not logged in)',
 'prefsnologintext' => 'පරිශීලක අභිරුචි සැකසීමට නම්, ඔබ  <span class="plainlinks">[{{fullurl:Special:Userlogin|returnto=$1}} ප්‍රවිෂ්ටවී]</span> සිටිය යුතුය.',
@@ -1937,9 +1933,9 @@ When filtered by user, only files where that user uploaded the most recent versi
 
 'disambiguations' => 'නිරාකරණ පිටු සඳහා සබැදෙන පිටු',
 'disambiguationspage' => 'Template:තේරුම් නිරාකරණය',
-'disambiguations-text' => "ඉදිරි පිටු '''වක්‍රෝත්තිහරණ පිටුව'''කට සබැ‍ඳේ.
+'disambiguations-text' => "පහත දැක්වෙන පිටු අතර '''වක්‍රෝත්තිහරණ පිටුවකට''' සබැඳෙන එක් සබැඳියක් හෝ ඇත.
 ඒවා ඒ වෙනුවට අනුරූප මාතෘකාවට සබැඳිය යුතුය.<br />
-යම් පිටුවක් වක්‍රෝත්තිහරණ පිටුවක් ලෙස සලකනුයේ එය [[MediaWiki:Disambiguationspage]] වෙතින් සබැඳුනු සැකිල්ලක් භාවිතා කරන්නේ නම්ය",
+යම් පිටුවක් වක්‍රෝත්තිහරණ පිටුවක් ලෙස සලකනුයේ එය [[MediaWiki:Disambiguationspage]] වෙතින් සබැඳුනු සැකිල්ලක් භාවිතා කරන්නේ නම්ය.",
 
 'doubleredirects' => 'ද්විත්ව යළි-යොමුකිරීම්',
 'doubleredirectstext' => 'අනෙකුත් යළි-යොමුවීම් පිටුවලට යළි-යොමුවන පිටුවල ලැයිස්තුවක් මෙම පිටුවේ දැක්වේ.
@@ -2166,7 +2162,7 @@ When filtered by user, only files where that user uploaded the most recent versi
 
 # Watchlist
 'watchlist' => 'මගේ මුර-ලැයිස්තුව',
-'mywatchlist' => 'මගේ මුර ලැයිස්තුව',
+'mywatchlist' => 'මුර-ලැයිස්තුව',
 'watchlistfor2' => '$1 සඳහා ($2)',
 'nowatchlist' => 'ඔබගේ මුර-ලැයිස්තුවේ කිසිදු අයිතමයක් නොමැත.',
 'watchlistanontext' => 'ඔබගේ මුර-ලැයිස්තුවෙහි අයිතම නැරඹීමට හෝ සංස්කරණය කිරීමට හෝ කරුණාකර $1 සපුරන්න.',
@@ -2202,11 +2198,7 @@ When filtered by user, only files where that user uploaded the most recent versi
 
 'enotif_mailer' => '{{SITENAME}}හි නිවේදන යවන්නා',
 'enotif_reset' => 'පිවිසුනු සියළු පිටු සලකුණු කරන්න',
-'enotif_newpagetext' => 'මෙය නව පිටුවකි.',
 'enotif_impersonal_salutation' => '{{SITENAME}} පරිශීලක',
-'changed' => 'වෙනස්කරන ලදි',
-'created' => 'තනන ලදි',
-'enotif_subject' => '{{SITENAME}}හි  $PAGETITLE යන පිටුව  $PAGEEDITOR විසින්  $CHANGEDORCREATED කෙරිණි',
 'enotif_lastvisited' => 'ඔබගේ අවසාන පිවිසුමට පසු සිදුවූ සියළු වෙනස්වීම් නැරඹුමට $1 බලන්න.',
 'enotif_lastdiff' => 'මෙම වෙනස නැරඹීම සඳහා $1 බලන්න.',
 'enotif_anon_editor' => 'නිර්නාමික පරිශීලක $1',
@@ -2427,9 +2419,9 @@ $1',
 'blanknamespace' => '(ප්‍රධාන)',
 
 # Contributions
-'contributions' => 'මෙම පරිශීලකගේ දායකත්වයන්',
+'contributions' => '{{GENDER:$1|පරිශීලකගේ}} දායකත්වයන්',
 'contributions-title' => ' $1 සඳහා පරිශීලක දායකත්වයන්',
-'mycontris' => 'මගේ දායකත්ව',
+'mycontris' => 'දායකත්ව',
 'contribsub2' => '$1 සඳහා ($2)',
 'nocontribs' => 'මෙම උපමානයන් හා ගැලපෙන වෙනස්වීම් හමුනොවිණි.',
 'uctop' => '(ඉහලම)',
@@ -2470,7 +2462,7 @@ $1',
 'whatlinkshere-hideredirs' => '$1 යළි-යොමුකරයි',
 'whatlinkshere-hidetrans' => '$1 අන්තර්ගතයන්',
 'whatlinkshere-hidelinks' => 'සබැඳියන් $1',
-'whatlinkshere-hideimages' => 'රූප සබැඳි $1',
+'whatlinkshere-hideimages' => 'ගොනු සබැඳි $1',
 'whatlinkshere-filters' => 'පෙරහන්',
 
 # Block/unblock
@@ -2954,11 +2946,29 @@ $1 ගේ වාරණයට හේතුව මෙය වේ: "$2"',
 
 # Info page
 'pageinfo-title' => '"$1" සඳහා තොරතුරු',
+'pageinfo-header-basic' => 'මූලික තොරතුරු',
 'pageinfo-header-edits' => 'සංස්කරණ',
+'pageinfo-header-restrictions' => 'පිටු ආරක්ෂණය',
+'pageinfo-display-title' => 'මාතෘකාව පෙන්වන්න',
+'pageinfo-default-sort' => 'පෙරනිමි තේරීම් යතුර',
+'pageinfo-length' => 'පිටු දිග (බයිට් වලින්)',
+'pageinfo-article-id' => 'පිටු අනන්‍යනාංකය',
+'pageinfo-robot-policy' => 'සෙවුම් එන්ජිම් තත්ත්වය',
 'pageinfo-views' => 'නැරඹුම් සංඛ්‍යාව',
-'pageinfo-watchers' => 'මුරකරන්නන් සංඛ්‍යාව',
-'pageinfo-edits' => 'සංස්කරණයන් සංඛ්‍යාව',
-'pageinfo-authors' => 'ප්‍රභින්න කර්තෘවරුන් සංඛ්‍යාව',
+'pageinfo-watchers' => 'පිටු මුරකරන්නන් සංඛ්‍යාව',
+'pageinfo-redirects-name' => 'මෙම පිටුවට යළියොමු ගණන',
+'pageinfo-subpages-name' => 'මෙම පිටුවෙහි උපපිටු',
+'pageinfo-subpages-value' => '$1 ($2 {{PLURAL:$2|යළියොමු වෙයි|යළියොමු වෙති}}; $3 {{PLURAL:$3|යළියොමු-නොවෙයි|යළියොමු-නොවෙති}})',
+'pageinfo-firstuser' => 'පිටු තැනූ තැනැත්තේ',
+'pageinfo-firsttime' => 'පිටු තැනූ දිනය',
+'pageinfo-lastuser' => 'අවසන් සංස්කාරක',
+'pageinfo-lasttime' => 'අවසන් සංස්කරණය වූ දිනය',
+'pageinfo-edits' => 'මුළු සංස්කරණ සංඛ්‍යාව',
+'pageinfo-authors' => 'ප්‍රභින්න කර්තෘවරුන් මුළු සංඛ්‍යාව',
+'pageinfo-recent-edits' => 'මෑත සංස්කරණ සංඛ්‍යාව (අවසන් $1 තුලදී)',
+'pageinfo-recent-authors' => 'මෑත ප්‍රභින්න කර්තෘවරුන් සංඛ්‍යාව',
+'pageinfo-magic-words' => 'මැජික් {{PLURAL:$1|වචනය|වචන}} ($1)',
+'pageinfo-toolboxlink' => 'පිටු තොරතුරු',
 
 # Patrolling
 'markaspatrolleddiff' => 'පරික්ෂාකර බැලූ ලෙස සලකුණු කරන්න',

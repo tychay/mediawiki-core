@@ -124,7 +124,6 @@ $messages = array(
 'qbbrowse' => 'Nepile',
 'qbedit' => "Hloli ye ng'i",
 'qbpageoptions' => 'Bye petulo',
-'qbpageinfo' => 'Petulo tuto',
 'qbmyoptions' => 'Zwa petulona',
 'qbspecialpages' => 'Petulo zwenti',
 'faq' => 'Alabile',
@@ -734,10 +733,7 @@ A sa afi kulobala di zwa mukoloko di kentezi, tampi \"ngambu kentezi\".",
 'watching' => 'Kentezi...',
 'unwatching' => 'Dikentezi...',
 
-'enotif_newpagetext' => 'Bye sa nca petulo.',
 'enotif_impersonal_salutation' => '{{SITENAME}} sebelu',
-'changed' => 'petuhoni',
-'created' => 'hlolini',
 
 # Delete
 'deletepage' => 'Afi kulobala petulo',

@@ -1,5 +1,5 @@
 <?php
-/** Lushai (Mizo ţawng)
+/** Mizo (Mizo ţawng)
  *
  * See MessagesQqq.php for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -395,9 +395,6 @@ $2',
 'logouttext' => "'''I chhuak fel ta.'''
 Inziaklût kher lovin {{SITENAME}} hi i hmang chhunzawm thei ang, a nih loh vëk pawhin hmangtu hming pangngai emaw, a hming dang emawin <span class='plainlinks'>[$1 lût leh]</span> thei ang.
 I fangtu cache i thenfai hma chu phêk ţhenkhat intar lang a awm reng mai thei, i la  chhuak lo emaw tih mai tùrin.",
-'welcomecreation' => '==Kan lo lawm a che, $1!==
-I siangchan siam a ni ta.
-I [[Special:Preferences|{{SITENAME}}duhdàn]] siam danglam theihnghilh suh ang che.',
 'yourname' => 'Hmangtuhming:',
 'yourpassword' => 'Thurûk:',
 'yourpasswordagain' => 'Thurûk ziak nawn leh rawh le:',
@@ -1419,11 +1416,7 @@ Hetah hian [[Special:UnusedCategories|pawl hman lohho]] pholan tel a ni lo.
 'watchlist-options' => 'Ralvèn duhdàn',
 
 'enotif_reset' => 'Phêk zawng zawng tlawh tawh vek angin chhinchhiah rawh.',
-'enotif_newpagetext' => 'Hei hi phêk thar a ni.',
 'enotif_impersonal_salutation' => '{{SITENAME}} hmangtu',
-'changed' => 'tihdanglam a ni ta',
-'created' => 'siam a ni ta',
-'enotif_subject' => '{{SITENAME}} phêk $PAGETITLE tih hi $CHANGEDORCREATED,  $PAGEEDITOR bultum a ni.',
 'enotif_lastvisited' => 'I tlawh hnuhnùn ber hnu lama tihdanglam zawng zawng en i duh chuan $1 en rawh.',
 'enotif_lastdiff' => 'Hë tihdanglamna hi en tùrin $1 thlír rawh.',
 'enotif_anon_editor' => 'hmangtu hriat loh $1',

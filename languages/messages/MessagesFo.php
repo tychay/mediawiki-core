@@ -17,11 +17,6 @@
  * @author לערי ריינהארט
  */
 
-$bookstoreList = array(
-	'Bokasolan.fo' => 'http://www.bokasolan.fo/vleitari.asp?haattur=bok.alfa&Heiti=&Hovindur=&Forlag=&innbinding=Oell&bolkur=Allir&prisur=Allir&Aarstal=Oell&mal=Oell&status=Oell&ISBN=$1',
-	'inherit' => true,
-);
-
 $namespaceNames = array(
 	NS_MEDIA            => 'Miðil',
 	NS_SPECIAL          => 'Serstakt',
@@ -51,15 +46,6 @@ $namespaceAliases = array(
 	'Fyrimynd_kjak' => NS_TEMPLATE_TALK,
 	'Hjálp_kjak' => NS_HELP_TALK,
 	'Bólkur_kjak' => NS_CATEGORY_TALK,
-);
-
-
-$datePreferences = false;
-$defaultDateFormat = 'dmy';
-$dateFormats = array(
-	'dmy time' => 'H:i',
-	'dmy date' => 'j. M Y',
-	'dmy both' => 'j. M Y "kl." H:i',
 );
 
 $specialPageAliases = array(
@@ -107,6 +93,19 @@ $specialPageAliases = array(
 	'Version'                   => array( 'Útgáva' ),
 	'Wantedpages'               => array( 'Ynsktar síður' ),
 	'Watchlist'                 => array( 'Mítt eftirlit' ),
+);
+
+$datePreferences = false;
+$defaultDateFormat = 'dmy';
+$dateFormats = array(
+	'dmy time' => 'H:i',
+	'dmy date' => 'j. M Y',
+	'dmy both' => 'j. M Y "kl." H:i',
+);
+
+$bookstoreList = array(
+	'Bokasolan.fo' => 'http://www.bokasolan.fo/vleitari.asp?haattur=bok.alfa&Heiti=&Hovindur=&Forlag=&innbinding=Oell&bolkur=Allir&prisur=Allir&Aarstal=Oell&mal=Oell&status=Oell&ISBN=$1',
+	'inherit' => true,
 );
 
 $linkTrail = '/^([áðíóúýæøa-z]+)(.*)$/sDu';
@@ -515,10 +514,6 @@ Givin orsøk er "\'\'$2\'\'".',
 'logouttext' => "'''Tú hevur nú ritað út.'''
 Tú kanst halda fram at brúka {{SITENAME}} sum dulnevndur, ella kanst tú <span class='plainlinks'>[\$1 logga á aftur]</span> sum sami ella sum annar brúkari. 
 Legg til merkis, at summar síður framvegis vera vístar, sum um tú enn vart loggaður á, til tú hevur reinsa tín brovsara fyri \"cache\".",
-'welcomecreation' => '== Vælkomin, $1! ==
-
-Tín konta er nú stovnað.
-Gloym ikki at broyta tínar [[Special:Preferences|{{SITENAME}} innstillingar]].',
 'yourname' => 'Títt brúkaranavn:',
 'yourpassword' => 'Títt loyniorð:',
 'yourpasswordagain' => 'Skriva loyniorð umaftur:',
@@ -1765,9 +1760,7 @@ Vilt tú flyta síðuna undan tínum eftirliti, kanst tú trýsta á \"Strika ef
 'watching' => 'Eftirlitir...',
 'unwatching' => 'Strikar eftirlit...',
 
-'enotif_newpagetext' => 'Hetta er ein nýggj síða.',
 'enotif_impersonal_salutation' => '{{SITENAME}}brúkari',
-'created' => 'stovnað',
 
 # Delete
 'deletepage' => 'Strika síðu',

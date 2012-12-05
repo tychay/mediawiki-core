@@ -38,8 +38,6 @@
  * @author לערי ריינהארט
  */
 
-$separatorTransformTable = array( ',' => "\xc2\xa0", '.' => ',' );
-
 $namespaceNames = array(
 	NS_MEDIA            => 'Media',
 	NS_SPECIAL          => 'Toiminnot',
@@ -64,43 +62,103 @@ $namespaceAliases = array(
 	'Keskustelu_kuvasta' => NS_FILE_TALK,
 );
 
-
-$datePreferences = array(
-	'default',
-	'fi normal',
-	'fi seconds',
-	'fi numeric',
-	'ISO 8601',
-);
-
-$defaultDateFormat = 'fi normal';
-
-$dateFormats = array(
-	'fi normal time' => 'H.i',
-	'fi normal date' => 'j. F"ta" Y',
-	'fi normal both' => 'j. F"ta" Y "kello" H.i',
-
-	'fi seconds time' => 'H:i:s',
-	'fi seconds date' => 'j. F"ta" Y',
-	'fi seconds both' => 'j. F"ta" Y "kello" H:i:s',
-
-	'fi numeric time' => 'H.i',
-	'fi numeric date' => 'j.n.Y',
-	'fi numeric both' => 'j.n.Y "kello" H.i',
-);
-
-$datePreferenceMigrationMap = array(
-	'default',
-	'fi normal',
-	'fi seconds',
-	'fi numeric',
-);
-
-$bookstoreList = array(
-	'Bookplus'                      => 'http://www.bookplus.fi/product.php?isbn=$1',
-	'Helsingin yliopiston kirjasto' => 'http://pandora.lib.hel.fi/cgi-bin/mhask/monihask.py?volname=&author=&keyword=&ident=$1&submit=Hae&engine_helka=ON',
-	'Pääkaupunkiseudun kirjastot'   => 'http://www.helmet.fi/search*fin/i?SEARCH=$1',
-	'Tampereen seudun kirjastot'    => 'http://kirjasto.tampere.fi/Piki?formid=fullt&typ0=6&dat0=$1'
+$specialPageAliases = array(
+	'Activeusers'               => array( 'Aktiiviset_käyttäjät' ),
+	'Allmessages'               => array( 'Järjestelmäviestit' ),
+	'Allpages'                  => array( 'Kaikki_sivut' ),
+	'Ancientpages'              => array( 'Kuolleet_sivut' ),
+	'Badtitle'                  => array( 'Kelpaamaton_otsikko' ),
+	'Blankpage'                 => array( 'Tyhjä_sivu' ),
+	'Block'                     => array( 'Estä' ),
+	'Blockme'                   => array( 'Estä_minut' ),
+	'Booksources'               => array( 'Kirjalähteet' ),
+	'BrokenRedirects'           => array( 'Virheelliset_ohjaukset', 'Virheelliset_uudelleenohjaukset' ),
+	'Categories'                => array( 'Luokat' ),
+	'ChangeEmail'               => array( 'Muuta_sähköpostiosoite' ),
+	'ChangePassword'            => array( 'Muuta_salasana', 'Alusta_salasana' ),
+	'ComparePages'              => array( 'Vertaa_sivuja' ),
+	'Confirmemail'              => array( 'Varmista_sähköpostiosoite' ),
+	'Contributions'             => array( 'Muokkaukset' ),
+	'CreateAccount'             => array( 'Luo_tunnus' ),
+	'Deadendpages'              => array( 'Linkittömät_sivut' ),
+	'DeletedContributions'      => array( 'Poistetut_muokkaukset' ),
+	'Disambiguations'           => array( 'Täsmennyssivut' ),
+	'DoubleRedirects'           => array( 'Kaksinkertaiset_ohjaukset', 'Kaksinkertaiset_uudelleenohjaukset' ),
+	'EditWatchlist'             => array( 'Muokkaa_tarkkailulistaa' ),
+	'Emailuser'                 => array( 'Lähetä_sähköpostia' ),
+	'Export'                    => array( 'Vie_sivuja' ),
+	'Fewestrevisions'           => array( 'Vähiten_muokatut_sivut' ),
+	'FileDuplicateSearch'       => array( 'Kaksoiskappaleiden_haku' ),
+	'Filepath'                  => array( 'Tiedostopolku' ),
+	'Import'                    => array( 'Tuo_sivuja' ),
+	'Invalidateemail'           => array( 'Hylkää_sähköpostiosoite' ),
+	'BlockList'                 => array( 'Muokkausestot' ),
+	'LinkSearch'                => array( 'Linkkihaku' ),
+	'Listadmins'                => array( 'Ylläpitäjät' ),
+	'Listbots'                  => array( 'Botit' ),
+	'Listfiles'                 => array( 'Tiedostoluettelo' ),
+	'Listgrouprights'           => array( 'Käyttäjäryhmien_oikeudet' ),
+	'Listredirects'             => array( 'Ohjaukset', 'Ohjaussivut', 'Uudelleenohjaukset' ),
+	'Listusers'                 => array( 'Käyttäjät' ),
+	'Lockdb'                    => array( 'Lukitse_tietokanta' ),
+	'Log'                       => array( 'Loki', 'Lokit' ),
+	'Lonelypages'               => array( 'Yksinäiset_sivut' ),
+	'Longpages'                 => array( 'Pitkät_sivut' ),
+	'MergeHistory'              => array( 'Liitä_muutoshistoria' ),
+	'MIMEsearch'                => array( 'MIME-haku' ),
+	'Mostcategories'            => array( 'Luokitelluimmat_sivut' ),
+	'Mostimages'                => array( 'Viitatuimmat_tiedostot' ),
+	'Mostlinked'                => array( 'Viitatuimmat_sivut' ),
+	'Mostlinkedcategories'      => array( 'Viitatuimmat_luokat' ),
+	'Mostlinkedtemplates'       => array( 'Viitatuimmat_mallineet' ),
+	'Mostrevisions'             => array( 'Muokatuimmat_sivut' ),
+	'Movepage'                  => array( 'Siirrä_sivu' ),
+	'Mycontributions'           => array( 'Omat_muokkaukset' ),
+	'Mypage'                    => array( 'Oma_sivu' ),
+	'Mytalk'                    => array( 'Oma_keskustelu' ),
+	'Myuploads'                 => array( 'Omat_tiedostot' ),
+	'Newimages'                 => array( 'Uudet_tiedostot', 'Uudet_kuvat' ),
+	'Newpages'                  => array( 'Uudet_sivut' ),
+	'PasswordReset'             => array( 'Unohtuneen_salasanan_vaihto' ),
+	'PermanentLink'             => array( 'Ikilinkki' ),
+	'Popularpages'              => array( 'Suositut_sivut' ),
+	'Preferences'               => array( 'Asetukset' ),
+	'Prefixindex'               => array( 'Etuliiteluettelo' ),
+	'Protectedpages'            => array( 'Suojatut_sivut' ),
+	'Protectedtitles'           => array( 'Suojatut_sivunimet' ),
+	'Randompage'                => array( 'Satunnainen_sivu' ),
+	'Randomredirect'            => array( 'Satunnainen_ohjaus', 'Satunnainen_uudelleenohjaus' ),
+	'Recentchanges'             => array( 'Tuoreet_muutokset' ),
+	'Recentchangeslinked'       => array( 'Linkitetyt_muutokset' ),
+	'Revisiondelete'            => array( 'Poista_muokkaus' ),
+	'Search'                    => array( 'Haku' ),
+	'Shortpages'                => array( 'Lyhyet_sivut' ),
+	'Specialpages'              => array( 'Toimintosivut' ),
+	'Statistics'                => array( 'Tilastot' ),
+	'Tags'                      => array( 'Merkinnät' ),
+	'Unblock'                   => array( 'Poista_esto' ),
+	'Uncategorizedcategories'   => array( 'Luokittelemattomat_luokat' ),
+	'Uncategorizedimages'       => array( 'Luokittelemattomat_tiedostot' ),
+	'Uncategorizedpages'        => array( 'Luokittelemattomat_sivut' ),
+	'Uncategorizedtemplates'    => array( 'Luokittelemattomat_mallineet' ),
+	'Undelete'                  => array( 'Palauta' ),
+	'Unlockdb'                  => array( 'Avaa_tietokanta' ),
+	'Unusedcategories'          => array( 'Käyttämättömät_luokat' ),
+	'Unusedimages'              => array( 'Käyttämättömät_tiedostot' ),
+	'Unusedtemplates'           => array( 'Käyttämättömät_mallineet' ),
+	'Unwatchedpages'            => array( 'Tarkkailemattomat_sivut' ),
+	'Upload'                    => array( 'Tallenna', 'Lisää_tiedosto' ),
+	'Userlogin'                 => array( 'Kirjaudu_sisään' ),
+	'Userlogout'                => array( 'Kirjaudu_ulos' ),
+	'Userrights'                => array( 'Käyttöoikeudet' ),
+	'Version'                   => array( 'Versio' ),
+	'Wantedcategories'          => array( 'Halutuimmat_luokat' ),
+	'Wantedfiles'               => array( 'Halutuimmat_tiedostot' ),
+	'Wantedpages'               => array( 'Halutuimmat_sivut' ),
+	'Wantedtemplates'           => array( 'Halutuimmat_mallineet' ),
+	'Watchlist'                 => array( 'Tarkkailulista' ),
+	'Whatlinkshere'             => array( 'Tänne_viittaavat_sivut' ),
+	'Withoutinterwiki'          => array( 'Kielilinkittömät_sivut' ),
 );
 
 $magicWords = array(
@@ -109,7 +167,6 @@ $magicWords = array(
 	'forcetoc'                  => array( '0', '__SISLUETTPAKOTUS__', '__FORCETOC__' ),
 	'toc'                       => array( '0', '__SISÄLLYSLUETTELO__', '__TOC__' ),
 	'noeditsection'             => array( '0', '__EIOSIOMUOKKAUSTA__', '__NOEDITSECTION__' ),
-	'noheader'                  => array( '0', '__EIOTSIKKOA__', '__NOHEADER__' ),
 	'currentmonth'              => array( '1', 'KULUVAKUU', 'CURRENTMONTH', 'CURRENTMONTH2' ),
 	'currentmonthname'          => array( '1', 'KULUVAKUUNIMI', 'CURRENTMONTHNAME' ),
 	'currentmonthnamegen'       => array( '1', 'KULUVAKUUNIMIGEN', 'CURRENTMONTHNAMEGEN' ),
@@ -210,104 +267,44 @@ $magicWords = array(
 	'protectionlevel'           => array( '1', 'SUOJAUSTASO', 'PROTECTIONLEVEL' ),
 );
 
-$specialPageAliases = array(
-	'Activeusers'               => array( 'Aktiiviset_käyttäjät' ),
-	'Allmessages'               => array( 'Järjestelmäviestit' ),
-	'Allpages'                  => array( 'Kaikki_sivut' ),
-	'Ancientpages'              => array( 'Kuolleet_sivut' ),
-	'Badtitle'                  => array( 'Kelpaamaton_otsikko' ),
-	'Blankpage'                 => array( 'Tyhjä_sivu' ),
-	'Block'                     => array( 'Estä' ),
-	'Blockme'                   => array( 'Estä_minut' ),
-	'Booksources'               => array( 'Kirjalähteet' ),
-	'BrokenRedirects'           => array( 'Virheelliset_ohjaukset', 'Virheelliset_uudelleenohjaukset' ),
-	'Categories'                => array( 'Luokat' ),
-	'ChangeEmail'               => array( 'Muuta_sähköpostiosoite' ),
-	'ChangePassword'            => array( 'Muuta_salasana', 'Alusta_salasana' ),
-	'ComparePages'              => array( 'Vertaa_sivuja' ),
-	'Confirmemail'              => array( 'Varmista_sähköpostiosoite' ),
-	'Contributions'             => array( 'Muokkaukset' ),
-	'CreateAccount'             => array( 'Luo_tunnus' ),
-	'Deadendpages'              => array( 'Linkittömät_sivut' ),
-	'DeletedContributions'      => array( 'Poistetut_muokkaukset' ),
-	'Disambiguations'           => array( 'Täsmennyssivut' ),
-	'DoubleRedirects'           => array( 'Kaksinkertaiset_ohjaukset', 'Kaksinkertaiset_uudelleenohjaukset' ),
-	'EditWatchlist'             => array( 'Muokkaa_tarkkailulistaa' ),
-	'Emailuser'                 => array( 'Lähetä_sähköpostia' ),
-	'Export'                    => array( 'Vie_sivuja' ),
-	'Fewestrevisions'           => array( 'Vähiten_muokatut_sivut' ),
-	'FileDuplicateSearch'       => array( 'Kaksoiskappaleiden_haku' ),
-	'Filepath'                  => array( 'Tiedostopolku' ),
-	'Import'                    => array( 'Tuo_sivuja' ),
-	'Invalidateemail'           => array( 'Hylkää_sähköpostiosoite' ),
-	'BlockList'                 => array( 'Muokkausestot' ),
-	'LinkSearch'                => array( 'Linkkihaku' ),
-	'Listadmins'                => array( 'Ylläpitäjät' ),
-	'Listbots'                  => array( 'Botit' ),
-	'Listfiles'                 => array( 'Tiedostoluettelo' ),
-	'Listgrouprights'           => array( 'Käyttäjäryhmien_oikeudet' ),
-	'Listredirects'             => array( 'Ohjaukset', 'Ohjaussivut', 'Uudelleenohjaukset' ),
-	'Listusers'                 => array( 'Käyttäjät' ),
-	'Lockdb'                    => array( 'Lukitse_tietokanta' ),
-	'Log'                       => array( 'Loki', 'Lokit' ),
-	'Lonelypages'               => array( 'Yksinäiset_sivut' ),
-	'Longpages'                 => array( 'Pitkät_sivut' ),
-	'MergeHistory'              => array( 'Liitä_muutoshistoria' ),
-	'MIMEsearch'                => array( 'MIME-haku' ),
-	'Mostcategories'            => array( 'Luokitelluimmat_sivut' ),
-	'Mostimages'                => array( 'Viitatuimmat_tiedostot' ),
-	'Mostlinked'                => array( 'Viitatuimmat_sivut' ),
-	'Mostlinkedcategories'      => array( 'Viitatuimmat_luokat' ),
-	'Mostlinkedtemplates'       => array( 'Viitatuimmat_mallineet' ),
-	'Mostrevisions'             => array( 'Muokatuimmat_sivut' ),
-	'Movepage'                  => array( 'Siirrä_sivu' ),
-	'Mycontributions'           => array( 'Omat_muokkaukset' ),
-	'Mypage'                    => array( 'Oma_sivu' ),
-	'Mytalk'                    => array( 'Oma_keskustelu' ),
-	'Myuploads'                 => array( 'Omat_tiedostot' ),
-	'Newimages'                 => array( 'Uudet_tiedostot', 'Uudet_kuvat' ),
-	'Newpages'                  => array( 'Uudet_sivut' ),
-	'PasswordReset'             => array( 'Unohtuneen_salasanan_vaihto' ),
-	'PermanentLink'             => array( 'Ikilinkki' ),
-	'Popularpages'              => array( 'Suositut_sivut' ),
-	'Preferences'               => array( 'Asetukset' ),
-	'Prefixindex'               => array( 'Etuliiteluettelo' ),
-	'Protectedpages'            => array( 'Suojatut_sivut' ),
-	'Protectedtitles'           => array( 'Suojatut_sivunimet' ),
-	'Randompage'                => array( 'Satunnainen_sivu' ),
-	'Randomredirect'            => array( 'Satunnainen_ohjaus', 'Satunnainen_uudelleenohjaus' ),
-	'Recentchanges'             => array( 'Tuoreet_muutokset' ),
-	'Recentchangeslinked'       => array( 'Linkitetyt_muutokset' ),
-	'Revisiondelete'            => array( 'Poista_muokkaus' ),
-	'RevisionMove'              => array( 'Versioiden_siirto' ),
-	'Search'                    => array( 'Haku' ),
-	'Shortpages'                => array( 'Lyhyet_sivut' ),
-	'Specialpages'              => array( 'Toimintosivut' ),
-	'Statistics'                => array( 'Tilastot' ),
-	'Tags'                      => array( 'Merkinnät' ),
-	'Unblock'                   => array( 'Poista_esto' ),
-	'Uncategorizedcategories'   => array( 'Luokittelemattomat_luokat' ),
-	'Uncategorizedimages'       => array( 'Luokittelemattomat_tiedostot' ),
-	'Uncategorizedpages'        => array( 'Luokittelemattomat_sivut' ),
-	'Uncategorizedtemplates'    => array( 'Luokittelemattomat_mallineet' ),
-	'Undelete'                  => array( 'Palauta' ),
-	'Unlockdb'                  => array( 'Avaa_tietokanta' ),
-	'Unusedcategories'          => array( 'Käyttämättömät_luokat' ),
-	'Unusedimages'              => array( 'Käyttämättömät_tiedostot' ),
-	'Unusedtemplates'           => array( 'Käyttämättömät_mallineet' ),
-	'Unwatchedpages'            => array( 'Tarkkailemattomat_sivut' ),
-	'Upload'                    => array( 'Tallenna', 'Lisää_tiedosto' ),
-	'Userlogin'                 => array( 'Kirjaudu_sisään' ),
-	'Userlogout'                => array( 'Kirjaudu_ulos' ),
-	'Userrights'                => array( 'Käyttöoikeudet' ),
-	'Version'                   => array( 'Versio' ),
-	'Wantedcategories'          => array( 'Halutuimmat_luokat' ),
-	'Wantedfiles'               => array( 'Halutuimmat_tiedostot' ),
-	'Wantedpages'               => array( 'Halutuimmat_sivut' ),
-	'Wantedtemplates'           => array( 'Halutuimmat_mallineet' ),
-	'Watchlist'                 => array( 'Tarkkailulista' ),
-	'Whatlinkshere'             => array( 'Tänne_viittaavat_sivut' ),
-	'Withoutinterwiki'          => array( 'Kielilinkittömät_sivut' ),
+$separatorTransformTable = array( ',' => "\xc2\xa0", '.' => ',' );
+
+$datePreferences = array(
+	'default',
+	'fi normal',
+	'fi seconds',
+	'fi numeric',
+	'ISO 8601',
+);
+
+$defaultDateFormat = 'fi normal';
+
+$dateFormats = array(
+	'fi normal time' => 'H.i',
+	'fi normal date' => 'j. F"ta" Y',
+	'fi normal both' => 'j. F"ta" Y "kello" H.i',
+
+	'fi seconds time' => 'H:i:s',
+	'fi seconds date' => 'j. F"ta" Y',
+	'fi seconds both' => 'j. F"ta" Y "kello" H:i:s',
+
+	'fi numeric time' => 'H.i',
+	'fi numeric date' => 'j.n.Y',
+	'fi numeric both' => 'j.n.Y "kello" H.i',
+);
+
+$datePreferenceMigrationMap = array(
+	'default',
+	'fi normal',
+	'fi seconds',
+	'fi numeric',
+);
+
+$bookstoreList = array(
+	'Bookplus'                      => 'http://www.bookplus.fi/product.php?isbn=$1',
+	'Helsingin yliopiston kirjasto' => 'http://pandora.lib.hel.fi/cgi-bin/mhask/monihask.py?volname=&author=&keyword=&ident=$1&submit=Hae&engine_helka=ON',
+	'Pääkaupunkiseudun kirjastot'   => 'http://www.helmet.fi/search*fin/i?SEARCH=$1',
+	'Tampereen seudun kirjastot'    => 'http://kirjasto.tampere.fi/Piki?formid=fullt&typ0=6&dat0=$1'
 );
 
 $linkTrail = '/^([a-zäö]+)(.*)$/sDu';
@@ -352,7 +349,7 @@ $messages = array(
 'tog-watchlisthidebots' => 'Piilota bottien muokkaukset',
 'tog-watchlisthideminor' => 'Piilota pienet muokkaukset',
 'tog-watchlisthideliu' => 'Piilota kirjautuneiden käyttäjien muokkaukset tarkkailulistalta',
-'tog-watchlisthideanons' => 'Piilota anonyymien käyttäjien muokkaukset tarkkailulistalta',
+'tog-watchlisthideanons' => 'Piilota rekisteröitymättömien käyttäjien muokkaukset tarkkailulistalta',
 'tog-watchlisthidepatrolled' => 'Piilota tarkastetut muokkaukset tarkkailulistalta',
 'tog-ccmeonemails' => 'Lähetä minulle kopio MediaWikin kautta lähetetyistä sähköposteista',
 'tog-diffonly' => 'Älä näytä sivun sisältöä versioita vertailtaessa',
@@ -362,7 +359,7 @@ $messages = array(
 
 'underline-always' => 'Aina',
 'underline-never' => 'Ei koskaan',
-'underline-default' => 'Selaimen oletustapa',
+'underline-default' => 'Ulkoasun tai selaimen oletustapa',
 
 # Font style option in Special:Preferences
 'editfont-style' => 'Muokkauskentän kirjasintyyppi',
@@ -458,7 +455,7 @@ $messages = array(
 'qbbrowse' => 'Selaa',
 'qbedit' => 'Muokkaa',
 'qbpageoptions' => 'Sivuasetukset',
-'qbmyoptions' => 'Asetukset',
+'qbmyoptions' => 'Omat sivut',
 'qbspecialpages' => 'Toimintosivut',
 'faq' => 'Usein kysytyt kysymykset',
 'faqpage' => 'Project:Usein kysytyt kysymykset',
@@ -480,6 +477,7 @@ $messages = array(
 'namespaces' => 'Nimiavaruudet',
 'variants' => 'Kirjoitusjärjestelmät',
 
+'navigation-heading' => 'Navigointivalikko',
 'errorpagetitle' => 'Virhe',
 'returnto' => 'Palaa sivulle $1.',
 'tagline' => '{{SITENAME}}',
@@ -673,8 +671,8 @@ Joku muu on saattanut poistaa sen.',
 'delete-hook-aborted' => 'Laajennuskoohdi esti muokkauksen antamatta syytä.',
 'badtitle' => 'Virheellinen otsikko',
 'badtitletext' => 'Pyytämäsi sivuotsikko oli virheellinen, tyhjä tai väärin linkitetty kieltenvälinen tai wikienvälinen linkki.',
-'perfcached' => 'Tiedot ovat välimuistista eivätkä välttämättä ole ajan tasalla. Välimuistissa on saatavilla enintään {{PLURAL:$1|yksi tulos|$1 tulosta}}.',
-'perfcachedts' => 'Tiedot ovat välimuistista ja se päivitettiin viimeksi $1. Välimuistissa on saatavilla enintään {{PLURAL:$4|yksi tulos|$4 tulosta}}.',
+'perfcached' => 'Nämä tiedot ovat välimuistista eivätkä välttämättä ole ajan tasalla. Välimuistissa on saatavilla enintään {{PLURAL:$1|yksi tulos|$1 tulosta}}.',
+'perfcachedts' => 'Nämä tiedot ovat välimuistista, ja ne on päivitetty viimeksi $1. Välimuistissa on saatavilla enintään {{PLURAL:$4|yksi tulos|$4 tulosta}}.',
 'querypage-no-updates' => 'Tämän sivun tietoja ei toistaiseksi päivitetä.',
 'wrong_wfQuery_params' => 'Virheelliset parametrit wfQuery()<br />Funktio: $1<br />Tiedustelu: $2',
 'viewsource' => 'Lähdekoodi',
@@ -716,8 +714,8 @@ Lukituksen asettanut ylläpitäjä on antanut seuraavan syyn toimenpiteelle: $3.
 
 Voit jatkaa {{GRAMMAR:genitive|{{SITENAME}}}} käyttöä nimettömänä, tai <span class='plainlinks'>[$1 kirjautua uudelleen sisään]</span>.
 Huomaa, että jotkut sivut saattavat näkyä edelleen kuin olisit kirjautunut sisään, kunnes tyhjennät selaimen välimuistin.",
-'welcomecreation' => '== Tervetuloa $1! ==
-Käyttäjätunnuksesi on luotu.
+'welcomeuser' => 'Tervetuloa $1!',
+'welcomecreation-msg' => 'Käyttäjätunnuksesi on luotu.
 Älä unohda virittää {{GRAMMAR:genitive|{{SITENAME}}}} [[Special:Preferences|asetuksiasi]].',
 'yourname' => 'Käyttäjätunnus',
 'yourpassword' => 'Salasana',
@@ -882,7 +880,7 @@ Väliaikainen salasana: $2',
 'image_sample' => 'Esimerkki.jpg',
 'image_tip' => 'Tallennettu tiedosto',
 'media_sample' => 'Esimerkki.ogg',
-'media_tip' => 'Mediatiedostolinkki',
+'media_tip' => 'Tiedostolinkki',
 'sig_tip' => 'Allekirjoitus aikamerkinnällä',
 'hr_tip' => 'Vaakasuora viiva',
 
@@ -957,9 +955,9 @@ Voit [[Special:Search/{{PAGENAME}}|etsiä sivun nimellä]] muilta sivuilta,
 tai [{{fullurl:{{FULLPAGENAME}}|action=edit}} muokata tätä sivua]</span>.',
 'noarticletext-nopermission' => 'Tällä hetkellä tällä sivulla ei ole tekstiä.
 Voit [[Special:Search/{{PAGENAME}}|etsiä sivun nimellä]] muilta sivuilta tai <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} hakea aiheeseen liittyviä lokeja]</span>, mutta sinulla ei ole oikeutta luoda tätä sivua.',
-'missing-revision' => 'Muutosta #$1 sivulla "{{PAGENAME}}" ei ole olemassa.
+'missing-revision' => 'Sivusta {{PAGENAME}} ei ole olemassa versiota $1.
 
-Tämä yleensä johtuu vanhentuneesta historialinkistä sivulle, joka on poistettu.
+Useimmiten tämä johtuu vanhentuneesta historialinkistä poistettuun sivuun.
 Lisätietoja löytyy [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} poistolokista].',
 'userpage-userdoesnotexist' => 'Käyttäjätunnusta <nowiki>$1</nowiki> ei ole rekisteröity. Varmista haluatko muokata tätä sivua.',
 'userpage-userdoesnotexist-view' => 'Käyttäjätunnusta ”$1” ei ole rekisteröity.',
@@ -983,7 +981,7 @@ Alla on viimeisin estolokin tapahtuma:',
 'note' => "'''Huomautus:'''",
 'previewnote' => "'''Tämä on vasta sivun esikatselu.'''
 Tekemiäsi muutoksia ei ole vielä tallennettu.",
-'continue-editing' => 'Jatka muokkaamista',
+'continue-editing' => 'Siirry muokkauskenttään',
 'previewconflict' => 'Tämä esikatselu näyttää miltä muokkausalueella oleva teksti näyttää tallennettuna.',
 'session_fail_preview' => "'''Muokkaustasi ei voitu tallentaa, koska istuntosi tiedot ovat kadonneet.''' Yritä uudelleen. Jos ongelma ei katoa, yritä [[Special:UserLogout|kirjautua ulos]] ja takaisin sisään.",
 'session_fail_preview_html' => "'''Muokkaustasi ei voitu tallentaa, koska istuntosi tiedot ovat kadonneet.'''
@@ -1050,9 +1048,12 @@ Se on ilmeisesti poistettu.',
 'edit-already-exists' => 'Uuden sivun luominen ei onnistunut.
 Se on jo olemassa.',
 'defaultmessagetext' => 'Viestin oletusteksti',
-'content-not-allowed-here' => '$1 ei ole sallittua sisältöä sivulla [[$2]]',
+'invalid-content-data' => 'Virheellinen sisältö',
+'content-not-allowed-here' => 'Sivun [[$2]] sisältö ei voi olla tyyppiä $1.',
 
 # Content models
+'content-model-wikitext' => 'wikiteksti',
+'content-model-text' => 'teksti',
 'content-model-javascript' => 'JavaScript',
 'content-model-css' => 'CSS',
 
@@ -1258,9 +1259,9 @@ Uuden ja vanhan sivun muutoksien pitää muodostaa jatkumo – ne eivät saa men
 'editundo' => 'kumoa',
 'diff-multi' => '(Näytettyjen versioiden välissä on {{PLURAL:$1|yksi muokkaus|$1 versiota, jotka ovat {{PLURAL:$2|yhden käyttäjän tekemiä|$2 eri käyttäjän tekemiä}}}}.)',
 'diff-multi-manyusers' => '(Versioiden välissä on {{PLURAL:$1|yksi muu muokkaus|$1 muuta muokkausta, jotka on tehnyt {{PLURAL:$2|yksi käyttäjä|yli $2 eri käyttäjää}}}}.)',
-'difference-missing-revision' => '{{PLURAL:$2|Yhtä versiota|$2 versiota}} tästä diffistä ($1) {{PLURAL:$2|ei|ei}} löytynyt.
+'difference-missing-revision' => '{{PLURAL:$2|Yhtä versiota|$2 versiota}} tästä vertailusta ($1) {{PLURAL:$2|ei}} löytynyt.
 
-Tämä johtuu yleensä seuraavasta vanhentuneeesta diffilinkistä sivulle, joka on poistettu.
+Useimmiten tämä johtuu vanhentuneesta vertailulinkistä poistettuun sivuun.
 Lisätietoja löytyy [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} poistolokista].',
 
 # Search results
@@ -1568,6 +1569,7 @@ Tässä satunnaisesti tuotettu arvo, jota voit käyttää: $1',
 'rightslogtext' => 'Tämä on loki käyttäjien käyttöoikeuksien muutoksista.',
 'rightslogentry' => 'muutti käyttäjän $1 oikeudet ryhmistä $2 ryhmiin $3',
 'rightslogentry-autopromote' => 'muutettiin automaattisesti ryhmistä $2 ryhmiin $3',
+'logentry-rights-rights' => '$1 muutti käyttäjän $3 oikeudet ryhmistä $4 ryhmiin $5',
 'rightsnone' => '(ei oikeuksia)',
 
 # Associated actions - in the sentence "You do not have permission to X"
@@ -2180,7 +2182,7 @@ Katso myös [[Special:WantedCategories|halutut luokat]].',
 'linksearch-ok' => 'Etsi',
 'linksearch-text' => 'Tähteä (*) voi käyttää jokerimerkkinä, esimerkiksi ”*.wikipedia.org”.
 Vähintään ylätason verkkotunnus, esimerkiksi "*.org", tarvitaan.<br />
-Tuetut protokollat: <code>$1</code> (älä lisää näitä hakuusi).',
+Tuetut protokollat: <code>$1</code> (oletuksena on <code>http://</code>, jos protokollaa ei määritetä).',
 'linksearch-line' => '$1 on linkitetty sivulta $2',
 'linksearch-error' => 'Jokerimerkkiä voi käyttää ainoastaan osoitteen alussa.',
 
@@ -2229,7 +2231,7 @@ Lisätietoa yksittäisistä käyttäjäoikeuksista saattaa löytyä [[{{MediaWik
 'emailuser-title-target' => 'Lähetä sähköpostia tälle {{GENDER:$1|käyttäjälle}}',
 'emailuser-title-notarget' => 'Lähetä sähköpostia käyttäjälle',
 'emailpage' => 'Lähetä sähköpostia käyttäjälle',
-'emailpagetext' => 'Jos tämä käyttäjä on antanut asetuksissaan kelvollisen sähköpostiosoitteen, alla olevalla lomakkeella voit lähettää hänelle viestin. [[Special:Preferences|Omissa asetuksissasi]] annettu sähköpostiosoite näkyy sähköpostin lähettäjän osoitteena, jotta vastaanottaja voi suoraan vastata viestiin.',
+'emailpagetext' => 'Jos tämä {{GENDER:$1|käyttäjä}} on antanut asetuksissaan kelvollisen sähköpostiosoitteen, alla olevalla lomakkeella voit lähettää hänelle viestin. [[Special:Preferences|Omissa asetuksissasi]] annettu sähköpostiosoite näkyy sähköpostin lähettäjän osoitteena, jotta vastaanottaja voi suoraan vastata viestiin.',
 'usermailererror' => 'Postitus palautti virheen:',
 'defemailsubject' => 'Sähköpostia käyttäjältä $1 sivustolta {{SITENAME}}',
 'usermaildisabled' => 'Käyttäjien sähköposti poistettu käytöstä',
@@ -2285,7 +2287,7 @@ Lisätietoa yksittäisistä käyttäjäoikeuksista saattaa löytyä [[{{MediaWik
 'watchlistcontains' => 'Tarkkailulistallasi on {{PLURAL:$1|yksi sivu|$1 sivua}}.',
 'iteminvalidname' => 'Sivun $1 kanssa oli ongelmia! Sivun nimessä on vikaa.',
 'wlnote' => "Alla on {{PLURAL:$1|yksi muutos|'''$1''' muutosta}} viimeisen {{PLURAL:$2|tunnin|'''$2''' tunnin}} ajalta $3 kello $4 asti.",
-'wlshowlast' => 'Näytä viimeiset $1 tuntia tai $2 päivää$3',
+'wlshowlast' => 'Näytä viimeiset $1 tuntia tai $2 päivää, $3',
 'watchlist-options' => 'Tarkkailulistan asetukset',
 
 # Displayed when you click the "watch" button and it is in the process of watching
@@ -2295,19 +2297,23 @@ Lisätietoa yksittäisistä käyttäjäoikeuksista saattaa löytyä [[{{MediaWik
 
 'enotif_mailer' => '{{GRAMMAR:genitive|{{SITENAME}}}} sivu on muuttunut -ilmoitus',
 'enotif_reset' => 'Merkitse kaikki sivut kerralla nähdyiksi',
-'enotif_newpagetext' => 'Tämä on uusi sivu.',
 'enotif_impersonal_salutation' => '{{SITENAME}}-käyttäjä',
-'changed' => 'muuttanut sivua',
-'created' => 'luonut sivun',
-'enotif_subject' => '$PAGEEDITOR on $CHANGEDORCREATED $PAGETITLE',
+'enotif_subject_deleted' => '{{gender:$2|$2}} poisti {{SITENAME}}-sivun $1',
+'enotif_subject_created' => '{{gender:$2|$2}} loi {{SITENAME}}-sivun $1',
+'enotif_subject_moved' => '{{gender:$2|$2}} siirsi {{SITENAME}}-sivun $1',
+'enotif_subject_restored' => '{{gender:$2|$2}} palautti {{SITENAME}}-sivun $1',
+'enotif_subject_changed' => '{{gender:$2|$2}} muutti {{SITENAME}}-sivua $1',
+'enotif_body_intro_deleted' => '{{gender:$2|$2}} poisti {{SITENAME}}-sivun $1 $PAGEEDITDATE, sivun nykyinen versio on osoitteessa $3.',
+'enotif_body_intro_created' => '{{gender:$2|$2}} loi {{SITENAME}}-sivun $1 $PAGEEDITDATE, sivun nykyinen versio on osoitteessa $3.',
+'enotif_body_intro_moved' => '{{gender:$2|$2}} siirsi {{SITENAME}}-sivun $1 $PAGEEDITDATE, sivun nykyinen versio on osoitteessa $3.',
+'enotif_body_intro_restored' => '{{gender:$2|$2}} palautti {{SITENAME}}-sivun $1 $PAGEEDITDATE, sivun nykyinen versio on osoitteessa $3.',
+'enotif_body_intro_changed' => '{{gender:$2|$2}} muutti {{SITENAME}}-sivua $1 $PAGEEDITDATE, sivun nykyinen versio on osoitteessa $3.',
 'enotif_lastvisited' => 'Osoitteessa $1 on kaikki muutokset viimeisen käyntisi jälkeen.',
 'enotif_lastdiff' => 'Muutos on osoitteessa $1.',
 'enotif_anon_editor' => 'kirjautumaton käyttäjä $1',
 'enotif_body' => '$WATCHINGUSERNAME,
 
-{{GRAMMAR:genitive|{{SITENAME}}}} käyttäjä $PAGEEDITOR on $CHANGEDORCREATED $PAGETITLE $PAGEEDITDATE. Nykyinen versio on osoitteessa $PAGETITLE_URL .
-
-$NEWPAGE
+$PAGEINTRO $NEWPAGE
 
 Muokkaajan yhteenveto: $PAGESUMMARY $PAGEMINOREDIT
 
@@ -2407,7 +2413,7 @@ Viimeisimmän muokkauksen on tehnyt käyttäjä [[User:$3|$3]] ([[User talk:$3|k
 'protect-cascadeon' => 'Tämä sivu on suojauksen kohteena, koska se on sisällytetty alla {{PLURAL:$1|olevaan laajennetusti suojattuun sivuun|oleviin laajennetusti suojattuihin sivuihin}}. Voit muuttaa tämän sivun suojaustasoa, mutta se ei vaikuta laajennettuun suojaukseen.',
 'protect-default' => 'Salli kaikki käyttäjät',
 'protect-fallback' => 'Vaadi $1-oikeus',
-'protect-level-autoconfirmed' => 'Estä uudet ja anonyymit käyttäjät',
+'protect-level-autoconfirmed' => 'Estä uudet ja kirjautumattomat käyttäjät',
 'protect-level-sysop' => 'Vain ylläpitäjät',
 'protect-summary-cascade' => 'laajennettu',
 'protect-expiring' => 'vanhentuu $1 (UTC)',
@@ -2503,7 +2509,7 @@ $1',
 'blanknamespace' => '(sivut)',
 
 # Contributions
-'contributions' => 'Käyttäjän muokkaukset',
+'contributions' => '{{GENDER:$1|Käyttäjän}} muokkaukset',
 'contributions-title' => 'Käyttäjän $1 muokkaukset',
 'mycontris' => 'Omat muokkaukset',
 'contribsub2' => 'Käyttäjän $1 ($2) muokkaukset',
@@ -2759,6 +2765,7 @@ $1 {{PLURAL:$1|sivu|sivua}} siirrettiin.',
 'immobile-target-namespace-iw' => 'Kielilinkki ei ole kelvollinen kohde sivun siirrolle.',
 'immobile-source-page' => 'Tämä sivu ei ole siirrettävissä.',
 'immobile-target-page' => 'Kyseiselle kohdenimelle ei voi siirtää.',
+'bad-target-model' => 'Kohde käyttää eri sisältömallia. Sisällön muuttaminen muodosta $1 muotoon $2 ei ole mahdollista.',
 'imagenocrossnamespace' => 'Tiedostoja ei voi siirtää pois tiedostonimiavaruudesta.',
 'nonfile-cannot-move-to-file' => 'Sivuja ei voi siirtää tiedostonimiavaruuteen.',
 'imagetypemismatch' => 'Uusi tiedostopääte ei vastaa tiedoston tyyppiä',
@@ -2837,6 +2844,7 @@ Jos haluat muokata MediaWikin yleistä kotoistusta, käy [//www.mediawiki.org/wi
 'import-interwiki-templates' => 'Liitä kaikki mallineet',
 'import-interwiki-submit' => 'Tuo',
 'import-interwiki-namespace' => 'Kohdenimiavaruus:',
+'import-interwiki-rootpage' => 'Tuo annetun sivun alasivuiksi (valinnainen):',
 'import-upload-filename' => 'Tiedostonimi:',
 'import-comment' => 'Syy',
 'importtext' => 'Vie sivuja lähdewikistä käyttäen [[Special:Export|vientityökalua]].
@@ -2870,6 +2878,8 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 'import-error-special' => 'Sivua $1 ei tuoda, koska se kuuluu nimitilaan, joka ei salli sivuja.',
 'import-error-invalid' => 'Sivua $1 ei tuoda, koska sen nimi ei kelpaa.',
 'import-options-wrong' => '{{PLURAL:$2|Väärä asetus|Väärät asetukset}}: <nowiki>$1</nowiki>',
+'import-rootpage-invalid' => 'Annettu sivun nimi ei kelpaa.',
+'import-rootpage-nosubpage' => 'Annetun sivun nimiavaruus $1 ei salli alasivuja.',
 
 # Import log
 'importlogpage' => 'Tuontiloki',
@@ -3018,6 +3028,7 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 
 # Info page
 'pageinfo-title' => 'Tietoja sivusta $1',
+'pageinfo-not-current' => 'Tiedot voidaan näyttää vain sivun viimeisimmälle versiolle.',
 'pageinfo-header-basic' => 'Perustiedot',
 'pageinfo-header-edits' => 'Muutoshistoria',
 'pageinfo-header-restrictions' => 'Sivun suojaus',
@@ -3026,23 +3037,30 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 'pageinfo-default-sort' => 'Oletuslajitteluavain',
 'pageinfo-length' => 'Sivun pituus (tavuina)',
 'pageinfo-article-id' => 'Sivun tunniste',
+'pageinfo-language' => 'Sivun sisällön kieli',
+'pageinfo-robot-policy' => 'Hakukonemerkinnät',
 'pageinfo-robot-index' => 'Indeksoitava',
 'pageinfo-robot-noindex' => 'Ei indeksoitava',
 'pageinfo-views' => 'Katselukertojen määrä',
 'pageinfo-watchers' => 'Sivun tarkkailijoiden lukumäärä',
 'pageinfo-redirects-name' => 'Sivulle johtavat ohjaukset',
 'pageinfo-subpages-name' => 'Sivun alasivut',
+'pageinfo-subpages-value' => '$1 ($2 {{PLURAL:$2|ohjaus|ohjausta}}; $3 {{PLURAL:$3|ei-ohjausta}})',
 'pageinfo-firstuser' => 'Sivun luonut',
 'pageinfo-firsttime' => 'Sivun luontipäivämäärä',
 'pageinfo-lastuser' => 'Viimeisin muokkaaja',
-'pageinfo-lasttime' => 'Viimeisimmän muokkausksen päivämäärä',
+'pageinfo-lasttime' => 'Viimeisin muokkauspäivämäärä',
 'pageinfo-edits' => 'Muokkausten kokonaismäärä',
 'pageinfo-authors' => 'Sivun eri muokkaajien kokonaismäärä',
+'pageinfo-recent-edits' => 'Tuoreita muutoksia ($1)',
+'pageinfo-recent-authors' => 'Tuoreita muokkaajia',
 'pageinfo-magic-words' => '{{PLURAL:$1|Taikasana|Taikasanat}} ($1)',
 'pageinfo-hidden-categories' => '{{PLURAL:$1|Piilotettu luokka|Piilotetut luokat}} ($1)',
 'pageinfo-templates' => '{{PLURAL:$1|Sisällytetty malline|Sisällytetyt mallineet}} ($1)',
 'pageinfo-toolboxlink' => 'Sivun tiedot',
+'pageinfo-redirectsto' => 'Ohjaus sivulle',
 'pageinfo-redirectsto-info' => 'tiedot',
+'pageinfo-contentpage' => 'Lasketaan sisältösivuksi',
 'pageinfo-contentpage-yes' => 'Kyllä',
 'pageinfo-protect-cascading-yes' => 'Kyllä',
 
@@ -3098,6 +3116,7 @@ Suorittamalla sen järjestelmäsi voi muuttua epäluotettavaksi.",
 'file-info-size-pages' => '$1 × $2 kuvapistettä, tiedoston koko $3, MIME-tyyppi $4, $5 {{PLURAL:$5|sivu|sivua}}',
 'file-nohires' => 'Tarkempaa kuvaa ei ole saatavilla.',
 'svg-long-desc' => 'SVG-tiedosto; oletustarkkuus $1 × $2 kuvapistettä; tiedostokoko $3',
+'svg-long-desc-animated' => 'Animoitu SVG-tiedosto; oletustarkkuus $1 × $2 kuvapistettä; tiedostokoko $3',
 'show-big-image' => 'Korkeatarkkuuksinen versio',
 'show-big-image-preview' => 'Tämän esikatselun koko: $1.',
 'show-big-image-other' => '{{PLURAL:$2|Muu resoluutio|Muut resoluutiot}}: $1.',
@@ -3128,6 +3147,7 @@ Suorittamalla sen järjestelmäsi voi muuttua epäluotettavaksi.",
 'hours' => '{{PLURAL:$1|$1 tunti|$1 tuntia}}',
 'days' => '{{PLURAL:$1|$1 päivä|$1 päivää}}',
 'ago' => '$1 sitten',
+'just-now' => 'juuri nyt',
 
 # Bad image list
 'bad_image_list' => 'Listan muoto on seuraava:
@@ -3551,7 +3571,7 @@ Kaikki muut linkit ovat poikkeuksia eli toisin sanoen sivuja, joissa tiedostoa s
 'edit-externally-help' => '(Katso [//www.mediawiki.org/wiki/Manual:External_editors ohjeet], jos haluat lisätietoja.)',
 
 # 'all' in various places, this might be different for inflected languages
-'watchlistall2' => ', koko historia',
+'watchlistall2' => 'koko historia',
 'namespacesall' => 'kaikki',
 'monthsall' => 'kaikki',
 'limitall' => 'kaikki',
@@ -3871,8 +3891,8 @@ Kuvat näytetään täysikokoisina. Muut tiedostot avataan niille määritetyss�
 'logentry-move-move_redir-noredirect' => '$1 siirsi sivun $3 ohjauksen $4 päälle luomatta ohjausta',
 'logentry-patrol-patrol' => '$1 merkitsi sivun $3 muutoksen $4 tarkastetuksi',
 'logentry-patrol-patrol-auto' => '$1 merkitsi automaattisesti sivun $3 muutoksen $4 tarkastetuksi',
-'logentry-newusers-newusers' => '$1 loi käyttäjätunnuksen',
-'logentry-newusers-create' => '$1 loi käyttäjätunnuksen',
+'logentry-newusers-newusers' => 'Käyttäjätunnus $1 luotiin',
+'logentry-newusers-create' => 'Käyttäjätunnus $1 luotiin',
 'logentry-newusers-create2' => '$1 loi käyttäjätunnuksen $3',
 'logentry-newusers-autocreate' => 'Käyttäjätunnus $1 luotiin automaattisesti',
 'newuserlog-byemail' => 'salasana lähetetty sähköpostitse',

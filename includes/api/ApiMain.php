@@ -119,7 +119,7 @@ class ApiMain extends ApiBase {
 			'msg' => 'Use of the write API',
 			'params' => array()
 		),
-		'apihighlimits'	=> array(
+		'apihighlimits' => array(
 			'msg' => 'Use higher limits in API queries (Slow queries: $1 results; Fast queries: $2 results). The limits for slow queries also apply to multivalue parameters.',
 			'params' => array( ApiBase::LIMIT_SML2, ApiBase::LIMIT_BIG2 )
 		)
@@ -376,7 +376,12 @@ class ApiMain extends ApiBase {
 
 			// Log it
 			if ( !( $e instanceof UsageException ) ) {
-				wfDebugLog( 'exception', $e->getLogMessage() );
+				global $wgLogExceptionBacktrace;
+				if ( $wgLogExceptionBacktrace ) {
+					wfDebugLog( 'exception', $e->getLogMessage() . "\n" . $e->getTraceAsString() . "\n" );
+				} else {
+					wfDebugLog( 'exception', $e->getLogMessage() );
+				}
 			}
 
 			// Handle any kind of exception by outputing properly formatted error message.
@@ -994,7 +999,7 @@ class ApiMain extends ApiBase {
 				'Maximum lag can be used when MediaWiki is installed on a database replicated cluster.',
 				'To save actions causing any more site replication lag, this parameter can make the client',
 				'wait until the replication lag is less than the specified value.',
-				'In case of a replag error, a HTTP 503 error is returned, with the message like',
+				'In case of a replag error, error code "maxlag" is returned, with the message like',
 				'"Waiting for $host: $lag seconds lagged\n".',
 				'See https://www.mediawiki.org/wiki/Manual:Maxlag_parameter for more information',
 			),

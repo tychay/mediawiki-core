@@ -211,7 +211,6 @@ $messages = array(
 'qbbrowse' => 'Shfleto',
 'qbedit' => 'Redakto',
 'qbpageoptions' => 'Kjo faqe',
-'qbpageinfo' => 'Konteksti',
 'qbmyoptions' => 'Faqet e mija',
 'qbspecialpages' => 'Faqet speciale',
 'faq' => 'Pyetjet e shpeshta',
@@ -453,10 +452,6 @@ Arsyeja e dhânë âsht "\'\'$2\'\'".',
 
 Mundeni me vazhdue me shfrytëzue {{SITENAME}} në mënyrë anonime, apo mundeni <span class='plainlinks'>[$1 me u kyçë]</span> si përdoruesi i njêjtë apo si nji tjetër.
 Disa faqe mujnë me u paraqitë prap si t'kishit qenë t'kyçun, derisa ta pastroni memorizimin e shfletuesit.",
-'welcomecreation' => '== Mirësevini, $1! ==
-
-Llogaria juej âsht krijue.
-Mos harroni me i ndryshue [[Special:Preferences|parapëlqimet për {{SITENAME}}]].',
 'yourname' => 'Nofka:',
 'yourpassword' => 'Fjalëkalimi:',
 'yourpasswordagain' => 'Fjalëkalimi përsëdyti:',

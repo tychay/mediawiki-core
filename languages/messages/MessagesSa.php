@@ -178,7 +178,6 @@ $magicWords = array(
 	'forcetoc'                  => array( '0', '__अनुक्रमणीसचते__', '__FORCETOC__' ),
 	'toc'                       => array( '0', '__अनुक्रमणी__', '__TOC__' ),
 	'noeditsection'             => array( '0', '__नैवसम्पादनविभाग__', '__NOEDITSECTION__' ),
-	'noheader'                  => array( '0', '__नैवमुख्यशिर्षक__', '__NOHEADER__' ),
 	'currentmonth'              => array( '1', 'अद्यमासे', 'CURRENTMONTH', 'CURRENTMONTH2' ),
 	'currentmonthname'          => array( '1', 'अद्यमासेनाम', 'CURRENTMONTHNAME' ),
 	'currentmonthnamegen'       => array( '1', 'अद्यमासेनामसाधारण', 'CURRENTMONTHNAMEGEN' ),
@@ -680,9 +679,6 @@ $2',
 
 भवान् {{SITENAME}} इत्येतत् अनामतया प्रयोक्तुं शक्नोति, अथवा भवान् तेनैव प्रयोक्तृनाम्ना, भिन्नप्रयोक्तृनाम्ना वा  <span class='plainlinks'>[$1 पुनः प्रवेष्टुं शक्नोति]</span>।
 इदानीमपि कानिचन पृष्ठानि पूर्ववदेव दृश्येरन् । अस्य वारणाय विचरकस्य स्मृतिसञ्चयः रिक्तीक्रियताम् ।",
-'welcomecreation' => '==स्वागतम्‌, $1!==
-भवता सदस्यता प्राप्ता अस्ति।
-भवतः [[Special:Preferences|{{SITENAME}} इष्टतमानि]]  इत्यस्य परिवर्तनं न विस्मर्यताम्।',
 'yourname' => 'योजकनामन्:',
 'yourpassword' => 'कूटशब्दः',
 'yourpasswordagain' => 'कूटशब्दः पुनः लिख्यताम् ।',
@@ -2273,11 +2269,7 @@ See https://www.mediawiki.org/wiki/Manual:Image_Authorization.',
 
 'enotif_mailer' => '{{SITENAME}} सूचितः विद्युन्मानपत्रप्रेषकः ।',
 'enotif_reset' => 'सन्दर्शितानि इति सर्वपुटानि अङ्कयतु ।',
-'enotif_newpagetext' => 'इदम् एकं नवीनपृष्ठम्',
 'enotif_impersonal_salutation' => '{{SITENAME}} योजक',
-'changed' => 'परिवर्तितम् ।',
-'created' => 'सृष्टम् ।',
-'enotif_subject' => '{{SITENAME}}  $ पुटशीर्षकं $ परिवर्तितम्$ इत्यनेन ।',
 'enotif_lastvisited' => 'भवतः पूवसन्दर्शनस्य पश्चात् सवृत्तपरिवर्तनार्थं $1 पश्यतु ।',
 'enotif_lastdiff' => 'एतत्परिवर्तनं दृष्टुं $1 पश्यतु ।',
 'enotif_anon_editor' => 'अनामकः योजकः $1',

@@ -157,7 +157,6 @@ $messages = array(
 'qbbrowse' => 'Cabba',
 'qbedit' => 'Sbadl',
 'qbpageoptions' => 'Tasnat ad',
-'qbpageinfo' => 'Context',
 'qbmyoptions' => 'Tisnatin inu',
 'qbspecialpages' => 'Tisnatin timzlay',
 'faq' => 'Isqsitn li bdda tsutulnin',
@@ -367,9 +366,6 @@ Akks ad iskrt kra yaḍn',
 'virus-unknownscanner' => 'antivirus oritwsan',
 
 # Login and logout pages
-'welcomecreation' => '== Brrkat,  $1! ==
-lcont nek  tuyskar .
- Adur tut atbaddlt [[Special:Preferences|{{SITENAME}} issusmen]]',
 'yourname' => 'smiyt o-msxdam:',
 'yourpassword' => 'awal iḥdan:',
 'yourpasswordagain' => 'Зawd ara awal iḥdan:',

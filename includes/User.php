@@ -370,7 +370,7 @@ class User {
 	 *    User::getCanonicalName(), except that true is accepted as an alias
 	 *    for 'valid', for BC.
 	 *
-	 * @return User object, or false if the username is invalid
+	 * @return User|bool User object, or false if the username is invalid
 	 *    (e.g. if it contains illegal characters or is an IP address). If the
 	 *    username is not present in the database, the result will be a user object
 	 *    with a name, zero user ID and default settings.
@@ -455,11 +455,12 @@ class User {
 	 * will be loaded once more from the database when accessing them.
 	 *
 	 * @param $row Array A row from the user table
+	 * @param $data Array Further data to load into the object (see User::loadFromRow for valid keys)
 	 * @return User
 	 */
-	public static function newFromRow( $row ) {
+	public static function newFromRow( $row, $data = null ) {
 		$user = new User;
-		$user->loadFromRow( $row );
+		$user->loadFromRow( $row, $data );
 		return $user;
 	}
 
@@ -1036,8 +1037,12 @@ class User {
 	 * Initialize this object from a row from the user table.
 	 *
 	 * @param $row Array Row from the user table to load.
+	 * @param $data Array Further user data to load into the object
+	 *
+	 *	user_groups		Array with groups out of the user_groups table
+	 *	user_properties		Array with properties out of the user_properties table
 	 */
-	public function loadFromRow( $row ) {
+	public function loadFromRow( $row, $data = null ) {
 		$all = true;
 
 		$this->mGroups = null; // deferred
@@ -1094,6 +1099,15 @@ class User {
 
 		if ( $all ) {
 			$this->mLoadedItems = true;
+		}
+
+		if ( is_array( $data ) ) {
+			if ( isset( $data['user_groups'] ) && is_array( $data['user_groups'] ) ) {
+				$this->mGroups = $data['user_groups'];
+			}
+			if ( isset( $data['user_properties'] ) && is_array( $data['user_properties'] ) ) {
+				$this->loadOptions( $data['user_properties'] );
+			}
 		}
 	}
 
@@ -1155,13 +1169,17 @@ class User {
 				}
 				$newGroups = array_merge( $oldGroups, $toPromote ); // all groups
 
-				$log = new LogPage( 'rights', $wgAutopromoteOnceLogInRC /* in RC? */ );
-				$log->addEntry( 'autopromote',
-					$this->getUserPage(),
-					'', // no comment
-					// These group names are "list to texted"-ed in class LogPage.
-					array( implode( ', ', $oldGroups ), implode( ', ', $newGroups ) )
-				);
+				$logEntry = new ManualLogEntry( 'rights', 'autopromote' );
+				$logEntry->setPerformer( $this );
+				$logEntry->setTarget( $this->getUserPage() );
+				$logEntry->setParameters( array(
+					'4::oldgroups' => $oldGroups,
+					'5::newgroups' => $newGroups,
+				) );
+				$logid = $logEntry->insert();
+				if ( $wgAutopromoteOnceLogInRC ) {
+					$logEntry->publish( $logid );
+				}
 			}
 		}
 		return $toPromote;
@@ -1202,6 +1220,14 @@ class User {
 	public static function getDefaultOptions() {
 		global $wgNamespacesToBeSearchedDefault, $wgDefaultUserOptions, $wgContLang, $wgDefaultSkin;
 
+		static $defOpt = null;
+		if ( !defined( 'MW_PHPUNIT_TEST' ) && $defOpt !== null ) {
+			// Disabling this for the unit tests, as they rely on being able to change $wgContLang
+			// mid-request and see that change reflected in the return value of this function.
+			// Which is insane and would never happen during normal MW operation
+			return $defOpt;
+		}
+
 		$defOpt = $wgDefaultUserOptions;
 		# default language setting
 		$defOpt['variant'] = $wgContLang->getCode();
@@ -1211,12 +1237,6 @@ class User {
 		}
 		$defOpt['skin'] = $wgDefaultSkin;
 
-		// FIXME: Ideally we'd cache the results of this function so the hook is only run once,
-		// but that breaks the parser tests because they rely on being able to change $wgContLang
-		// mid-request and see that change reflected in the return value of this function.
-		// Which is insane and would never happen during normal MW operation, but is also not
-		// likely to get fixed unless and until we context-ify everything.
-		// See also https://www.mediawiki.org/wiki/Special:Code/MediaWiki/101488#c25275
 		wfRunHooks( 'UserGetDefaultOptions', array( &$defOpt ) );
 
 		return $defOpt;
@@ -2199,13 +2219,6 @@ class User {
 		global $wgHiddenPrefs;
 		$this->loadOptions();
 
-		if ( is_null( $this->mOptions ) ) {
-			if($defaultOverride != '') {
-				return $defaultOverride;
-			}
-			$this->mOptions = User::getDefaultOptions();
-		}
-
 		# We want 'disabled' preferences to always behave as the default value for
 		# users, even if they have set the option explicitly in their settings (ie they
 		# set it, and then it was disabled removing their ability to change it).  But
@@ -2281,15 +2294,11 @@ class User {
 	 * @param $val mixed New value to set
 	 */
 	public function setOption( $oname, $val ) {
-		$this->load();
 		$this->loadOptions();
 
 		// Explicitly NULL values should refer to defaults
 		if( is_null( $val ) ) {
-			$defaultOption = self::getDefaultOption( $oname );
-			if( !is_null( $defaultOption ) ) {
-				$val = $defaultOption;
-			}
+			$val = self::getDefaultOption( $oname );
 		}
 
 		$this->mOptions[$oname] = $val;
@@ -2348,7 +2357,7 @@ class User {
 			$this->mRights = self::getGroupPermissions( $this->getEffectiveGroups() );
 			wfRunHooks( 'UserGetRights', array( $this, &$this->mRights ) );
 			// Force reindexation of rights when a hook has unset one of them
-			$this->mRights = array_values( $this->mRights );
+			$this->mRights = array_values( array_unique( $this->mRights ) );
 		}
 		return $this->mRights;
 	}
@@ -2380,6 +2389,8 @@ class User {
 			) );
 			# Hook for additional groups
 			wfRunHooks( 'UserEffectiveGroups', array( &$this, &$this->mEffectiveGroups ) );
+			// Force reindexation of groups when a hook has unset one of them
+			$this->mEffectiveGroups = array_values( array_unique( $this->mEffectiveGroups ) );
 			wfProfileOut( __METHOD__ );
 		}
 		return $this->mEffectiveGroups;
@@ -2443,30 +2454,29 @@ class User {
 	 * @return Int
 	 */
 	public function getEditCount() {
-		if( $this->getId() ) {
-			if ( !isset( $this->mEditCount ) ) {
-				/* Populate the count, if it has not been populated yet */
-				wfProfileIn( __METHOD__ );
-				$dbr = wfGetDB( DB_SLAVE );
-				// check if the user_editcount field has been initialized
-				$count = $dbr->selectField(
-					'user', 'user_editcount',
-					array( 'user_id' => $this->mId ),
-					__METHOD__
-				);
-
-				if( $count === null ) {
-					// it has not been initialized. do so.
-					$count = $this->initEditCount();
-				}
-				wfProfileOut( __METHOD__ );
-				$this->mEditCount = $count;
-			}
-			return $this->mEditCount;
-		} else {
-			/* nil */
+		if ( !$this->getId() ) {
 			return null;
 		}
+
+		if ( !isset( $this->mEditCount ) ) {
+			/* Populate the count, if it has not been populated yet */
+			wfProfileIn( __METHOD__ );
+			$dbr = wfGetDB( DB_SLAVE );
+			// check if the user_editcount field has been initialized
+			$count = $dbr->selectField(
+				'user', 'user_editcount',
+				array( 'user_id' => $this->mId ),
+				__METHOD__
+			);
+
+			if( $count === null ) {
+				// it has not been initialized. do so.
+				$count = $this->initEditCount();
+			}
+			$this->mEditCount = intval( $count );
+			wfProfileOut( __METHOD__ );
+		}
+		return $this->mEditCount;
 	}
 
 	/**
@@ -3970,7 +3980,7 @@ class User {
 		// Pull from a slave to be less cruel to servers
 		// Accuracy isn't the point anyway here
 		$dbr = wfGetDB( DB_SLAVE );
-		$count = $dbr->selectField(
+		$count = (int) $dbr->selectField(
 			'revision',
 			'COUNT(rev_user)',
 			array( 'rev_user' => $this->getId() ),
@@ -4128,9 +4138,11 @@ class User {
 	}
 
 	/**
-	 * @todo document
+	 * Load the user options either from cache, the database or an array
+	 *
+	 * @param $data Rows for the current user out of the user_properties table
 	 */
-	protected function loadOptions() {
+	protected function loadOptions( $data = null ) {
 		global $wgContLang;
 
 		$this->load();
@@ -4160,21 +4172,27 @@ class User {
 				$this->mOptions[$key] = $value;
 			}
 		} else {
-			wfDebug( "User: loading options for user " . $this->getId() . " from database.\n" );
-			// Load from database
-			$dbr = wfGetDB( DB_SLAVE );
+			if( !is_array( $data ) ) {
+				wfDebug( "User: loading options for user " . $this->getId() . " from database.\n" );
+				// Load from database
+				$dbr = wfGetDB( DB_SLAVE );
 
-			$res = $dbr->select(
-				'user_properties',
-				array( 'up_property', 'up_value' ),
-				array( 'up_user' => $this->getId() ),
-				__METHOD__
-			);
+				$res = $dbr->select(
+					'user_properties',
+					array( 'up_property', 'up_value' ),
+					array( 'up_user' => $this->getId() ),
+					__METHOD__
+				);
 
-			$this->mOptionOverrides = array();
-			foreach ( $res as $row ) {
-				$this->mOptionOverrides[$row->up_property] = $row->up_value;
-				$this->mOptions[$row->up_property] = $row->up_value;
+				$this->mOptionOverrides = array();
+				$data = array();
+				foreach ( $res as $row ) {
+					$data[$row->up_property] = $row->up_value;
+				}
+			}
+			foreach ( $data as $property => $value ) {
+				$this->mOptionOverrides[$property] = $value;
+				$this->mOptions[$property] = $value;
 			}
 		}
 

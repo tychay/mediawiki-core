@@ -3,6 +3,7 @@
 * @group ContentHandler
 * @group Database
 * ^--- important, causes temporary tables to be used instead of the real database
+* @group medium
 **/
 
 class WikiPageTest extends MediaWikiLangTestCase {
@@ -60,7 +61,8 @@ class WikiPageTest extends MediaWikiLangTestCase {
 	 */
 	protected function newPage( $title, $model = null ) {
 		if ( is_string( $title ) ) {
-			$title = Title::newFromText( $title );
+			$ns = $this->getDefaultWikitextNS();
+			$title = Title::newFromText( $title, $ns );
 		}
 
 		$p = new WikiPage( $title );
@@ -79,11 +81,7 @@ class WikiPageTest extends MediaWikiLangTestCase {
 	 * @return WikiPage
 	 */
 	protected function createPage( $page, $text, $model = null ) {
-		if ( is_string( $page ) ) {
-			$page = Title::newFromText( $page );
-		}
-
-		if ( $page instanceof Title ) {
+		if ( is_string( $page ) || $page instanceof Title ) {
 			$page = $this->newPage( $page, $model );
 		}
 
@@ -94,9 +92,8 @@ class WikiPageTest extends MediaWikiLangTestCase {
 	}
 
 	public function testDoEditContent() {
-		$title = Title::newFromText( "WikiPageTest_testDoEditContent" );
-
-		$page = $this->newPage( $title );
+		$page = $this->newPage( "WikiPageTest_testDoEditContent" );
+		$title = $page->getTitle();
 
 		$content = ContentHandler::makeContent( "[[Lorem ipsum]] dolor sit amet, consetetur sadipscing elitr, sed diam "
 						. " nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.",
@@ -543,10 +540,16 @@ class WikiPageTest extends MediaWikiLangTestCase {
 	 * @dataProvider provideIsCountable
 	 */
 	public function testIsCountable( $title, $model, $text, $mode, $expected ) {
-		global $wgArticleCountMethod;
+		global $wgContentHandlerUseDB;
 
-		$oldArticleCountMethod = $wgArticleCountMethod;
-		$wgArticleCountMethod = $mode;
+		$this->setMwGlobals( 'wgArticleCountMethod', $mode );
+
+		$title = Title::newFromText( $title );
+
+		if ( !$wgContentHandlerUseDB && ContentHandler::getDefaultModelFor( $title ) != $model ) {
+			$this->markTestSkipped( "Can not use non-default content model $model for "
+				. $title->getPrefixedDBkey() . " with \wgArticleCountMethod disabled." );
+		}
 
 		$page = $this->createPage( $title, $text, $model );
 		$hasLinks = wfGetDB( DB_SLAVE )->selectField( 'pagelinks', 1,
@@ -556,8 +559,6 @@ class WikiPageTest extends MediaWikiLangTestCase {
 
 		$v = $page->isCountable();
 		$w = $page->isCountable( $editInfo );
-
-		$wgArticleCountMethod = $oldArticleCountMethod;
 
 		$this->assertEquals( $expected, $v, "isCountable( null ) returned unexpected value " . var_export( $v, true )
 											. " instead of " . var_export( $expected, true ) . " in mode `$mode` for text \"$text\"" );
@@ -703,16 +704,7 @@ more stuff
 
 	/* @todo FIXME: fix this!
 	public function testGetUndoText() {
-		global $wgDiff3;
-
-		wfSuppressWarnings();
-		$haveDiff3 = $wgDiff3 && file_exists( $wgDiff3 );
-		wfRestoreWarnings();
-
-		if( !$haveDiff3 ) {
-			$this->markTestSkipped( "diff3 not installed or not found" );
-			return;
-		}
+		$this->checkHasDiff3();
 
 		$text = "one";
 		$page = $this->createPage( "WikiPageTest_testGetUndoText", $text );

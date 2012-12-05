@@ -33,6 +33,7 @@
  * @author Nghtwlkr
  * @author Njardarlogar
  * @author Nsaa
+ * @author Pladask
  * @author Purodha
  * @author Qaqqalik
  * @author Samuelsen
@@ -40,6 +41,7 @@
  * @author Sjurhamre
  * @author Stigmj
  * @author Teak
+ * @author Wouterkoch
  * @author לערי ריינהארט
  */
 
@@ -162,7 +164,6 @@ $specialPageAliases = array(
 	'Recentchanges'             => array( 'Siste_endringer' ),
 	'Recentchangeslinked'       => array( 'Relaterte_endringer' ),
 	'Revisiondelete'            => array( 'Revisjonssletting' ),
-	'RevisionMove'              => array( 'Revisjonsflytting' ),
 	'Search'                    => array( 'Søk' ),
 	'Shortpages'                => array( 'Korte_sider' ),
 	'Specialpages'              => array( 'Spesialsider' ),
@@ -363,7 +364,7 @@ $messages = array(
 
 'underline-always' => 'Alltid',
 'underline-never' => 'Aldri',
-'underline-default' => 'Bruk nettleserstandard',
+'underline-default' => 'Nettleserens standardinnstillinger',
 
 # Font style option in Special:Preferences
 'editfont-style' => 'Skrifttype i redigeringsboksen:',
@@ -448,7 +449,7 @@ $messages = array(
 'newwindow' => '(åpnes i et nytt vindu)',
 'cancel' => 'Avbryt',
 'moredotdotdot' => 'Mer …',
-'mypage' => 'Min side',
+'mypage' => 'Min brukerside',
 'mytalk' => 'Min diskusjonsside',
 'anontalk' => 'Brukerdiskusjon for denne IP-adressen',
 'navigation' => 'Navigasjon',
@@ -481,6 +482,7 @@ $messages = array(
 'namespaces' => 'Navnerom',
 'variants' => 'Varianter',
 
+'navigation-heading' => 'Navigasjonsmeny',
 'errorpagetitle' => 'Feil',
 'returnto' => 'Tilbake til $1.',
 'tagline' => 'Fra {{SITENAME}}',
@@ -689,7 +691,7 @@ Spørring: $2',
 'viewsource-title' => 'Vis kilden til $1',
 'actionthrottled' => 'Handlingsgrense overskredet',
 'actionthrottledtext' => 'For å beskytte mot spam, kan du ikke utføre denne handlingen for mange ganger i løpet av et kort tidssrom, og du har overskredet denne grensen. Prøv igjen om noen minutter.',
-'protectedpagetext' => 'Denne siden har blitt låst for redigeringer.',
+'protectedpagetext' => 'Denne siden har blitt låst for endringer.',
 'viewsourcetext' => 'Du kan se og kopiere kilden til denne siden:',
 'viewyourtext' => "Du kan se og kopiere kilden til '''dine endringer''' på denne siden:",
 'protectedinterface' => 'Denne siden fremskaffer brukergrensesnittekst for programvaren, og er låst for å hindre misbruk.',
@@ -723,9 +725,9 @@ Administrators nærmere begrunnelse: «$3».',
 
 Du kan fortsette å bruke {{SITENAME}} anonymt, eller <span class='plainlinks'>[$1 logge inn igjen]</span> som samme eller en annen bruker.
 Merk at noen sider kan vise at du fortsatt er logget inn fram til du tømmer mellomlageret i nettleseren.",
-'welcomecreation' => '==Velkommen, $1!==
-Brukerkontoen din har blitt opprettet.
-Ikke glem å endre [[Special:Preferences|innstillingene]] dine.',
+'welcomeuser' => 'Velkommen, $1!',
+'welcomecreation-msg' => 'Kontoen din har blitt opprettet.
+Ikke glem å endre [[Special:Preferences|innstillingene dine]] på {{SITENAME}}.',
 'yourname' => 'Brukernavn:',
 'yourpassword' => 'Passord:',
 'yourpasswordagain' => 'Gjenta passord',
@@ -1009,7 +1011,7 @@ Siste blokkeringsloggelement kan sees nedenfor.',
 'note' => "'''Merk:'''",
 'previewnote' => "'''Husk at dette bare er en forhåndsvisning.'''
 Endringene dine har ikke blitt lagret ennå!",
-'continue-editing' => 'Fortsett med redigeringen',
+'continue-editing' => 'Gå til redigeringsfeltet',
 'previewconflict' => 'Slik vil teksten i redigeringsvinduet se ut dersom du lagrer den.',
 'session_fail_preview' => "'''Beklager! Klarte ikke å lagre redigeringen din på grunn av tap av øktdata.'''
 Prøv igjen.
@@ -1616,6 +1618,9 @@ Den kan maks inneholde $1 {{PLURAL:$1|tegn|tegn}}.',
 'rightslogtext' => 'Dette er en logg over endringer av brukerrettigheter.',
 'rightslogentry' => 'endret gruppe for $1 fra $2 til $3',
 'rightslogentry-autopromote' => 'ble automatisk forfremmet fra $2 til $3',
+'logentry-rights-rights' => '$1 endret gruppemedlemskap for $3 fra $4 til $5',
+'logentry-rights-rights-legacy' => '$1 endret gruppemedlemskap for $3',
+'logentry-rights-autopromote' => '$1 ble automatisk forfremmet fra $4 til $5',
 'rightsnone' => '(ingen)',
 
 # Associated actions - in the sentence "You do not have permission to X"
@@ -1768,7 +1773,7 @@ Se [[Special:NewFiles|galleriet over nye filer]] for en mer visuell visning',
 'fileexists' => 'Ei fil med dette navnet finnes allerede.
 Sjekk <strong>[[:$1]]</strong> hvis du ikke er sikker på at du vil forandre den.
 [[$1|thumb]]',
-'filepageexists' => 'Beskrivelsessiden for denne filen finnes allerede på <strong>[[:$1]]</strong>, men ingen filer med dette navnet finnes. Sammendraget du skruver inn vil ikke vises på beskrivelsessiden. For at det skal dukke opp der må du skrive det inn manuelt etter å da lastet opp filen.
+'filepageexists' => 'Beskrivelsessiden for denne filen finnes allerede på <strong>[[:$1]]</strong>, men ingen filer med dette navnet finnes. Sammendraget du skriver inn vil ikke vises på beskrivelsessiden. For at det skal dukke opp der må du skrive det inn manuelt etter å ha lastet opp filen.
 [[$1|thumb]]',
 'fileexists-extension' => 'En fil med et lignende navn finnes: [[$2|thumb]]
 * Navnet på din fil: <strong>[[:$1]]</strong>
@@ -1854,6 +1859,7 @@ Om problemet fortsetter, kontakt en [[Special:ListUsers/sysop|administrator]].',
 'backend-fail-notsame' => 'En ikke-identisk fil finnes allerede på $1.',
 'backend-fail-invalidpath' => '$1 er ikke en gyldig lagringsbane.',
 'backend-fail-delete' => 'Kunne ikke slette filen $1.',
+'backend-fail-describe' => 'Kunne ikke endre metadata for filen «$1».',
 'backend-fail-alreadyexists' => 'Filen $1 finnes allerede.',
 'backend-fail-store' => 'Kunne ikke lagre filen $1 på $2.',
 'backend-fail-copy' => 'Kunne ikke kopiere filen $1 til $2.',
@@ -2236,7 +2242,7 @@ Se også [[Special:WantedCategories|ønskede kategorier]].',
 'linksearch-pat' => 'Søkemønster:',
 'linksearch-ns' => 'Navnerom:',
 'linksearch-ok' => 'Søk',
-'linksearch-text' => 'Jokertegn som «*.wikipedia.org» kan brukes.
+'linksearch-text' => 'Jokertegn slik som i «*.wikipedia.org» kan brukes.
 Det kreves at det oppgis minst et toppnivådomene, for eksempel «*.org».<br />
 Støttede protokoller: <code>$1</code> (ikke legg til noen av disse i søket ditt).',
 'linksearch-line' => '$1 lenkes fra $2',
@@ -2287,8 +2293,8 @@ Mer informasjon om de enkelte rettighetstypene kan finnes [[{{MediaWiki:Listgrou
 'emailuser-title-target' => 'Send epost til denne {{GENDER:$1|brukeren}}',
 'emailuser-title-notarget' => 'E-post til bruker',
 'emailpage' => 'E-post til bruker',
-'emailpagetext' => 'Du kan bruke skjemaet nedenfor for å sende en e-post til denne brukeren.
-Den e-postadressen du har satt i [[Special:Preferences|innstillingene dine]] vil dukke opp i «fra»-feltet på denne e-posten, så mottakeren er i stand til å svare.',
+'emailpagetext' => 'Du kan bruke skjemaet under for å sende en e-post til denne {{GENDER:$1|brukeren}}.
+E-postadressen du har satt i [[Special:Preferences|innstillingene dine]] vil vises i «Fra»-feltet i e-posten, slik at mottakeren kan svare deg direkte.',
 'usermailererror' => 'E-postobjekt returnerte feilen:',
 'defemailsubject' => 'E-post fra {{SITENAME}}-brukeren «$1»',
 'usermaildisabled' => 'Brukerepost deaktivert',
@@ -2355,20 +2361,23 @@ Fremtidige endringer til denne siden og den tilhørende diskusjonssiden blir lis
 
 'enotif_mailer' => '{{SITENAME}}s påminnelsessystem',
 'enotif_reset' => 'Merk alle sider som besøkt',
-'enotif_newpagetext' => 'Dette er en ny side.',
 'enotif_impersonal_salutation' => '{{SITENAME}}-bruker',
-'changed' => 'endret',
-'created' => 'opprettet',
-'enotif_subject' => '{{SITENAME}}-siden $PAGETITLE har blitt $CHANGEDORCREATED av $PAGEEDITOR',
+'enotif_subject_deleted' => '{{SITENAME}}-siden $1 har blitt slettet av {{gender:$2|$2}}',
+'enotif_subject_created' => '{{SITENAME}}-siden $1 har blitt opprettet av {{gender:$2|$2}}',
+'enotif_subject_moved' => '{{SITENAME}}-siden $1 har blitt flyttet av {{gender:$2|$2}}',
+'enotif_subject_restored' => '{{SITENAME}}-siden $1 har blitt gjenopprettet av {{gender:$2|$2}}',
+'enotif_subject_changed' => '{{SITENAME}}-siden $1 har blitt endret av {{gender:$2|$2}}',
+'enotif_body_intro_deleted' => '{{SITENAME}}-siden $1 ble slettet $PAGEEDITDATE av {{gender:$2|$2}}. Se $3 for den nåværende versjonen.',
+'enotif_body_intro_created' => '{{SITENAME}}-siden $1 ble opprettet $PAGEEDITDATE av {{gender:$2|$2}}. Se $3 for den nåværende versjonen.',
+'enotif_body_intro_moved' => '{{SITENAME}}-siden $1 ble flyttet $PAGEEDITDATE av {{gender:$2|$2}}. Se $3 for den nåværende versjonen.',
+'enotif_body_intro_restored' => '{{SITENAME}}-siden $1 ble gjenopprettet $PAGEEDITDATE av {{gender:$2|$2}}. Se $3 for den nåværende versjonen.',
+'enotif_body_intro_changed' => '{{SITENAME}}-siden $1 ble endret $PAGEEDITDATE av {{gender:$2|$2}}. Se $3 for den nåværende versjonen.',
 'enotif_lastvisited' => 'Se $1 for alle endringer siden ditt forrige besøk.',
 'enotif_lastdiff' => 'Se $1 for å se denne endringen.',
 'enotif_anon_editor' => 'anonym bruker $1',
 'enotif_body' => 'Kjære $WATCHINGUSERNAME,
 
-
-{{SITENAME}}-siden $PAGETITLE har blitt $CHANGEDORCREATED den $PAGEEDITDATE av $PAGEEDITOR, se $PAGETITLE_URL for den nåværende revisjonen.
-
-$NEWPAGE
+$PAGEINTRO $NEWPAGE
 
 Redigeringssammendrag: $PAGESUMMARY $PAGEMINOREDIT
 
@@ -2570,7 +2579,7 @@ $1',
 # Contributions
 'contributions' => 'Brukerbidrag',
 'contributions-title' => 'Brukerbidrag av $1',
-'mycontris' => 'Mine bidrag',
+'mycontris' => 'Bidrag',
 'contribsub2' => 'For $1 ($2)',
 'nocontribs' => 'Ingen endringer er funnet som passer disse kriteriene.',
 'uctop' => '(siste)',
@@ -3090,7 +3099,7 @@ Dette er sannsynligvis forårsaket av en lenke til et svartelistet eksternt nett
 
 # Info page
 'pageinfo-title' => 'Informasjon om «$1»',
-'pageinfo-not-current' => 'Informasjonen vises kanskje bare for den gjeldende revisjonen.',
+'pageinfo-not-current' => 'Beklager, det er ikke mulig å vise denne informasjonen for gamle revisjoner.',
 'pageinfo-header-basic' => 'Grunnleggende informasjon',
 'pageinfo-header-edits' => 'Redigeringshistorikk',
 'pageinfo-header-restrictions' => 'Sidebeskyttelse',
@@ -3099,6 +3108,7 @@ Dette er sannsynligvis forårsaket av en lenke til et svartelistet eksternt nett
 'pageinfo-default-sort' => 'Standardsorteringsnøkkel',
 'pageinfo-length' => 'Sidelengde (i bytes)',
 'pageinfo-article-id' => 'Side-ID',
+'pageinfo-language' => 'Språk for sideinnholdet',
 'pageinfo-robot-policy' => 'Søkemotorstatus',
 'pageinfo-robot-index' => 'Indekserbar',
 'pageinfo-robot-noindex' => 'Ikke indekserbar',
@@ -3146,6 +3156,8 @@ Dette er sannsynligvis forårsaket av en lenke til et svartelistet eksternt nett
 'markedaspatrollederror' => 'Kan ikke merke som godkjent',
 'markedaspatrollederrortext' => 'Du må spesifisere en versjon å merke som godkjent.',
 'markedaspatrollederror-noautopatrol' => 'Du kan ikke merke dine egne endringer som godkjente.',
+'markedaspatrollednotify' => 'Denne endringen av $1 har blitt patruljert.',
+'markedaspatrollederrornotify' => 'Patruljering feilet.',
 
 # Patrol log
 'patrol-log-page' => 'Godkjenningslogg',
@@ -3210,6 +3222,7 @@ Ved å åpne den kan systemet ditt kompromitteres.",
 'hours' => '{{PLURAL:$1|$1 time|$1 timer}}',
 'days' => '{{PLURAL:$1|$1 dag|$1 dager}}',
 'ago' => '$1 siden',
+'just-now' => 'nettopp',
 
 # Bad image list
 'bad_image_list' => 'Formatet er som følger:
@@ -3839,6 +3852,7 @@ Du kan også [[Special:EditWatchlist|bruke standardverktøyet]].',
 'version-license' => 'Lisens',
 'version-poweredby-credits' => "Denne wikien er drevet av '''[//www.mediawiki.org/ MediaWiki]''', copyright © 2001-$1 $2.",
 'version-poweredby-others' => 'andre',
+'version-credits-summary' => 'Vi ønsker å takke følgende personer for deres bidrag til [[Special:Version|MediaWiki]].',
 'version-license-info' => 'MediaWiki er fri programvare; du kan redistribuere det og/eller modifisere det under betingelsene i GNU General Public License som publisert av Free Software Foundation; enten versjon 2 av lisensen, eller (etter eget valg) enhver senere versjon.
 
 MediaWiki er distribuert i håp om at det vil være nyttig, men UTEN NOEN GARANTI; ikke engang implisitt garanti av SALGBARHET eller EGNETHET FOR ET BESTEMT FORMÅL. Se GNU General Public License for flere detaljer.
@@ -3978,9 +3992,9 @@ Bilder vises med full oppløsning, mens andre filtyper startes direkte gjennom s
 'logentry-move-move_redir-noredirect' => '$1 flyttet siden $3 til $4 over en omdirigering uten å etterlate en omdirigering',
 'logentry-patrol-patrol' => '$1 markerte revisjon $4 av siden $3 som patruljert',
 'logentry-patrol-patrol-auto' => '$1 markerte automatisk revisjon $4 av siden $3 som patruljert',
-'logentry-newusers-newusers' => '$1 opprettet en brukerkonto',
-'logentry-newusers-create' => '$1 opprettet en brukerkonto',
-'logentry-newusers-create2' => '$1 opprettet en brukerkonto $3',
+'logentry-newusers-newusers' => 'Kontoen $1 ble opprettet',
+'logentry-newusers-create' => 'Kontoen $1 ble opprettet',
+'logentry-newusers-create2' => 'Kontoen $3 ble opprettet av $1',
 'logentry-newusers-autocreate' => 'Konto $1 ble opprettet automatisk',
 'newuserlog-byemail' => 'passord sendt på e-post',
 
@@ -4056,4 +4070,6 @@ Om det ikke er tilfellet, kan du bruke det enkle skjemaet som du finner under. K
 'duration-centuries' => '$1 {{PLURAL:$1|århundre|århundrer}}',
 'duration-millennia' => '$1 {{PLURAL:$1|millennium|millennier}}',
 
+# Unknown messages
+'svg-long-error' => 'Ugyldig SVG-fil: $1',
 );

@@ -18,6 +18,7 @@
  * @author Jay
  * @author Kaganer
  * @author KartikMistry
+ * @author Kondi
  * @author Metrix1312
  * @author Mohit.dalal
  * @author Nehal
@@ -418,9 +419,9 @@ $1',
 'youhavenewmessages' => 'તમારા માટે $1 ($2).',
 'newmessageslink' => 'નવીન સંદેશ',
 'newmessagesdifflink' => 'છેલ્લો ફેરફાર',
-'youhavenewmessagesfromusers' => 'આપને માટે {{PLURAL:$3|અન્ય સભ્યના|$3 અન્ય સભ્યોના}} $1 છે. ($2).',
+'youhavenewmessagesfromusers' => 'આપને માટે {{PLURAL:$3|અન્ય સભ્ય|$3 અન્ય સભ્યો}} તરફથી $1 છે. ($2).',
 'youhavenewmessagesmanyusers' => 'આપને માટે $1 છે. ($2)',
-'newmessageslinkplural' => '{{PLURAL:$1|નવો સંદેશ|નવાં સંદેશાઓ}}',
+'newmessageslinkplural' => '{{PLURAL:$1|નવો સંદેશો|નવા સંદેશા}}',
 'newmessagesdifflinkplural' => 'છેલ્લા {{PLURAL:$1|ફેરફાર|ફેરફારો}}',
 'youhavenewmessagesmulti' => '$1 ઉપર તમારા માટે નવો સંદેશ છે.',
 'editsection' => 'ફેરફાર કરો',
@@ -562,9 +563,6 @@ $2',
 
 તમે અનામી તરીકે {{SITENAME}} વાપરવાનું ચાલુ રાખી શકો છો, કે પછી તેના તે જ કે અલગ સભ્ય તરીકે <span class='plainlinks'>[$1 ફરી પ્રવેશ]</span> કરી શકો છો.
 ધ્યાન રાખો કે જ્યાં સુધી તમે તમારા બ્રાઉઝરનો  કૅશ સાફ નહીં કરો ત્યાં સુધી કેટલાક પાનાં તમે પ્રવેશી ચુક્યા છો તેમ બતાવશે.",
-'welcomecreation' => '== તમારૂં સ્વાગત છે $1! ==
-તમારૂં ખાતું બની ગયું છે.
-તમારી [[Special:Preferences|{{SITENAME}} પસંદ]] બદલવાનું ભૂલશો નહીં.',
 'yourname' => 'સભ્ય નામ:',
 'yourpassword' => 'ગુપ્ત સંજ્ઞા:',
 'yourpasswordagain' => 'ગુપ્ત સંજ્ઞા (પાસવર્ડ) ફરી લખો',
@@ -850,7 +848,7 @@ $2
 'note' => "'''નોંધ:'''",
 'previewnote' => "'''આ ફક્ત પૂર્વાવલોકન છે;'''
 તમારા ફેરફારો હજુ સાચવવામાં નથી આવ્યા!",
-'continue-editing' => 'વાંચવાનું ચાલુ રાખો',
+'continue-editing' => 'ફેરફાર કરવાનું ચાલુ રાખો',
 'previewconflict' => 'જો તમે આ પાનું સાચવશો તો આ પ્રિવ્યુમાં દેખાય છે તેવું સચવાશે.',
 'session_fail_preview' => "'''અફસોસ છે! સત્ર માહિતી ખોઇ દેવાને કારણે અમે તમારું કાર્ય સાચવી ન શક્યાં.'''
 કૃપયા ફરી પ્રયત્ન કરો.
@@ -2182,11 +2180,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization. જુઓ',
 
 'enotif_mailer' => '{{SITENAME}} સૂચના ઈ-મેલ પાઠક',
 'enotif_reset' => 'બધા પાનાને મુલાકાત લેવાયેલા અંકિત કરો',
-'enotif_newpagetext' => 'આ નવું પાનું છે.',
 'enotif_impersonal_salutation' => '{{SITENAME}} સભ્ય',
-'changed' => 'બદલ્યું',
-'created' => 'બનાવ્યું',
-'enotif_subject' => '{{SITENAME}} નું પાનું $PAGETITLE $PAGEEDITOR દ્વારા $CHANGEDORCREATED',
 'enotif_lastvisited' => 'તમારી પાછલી મુલાકાત પછી થયેલા બધા ફેરફારો માટે $1 જુઓ',
 'enotif_lastdiff' => 'આ ફેરફાર જોવા $1 જુઓ',
 'enotif_anon_editor' => 'અનામિ સભ્ય $1',

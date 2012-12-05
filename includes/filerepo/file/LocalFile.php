@@ -814,7 +814,9 @@ class LocalFile extends File {
 		foreach ( $files as $file ) {
 			# Check that the base file name is part of the thumb name
 			# This is a basic sanity check to avoid erasing unrelated directories
-			if ( strpos( $file, $this->getName() ) !== false ) {
+			if ( strpos( $file, $this->getName() ) !== false
+				|| strpos( $file, "-thumbnail" ) !== false // "short" thumb name
+			) {
 				$purgeList[] = "{$dir}/{$file}";
 			}
 		}
@@ -949,7 +951,7 @@ class LocalFile extends File {
 
 	/**
 	 * Upload a file and record it in the DB
-	 * @param $srcPath String: source storage path or virtual URL
+	 * @param $srcPath String: source storage path, virtual URL, or filesystem path
 	 * @param $comment String: upload description
 	 * @param $pageText String: text to use for the new description page,
 	 *                  if a new description page is created
@@ -970,11 +972,31 @@ class LocalFile extends File {
 			return $this->readOnlyFatalStatus();
 		}
 
+		if ( !$props ) {
+			wfProfileIn( __METHOD__ . '-getProps' );
+			if ( $this->repo->isVirtualUrl( $srcPath )
+				|| FileBackend::isStoragePath( $srcPath ) )
+			{
+				$props = $this->repo->getFileProps( $srcPath );
+			} else {
+				$props = FSFile::getPropsFromPath( $srcPath );
+			}
+			wfProfileOut( __METHOD__ . '-getProps' );
+		}
+
+		$options = array();
+		$handler = MediaHandler::getHandler( $props['mime'] );
+		if ( $handler ) {
+			$options['headers'] = $handler->getStreamHeaders( $props['metadata'] );
+		} else {
+			$options['headers'] = array();
+		}
+
 		// truncate nicely or the DB will do it for us
 		// non-nicely (dangling multi-byte chars, non-truncated version in cache).
 		$comment = $wgContLang->truncate( $comment, 255 );
 		$this->lock(); // begin
-		$status = $this->publish( $srcPath, $flags );
+		$status = $this->publish( $srcPath, $flags, $options );
 
 		if ( $status->successCount > 0 ) {
 			# Essentially we are displacing any existing current file and saving
@@ -1191,13 +1213,13 @@ class LocalFile extends File {
 			$status = $wikiPage->doEditContent( $content, $comment, EDIT_NEW | EDIT_SUPPRESS_RC, false, $user );
 
 			if ( isset( $status->value['revision'] ) ) { // XXX; doEdit() uses a transaction
-				$dbw->begin();
+				$dbw->begin( __METHOD__ );
 				$dbw->update( 'logging',
 					array( 'log_page' => $status->value['revision']->getPage() ),
 					array( 'log_id' => $logId ),
 					__METHOD__
 				);
-				$dbw->commit(); // commit before anything bad can happen
+				$dbw->commit( __METHOD__ ); // commit before anything bad can happen
 			}
 		}
 		wfProfileOut( __METHOD__ . '-edit' );
@@ -1250,11 +1272,12 @@ class LocalFile extends File {
 	 * @param $srcPath String: local filesystem path to the source image
 	 * @param $flags Integer: a bitwise combination of:
 	 *     File::DELETE_SOURCE	Delete the source file, i.e. move rather than copy
+	 * @param $options Array Optional additional parameters
 	 * @return FileRepoStatus object. On success, the value member contains the
 	 *     archive name, or an empty string if it was a new file.
 	 */
-	function publish( $srcPath, $flags = 0 ) {
-		return $this->publishTo( $srcPath, $this->getRel(), $flags );
+	function publish( $srcPath, $flags = 0, array $options = array() ) {
+		return $this->publishTo( $srcPath, $this->getRel(), $flags, $options );
 	}
 
 	/**
@@ -1268,10 +1291,11 @@ class LocalFile extends File {
 	 * @param $dstRel String: target relative path
 	 * @param $flags Integer: a bitwise combination of:
 	 *     File::DELETE_SOURCE	Delete the source file, i.e. move rather than copy
+	 * @param $options Array Optional additional parameters
 	 * @return FileRepoStatus object. On success, the value member contains the
 	 *     archive name, or an empty string if it was a new file.
 	 */
-	function publishTo( $srcPath, $dstRel, $flags = 0 ) {
+	function publishTo( $srcPath, $dstRel, $flags = 0, array $options = array() ) {
 		if ( $this->getRepo()->getReadOnlyReason() !== false ) {
 			return $this->readOnlyFatalStatus();
 		}
@@ -1281,7 +1305,7 @@ class LocalFile extends File {
 		$archiveName = wfTimestamp( TS_MW ) . '!'. $this->getName();
 		$archiveRel = 'archive/' . $this->getHashPath() . $archiveName;
 		$flags = $flags & File::DELETE_SOURCE ? LocalRepo::DELETE_SOURCE : 0;
-		$status = $this->repo->publish( $srcPath, $dstRel, $archiveRel, $flags );
+		$status = $this->repo->publish( $srcPath, $dstRel, $archiveRel, $flags, $options );
 
 		if ( $status->value == 'new' ) {
 			$status->value = '';
@@ -1473,7 +1497,6 @@ class LocalFile extends File {
 	 * @return bool|mixed
 	 */
 	function getDescriptionText() {
-		global $wgParser;
 		$revision = Revision::newFromTitle( $this->title, false, Revision::READ_NORMAL );
 		if ( !$revision ) return false;
 		$content = $revision->getContent();
@@ -1759,7 +1782,7 @@ class LocalFileDeleteBatch {
 					'fa_deleted_user'      => $encUserId,
 					'fa_deleted_timestamp' => $encTimestamp,
 					'fa_deleted_reason'    => $encReason,
-					'fa_deleted'		   => $this->suppress ? $bitfield : 0,
+					'fa_deleted'           => $this->suppress ? $bitfield : 0,
 
 					'fa_name'         => 'img_name',
 					'fa_archive_name' => 'NULL',

@@ -151,7 +151,6 @@ $magicWords = array(
 	'forcetoc'                  => array( '0', '__FORCIÉR_LO_SOMÈRO__', '__FORCIÉR_LA_TRÂBLA__', '__FORCERSOMMAIRE__', '__FORCERTDM__', '__FORCETOC__' ),
 	'toc'                       => array( '0', '__SOMÈRO__', '__TRÂBLA__', '__SOMMAIRE__', '__TDM__', '__TOC__' ),
 	'noeditsection'             => array( '0', '__SÈCCION_QUE_PÔT_PAS_ÉTRE_CHANGIÊ__', '__SECTIONNONEDITABLE__', '__NOEDITSECTION__' ),
-	'noheader'                  => array( '0', '__NION_EN_TÉTA__', '__AUCUNENTETE__', '__NOHEADER__' ),
 	'currentmonth'              => array( '1', 'MÊS_D_ORA', 'MÊS_D_ORA_2', 'MOISACTUEL', 'MOIS2ACTUEL', 'CURRENTMONTH', 'CURRENTMONTH2' ),
 	'currentmonth1'             => array( '1', 'MÊS_D_ORA_1', 'MOIS1ACTUEL', 'CURRENTMONTH1' ),
 	'currentmonthname'          => array( '1', 'NOM_DU_MÊS_D_ORA', 'NOMMOISACTUEL', 'CURRENTMONTHNAME' ),
@@ -714,9 +713,6 @@ La rêson balyêye est « ''$2'' ».",
 
 Vos pouede continuar a empleyér {{SITENAME}} de façon anonima ou ben <span class='plainlinks'>[$1 vos tornar branchiér]</span> desot lo mémo nom ou un ôtro.
 Notâd qu’y at des pâges que pôvont étre oncor fêtes vêre coment se vos érâd adés branchiê{{GENDER:||ye|(ye)}}, tant que vos èfaciéd lo cacho de voutron navigator.",
-'welcomecreation' => '== Benvegnua, $1 ! ==
-Voutron compto est étâ fêt.
-Oubliâd pas de pèrsonalisar voutres [[Special:Preferences|prèferences dessus {{SITENAME}}]].',
 'yourname' => 'Nom d’utilisator :',
 'yourpassword' => 'Contresegno :',
 'yourpasswordagain' => 'Confirmâd lo contresegno :',
@@ -2351,11 +2347,7 @@ Los changements a vegnir de ceta pâge et de sa pâge de discussion y seront lis
 
 'enotif_mailer' => 'Sistèmo de notificacion per mèssageria èlèctronica de {{SITENAME}}',
 'enotif_reset' => 'Marcar totes les pâges coment visitâs',
-'enotif_newpagetext' => 'O est una pâge novèla.',
 'enotif_impersonal_salutation' => 'Usanciér de {{SITENAME}}',
-'changed' => 'changiê',
-'created' => 'fêta',
-'enotif_subject' => 'La pâge « $PAGETITLE » de {{SITENAME}} at étâ $CHANGEDORCREATED per $PAGEEDITOR',
 'enotif_lastvisited' => 'Vêde $1 por tôs los changements dês voutra dèrriére visita.',
 'enotif_lastdiff' => 'Vêde $1 por vêre cél changement.',
 'enotif_anon_editor' => 'usanciér pas encartâ $1',

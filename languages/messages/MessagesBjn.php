@@ -114,7 +114,6 @@ $specialPageAliases = array(
 	'Recentchanges'             => array( 'Paubahan_pahanyarnya' ),
 	'Recentchangeslinked'       => array( 'Paubahan_tarait' ),
 	'Revisiondelete'            => array( 'Hapus_ralatan' ),
-	'RevisionMove'              => array( 'Ralatan_pamindahan' ),
 	'Search'                    => array( 'Panggagaian' ),
 	'Shortpages'                => array( 'Tungkaran_handap' ),
 	'Specialpages'              => array( 'Tungkaran_istimiwa' ),
@@ -541,9 +540,6 @@ Administrator nang takunci nintu manawarakan panjalasan: "$3".',
 
 Pian kawa manyambung hagan mangguna'akan {{SITENAME}} kada bangaran, atawa Pian kawa <span class='plainlinks'>[$1 babuat log pulang]</span> sawagai pamakai nang sama atawa sawagai pamakai balain.
 Catatan bahwasa babarapa tungkaran pinanya masih ha tarus manampaiakan Pian masih babuat log, sampai Pian mahabisakan timbuluk panjalajah web Pian.",
-'welcomecreation' => '==Salamat datang, $1!==
-Akun Pian sudah diulah.
-Jangan kada ingat hagan maubah [[Special:Preferences|kakatujuan {{SITENAME}}]] Pian.',
 'yourname' => 'Ngaran pamakai:',
 'yourpassword' => 'Katasunduk:',
 'yourpasswordagain' => 'Katik pulang katasunduk:',
@@ -2132,11 +2128,7 @@ Parubahan-parubahan salanjutnya pada tungkaran ini dan tungkaran pamandiran tara
 
 'enotif_mailer' => 'Panyurili pamadahan {{SITENAME}}',
 'enotif_reset' => 'Tandai samunyaan tutungkaran sudah diilangi',
-'enotif_newpagetext' => 'Ngini adalah sabuah tungkaran hanyar.',
 'enotif_impersonal_salutation' => 'Pamuruk {{SITENAME}}',
-'changed' => "ta'ubah",
-'created' => "ta'ulah",
-'enotif_subject' => 'Tungkaran $PAGETITLE pintang {{SITENAME}} sudah $CHANGEDORCREATED ulih $PAGEEDITOR',
 'enotif_lastvisited' => 'Janaki $1 gasan samunyaan parubahan mula Pian pauncitan tadi bailang.',
 'enotif_lastdiff' => 'Janaki $1 hagaan maniringi parubahan ngini.',
 'enotif_anon_editor' => 'pamuruk kada-bangaran $1',

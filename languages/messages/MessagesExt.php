@@ -378,10 +378,6 @@ La razón es la siguienti: ''$2''.",
 'logouttext' => "'''Cuenta afechá corretamenti.'''<br />
 Pueis acontinal gastandu {{SITENAME}} de holma anónima, u <span class='plainlinks'>[$1 entral ena tu cuenta]</span> con el mesmu ussuáriu, u con otru.
 Dati cuenta que hata que nu esborris el caché del tu escrucaol pué paecel que la tu cuenta acontina abierta n'angunas páginas.",
-'welcomecreation' => "== Bienviniu, $1! ==
-
-La tu cuenta d'ussuáriu á siu criá.
-Alcuerdati de chambal las tus [[Special:Preferences|preferéncias de {{SITENAME}}]].",
 'yourname' => "Nombri d'usuáriu:",
 'yourpassword' => 'Consínia:',
 'yourpasswordagain' => 'Escrebi e nuevu la consínia:',
@@ -1421,11 +1417,7 @@ Si quieis ehal de vehilal la páhina, pursa sobri \"Ehal de vehilal\".",
 
 'enotif_mailer' => 'Notificaeru pol correu e {{SITENAME}}',
 'enotif_reset' => 'Aseñalal tolas páhinas vesitás',
-'enotif_newpagetext' => 'Esta páhina es nueva.',
 'enotif_impersonal_salutation' => 'usuáriu e {{SITENAME}}',
-'changed' => 'chambau',
-'created' => 'criá',
-'enotif_subject' => '{{SITENAME}}: la páhina $PAGETITLE á siu $CHANGEDORCREATED pol $PAGEEDITOR',
 'enotif_lastvisited' => 'Vai pa $1 pa visoreal tolos chambus hechus dendi la tu úrtima vesita.',
 'enotif_lastdiff' => 'Vai pa $1 pa visoreal esti chambu.',
 'enotif_anon_editor' => 'usuáriu anónimu $1',

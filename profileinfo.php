@@ -95,8 +95,7 @@ header( 'Content-Type: text/html; charset=utf-8' );
 
 	.table th,
 	.table td {
-		padding: 8px;
-		line-height: 20px;
+		padding: 0.1em;
 		text-align: left;
 		vertical-align: top;
 		border-top: 1px solid #ddd;
@@ -156,9 +155,9 @@ $dbr = wfGetDB( DB_SLAVE );
 
 if( !$dbr->tableExists( 'profiling' ) ) {
 	echo '<p>No <code>profiling</code> table exists, so we can\'t show you anything.</p>'
-		. '<p>If you want to log profiling data, create the table using '
-		. '<code>maintenance/archives/patch-profiling.sql</code> and enable '
-		. '<code>$wgProfileToDatabase</code>.</p>'
+		. '<p>If you want to log profiling data, enable <code>$wgProfileToDatabase</code>'
+		. ' in your LocalSettings.php and run <code>maintenance/update.php</code> to'
+		. ' create the profiling table.'
 		. '</body></html>';
 	exit( 1 );
 }
@@ -193,10 +192,12 @@ class profile_point {
 
 		$ex = isset( $expand[$this->name()] );
 
+		$anchor = str_replace( '"', '', $this->name() );
+
 		if ( !$ex ) {
 			if ( count( $this->children ) ) {
 				$url = getEscapedProfileUrl( false, false, $expand + array( $this->name() => true ) );
-				$extet = ' <a href="' . $url . '">[+]</a>';
+				$extet = " <a id=\"{$anchor}\" href=\"{$url}#{$anchor}\">[+]</a>";
 			} else {
 				$extet = '';
 			}
@@ -207,8 +208,8 @@ class profile_point {
 					$e += array( $name => $ep );
 				}
 			}
-
-			$extet = ' <a href="' . getEscapedProfileUrl( false, false, $e ) . '">[–]</a>';
+			$url = getEscapedProfileUrl( false, false, $e );
+			$extet = " <a id=\"{$anchor}\" href=\"{$url}#{$anchor}\">[–]</a>";
 		}
 		?>
 		<tr>

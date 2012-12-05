@@ -52,7 +52,7 @@ class Revision implements IDBAccessObject {
 	protected $mContentFormat;
 
 	/**
-	 * @var Content
+	 * @var Content|null|bool
 	 */
 	protected $mContent;
 
@@ -124,7 +124,7 @@ class Revision implements IDBAccessObject {
 	 * Returns null if no such revision can be found.
 	 *
 	 * $flags include:
-	 *      Revision::READ_LATEST  : Select the data from the master
+	 *      Revision::READ_LATEST  : Select the data from the master (since 1.20)
 	 *      Revision::READ_LOCKING : Select & lock the data from the master
 	 *
 	 * @param $revId Integer
@@ -176,6 +176,13 @@ class Revision implements IDBAccessObject {
 		if ( !$wgContentHandlerUseDB ) {
 			unset( $attribs['content_model'] );
 			unset( $attribs['content_format'] );
+		}
+
+		if ( !isset( $attribs['title'] )
+			&& isset( $row->ar_namespace )
+			&& isset( $row->ar_title ) ) {
+
+			$attribs['title'] = Title::makeTitle( $row->ar_namespace, $row->ar_title );
 		}
 
 		if ( isset( $row->ar_text ) && !$row->ar_text_id ) {
@@ -600,15 +607,19 @@ class Revision implements IDBAccessObject {
 				$this->mContent = $handler->unserializeContent( $this->mText );
 			}
 
-			// if we have a Title object, override mPage. Useful for testing and convenience.
-			if ( isset( $row['title'] ) ) {
-				$this->mTitle     = $row['title'];
-				$this->mPage      = $this->mTitle->getArticleID();
-			} else {
-				$this->mTitle     = null; // Load on demand if needed
+			// If we have a Title object, make sure it is consistent with mPage.
+			if ( $this->mTitle && $this->mTitle->exists() ) {
+				if ( $this->mPage === null ) {
+					// if the page ID wasn't known, set it now
+					$this->mPage = $this->mTitle->getArticleID();
+				} elseif ( $this->mTitle->getArticleID() !== $this->mPage ) {
+					// Got different page IDs. This may be legit (e.g. during undeletion),
+					// but it seems worth mentioning it in the log.
+					wfDebug( "Page ID " . $this->mPage . " mismatches the ID "
+							. $this->mTitle->getArticleID() . " provided by the Title object." );
+				}
 			}
 
-			// @todo: XXX: really? we are about to create a revision. it will usually then be the current one.
 			$this->mCurrent   = false;
 
 			// If we still have no length, see it we have the text to figure it out
@@ -971,27 +982,34 @@ class Revision implements IDBAccessObject {
 	}
 
 	/**
-	 * Gets the content object for the revision
+	 * Gets the content object for the revision (or null on failure).
+	 *
+	 * Note that for mutable Content objects, each call to this method will return a
+	 * fresh clone.
 	 *
 	 * @since 1.21
-	 * @return Content
+	 * @return Content|null the Revision's content, or null on failure.
 	 */
 	protected function getContentInternal() {
 		if( is_null( $this->mContent ) ) {
 			// Revision is immutable. Load on demand:
-
-			$handler = $this->getContentHandler();
-			$format = $this->getContentFormat();
-
 			if( is_null( $this->mText ) ) {
-				// Load text on demand:
 				$this->mText = $this->loadText();
 			}
 
-			$this->mContent = is_null( $this->mText ) ? null : $handler->unserializeContent( $this->mText, $format );
+			if ( $this->mText !== null && $this->mText !== false ) {
+				// Unserialize content
+				$handler = $this->getContentHandler();
+				$format = $this->getContentFormat();
+
+				$this->mContent = $handler->unserializeContent( $this->mText, $format );
+			} else {
+				$this->mContent = false; // negative caching!
+			}
 		}
 
-		return $this->mContent->copy(); // NOTE: copy() will return $this for immutable content objects
+		// NOTE: copy() will return $this for immutable content objects
+		return $this->mContent ? $this->mContent->copy() : null;
 	}
 
 	/**
@@ -1366,7 +1384,7 @@ class Revision implements IDBAccessObject {
 
 		$content = $this->getContent( Revision::RAW );
 
-		if ( !$content->isValid() ) {
+		if ( !$content || !$content->isValid() ) {
 			$t = $title->getPrefixedDBkey();
 
 			throw new MWException( "Content of $t is not valid! Content model is $model" );
@@ -1386,7 +1404,7 @@ class Revision implements IDBAccessObject {
 	 * Lazy-load the revision's text.
 	 * Currently hardcoded to the 'text' table storage engine.
 	 *
-	 * @return String
+	 * @return String|bool the revision's text, or false on failure
 	 */
 	protected function loadText() {
 		wfProfileIn( __METHOD__ );

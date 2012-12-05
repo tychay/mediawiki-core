@@ -72,7 +72,7 @@ class ApiParse extends ApiBase {
 		// TODO: Does this still need $wgTitle?
 		global $wgParser, $wgTitle;
 
-		// Currently unnecessary, code to act as a safeguard against any change in current behaviour of uselang breaks
+		// Currently unnecessary, code to act as a safeguard against any change in current behaviour of uselang
 		$oldLang = null;
 		if ( isset( $params['uselang'] ) && $params['uselang'] != $this->getContext()->getLanguage()->getCode() ) {
 			$oldLang = $this->getContext()->getLanguage(); // Backup language
@@ -147,6 +147,9 @@ class ApiParse extends ApiBase {
 
 				$pageObj = $this->getTitleOrPageId( $pageParams, 'fromdb' );
 				$titleObj = $pageObj->getTitle();
+				if ( !$titleObj || !$titleObj->exists() ) {
+					$this->dieUsage( "The page you specified doesn't exist", 'missingtitle' );
+				}
 				$wgTitle = $titleObj;
 
 				if ( isset( $prop['revid'] ) ) {
@@ -630,7 +633,7 @@ class ApiParse extends ApiBase {
 			'uselang' => 'Which language to parse the request in',
 			'section' => 'Only retrieve the content of this section number',
 			'disablepp' => 'Disable the PP Report from the parser output',
-			'generatexml' => 'Generate XML parse tree',
+			'generatexml' => 'Generate XML parse tree (requires prop=wikitext)',
 			'contentformat' => 'Content serialization format used for the input text',
 			'contentmodel' => 'Content model of the new content',
 		);

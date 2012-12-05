@@ -80,7 +80,6 @@ $magicWords = array(
 	'forcetoc'                  => array( '0', '__بافهرست__', '__FORCETOC__' ),
 	'toc'                       => array( '0', '__فهرست__', '__TOC__' ),
 	'noeditsection'             => array( '0', '__بی‌بخش__', '__NOEDITSECTION__' ),
-	'noheader'                  => array( '0', 'بی‌عنوان__', '__بی‌عنوان__', '__NOHEADER__' ),
 	'currentmonth'              => array( '1', 'ماه', 'ماه‌کنونی', 'ماه_کنونی', 'ماه‌کنونی۲', 'ماه_اسایی۲', 'ماه_کنونی۲', 'CURRENTMONTH', 'CURRENTMONTH2' ),
 	'currentmonth1'             => array( '1', 'ماه۱', 'ماه‌کنونی۱', 'ماه_کنونی۱', 'CURRENTMONTH1' ),
 	'currentmonthname'          => array( '1', 'نام‌ماه', 'نام_ماه', 'نام‌ماه‌کنونی', 'نام_ماه_کنونی', 'CURRENTMONTHNAME' ),
@@ -210,7 +209,7 @@ $messages = array(
 'september' => 'سـه‌پـتـه‌مـبـر',
 'october' => 'اکتبر',
 'november' => 'نـووه‌مـبـر',
-'december' => 'ده‌سـه‌مـبـر',
+'december' => 'دسامبر',
 'january-gen' => 'جـانـویـه',
 'february-gen' => 'فوریه',
 'march-gen' => 'مـارس',
@@ -222,7 +221,7 @@ $messages = array(
 'september-gen' => 'سـه‌پـتـه‌مـبـر',
 'october-gen' => 'اکتبر',
 'november-gen' => 'نـووه‌مـبـر',
-'december-gen' => 'ده‌سـه‌مـبـر',
+'december-gen' => 'دسامبر',
 'jan' => 'جانویه',
 'feb' => 'فه‌وریه',
 'mar' => 'مارچ',
@@ -234,7 +233,7 @@ $messages = array(
 'sep' => 'سه‌پته‌مبر',
 'oct' => 'ئوکتوبر',
 'nov' => 'نووه‌مبر',
-'dec' => 'ده‌سه‌مبر',
+'dec' => 'دسامبر',
 
 # Categories related messages
 'pagecategories' => '{{PLURAL:$1|رج|رج‌ئون}}',
@@ -271,7 +270,6 @@ $messages = array(
 'qbbrowse' => 'چأرخه‌سه‌ن',
 'qbedit' => 'دچی‌ین',
 'qbpageoptions' => 'این صفحه',
-'qbpageinfo' => 'بافت',
 'qbmyoptions' => 'مه صفحه‌ئون',
 'qbspecialpages' => 'شا صفحه‌ئون',
 'faq' => 'معمولی سوالا',
@@ -506,9 +504,6 @@ $2، $1',
 'sqlhidden' => '(دستور اس‌کیوال دپوشنی‌یه بیّه)',
 
 # Login and logout pages
-'welcomecreation' => '==$1، خِش بمونی!==
-شِمه حساب بساته بیّه.
-فراموش نکانین که [[Special:Preferences|شه ترجیحات {{SITENAME}}]] ره تنظیم هاکنین.',
 'yourname' => 'شمه کاروری‌نوم:',
 'yourpassword' => 'شمه پسورد',
 'yourpasswordagain' => 'پسورد ره دِباره بنویس',
@@ -866,9 +861,6 @@ $2، $1',
 'watching' => 'ده‌مـبـال هـه‌کـارده‌ن...',
 'unwatching' => 'ده‌مـبـال نـه‌کـارده‌ن...',
 
-'enotif_newpagetext' => 'این صفحه نوبساته هسته',
-'created' => 'بساته بیّه',
-'enotif_subject' => 'صفحه‌ی «$PAGETITLE» {{SITENAME}} به‌دست $PAGEEDITOR $CHANGEDORCREATED‌هسته.',
 'enotif_lastvisited' => 'بدی‌ین همه‌ی تغییرات از آخرین باری که سر بزونی وسّه $1 ره هارشین.',
 'enotif_lastdiff' => 'هارشائن این تغییر وسّه $1 ره بزنین.',
 'enotif_anon_editor' => 'نشناسی‌یه کارور $1',

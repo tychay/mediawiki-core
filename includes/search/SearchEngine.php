@@ -187,6 +187,11 @@ class SearchEngine {
 				return null;
 			}
 
+			# Try files if searching in the Media: namespace
+			if ( $title->getNamespace() == NS_MEDIA ) {
+				$title = Title::makeTitle( NS_FILE, $title->getText() );
+			}
+
 			if ( $title->isSpecialPage() || $title->isExternal() || $title->exists() ) {
 				return $title;
 			}
@@ -197,22 +202,23 @@ class SearchEngine {
 				return $title;
 			}
 
+			if ( !wfRunHooks( 'SearchAfterNoDirectMatch', array( $term, &$title ) ) ) {
+				return $title;
+			}
+
 			# Now try all lower case (i.e. first letter capitalized)
-			#
 			$title = Title::newFromText( $wgContLang->lc( $term ) );
 			if ( $title && $title->exists() ) {
 				return $title;
 			}
 
 			# Now try capitalized string
-			#
 			$title = Title::newFromText( $wgContLang->ucwords( $term ) );
 			if ( $title && $title->exists() ) {
 				return $title;
 			}
 
 			# Now try all upper case
-			#
 			$title = Title::newFromText( $wgContLang->uc( $term ) );
 			if ( $title && $title->exists() ) {
 				return $title;
@@ -795,7 +801,7 @@ class SearchResult {
 				//TODO: if we could plug in some code that knows about special content models *and* about
 				//      special features of the search engine, the search could benefit.
 				$content = $this->mRevision->getContent();
-				$this->mText = $content->getTextForSearchIndex();
+				$this->mText = $content ? $content->getTextForSearchIndex() : '';
 			} else { // TODO: can we fetch raw wikitext for commons images?
 				$this->mText = '';
 			}

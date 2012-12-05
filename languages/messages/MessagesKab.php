@@ -445,10 +445,6 @@ Anedbal i tid sekkweṛen yefkad taɣẓint agi : « $3 ».',
 
 Tzemreḍ ad tesseqdceḍ {{SITENAME}} d udrig, <span class='plainlinks'>[$1 ad tkecmeḍ daɣen]</span> s yisem n wemseqdac inek (neɣ nniḍen).
 Kra n isebtar zemren ad sskanen belli mazal-ik s yisem n wemseqdac inek armi temḥuḍ lkac.",
-'welcomecreation' => '== Anṣuf yisek (yisem), $1 ! ==
-
-Amiḍan ik (im) yesnulfad.
-Ur tettuḍ ara ad tbeddleḍ [[Special:Preferences|isemyifiyen inek (inem) ɣef {{SITENAME}}]].',
 'yourname' => 'Isem n wemseqdac',
 'yourpassword' => 'Awal n tbaḍnit',
 'yourpasswordagain' => 'Ɛiwed ssekcem awal n tbaḍnit',
@@ -2037,11 +2033,7 @@ Ma tebɣiḍ ad tekkseḍ asebter seg wumuɣ n uɛessi inek, wekki ɣef \"Fakk a
 
 'enotif_mailer' => 'Email n talɣut n {{SITENAME}}',
 'enotif_reset' => 'Rcem akk isebtar mmeẓren',
-'enotif_newpagetext' => 'Wagi d asebter amaynut.',
 'enotif_impersonal_salutation' => 'Amseqdac n {{SITENAME}}',
-'changed' => 'yettubeddel',
-'created' => 'yettwaxleq',
-'enotif_subject' => 'Asebter $PAGETITLE n {{SITENAME}} $CHANGEDORCREATED sɣur $PAGEEDITOR',
 'enotif_lastvisited' => 'Ẓer $1 i akk ibeddlen segwasmi tkecmeḍ tikelt taneggarut.',
 'enotif_lastdiff' => 'Ẓer $1 akken ad tmuqleḍ abeddel.',
 'enotif_anon_editor' => 'aseqdac ur i siggezen ara $1',
@@ -2097,7 +2089,13 @@ Tuɣalin d tadhelt :
 'deletecomment' => 'Ayɣer',
 'deleteotherreason' => 'Taɣẓint nniḍen / taɣzint tamarnant :',
 'deletereasonotherlist' => 'Taɣẓint nniḍen',
+'deletereason-dropdown' => '* Tiɣẓinin n umḥu id t-uɣalen aṭas tikkwal
+** Asuter n useqdac
+** Akukel n izerfan umeskar
+** Asfata',
 'delete-edit-reasonlist' => 'Beddel tiɣẓinin n umḥu n usebter',
+'delete-toobig' => 'Asebter agi yesɛa amezruy ameqqṛan aṭas n ibeddilen, yugar $1 {{PLURAL:$1|lqem|ileqman}}.
+Amḥu n isebtar am wagi yesɛa akref iwakken {{SITENAME}} ur yesɛu ara arway.',
 
 # Rollback
 'rollback' => 'Semmet ibeddilen',
@@ -2491,6 +2489,8 @@ Anda tebɣiḍ tesmimeḍ "[[:$1]]" yella yagi. tebɣiḍ ad temḥuḍ iwakken 
 'pageinfo-views' => 'Amḍan n timuɣliwin',
 'pageinfo-watchers' => 'Amḍan n imttekkiyen yesɛan asebter agi deg umuɣ nsen n uɛassi',
 'pageinfo-subpages-name' => 'Adu-isebtar n usebter agi',
+'pageinfo-contentpage-yes' => 'Ih',
+'pageinfo-protect-cascading-yes' => 'Ih',
 
 # Patrolling
 'markaspatrolleddiff' => 'Rcem "yettwassenqden"',
@@ -2541,6 +2541,7 @@ Lukan a t-tesseqdceḍ yezmer ad yexsser aselkim inek/inem.",
 'hours' => '{{PLURAL:$1|$1 asrag|$1 isragen}}',
 'days' => '{{PLURAL:$1|$1 ass|$1 ussan}}',
 'ago' => '$1 aya',
+'just-now' => 'Tura kan',
 
 # Bad image list
 'bad_image_list' => 'Amasal d-wagi :
@@ -2976,6 +2977,17 @@ G leɛnaya-k sentem belli ṣaḥḥ tebɣiḍ ad tɛiwedeḍ axlaq n usebter-ag
 # Special:Version
 'version' => 'Lqem',
 'version-specialpages' => 'isebtar usligen',
+'version-software' => 'Iseɣẓanen i serkeben',
+'version-software-product' => 'Afaris',
+'version-software-version' => 'Lqem',
+'version-entrypoints' => 'Tansa URL n irden n wekcam',
+'version-entrypoints-header-entrypoint' => 'Ired n wekcam',
+'version-entrypoints-header-url' => 'Tansa URL',
+
+# Special:FilePath
+'filepath' => 'Abrid n wadduf ufaylu',
+'filepath-page' => 'Afaylu :',
+'filepath-submit' => 'Ruḥ',
 
 # Special:SpecialPages
 'specialpages' => 'isebtar usligen',

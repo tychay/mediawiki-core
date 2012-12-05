@@ -201,7 +201,6 @@ $magicWords = array(
 	'forcetoc'                  => array( '0', '__FORCARTDC__', '__FORCARSUMARIO__', '__FORÇARTDC__', '__FORÇARSUMÁRIO__', '__FORCETOC__' ),
 	'toc'                       => array( '0', '__TDC__', '__SUMÁRIO__', '__SUMARIO__', '__TOC__' ),
 	'noeditsection'             => array( '0', '__NÃOEDITARSEÇÃO__', '__SEMEDITARSEÇÃO__', '__NAOEDITARSECAO__', '__SEMEDITARSECAO__', '__NOEDITSECTION__' ),
-	'noheader'                  => array( '0', '__SEMCABECALHO__', '__SEMCABEÇALHO__', '__SEMTITULO__', '__SEMTÍTULO__', '__NOHEADER__' ),
 	'currentmonth'              => array( '1', 'MESATUAL', 'MESATUAL2', 'CURRENTMONTH', 'CURRENTMONTH2' ),
 	'currentmonth1'             => array( '1', 'MESATUAL1', 'CURRENTMONTH1' ),
 	'currentmonthname'          => array( '1', 'NOMEDOMESATUAL', 'CURRENTMONTHNAME' ),
@@ -443,7 +442,7 @@ $messages = array(
 'newwindow' => '(abre numa janela nova)',
 'cancel' => 'Cancelar',
 'moredotdotdot' => 'Mais...',
-'mypage' => 'Utilizador',
+'mypage' => 'Página',
 'mytalk' => 'Discussão',
 'anontalk' => 'Discussão para este IP',
 'navigation' => 'Navegação',
@@ -718,9 +717,6 @@ O administrador que efetuou o bloqueio deu a seguinte explicação: "$3".',
 
 Pode continuar a utilizar a {{SITENAME}} anonimamente, ou pode <span class='plainlinks'>[$1 autenticar-se novamente]</span> com o mesmo nome de utilizador ou com um nome de utilizador diferente.
 Tenha em atenção que algumas páginas poderão continuar a ser apresentadas como se ainda estivesse autenticado até limpar a cache do seu browser.",
-'welcomecreation' => '== Bem-vindo, $1! ==
-A sua conta foi criada.
-Não se esqueça de personalizar as suas [[Special:Preferences|preferências na {{SITENAME}}]].',
 'yourname' => 'Nome de utilizador:',
 'yourpassword' => 'Palavra-chave:',
 'yourpasswordagain' => 'Repita a palavra-chave:',
@@ -1005,7 +1001,7 @@ Este ainda não foi gravado!",
 'note' => "'''Nota:'''",
 'previewnote' => "'''Lembre-se que esta é apenas uma antevisão do resultado.'''
 As modificações ainda não foram gravadas!",
-'continue-editing' => 'Continuar a editar',
+'continue-editing' => 'Ir para a área de edição',
 'previewconflict' => 'Esta antevisão do resultado apresenta o texto da caixa de edição acima tal como este aparecerá se escolher gravá-lo.',
 'session_fail_preview' => "'''Não foi possível processar a edição devido à perda dos dados da sua sessão.
 Tente novamente, por favor.
@@ -1090,6 +1086,10 @@ Ela parece ter sido eliminada.',
 'edit-already-exists' => 'Não foi possível criar uma página nova.
 Ela já existia.',
 'defaultmessagetext' => 'Texto da mensagem padrão',
+
+# Content models
+'content-model-javascript' => 'JavaScript',
+'content-model-css' => 'CSS',
 
 # Parser/template warnings
 'expensive-parserfunction-warning' => 'Aviso: Esta página contém demasiadas chamadas de funções exigentes do analisador sintáctico.
@@ -2301,6 +2301,7 @@ Encontram-se disponíveis [[{{MediaWiki:Listgrouprights-helppage}}|informações
 'mailnologin' => 'Não existe endereço de envio',
 'mailnologintext' => 'Precisa de estar [[Special:UserLogin|autenticado]] e possuir um endereço de correio válido nas suas [[Special:Preferences|preferências]], para poder enviar correio electrónico a outros utilizadores.',
 'emailuser' => 'Enviar correio electrónico a este utilizador',
+'emailuser-title-target' => 'Enviar correio eletrónico a {{GENDER:$1|este utilizador|esta utilizadora}}',
 'emailpage' => 'Enviar correio electrónico ao utilizador',
 'emailpagetext' => 'Pode usar o formulário abaixo para enviar uma mensagem por correio electrónico para este utilizador.
 O endereço de correio que introduziu nas suas [[Special:Preferences|preferências]] irá aparecer no campo do remetente da mensagem "De:", para que o destinatário lhe possa responder directamente.',
@@ -2371,11 +2372,7 @@ O nome desta página passará a aparecer a '''negrito''' na lista de [[Special:R
 
 'enotif_mailer' => 'Gerador de Notificações da {{SITENAME}}',
 'enotif_reset' => 'Marcar todas as páginas como visitadas',
-'enotif_newpagetext' => 'Esta é uma página nova.',
 'enotif_impersonal_salutation' => 'Utilizador da "{{SITENAME}}"',
-'changed' => 'alterada',
-'created' => 'criada',
-'enotif_subject' => '{{SITENAME}}: A página $PAGETITLE foi $CHANGEDORCREATED por $PAGEEDITOR',
 'enotif_lastvisited' => 'Consulte $1 para todas as alterações efectuadas desde a sua última visita.',
 'enotif_lastdiff' => 'Consulte $1 para ver esta alteração.',
 'enotif_anon_editor' => 'utilizador anónimo $1',
@@ -2636,7 +2633,7 @@ Para referência é apresentado abaixo o último registo de bloqueio:',
 'whatlinkshere-hideredirs' => '$1 redireccionamentos',
 'whatlinkshere-hidetrans' => '$1 transclusões',
 'whatlinkshere-hidelinks' => '$1 links',
-'whatlinkshere-hideimages' => '$1 links para imagens',
+'whatlinkshere-hideimages' => '$1 links para ficheiros',
 'whatlinkshere-filters' => 'Filtros',
 
 # Block/unblock
@@ -3147,6 +3144,9 @@ Este bloqueio foi provavelmente causado por um link para um site externo que con
 'pageinfo-recent-authors' => 'Número recente de autores distintos',
 'pageinfo-magic-words' => '{{PLURAL:$1|Palavra mágica|Palavras mágicas}} ($1)',
 'pageinfo-hidden-categories' => '{{PLURAL:$1|Categoria oculta|Categorias ocultas}} ($1)',
+'pageinfo-toolboxlink' => 'Informações da página',
+'pageinfo-contentpage-yes' => 'Sim',
+'pageinfo-protect-cascading-yes' => 'Sim',
 
 # Skin names
 'skinname-standard' => 'Clássico',

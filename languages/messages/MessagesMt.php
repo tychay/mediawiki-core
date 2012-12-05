@@ -665,9 +665,6 @@ Ir-raġuni li ġiet mogħtija kienet ''$2''.",
 
 Tista' tkompli tuża' {{SITENAME}} bħala utent anonimu, jew tista' terġa <span class='plainlinks'>[$1 tidħol]</span> bħala l-istess utent jew wieħed differenti.
 Kun af li ċerti paġni jistgħu jkomplu jidhru bħallikieku l-illogjar 'l barra mill-kont qatt ma seħħ, sakemm ma tħassarx il-cache tal-browser.",
-'welcomecreation' => "== Merħba, $1! ==
-Il-kont tiegħek ġie maħluq.<br />
-Tinsiex tippersonalizza l-[[Special:Preferences|preferenzi]] ta' {{SITENAME}}.",
 'yourname' => 'Isem tal-utent:',
 'yourpassword' => 'Password:',
 'yourpasswordagain' => "Erġa' ikteb il-password:",
@@ -1514,8 +1511,9 @@ Hawnhekk hawn valur iġġenerat b'mod każwali li inti tista' tuża: $1",
 # User rights log
 'rightslog' => 'Drittijiet tal-utenti',
 'rightslogtext' => "Dan huwa r-reġistru tal-modifiki ta' drittijiet tal-utenti.",
-'rightslogentry' => "biddel is-sħubija ta' $1 mill-grupp $2 għall-grupp $3",
+'rightslogentry' => "biddel is-sħubija ta' $1 minn $2 għal $3",
 'rightslogentry-autopromote' => 'ġie awtomatikament promoss minn $2 għal $3',
+'logentry-rights-rights' => "$1 biddel is-sħubija ta' $3 minn $4 għal $5",
 'rightsnone' => '(xejn)',
 
 # Associated actions - in the sentence "You do not have permission to X"
@@ -1941,15 +1939,16 @@ Daħħal: tip/sottotip, eż. <code>image/jpeg</code>.",
 'disambiguations-text' => "Il-Paġni li jinsabu f'din lista huma parti minn '''paġna ta' diżambigwazzjoni''' b'hekk għandhom jiġu relatati mas-suġġett preċiż minflok. <br />
 Paġna tiġi stimata paġna ta' diżambigwazzjoni dawk kollha li jagħmlu użu mit-template elenkat f'[[MediaWiki:Disambiguationspage]]",
 
-'doubleredirects' => 'Riindirizzi doppji',
-'doubleredirectstext' => 'Din il-paġna telenka dawk il-paġni li jindirizzaw lejn paġna oħra ta\' riindirizzament.
-Kull filliera għandha ħolqa għall-ewwel u t-tieni riindirizz, kif ukoll fejn tirrindirizza t-tieni paġna, is-soltu magħrufa bħalha l-paġna "reali" fejn se twassal, fejn suppost l-ewwel riindirizz għandu jipponta.',
+'doubleredirects' => 'Rindirizzi doppji',
+'doubleredirectstext' => 'Din il-paġna telenka dawk il-paġni li jindirizzaw lejn paġna oħra ta\' rindirizzament.
+Kull filliera għandha ħolqa għall-ewwel u t-tieni rindirizz, kif ukoll fejn tirrindirizza t-tieni paġna, is-soltu magħrufa bħalha l-paġna "reali" fejn se twassal, fejn suppost l-ewwel rindirizz għandu jipponta.
+Daħliet <del>maqtugħa</del> saritilhom it-tiswija.',
 'double-redirect-fixed-move' => '[[$1]] ġie mmexxi awtomatikament, issa hu rindirizz għal [[$2]]',
 'double-redirect-fixed-maintenance' => "Tiswija ta' rindirizz doppju minn [[$1]] għal [[$2]].",
 'double-redirect-fixer' => "Tiswija ta' rindirizz",
 
-'brokenredirects' => 'Riindirizzi ħżiena',
-'brokenredirectstext' => 'Ir-riindirizzi segwenti għandhom ħoloq għal paġni ineżistenti:',
+'brokenredirects' => 'Rindirizzi ħżiena',
+'brokenredirectstext' => 'Ir-rindirizzi segwenti għandhom ħoloq lejn paġni li ma jeżistux:',
 'brokenredirects-edit' => 'editja',
 'brokenredirects-delete' => 'ħassar',
 
@@ -2201,11 +2200,7 @@ Jekk f'xi ħin tkun tixtieq tneħħi l-paġna mil-lista ta' osservazzjoni tiegħ
 
 'enotif_mailer' => "Sistema ta' notifikazzjoni bl-użu tal-posta elettronika fuq {{SITENAME}}",
 'enotif_reset' => 'Immarka l-paġni kollha bħala diġà viżitati',
-'enotif_newpagetext' => 'Din hija paġna ġdida.',
 'enotif_impersonal_salutation' => "Utent ta' {{SITENAME}}",
-'changed' => 'modifikata',
-'created' => 'inħolqot',
-'enotif_subject' => 'Il-Paġna $PAGETITLE ta\' {{SITENAME}} ġiet $CHANGEDORCREATED minn $PAGEEDITOR',
 'enotif_lastvisited' => 'Ara $1 għal modifiki kollha mill-aħħar żjara.',
 'enotif_lastdiff' => 'Ara $1 biex tara din l-modifika.',
 'enotif_anon_editor' => 'utent anonimu $1',

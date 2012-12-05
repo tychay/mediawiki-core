@@ -514,6 +514,19 @@ class SpecialPage {
 	}
 
 	/**
+	 * Is this page cached?
+	 * Expensive pages are cached or disabled in miser mode.
+	 * Used by QueryPage and subclasses, moved here so that
+	 * Special:SpecialPages can safely call it for all special pages.
+	 *
+	 * @return Boolean
+	 * @since 1.21
+	 */
+	public function isCached() {
+		return false;
+	}
+
+	/**
 	 * Can be overridden by subclasses with more complicated permissions
 	 * schemes.
 	 *
@@ -1017,14 +1030,12 @@ abstract class RedirectSpecialPage extends UnlistedSpecialPage {
 		if ( $redirect instanceof Title ) {
 			$url = $redirect->getFullUrl( $query );
 			$this->getOutput()->redirect( $url );
-			wfProfileOut( __METHOD__ );
 			return $redirect;
 		// Redirect to index.php with query parameters
 		} elseif ( $redirect === true ) {
 			global $wgScript;
 			$url = $wgScript . '?' . wfArrayToCGI( $query );
 			$this->getOutput()->redirect( $url );
-			wfProfileOut( __METHOD__ );
 			return $redirect;
 		} else {
 			$class = __CLASS__;
@@ -1209,7 +1220,7 @@ abstract class RedirectSpecialArticle extends RedirectSpecialPage {
 			'ctype', 'maxage', 'smaxage',
 		);
 
-		wfRunHooks( "RedirectSpecialArticleRedirectParams", array(&$redirectParams) );
+		wfRunHooks( "RedirectSpecialArticleRedirectParams", array( &$redirectParams ) );
 		$this->mAllowedRedirectParams = $redirectParams;
 	}
 }

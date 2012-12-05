@@ -522,9 +522,6 @@ A razón data ye ''$2''.",
 'logouttext' => "'''Ha rematato a sesión.'''
 
 Puede continar navegando por {{SITENAME}} anonimament, u puede <span class='plainlinks'>[$1 encetar]</span> una nueva sesión con o mesmo nombre d'usuario u bell atro diferent. Pare cuenta que, entre que se limpia a caché d'o navegador, puet estar que bellas pachinas s'amuestren como si encara continase en a sesión anterior.",
-'welcomecreation' => "== ¡Bienveniu(da), $1! ==
-S'ha creyato a suya cuenta.
-No xublide de presonalizar [[Special:Preferences|as suyas preferencias en {{SITENAME}}]].",
 'yourname' => "Nombre d'usuario:",
 'yourpassword' => "Clau d'acceso:",
 'yourpasswordagain' => 'Torne a escribir a clau:',
@@ -2054,11 +2051,7 @@ L\'adreza de correu-e que endicó en as suyas [[Special:Preferences|preferencias
 
 'enotif_mailer' => 'Sistema de notificación por correu de {{SITENAME}}',
 'enotif_reset' => 'Marcar todas as pachinas como vesitatas',
-'enotif_newpagetext' => 'Ista ye una nueva pachina.',
 'enotif_impersonal_salutation' => 'usuario de {{SITENAME}}',
-'changed' => 'editata',
-'created' => 'creyata',
-'enotif_subject' => 'A pachina $PAGETITLE de {{SITENAME}} ha estato $CHANGEDORCREATED por $PAGEEDITOR',
 'enotif_lastvisited' => 'Vaiga ta $1 ta veyer totz os cambeos dende a suya zaguer vesita.',
 'enotif_lastdiff' => 'Vaiga ta $1 ta veyer iste cambeo.',
 'enotif_anon_editor' => 'usuario anonimo $1',

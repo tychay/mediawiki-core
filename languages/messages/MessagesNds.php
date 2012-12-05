@@ -607,9 +607,6 @@ As Grund is angeven: ''$2''.",
 
 Du kannst {{SITENAME}} nu anonym wiederbruken oder di ünner dissen oder en annern Brukernaam wedder <span class='plainlinks'>[$1 anmellen]</span>.
 Denk dor an, dat welk Sieden ünner Ümstänn noch jümmer so wiest warrn köönt, as wenn du anmellt weerst. Dat ännert sik, wenn du den Cache vun dien Browser leddig maakst.",
-'welcomecreation' => '== Willkamen, $1! ==
-Dien Brukerkonto is nu inricht.
-Vergeet nich, de Sied för di persönlich [[Special:Preferences|intostellen]].',
 'yourname' => 'Dien Brukernaam',
 'yourpassword' => 'Dien Passwoort',
 'yourpasswordagain' => 'Passwoort nochmal ingeven',
@@ -1897,11 +1894,7 @@ Mehr Informatschonen över enkelte Rechten staht ünner [[{{MediaWiki:Listgroupr
 
 'enotif_mailer' => '{{SITENAME}} E-Mail-Bescheedgeevdeenst',
 'enotif_reset' => 'All Sieden as besöcht marken',
-'enotif_newpagetext' => 'Dit is en ne’e Siet.',
 'enotif_impersonal_salutation' => '{{SITENAME}}-Bruker',
-'changed' => 'ännert',
-'created' => 'opstellt',
-'enotif_subject' => '[{{SITENAME}}] De Siet „$PAGETITLE“ is vun $PAGEEDITOR $CHANGEDORCREATED worrn',
 'enotif_lastvisited' => 'All Ännern siet dien letzten Besöök op een Blick: $1',
 'enotif_lastdiff' => 'Kiek bi $1 för dit Ännern.',
 'enotif_anon_editor' => 'Anonymen Bruker $1',

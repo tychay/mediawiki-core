@@ -328,7 +328,6 @@ For translations, please consider using [//translatewiki.net/wiki/Main_Page?setl
 'logouttext' => "'''Ngì hien-chhai yí-kîn thui-chhut.'''
 
 Ngì khó-yî ki-siu̍k yî ngia̍k-miàng fông-sṳt sṳ́-yung {{SITENAME}}, fe̍t-chá chai-chhṳ yî siông-thùng fe̍t-he mò-thùng yung-fu sṳ̂n-fun tên-ngi̍p.",
-'welcomecreation' => '<h2>Fôn-ngiàng, $1!</h2><p>Ngì-ke chong-ho yí-kîn kien-li̍p, put-yeu mong-ki sat-chṳ {{SITENAME}} ke-ngìn chhâm-sṳ.</p>',
 'yourname' => 'Yung-fu-miàng',
 'yourpassword' => 'Me̍t-ma:',
 'yourpasswordagain' => 'Chai-chhṳ sû-ngi̍p me̍t-ma:',
@@ -1064,11 +1063,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 
 'enotif_mailer' => '{{SITENAME}} email thûng-tî-hi',
 'enotif_reset' => 'Chiông só-yû hong-mien phêu-vi yí-kîn thu̍k-ko.',
-'enotif_newpagetext' => 'Liá-he sîn-kien vùn-chông.',
 'enotif_impersonal_salutation' => '{{SITENAME}} yung-fu',
-'changed' => 'siû-kói liáu',
-'created' => 'Yí-kîn kien-li̍p',
-'enotif_subject' => '{{SITENAME}} yû vùn-chông $PAGETITLE pûn $PAGEEDITOR $CHANGEDORCREATED',
 'enotif_lastvisited' => 'Kiám-sṳ ngì song-chhṳ fóng-mun heu ke só-yû kiên-kói chhián chhâm-siòng $1.',
 'enotif_lastdiff' => 'Kiám-chhà kiên-kói chhiáng chhâm-siòng $1.',
 'enotif_anon_editor' => 'ngia̍k-miàng yung-fu $1',

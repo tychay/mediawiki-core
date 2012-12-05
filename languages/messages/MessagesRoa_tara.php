@@ -162,8 +162,8 @@ $messages = array(
 'newwindow' => "(iapre jndr'à 'na fenestra nova)",
 'cancel' => 'Scangìlle',
 'moredotdotdot' => 'De cchiù...',
-'mypage' => "'A pàgene meje",
-'mytalk' => 'Ngazzaminde mie',
+'mypage' => "'A pàgena meje",
+'mytalk' => "'Ngazzaminde mie",
 'anontalk' => "'Ngazzaminde pe quiste IP",
 'navigation' => 'Naveghesce',
 'and' => '&#32;e',
@@ -447,9 +447,6 @@ L\'amministratore ca l\'ha bloccate dèje sta spiegazione: "$3".',
 
 Tu puè condinuà a ausà {{SITENAME}} in mode anonime, o tu puè <span class='plainlinks'>[$1 collegarte 'n'otra vote]</span> cumme 'u stesse utende o cumme 'n'otre utende.
 Note Bbuene ca certe pàggene ponne condinuà a essere viste cumme ce tu ste angore colleghete, fine a quanne a cache d'u browser no se sdeveche.",
-'welcomecreation' => "== Bovegne, $1! ==
-'U cunde tue ha state ccrejete.
-No te sce scurdanne de cangià le [[Special:Preferences|{{SITENAME}} preferenze tue]].",
 'yourname' => 'Nome utende:',
 'yourpassword' => 'Passuord:',
 'yourpasswordagain' => "Scrive 'a passuord notra vote:",
@@ -1128,7 +1125,7 @@ Però fa attenzione purcè l'indice lore sus a {{SITENAME}} ponne condenè pàgg
 
 # Preferences page
 'preferences' => 'Me piece accussì',
-'mypreferences' => 'Me piece accussì',
+'mypreferences' => 'Me piace accussì',
 'prefs-edits' => 'Numere de cangiaminde:',
 'prefsnologin' => 'Non ge sinde colleghete',
 'prefsnologintext' => 'Tu a essere <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} colleghete]</span> pe \'mbostà le preferenze de l\'utinde.',
@@ -2092,7 +2089,7 @@ L'indirizze e-mail ca tu è 'nzerite jndr'à le [[Special:Preferences|preferenze
 
 # Watchlist
 'watchlist' => 'Pàggene condrollete',
-'mywatchlist' => 'Pàggene condrollete',
+'mywatchlist' => 'Pàggene condrollate',
 'watchlistfor2' => 'Pe $1 $2',
 'nowatchlist' => "Non ge tine pàggene jndr'à liste de le pàggene condrollete.",
 'watchlistanontext' => 'Pe piacere $1 pe vedè o cangià le vosce sus a liste de le pàggene condrollete.',
@@ -2128,11 +2125,7 @@ Le cangiaminde future a sta pàgene e 'a pàgene de le 'ngazzaminde associete le
 
 'enotif_mailer' => '{{SITENAME}} Notificatore de email',
 'enotif_reset' => 'Signe tutte le pàggene cumme visitete',
-'enotif_newpagetext' => "Queste è 'na pàgena nove.",
 'enotif_impersonal_salutation' => 'Utende de {{SITENAME}}',
-'changed' => 'cangete',
-'created' => 'ccrejete',
-'enotif_subject' => '\'A pàgene de {{SITENAME}} $PAGETITLE ha state $CHANGEDORCREATED da $PAGEEDITOR',
 'enotif_lastvisited' => "Vide $1 pe tutte le cangiaminde da l'urtema visita toje.",
 'enotif_lastdiff' => 'Vide $1 pe vedè stu cangiamende.',
 'enotif_anon_editor' => 'Utende anonime $1',
@@ -2401,7 +2394,7 @@ L'urteme archivije de le bloccaminde se iacche aqquà sotte pe referimende:",
 'whatlinkshere-hideredirs' => '$1 ridirezionaminde',
 'whatlinkshere-hidetrans' => '$1 transclusiune',
 'whatlinkshere-hidelinks' => '$1 collegaminde',
-'whatlinkshere-hideimages' => '$1 collegaminde a immaggine',
+'whatlinkshere-hideimages' => "$1 collegaminde a 'u file",
 'whatlinkshere-filters' => 'Filtre',
 
 # Block/unblock
@@ -3969,8 +3962,8 @@ Le immaggine sonde fatte vedè jndr'à resoluziona megghie, otre tipe de file re
 'logentry-move-move_redir-noredirect' => "$1 pàgena spustate $3 a $4 sus a 'nu redirezionamende senze lassà 'nu redirezionamende",
 'logentry-patrol-patrol' => '$1 revisione marcate $4 de pàgene condrollate $3',
 'logentry-patrol-patrol-auto' => '$1 automaticamende revisione marcate $4 de pàgene condrollate $3',
-'logentry-newusers-newusers' => "$1 ccrejate 'nu cunde utende",
-'logentry-newusers-create' => "$1 ccrejate 'nu cunde utende",
+'logentry-newusers-newusers' => "'U cunde utende $1 ha state ccrejate",
+'logentry-newusers-create' => "'U cunde utende $1 ha state ccrejate",
 'logentry-newusers-create2' => "$1 ccrejate 'nu cunde utende $3",
 'logentry-newusers-autocreate' => "'U cunde utende $1 ha state ccrejate automaticamende",
 'newuserlog-byemail' => 'password mannete pe e-mail',

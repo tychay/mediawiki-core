@@ -121,7 +121,6 @@ $magicWords = array(
 	'forcetoc'                  => array( '0', '__FORSIRANISADRŽAJ__', '__UKLJUČISADRŽAJ__', '__FORCETOC__' ),
 	'toc'                       => array( '0', '__SADRŽAJ__', '__TOC__' ),
 	'noeditsection'             => array( '0', '__BEZ_IZMJENA__', '__BEZIZMJENA__', '__BEZ_IZMENA__', '__BEZIZMENA__', '__NOEDITSECTION__' ),
-	'noheader'                  => array( '0', '__BEZ_ZAGLAVLJA__', '__NOHEADER__' ),
 	'currentmonth'              => array( '1', 'TRENUTNIMJESEC', 'TRENUTNIMESEC', 'TRENUTAČNIMJESEC', 'CURRENTMONTH', 'CURRENTMONTH2' ),
 	'currentmonth1'             => array( '1', 'TRENUTNIMJESEC1', 'TRENUTNIMESEC1', 'TRENUTAČNIMJESEC1', 'CURRENTMONTH1' ),
 	'currentmonthname'          => array( '1', 'TRENUTNIMJESECIME', 'TRENUTNIMESECIME', 'TRENUTAČNIMJESECIME', 'CURRENTMONTHNAME' ),
@@ -617,9 +616,6 @@ Administrator koji ju je zaključao ponudio je sledeće objašnjenje: „$3“.'
 
 Možete nastaviti da koristite {{SITENAME}} anonimno, ili se ponovo <span class='plainlinks'>[$1 prijaviti]</span> kao isti ili kao drugi korisnik.
 Obratite pažnju da neke stranice mogu nastaviti da se prikazuju kao da ste još uvijek prijavljeni, dok ne očistite keš svog preglednika.",
-'welcomecreation' => '== Dobro došli, $1! ==
-Vaš korisnički račun je napravljen.
-Ne zaboravite izmijeniti vlastite [[Special:Preferences|{{SITENAME}} postavke]].',
 'yourname' => 'Korisničko ime:',
 'yourpassword' => 'Lozinka/zaporka:',
 'yourpasswordagain' => 'Ponovno utipkajte lozinku/zaporku:',
@@ -2261,11 +2257,7 @@ Buduće promjene ove stranice i njoj pridružene stranice za razgovor će biti n
 
 'enotif_mailer' => '{{SITENAME}} obavještenje o pošti',
 'enotif_reset' => 'Označi sve strane kao posjećene',
-'enotif_newpagetext' => 'Ovo je nova stranica.',
 'enotif_impersonal_salutation' => '{{SITENAME}} korisnik',
-'changed' => 'promijenjena',
-'created' => 'napravljena',
-'enotif_subject' => '{{SITENAME}} strana $PAGETITLE je bila $CHANGEDORCREATED od strane $PAGEEDITOR',
 'enotif_lastvisited' => 'Pogledajte $1 za sve izmjene od vaše posljednje posjete.',
 'enotif_lastdiff' => 'Vidi $1 da pregledate ovu promjenu.',
 'enotif_anon_editor' => 'anonimni korisnik $1',

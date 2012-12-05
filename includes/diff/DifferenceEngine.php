@@ -421,8 +421,8 @@ class DifferenceEngine extends ContextSource {
 	/**
 	 * Get a link to mark the change as patrolled, or '' if there's either no
 	 * revision to patrol or the user is not allowed to to it.
-	 * Side effect: this method will call OutputPage::preventClickjacking()
-	 * when a link is builded.
+	 * Side effect: When the patrol link is build, this method will call
+	 * OutputPage::preventClickjacking() and load mediawiki.page.patrol.ajax.
 	 *
 	 * @return String
 	 */
@@ -463,6 +463,8 @@ class DifferenceEngine extends ContextSource {
 				// Build the link
 				if ( $rcid ) {
 					$this->getOutput()->preventClickjacking();
+					$this->getOutput()->addModules( 'mediawiki.page.patrol.ajax' );
+
 					$token = $this->getUser()->getEditToken( $rcid );
 					$this->mMarkPatrolledLink = ' <span class="patrollink">[' . Linker::linkKnown(
 						$this->mNewPage,
@@ -522,8 +524,10 @@ class DifferenceEngine extends ContextSource {
 				if ( ContentHandler::runLegacyHooks( 'ShowRawCssJs', array( $this->mNewContent, $this->mNewPage, $out ) ) ) {
 					// NOTE: deprecated hook, B/C only
 					// use the content object's own rendering
-					$po = $this->mNewRev->getContent()->getParserOutput( $this->mNewRev->getTitle(), $this->mNewRev->getId() );
-					$out->addHTML( $po->getText() );
+					$cnt = $this->mNewRev->getContent();
+					$po = $cnt ? $cnt->getParserOutput( $this->mNewRev->getTitle(), $this->mNewRev->getId() ) : null;
+					$txt = $po ? $po->getText() : '';
+					$out->addHTML( $txt );
 				}
 			} elseif( !wfRunHooks( 'ArticleContentViewCustom', array( $this->mNewContent, $this->mNewPage, $out ) ) ) {
 				// Handled by extension
@@ -545,7 +549,7 @@ class DifferenceEngine extends ContextSource {
 				$parserOutput = $this->getParserOutput( $wikiPage, $this->mNewRev );
 
 				# Also try to load it as a redirect
-				$rt = $this->mNewContent->getRedirectTarget();
+				$rt = $this->mNewContent ? $this->mNewContent->getRedirectTarget() : null;
 
 				if ( $rt ) {
 					$article = Article::newFromTitle( $this->mNewPage, $this->getContext() );
@@ -1169,13 +1173,13 @@ class DifferenceEngine extends ContextSource {
 		}
 		if ( $this->mOldRev ) {
 			$this->mOldContent = $this->mOldRev->getContent( Revision::FOR_THIS_USER, $this->getUser() );
-			if ( $this->mOldContent === false ) {
+			if ( $this->mOldContent === null ) {
 				return false;
 			}
 		}
 		if ( $this->mNewRev ) {
 			$this->mNewContent = $this->mNewRev->getContent( Revision::FOR_THIS_USER, $this->getUser() );
-			if ( $this->mNewContent === false ) {
+			if ( $this->mNewContent === null ) {
 				return false;
 			}
 		}

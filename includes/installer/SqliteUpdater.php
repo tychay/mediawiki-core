@@ -88,7 +88,6 @@ class SqliteUpdater extends DatabaseUpdater {
 			array( 'modifyField', 'user_former_groups', 'ufg_group', 'patch-ug_group-length-increase.sql' ),
 
 			// 1.20
-			array( 'addTable', 'config',                            'patch-config.sql' ),
 			array( 'addIndex', 'revision', 'page_user_timestamp', 'patch-revision-user-page-index.sql' ),
 			array( 'addField', 'ipblocks', 'ipb_parent_block_id', 'patch-ipb-parent-block-id.sql' ),
 			array( 'addIndex', 'ipblocks', 'ipb_parent_block_id', 'patch-ipb-parent-block-id-index.sql' ),
@@ -106,6 +105,9 @@ class SqliteUpdater extends DatabaseUpdater {
 			array( 'addTable', 'sites',                            'patch-sites.sql' ),
 			array( 'addField', 'filearchive',   'fa_sha1',          'patch-fa_sha1.sql' ),
 			array( 'addField', 'job',           'job_token',         'patch-job_token.sql' ),
+			array( 'addField', 'job',           'job_attempts',      'patch-job_attempts.sql' ),
+			array( 'doEnableProfiling' ),
+			array( 'addField', 'uploadstash',      'us_props',      'patch-uploadstash-us_props.sql' ),
 		);
 	}
 
@@ -127,6 +129,13 @@ class SqliteUpdater extends DatabaseUpdater {
 			$this->applyPatch( 'searchindex-fts3.sql', false, "Adding FTS3 search capabilities" );
 		} else {
 			$this->output( "...fulltext search table appears to be in order.\n" );
+		}
+	}
+
+	protected function doEnableProfiling() {
+		global $wgProfileToDatabase;
+		if ( $wgProfileToDatabase === true && ! $this->db->tableExists( 'profiling', __METHOD__ ) ) {
+			$this->applyPatch( 'patch-profiling.sql', false, 'Add profiling table' );
 		}
 	}
 }

@@ -14,8 +14,6 @@
 
 $fallback8bitEncoding = 'windows-1254';
 
-$separatorTransformTable = array( ','     => '.', '.'     => ',' );
-
 $namespaceNames = array(
 	NS_MEDIA            => 'Media',
 	NS_SPECIAL          => 'Mahsus',
@@ -35,8 +33,8 @@ $namespaceNames = array(
 	NS_CATEGORY_TALK    => 'Kategoriya_muzakeresi',
 );
 
-# Aliases to cyril namespaces
 $namespaceAliases = array(
+	# Aliases to Cyrillic (crh-cyrl) namespaces
 	"Медиа"                  => NS_MEDIA,
 	"Махсус"                 => NS_SPECIAL,
 	"Музакере"               => NS_TALK,
@@ -56,7 +54,6 @@ $namespaceAliases = array(
 	'Категория'              => NS_CATEGORY,
 	'Категория_музакереси'   => NS_CATEGORY_TALK
 );
-
 
 $datePreferences = array(
     'default',
@@ -98,6 +95,7 @@ $dateFormats = array(
     'ISO 8601 both' => 'xnY.xnm.xnd"T"xnH:xni:xns',
 );
 
+$separatorTransformTable = array( ',' => '.', '.' => ',' );
 $linkTrail = '/^([a-zâçğıñöşüа-яё“»]+)(.*)$/sDu';
 
 $messages = array(
@@ -236,8 +234,8 @@ $messages = array(
 'newwindow' => '(yañı bir pencerede açılır)',
 'cancel' => 'Lâğu',
 'moredotdotdot' => 'Daa...',
-'mypage' => 'Saifem',
-'mytalk' => 'Muzakere saifem',
+'mypage' => 'Saife',
+'mytalk' => 'Muzakere',
 'anontalk' => 'Bu IP-niñ muzakeresi',
 'navigation' => 'Saytta yol tapuv',
 'and' => '&#32;ve',
@@ -247,7 +245,6 @@ $messages = array(
 'qbbrowse' => 'Baqıp çıq',
 'qbedit' => 'Deñiştir',
 'qbpageoptions' => 'Bu saife',
-'qbpageinfo' => 'Saife aqqında malümat',
 'qbmyoptions' => 'Saifelerim',
 'qbspecialpages' => 'Mahsus saifeler',
 'faq' => 'Sıq berilgen sualler',
@@ -488,9 +485,6 @@ Sebep: ''$2''.",
 'logouttext' => "'''Oturımnı qapattıñız.'''
 
 Şimdi {{SITENAME}} saytını anonim olaraq qullanıp olasıñız, ya da yañıdan <span class='plainlinks'>[$1 oturım açıp]</span> olasıñız (ister aynı qullanıcı adınen, ister başqa bir qullanıcı adınen). Web brauzeriñiz keşini temizlegence bazı saifeler sanki alâ daa oturımıñız açıq eken kibi körünip olur.",
-'welcomecreation' => '== Hoş keldiñiz, $1! ==
-Esabıñız açıldı.
-Bu saytnıñ [[Special:Preferences|sazlamalarını]] şahsıñızğa köre deñiştirmege unutmañız.',
 'yourname' => 'Qullanıcı adıñız',
 'yourpassword' => 'Paroliñiz',
 'yourpasswordagain' => 'Parolni bir daa yazıñız:',
@@ -1437,11 +1431,7 @@ Ayrıca [[Special:WantedCategories|talap etilgen kategoriyalarnıñ cedveline]] 
 
 'enotif_mailer' => '{{SITENAME}} poçta vastasınen haber bergen hızmet',
 'enotif_reset' => 'Cümle saifelerni baqılğan olaraq işaretle',
-'enotif_newpagetext' => 'Bu yañı bir saifedir.',
 'enotif_impersonal_salutation' => '{{SITENAME}} qullanıcısı',
-'changed' => 'deñiştirildi',
-'created' => 'yaratıldı',
-'enotif_subject' => '"{{SITENAME}}" $PAGETITLE saifesi $PAGEEDITOR qullanıcı tarafından $CHANGEDORCREATED',
 'enotif_lastvisited' => 'Soñki ziyaretiñizden berli yapılğan deñişmelerni körmek içün $1 baqıñız.',
 'enotif_anon_editor' => 'adsız (anonim) qullanıcı $1',
 'enotif_body' => 'Sayğılı $WATCHINGUSERNAME,

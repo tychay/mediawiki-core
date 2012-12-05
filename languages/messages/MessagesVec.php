@@ -119,7 +119,6 @@ $specialPageAliases = array(
 	'Recentchanges'             => array( 'ÙltimiCanbiamenti' ),
 	'Recentchangeslinked'       => array( 'CanbiamentiLigà' ),
 	'Revisiondelete'            => array( 'ScancelaRevision' ),
-	'RevisionMove'              => array( 'SpostaRevision' ),
 	'Search'                    => array( 'Serca' ),
 	'Shortpages'                => array( 'PaginePiCurte' ),
 	'Specialpages'              => array( 'PagineSpeciali' ),
@@ -549,10 +548,6 @@ L\'aministradore che ło ga blocà ga fornìo sta spiegasion: "$3".',
 
 Te poli 'ndar vanti doparando {{SITENAME}} come utente anonimo o se nò <span class='plainlinks'>[$1 entrar da novo]</span>, col stesso nome utente o uno difarente.
 Ocio che serte pagine podarìa èssar che ti 'e vedi come se te fussi 'ncora drento col to nome de prima, fin che no te neti la ''cache'' del to browser.",
-'welcomecreation' => '== Benvegnù, $1! ==
-
-El to nome utente el xe stà creà.
-Te poli sistemarte come te vol le to [[Special:Preferences|prefarense de {{SITENAME}}]].',
 'yourname' => 'Nome utente:',
 'yourpassword' => 'Password:',
 'yourpasswordagain' => 'De novo la password:',
@@ -2057,11 +2052,7 @@ I futuri canbiamenti a sta pagina e a la so pagina de discussion i se vedarà fo
 
 'enotif_mailer' => 'Sistema de notifica via e-mail de {{SITENAME}}',
 'enotif_reset' => 'Segna tute le pagine come zà viste',
-'enotif_newpagetext' => 'Sta qua la xe na nova pàxena.',
 'enotif_impersonal_salutation' => 'Utente de {{SITENAME}}',
-'changed' => 'canbià',
-'created' => 'creà',
-'enotif_subject' => 'La pagina $PAGETITLE de {{SITENAME}} la xe stà $CHANGEDORCREATED da $PAGEEDITOR',
 'enotif_lastvisited' => 'Varda $1 par tute le modifiche da la to ultima visita.',
 'enotif_lastdiff' => 'Varda $1 par visualizar la modifica.',
 'enotif_anon_editor' => 'utente anonimo $1',

@@ -698,10 +698,9 @@ Administraator lukustas selle järgmisel põhjusel: "$3".',
 
 Võid jätkata {{GRAMMAR:genitive|{{SITENAME}}}} kasutamist anonüümselt, aga ka sama või mõne teise kasutajana uuesti <span class='plainlinks'>[$1 sisse logida]</span>.
 Pane tähele, et seni kuni sa pole oma võrgulehitseja puhvrit tühjendanud, võidakse mõni lehekülg endiselt nii kuvada nagu oleksid ikka sisse logitud.",
-'welcomecreation' => '== Tere tulemast, $1! ==
-
-Sinu konto on loodud.
-Ära unusta oma {{GRAMMAR:genitive|{{SITENAME}}}} [[Special:Preferences|eelistusi]] seada.',
+'welcomeuser' => 'Tere tulemast, $1!',
+'welcomecreation-msg' => 'Sinu konto on loodud.
+Ära unusta seada oma {{GRAMMAR:genitive|{{SITENAME}}}} [[Eri:Eelistused|eelistusi]].',
 'yourname' => 'Kasutajanimi:',
 'yourpassword' => 'Parool:',
 'yourpasswordagain' => 'Sisesta parool uuesti:',
@@ -2289,11 +2288,7 @@ Kui tahad seda lehte hiljem jälgimisloendist eemaldada, klõpsa päisenupule \"
 
 'enotif_mailer' => '{{GRAMMAR:genitive|{{SITENAME}}}} lehekülje muutmise teavitaja',
 'enotif_reset' => 'Märgi kõik lehed loetuks',
-'enotif_newpagetext' => 'See on uus lehekülg.',
 'enotif_impersonal_salutation' => '{{GRAMMAR:genitive|{{SITENAME}}}} kasutaja',
-'changed' => 'muutnud lehekülge',
-'created' => 'loonud lehekülje',
-'enotif_subject' => '$PAGEEDITOR on {{GRAMMAR:inessive|{{SITENAME}}}} $CHANGEDORCREATED $PAGETITLE',
 'enotif_lastvisited' => 'Kõigi sinu viimase külastuse järel tehtud muudatuste nägemiseks vaata: $1.',
 'enotif_lastdiff' => 'Muudatus on leheküljel $1.',
 'enotif_anon_editor' => 'anonüümne kasutaja $1',

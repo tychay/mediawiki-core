@@ -3,7 +3,7 @@
  */
 
 var mw = ( function ( $, undefined ) {
-	"use strict";
+	'use strict';
 
 	/* Private Members */
 
@@ -290,14 +290,14 @@ var mw = ( function ( $, undefined ) {
 		 * Gets a message object, similar to wfMessage()
 		 *
 		 * @param key string Key of message to get
-		 * @param parameter_1 mixed First argument in a list of variadic arguments,
+		 * @param parameter1 mixed First argument in a list of variadic arguments,
 		 *  each a parameter for $N replacement in messages.
 		 * @return Message
 		 */
-		message: function ( key, parameter_1 /* [, parameter_2] */ ) {
+		message: function ( key, parameter1 ) {
 			var parameters;
 			// Support variadic arguments
-			if ( parameter_1 !== undefined ) {
+			if ( parameter1 !== undefined ) {
 				parameters = slice.call( arguments );
 				parameters.shift();
 			} else {
@@ -473,32 +473,14 @@ var mw = ( function ( $, undefined ) {
 				}
 			}
 
-			function compare( a, b ) {
-				var i;
-				if ( a.length !== b.length ) {
-					return false;
-				}
-				for ( i = 0; i < b.length; i += 1 ) {
-					if ( $.isArray( a[i] ) ) {
-						if ( !compare( a[i], b[i] ) ) {
-							return false;
-						}
-					}
-					if ( a[i] !== b[i] ) {
-						return false;
-					}
-				}
-				return true;
-			}
-
 			/**
 			 * Generates an ISO8601 "basic" string from a UNIX timestamp
 			 */
 			function formatVersionNumber( timestamp ) {
-				var	pad = function ( a, b, c ) {
-						return [a < 10 ? '0' + a : a, b < 10 ? '0' + b : b, c < 10 ? '0' + c : c].join( '' );
-					},
-					d = new Date();
+				var	d = new Date();
+				function pad( a, b, c ) {
+					return [a < 10 ? '0' + a : a, b < 10 ? '0' + b : b, c < 10 ? '0' + c : c].join( '' );
+				}
 				d.setTime( timestamp * 1000 );
 				return [
 					pad( d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate() ), 'T',
@@ -712,7 +694,7 @@ var mw = ( function ( $, undefined ) {
 						j -= 1;
 						try {
 							if ( hasErrors ) {
-								throw new Error ("Module " + module + " failed.");
+								throw new Error( 'Module ' + module + ' failed.');
 							} else {
 								if ( $.isFunction( job.ready ) ) {
 									job.ready();
@@ -758,16 +740,20 @@ var mw = ( function ( $, undefined ) {
 				// Using isReady directly instead of storing it locally from
 				// a $.fn.ready callback (bug 31895).
 				if ( $.isReady || async ) {
-					// jQuery's getScript method is NOT better than doing this the old-fashioned way
-					// because jQuery will eval the script's code, and errors will not have sane
-					// line numbers.
-					script = document.createElement( 'script' );
-					script.setAttribute( 'src', src );
-					script.setAttribute( 'type', 'text/javascript' );
-					if ( $.isFunction( callback ) ) {
-						// Attach handlers for all browsers (based on jQuery.ajax)
-						script.onload = script.onreadystatechange = function () {
+					// Can't use jQuery.getScript because that only uses <script> for cross-domain,
+					// it uses XHR and eval for same-domain scripts, which we don't want because it
+					// messes up line numbers.
+					// The below is based on jQuery ([jquery@1.8.2]/src/ajax/script.js)
 
+					// IE-safe way of getting the <head>. document.head isn't supported
+					// in old IE, and doesn't work when in the <head>.
+					head = document.getElementsByTagName( 'head' )[0] || document.body;
+
+					script = document.createElement( 'script' );
+					script.async = true;
+					script.src = src;
+					if ( $.isFunction( callback ) ) {
+						script.onload = script.onreadystatechange = function () {
 							if (
 								!done
 								&& (
@@ -775,24 +761,20 @@ var mw = ( function ( $, undefined ) {
 									|| /loaded|complete/.test( script.readyState )
 								)
 							) {
-
 								done = true;
 
+								// Handle memory leak in IE
+								script.onload = script.onreadystatechange = null;
+
+								// Remove the script
+								if ( script.parentNode ) {
+									script.parentNode.removeChild( script );
+								}
+
+								// Dereference the script
+								script = undefined;
+
 								callback();
-
-								// Handle memory leak in IE. This seems to fail in
-								// IE7 sometimes (Permission Denied error when
-								// accessing script.parentNode) so wrap it in
-								// a try catch.
-								try {
-									script.onload = script.onreadystatechange = null;
-									if ( script.parentNode ) {
-										script.parentNode.removeChild( script );
-									}
-
-									// Dereference the script
-									script = undefined;
-								} catch ( e ) { }
 							}
 						};
 					}
@@ -800,20 +782,17 @@ var mw = ( function ( $, undefined ) {
 					if ( window.opera ) {
 						// Appending to the <head> blocks rendering completely in Opera,
 						// so append to the <body> after document ready. This means the
-						// scripts only start loading after  the document has been rendered,
+						// scripts only start loading after the document has been rendered,
 						// but so be it. Opera users don't deserve faster web pages if their
-						// browser makes it impossible
-						$( function () { document.body.appendChild( script ); } );
+						// browser makes it impossible.
+						$( function () {
+							document.body.appendChild( script );
+						} );
 					} else {
-						// IE-safe way of getting the <head> . document.documentElement.head doesn't
-						// work in scripts that run in the <head>
-						head = document.getElementsByTagName( 'head' )[0];
-						( document.body || head ).appendChild( script );
+						head.appendChild( script );
 					}
 				} else {
-					document.write( mw.html.element(
-						'script', { 'type': 'text/javascript', 'src': src }, ''
-					) );
+					document.write( mw.html.element( 'script', { 'src': src }, '' ) );
 					if ( $.isFunction( callback ) ) {
 						// Document.write is synchronous, so this is called when it's done
 						// FIXME: that's a lie. doc.write isn't actually synchronous
@@ -960,7 +939,7 @@ var mw = ( function ( $, undefined ) {
 			 *  document ready has not yet occurred
 			 */
 			function request( dependencies, ready, error, async ) {
-				var regItemDeps, regItemDepLen, n;
+				var n;
 
 				// Allow calling by single module name
 				if ( typeof dependencies === 'string' ) {
@@ -1032,7 +1011,7 @@ var mw = ( function ( $, undefined ) {
 			 */
 			function doRequest( moduleMap, currReqBase, sourceLoadScript, async ) {
 				var request = $.extend(
-					{ 'modules': buildModulesString( moduleMap ) },
+					{ modules: buildModulesString( moduleMap ) },
 					currReqBase
 				);
 				request = sortQuery( request );
@@ -1127,9 +1106,9 @@ var mw = ( function ( $, undefined ) {
 								}
 							}
 
-							currReqBase = $.extend( { 'version': formatVersionNumber( maxVersion ) }, reqBase );
+							currReqBase = $.extend( { version: formatVersionNumber( maxVersion ) }, reqBase );
 							// For user modules append a user name to the request.
-							if ( group === "user" && mw.config.get( 'wgUserName' ) !== null ) {
+							if ( group === 'user' && mw.config.get( 'wgUserName' ) !== null ) {
 								currReqBase.user = mw.config.get( 'wgUserName' );
 							}
 							currReqBaseLength = $.param( currReqBase ).length;
@@ -1242,15 +1221,15 @@ var mw = ( function ( $, undefined ) {
 					}
 					// List the module as registered
 					registry[module] = {
-						'version': version !== undefined ? parseInt( version, 10 ) : 0,
-						'dependencies': [],
-						'group': typeof group === 'string' ? group : null,
-						'source': typeof source === 'string' ? source: 'local',
-						'state': 'registered'
+						version: version !== undefined ? parseInt( version, 10 ) : 0,
+						dependencies: [],
+						group: typeof group === 'string' ? group : null,
+						source: typeof source === 'string' ? source: 'local',
+						state: 'registered'
 					};
 					if ( typeof dependencies === 'string' ) {
 						// Allow dependencies to be given as a single module name
-						registry[module].dependencies = [dependencies];
+						registry[module].dependencies = [ dependencies ];
 					} else if ( typeof dependencies === 'object' || $.isFunction( dependencies ) ) {
 						// Allow dependencies to be given as an array of module names
 						// or a function which returns an array
@@ -1331,7 +1310,7 @@ var mw = ( function ( $, undefined ) {
 					}
 					// Allow calling with a single dependency as a string
 					if ( tod === 'string' ) {
-						dependencies = [dependencies];
+						dependencies = [ dependencies ];
 					}
 					// Resolve entire dependency map
 					dependencies = resolve( dependencies );
@@ -1366,7 +1345,7 @@ var mw = ( function ( $, undefined ) {
 				 *  be assumed if loading a URL, and false will be assumed otherwise.
 				 */
 				load: function ( modules, type, async ) {
-					var filtered, m, module;
+					var filtered, m, module, l;
 
 					// Validate input
 					if ( typeof modules !== 'object' && typeof modules !== 'string' ) {
@@ -1381,11 +1360,13 @@ var mw = ( function ( $, undefined ) {
 								async = true;
 							}
 							if ( type === 'text/css' ) {
-								$( 'head' ).append( $( '<link>', {
-									rel: 'stylesheet',
-									type: 'text/css',
-									href: modules
-								} ) );
+								// IE7-8 throws security warnings when inserting a <link> tag
+								// with a protocol-relative URL set though attributes (instead of
+								// properties) - when on HTTPS. See also bug #.
+								l = document.createElement( 'link' );
+								l.rel = 'stylesheet';
+								l.href = modules;
+								$( 'head' ).append( l );
 								return;
 							}
 							if ( type === 'text/javascript' || type === undefined ) {
@@ -1396,7 +1377,7 @@ var mw = ( function ( $, undefined ) {
 							throw new Error( 'invalid type for external url, must be text/css or text/javascript. not ' + type );
 						}
 						// Called with single module
-						modules = [modules];
+						modules = [ modules ];
 					}
 
 					// Filter out undefined modules, otherwise resolve() will throw
@@ -1448,7 +1429,7 @@ var mw = ( function ( $, undefined ) {
 					if ( registry[module] === undefined ) {
 						mw.loader.register( module );
 					}
-					if ( $.inArray(state, ['ready', 'error', 'missing']) !== -1
+					if ( $.inArray( state, ['ready', 'error', 'missing'] ) !== -1
 						&& registry[module].state !== state ) {
 						// Make sure pending modules depending on this one get executed if their
 						// dependencies are now fulfilled!
@@ -1514,7 +1495,7 @@ var mw = ( function ( $, undefined ) {
 		html: ( function () {
 			function escapeCallback( s ) {
 				switch ( s ) {
-					case "'":
+					case '\'':
 						return '&#039;';
 					case '"':
 						return '&quot;';

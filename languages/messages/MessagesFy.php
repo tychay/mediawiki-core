@@ -281,7 +281,6 @@ $messages = array(
 'qbbrowse' => 'Blêdzje',
 'qbedit' => 'Bewurkje',
 'qbpageoptions' => 'Side-opsjes',
-'qbpageinfo' => 'Side-ynfo',
 'qbmyoptions' => 'Myn Opsjes',
 'qbspecialpages' => 'Bysûndere siden',
 'faq' => 'FAQ (faak stelde fragen)',
@@ -506,8 +505,6 @@ De oanfierde reden is ''$2''.",
 
 Jo kinne de {{SITENAME}} fierders anonym brûke, of jo op 'e <span class='plainlinks'>[$1 nij oanmelde]</span> ûnder deselde of in oare namme.
 Mûglik wurdt noch in tal siden werjûn as wiene Jo oanmeld, oant Jo de cache fan Jo browser leegje.",
-'welcomecreation' => '<h2>Wolkom, $1!</h2><p>Jo ynstellings binne oanmakke.
-Ferjit net se oan jo foarkar oan te passen.',
 'yourname' => 'Jo meidochnamme:',
 'yourpassword' => 'Jo wachtwurd',
 'yourpasswordagain' => 'Jo wachtwurd (nochris)',
@@ -1715,10 +1712,7 @@ At jo letter in side net mear folgje wolle, dan brûke jo op dy side de keppelin
 'watching' => "Dwaande mei op'e folchlist te setten ...",
 'unwatching' => "Dwaande mei fan'e folchlist ôf te heljen ...",
 
-'enotif_newpagetext' => 'Dit is in nije side.',
 'enotif_impersonal_salutation' => 'meidogger fan {{SITENAME}}',
-'changed' => 'feroare',
-'created' => 'oanmakke',
 'enotif_body' => 'Bêste $WATCHINGUSERNAME,
 
 De {{SITENAME}}side \'$PAGETITLE\' is op $PAGEEDITDATE $CHANGEDORCREATED troch meidogger $PAGEEDITOR;

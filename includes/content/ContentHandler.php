@@ -582,8 +582,6 @@ abstract class ContentHandler {
 		$rcid = 0, # FIXME: use everywhere!
 		$refreshCache = false, $unhide = false
 	) {
-		$this->checkModelID( $context->getTitle()->getContentModel() );
-
 		$diffEngineClass = $this->getDiffEngineClass();
 
 		return new $diffEngineClass( $context, $old, $new, $rcid, $refreshCache, $unhide );
@@ -607,15 +605,17 @@ abstract class ContentHandler {
 	 * @return Language the page's language
 	 */
 	public function getPageLanguage( Title $title, Content $content = null ) {
-		global $wgContLang;
+		global $wgContLang, $wgLang;
+		$pageLang = $wgContLang;
 
 		if ( $title->getNamespace() == NS_MEDIAWIKI ) {
 			// Parse mediawiki messages with correct target language
 			list( /* $unused */, $lang ) = MessageCache::singleton()->figureMessage( $title->getText() );
-			return wfGetLangObj( $lang );
+			$pageLang = wfGetLangObj( $lang );
 		}
 
-		return $wgContLang;
+		wfRunHooks( 'PageContentLanguage', array( $title, &$pageLang, $wgLang ) );
+		return wfGetLangObj( $pageLang );
 	}
 
 	/**
@@ -712,8 +712,6 @@ abstract class ContentHandler {
 	 * @return string An appropriate auto-summary, or an empty string.
 	 */
 	public function getAutosummary( Content $oldContent = null, Content $newContent = null, $flags ) {
-		global $wgContLang;
-
 		// Decide what kind of auto-summary is needed.
 
 		// Redirect auto-summaries
@@ -802,19 +800,20 @@ abstract class ContentHandler {
 		$content = $rev->getContent();
 		$blank = false;
 
-		$this->checkModelID( $content->getModel() );
-
 		// If the page is blank, use the text from the previous revision,
 		// which can only be blank if there's a move/import/protect dummy
 		// revision involved
-		if ( $content->getSize() == 0 ) {
+		if ( !$content || $content->isEmpty() ) {
 			$prev = $rev->getPrevious();
 
-			if ( $prev )	{
-				$content = $prev->getContent();
+			if ( $prev ) {
+				$rev = $prev;
+				$content = $rev->getContent();
 				$blank = true;
 			}
 		}
+
+		$this->checkModelID( $rev->getContentModel() );
 
 		// Find out if there was only one contributor
 		// Only scan the last 20 revisions
@@ -871,7 +870,7 @@ abstract class ContentHandler {
 		}
 
 		// Max content length = max comment length - length of the comment (excl. $1)
-		$text = $content->getTextForSummary( 255 - ( strlen( $reason ) - 2 ) );
+		$text = $content ? $content->getTextForSummary( 255 - ( strlen( $reason ) - 2 ) ) : '';
 
 		// Now replace the '$1' placeholder
 		$reason = str_replace( '$1', $text, $reason );

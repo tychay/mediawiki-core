@@ -107,7 +107,6 @@ $specialPageAliases = array(
 	'Recentchanges'             => array( 'ChanjmanResan' ),
 	'Recentchangeslinked'       => array( 'LyenChanjmanResan', 'ChanjmanAk' ),
 	'Revisiondelete'            => array( 'RevizyonSiprime' ),
-	'RevisionMove'              => array( 'DeplaseRevizyon' ),
 	'Search'                    => array( 'Chache', 'Fouye' ),
 	'Shortpages'                => array( 'PajKout' ),
 	'Specialpages'              => array( 'PajEspesyal' ),
@@ -285,7 +284,6 @@ $messages = array(
 'qbbrowse' => 'Bouske',
 'qbedit' => 'Modifye',
 'qbpageoptions' => 'Paj sa a',
-'qbpageinfo' => 'Kontèks',
 'qbmyoptions' => 'Paj mwen yo',
 'qbspecialpages' => 'Paj espesyal',
 'faq' => 'FAQ',
@@ -527,9 +525,6 @@ Rezon li bay yo se « ''$2'' ».",
 
 Ou mèt kontinye itilize {{SITENAME}} san ou pa idantifye, oubyen ou ka <span class='plainlinks'>[$1 rekonekte]</span> w ankò ak menm non an oubyen yon lòt.
 Note ke kèk paj gendwa afiche tankou ou te toujou konekte tank ou pa efase kach nan navigatè ou.",
-'welcomecreation' => '== Byenvini, $1 ! ==
-
-Kont ou an kreye. Pa bliye pèsonalize l nan  [[Special:Preferences|preferans ou an sou paj sa {{SITENAME}}]].',
 'yourname' => 'Non itilizatè ou an :',
 'yourpassword' => 'Mopas ou an :',
 'yourpasswordagain' => 'Mete mopas ou an ankò :',

@@ -515,7 +515,7 @@ class Article extends Page {
 	 * page of the given title.
 	 */
 	public function view() {
-		global $wgParser, $wgUseFileCache, $wgUseETag, $wgDebugToolbar;
+		global $wgUseFileCache, $wgUseETag, $wgDebugToolbar;
 
 		wfProfileIn( __METHOD__ );
 
@@ -688,7 +688,7 @@ class Article extends Page {
 						$outputDone = true;
 					} else {
 						$content = $this->getContentObject();
-						$rt = $content->getRedirectChain();
+						$rt = $content ? $content->getRedirectChain() : null;
 						if ( $rt ) {
 							wfDebug( __METHOD__ . ": showing redirect=no page\n" );
 							# Viewing a redirect page (e.g. with parameter redirect=no)
@@ -704,9 +704,8 @@ class Article extends Page {
 					# Run the parse, protected by a pool counter
 					wfDebug( __METHOD__ . ": doing uncached parse\n" );
 
-					// @todo: shouldn't we be passing $this->getPage() to PoolWorkArticleView instead of plain $this?
-					$poolArticleView = new PoolWorkArticleView( $this, $parserOptions,
-						$this->getRevIdFetched(), $useParserCache, $this->getContentObject(), $this->getContext() );
+					$poolArticleView = new PoolWorkArticleView( $this->getPage(), $parserOptions,
+						$this->getRevIdFetched(), $useParserCache, $this->getContentObject() );
 
 					if ( !$poolArticleView->execute() ) {
 						$error = $poolArticleView->getError();
@@ -842,10 +841,14 @@ class Article extends Page {
 				'clearyourcache' );
 		}
 
-		// Give hooks a chance to customise the output
-		if ( ContentHandler::runLegacyHooks( 'ShowRawCssJs', array( $this->fetchContentObject(), $this->getTitle(), $outputPage ) ) ) {
-			$po = $this->mContentObject->getParserOutput( $this->getTitle() );
-			$outputPage->addHTML( $po->getText() );
+		$this->fetchContentObject();
+
+		if ( $this->mContentObject ) {
+			// Give hooks a chance to customise the output
+			if ( ContentHandler::runLegacyHooks( 'ShowRawCssJs', array( $this->mContentObject, $this->getTitle(), $outputPage ) ) ) {
+				$po = $this->mContentObject->getParserOutput( $this->getTitle() );
+				$outputPage->addHTML( $po->getText() );
+			}
 		}
 	}
 
@@ -1041,6 +1044,8 @@ class Article extends Page {
 	 * If patrol is possible, output a patrol UI box. This is called from the
 	 * footer section of ordinary page views. If patrol is not possible or not
 	 * desired, does nothing.
+	 * Side effect: When the patrol link is build, this method will call
+	 * OutputPage::preventClickjacking() and load mediawiki.page.patrol.ajax.
 	 */
 	public function showPatrolFooter() {
 		$request = $this->getContext()->getRequest();
@@ -1053,7 +1058,9 @@ class Article extends Page {
 		}
 
 		$token = $user->getEditToken( $rcid );
+
 		$outputPage->preventClickjacking();
+		$outputPage->addModules( 'mediawiki.page.patrol.ajax' );
 
 		$link = Linker::linkKnown(
 			$this->getTitle(),

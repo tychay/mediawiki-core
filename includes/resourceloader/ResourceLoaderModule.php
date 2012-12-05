@@ -77,7 +77,7 @@ abstract class ResourceLoaderModule {
 	}
 
 	/**
-	 * Set this module's name. This is called by ResourceLodaer::register()
+	 * Set this module's name. This is called by ResourceLoader::register()
 	 * when registering the module. Other code should not call this.
 	 *
 	 * @param $name String: Name
@@ -91,7 +91,7 @@ abstract class ResourceLoaderModule {
 	 * with ResourceLoader::register()
 	 *
 	 * @return Int ResourceLoaderModule class constant, the subclass default
-	 *     if not set manuall
+	 *     if not set manually
 	 */
 	public function getOrigin() {
 		return $this->origin;

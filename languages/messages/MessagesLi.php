@@ -559,9 +559,6 @@ d\'n Opgegaeve raej vanne sloetendje admin waar "\'\'$3\'\'".',
 
 De kèns {{SITENAME}} noe anoniem (mit vermeljing van IP-adres) gebroeke, of <span class='plainlinks'>[$1 opnuuj aanmelde]</span> ónger dezelfde of 'ne angere naam.
 Mäögelik waert nog 'n deil pagina's getuind esofs te nog aangemeld bis pès te de cache van diene browser laeg maaks.",
-'welcomecreation' => '== Wèlkóm, $1! ==
-Diene gebroeker is noe vaerdig.
-Vergaet neet dien [[Special:Preferences|veurkäöre veur {{SITENAME}}]] aan te passe.',
 'yourname' => 'Diene gebroekersnaam',
 'yourpassword' => 'Die wachwaord',
 'yourpasswordagain' => 'Wachwaord opnuuj intype',
@@ -2136,11 +2133,7 @@ Toekomstige verangeringe aan dees pagina en de biebehurende euverlèkpagina weur
 
 'enotif_mailer' => '{{SITENAME}} notificatiemail',
 'enotif_reset' => "Mèrk alle bezochde pazjena's aan.",
-'enotif_newpagetext' => "DIt is 'n nuuj pazjena.",
 'enotif_impersonal_salutation' => '{{SITENAME}} gebroeker',
-'changed' => 'verangerd',
-'created' => 'aangemaak',
-'enotif_subject' => 'De {{SITENAME}}pagina $PAGETITLE is $CHANGEDORCREATED door $PAGEEDITOR',
 'enotif_lastvisited' => 'Zuug $1 veur al verangeringe saer dien lèste bezeuk.',
 'enotif_lastdiff' => 'Zuug $1 om deze wieziging te zeen.',
 'enotif_anon_editor' => 'anonieme gebroeker $1',

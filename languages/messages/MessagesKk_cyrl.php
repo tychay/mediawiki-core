@@ -757,9 +757,6 @@ $2',
 
 Жүйеге кірместен де {{SITENAME}} жобасын пайдалана аласыз, немесе баяғы не өзге қатысушы ретінде жүйеге <span class='plainlinks'>[$1 қайта кіруіңізге]</span> болады.
 Аңғартпа: Кейбір беттер шолғышыңыздың кэшін тазартқанша әлі де жүйеге кіріп отырғаныңыздай көрінуі мүмкін.",
-'welcomecreation' => '== Қош келдіңіз, $1! ==
-Жаңа тіркелгіңіз жасалды.
-Өзіңіздің [[Special:Preferences|жеке баптауларыңызды]] өзгертуді ұмытпаңыз.',
 'yourname' => 'Қатысушы аты:',
 'yourpassword' => 'Құпия сөз:',
 'yourpasswordagain' => 'Құпия сөзді қайталаңыз:',
@@ -1990,11 +1987,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 
 'enotif_mailer' => '{{SITENAME}} ескерту хат жіберу қызметі',
 'enotif_reset' => 'Барлық бет келіп-кетілді деп белгіле',
-'enotif_newpagetext' => 'Мынау жаңа бет.',
 'enotif_impersonal_salutation' => '{{SITENAME}} қатысушысы',
-'changed' => 'өзгертті',
-'created' => 'бастады',
-'enotif_subject' => '{{SITENAME}} жобасында $PAGEEDITOR $PAGETITLE атаулы бетті $CHANGEDORCREATED',
 'enotif_lastvisited' => 'Соңғы келіп-кетуіңізден бері болған өзгерістер үшін $1 дегенді қараңыз.',
 'enotif_lastdiff' => 'Осы өзгеріс үшін $1 дегенді қараңыз.',
 'enotif_anon_editor' => 'тіркелгісіз қатысушы $1',

@@ -73,15 +73,6 @@ $namespaceAliases = array(
 	'Hjælp-diskussion'     => NS_HELP_TALK,
 );
 
-$bookstoreList = array(
-	"Bibliotek.dk" => "http://bibliotek.dk/vis.php?base=dfa&origin=kommando&field1=ccl&term1=is=$1&element=L&start=1&step=10",
-	"Bogguide.dk" => "http://www.bogguide.dk/find_boeger_bog.asp?ISBN=$1",
-	'inherit' => true,
-);
-
-$separatorTransformTable = array( ',' => '.', '.' => ',' );
-$linkTrail = '/^([a-zæøå]+)(.*)$/sDu';
-
 $specialPageAliases = array(
 	'Activeusers'               => array( 'Aktive_Brugere' ),
 	'Allmessages'               => array( 'MediaWiki-systemmeddelelser' ),
@@ -125,6 +116,7 @@ $specialPageAliases = array(
 	'MIMEsearch'                => array( 'MIME-type-søgning' ),
 	'Mostcategories'            => array( 'Sider_med_flest_kategorier' ),
 	'Mostimages'                => array( 'Mest_brugte_filer' ),
+	'Mostinterwikis'            => array( 'Flest_interwikilinks' ),
 	'Mostlinked'                => array( 'Sider_med_flest_henvisninger' ),
 	'Mostlinkedcategories'      => array( 'Kategorier_med_flest_sider' ),
 	'Mostlinkedtemplates'       => array( 'Hyppigst_brugte_skabeloner' ),
@@ -145,7 +137,6 @@ $specialPageAliases = array(
 	'Recentchanges'             => array( 'Seneste_ændringer' ),
 	'Recentchangeslinked'       => array( 'Relaterede_ændringer' ),
 	'Revisiondelete'            => array( 'Versionssletning' ),
-	'RevisionMove'              => array( 'Versionsflytning' ),
 	'Search'                    => array( 'Søgning' ),
 	'Shortpages'                => array( 'Korteste_sider' ),
 	'Specialpages'              => array( 'Specialsider' ),
@@ -185,6 +176,15 @@ $dateFormats = array(
 	'ymd date' => 'Y M j',
 	'ymd both' => 'Y M j, H:i'
 );
+
+$bookstoreList = array(
+	"Bibliotek.dk" => "http://bibliotek.dk/vis.php?base=dfa&origin=kommando&field1=ccl&term1=is=$1&element=L&start=1&step=10",
+	"Bogguide.dk" => "http://www.bogguide.dk/find_boeger_bog.asp?ISBN=$1",
+	'inherit' => true,
+);
+
+$separatorTransformTable = array( ',' => '.', '.' => ',' );
+$linkTrail = '/^([a-zæøå]+)(.*)$/sDu';
 
 $messages = array(
 # User preference toggles
@@ -236,7 +236,7 @@ $messages = array(
 
 'underline-always' => 'Altid',
 'underline-never' => 'Aldrig',
-'underline-default' => 'Brug browserens indstilling',
+'underline-default' => 'Brug browserens indstilling eller standarden for det valgte udseende',
 
 # Font style option in Special:Preferences
 'editfont-style' => 'Skriftstil ved redigering:',
@@ -321,8 +321,8 @@ $messages = array(
 'newwindow' => '(åbner i et nyt vindue)',
 'cancel' => 'Afbryd',
 'moredotdotdot' => 'Mere...',
-'mypage' => 'Min side',
-'mytalk' => 'Min diskussion',
+'mypage' => 'Side',
+'mytalk' => 'Diskussion',
 'anontalk' => 'Diskussionsside for denne IP-adresse',
 'navigation' => 'Navigation',
 'and' => '&#32;og',
@@ -354,6 +354,7 @@ $messages = array(
 'namespaces' => 'Navnerum',
 'variants' => 'Varianter',
 
+'navigation-heading' => 'Navigationsmenu',
 'errorpagetitle' => 'Fejl',
 'returnto' => 'Tilbage til $1.',
 'tagline' => 'Fra {{SITENAME}}',
@@ -561,7 +562,7 @@ Forespørgsel: $2',
 'viewsource-title' => 'Se kildekoden til $1',
 'actionthrottled' => 'Begrænsning af handling',
 'actionthrottledtext' => 'For at modvirke spam, er det ikke muligt at udføre denne handling mange gange på kort tid. Du har overskredet grænsen, hvorfor handlingen er blevet afbrudt. Vær venlig at forsøge igen om et par minutter.',
-'protectedpagetext' => 'Denne side er skrivebeskyttet.',
+'protectedpagetext' => 'Denne side er blevet beskyttet, for at forhindre redigering eller andre handlinger.',
 'viewsourcetext' => 'Du kan se og kopiere kildekoden til siden:',
 'viewyourtext' => "Du kan se og kopiere kildekoden for '''dine redigeringer''' til denne side:",
 'protectedinterface' => 'Denne side indeholder teksten i brugergrænsefladen til softwaren på denne wiki, og er beskyttet for at forhindre misbrug.
@@ -594,9 +595,9 @@ Administratoren, som skrivebeskyttede den, gav følgende begrundelse: "$3".',
 
 Du kan fortsætte med at bruge {{SITENAME}} anonymt, eller du kan <span class='plainlinks'>[$1 logge på igen]</span> som den samme eller en anden bruger.
 Bemærk, at nogle sider stadigvæk kan vises som om du var logget på, indtil du tømmer din browsers cache.",
-'welcomecreation' => '== Velkommen, $1! ==
-
-Din konto er blevet oprettet. Glem ikke at personliggøre dine [[Special:Preferences|{{SITENAME}}-indstillinger]].',
+'welcomeuser' => 'Velkommen, $1!',
+'welcomecreation-msg' => 'Din konto er blevet oprettet.
+Glem ikke at ændre dine [[Special:Preferences|{{SITENAME}} indstillinger]].',
 'yourname' => 'Dit brugernavn:',
 'yourpassword' => 'Din adgangskode:',
 'yourpasswordagain' => 'Gentag adgangskode',
@@ -761,7 +762,7 @@ Midlertidig adgangskode: $2',
 'extlink_sample' => 'http://www.example.com Titel på henvisning',
 'extlink_tip' => 'Ekstern henvisning (husk http:// præfiks)',
 'headline_sample' => 'Tekst til overskrift',
-'headline_tip' => 'Type 2 overskrift',
+'headline_tip' => 'Type 2-overskrift',
 'nowiki_sample' => 'Indsæt tekst her som ikke skal wikiformateres',
 'nowiki_tip' => 'Ignorer wikiformatering',
 'image_sample' => 'Eksempel.jpg',
@@ -799,7 +800,7 @@ Blokeringen udløber: $6
 Blokeringen er rettet mod: $7
 
 Du kan kontakte $1 eller en af de andre [[{{MediaWiki:Grouppage-sysop}}|administratorer]] for at diskutere blokeringen.
-Du kan ikke bruge funktionen 'e-mail til denne bruger' medmindre der er angivet en gyldig email-adresse i dine
+Du kan ikke bruge funktionen 'e-mail til denne bruger' medmindre der er angivet en gyldig e-mailadresse i dine
 [[Special:Preferences|kontoindstillinger]], og du ikke er blevet blokeret fra at bruge den.
 
 Din nuværende IP-adresse er $3, og blokerings-id er #$5.
@@ -875,7 +876,7 @@ Loggen over den seneste blokering ses nedenfor:',
 'note' => "'''Bemærk:'''",
 'previewnote' => "'''Husk at dette er kun en forhåndsvisning.'''
 Dine ændringer er endnu ikke blevet gemt!",
-'continue-editing' => 'Fortsæt med at redigere',
+'continue-editing' => 'Gå til redigeringsfeltet',
 'previewconflict' => 'Denne forhåndsvisning er resultatet af den redigérbare tekst ovenfor, sådan vil det komme til at se ud hvis du vælger at gemme teksten.',
 'session_fail_preview' => "'''Din ændring kunne ikke gemmes, da dine sessionsdata er gået tabt.
 Prøv venligst igen. Hvis problemet fortsætter, log af og log på igen.'''",
@@ -1319,7 +1320,7 @@ Her er en tilfældig genereret værdi som du kan bruge: $1',
 Det kan ikke gøres om.',
 'prefs-emailconfirm-label' => 'Bekræftelse af e-mail:',
 'prefs-textboxsize' => 'Størrelse på redigeringsvindue',
-'youremail' => 'Din e-mail-adresse:',
+'youremail' => 'Din e-mailadresse:',
 'username' => 'Brugernavn:',
 'uid' => 'Brugernummer:',
 'prefs-memberingroups' => 'Medlem af {{PLURAL:$1|gruppen|grupperne}}:',
@@ -1475,6 +1476,9 @@ Hvis du vælger at oplyse dit navn, vil det blive brugt til at tilskrive dig dit
 'rightslogtext' => 'Dette er en log over ændringer i brugeres rettigheder.',
 'rightslogentry' => 'ændrede grupperettigheder for „$1“ fra „$2“ til „$3“.',
 'rightslogentry-autopromote' => 'blev automatisk forfremmet fra $2 til $3',
+'logentry-rights-rights' => '$1 ændrede gruppemedlemskabet for $3 fra $4 til $5',
+'logentry-rights-rights-legacy' => '$1 ændrede gruppemedlemskabet for $3',
+'logentry-rights-autopromote' => '$1 blev automatisk forfremmet fra $4 til $5',
 'rightsnone' => '(-)',
 
 # Associated actions - in the sentence "You do not have permission to X"
@@ -1669,6 +1673,20 @@ Det er ikke tilladt at uploade Javafiler, da det kan forårsage, at sikkerhedsre
 'watchthisupload' => 'Overvåg filen',
 'filewasdeleted' => 'En fil med dette navn er tidligere uploadet og i mellemtiden slettet igen. Kontroller først indførslen i $1, før du gemmer filen.',
 'filename-bad-prefix' => "Navnet på filen du er ved at lægge op begynder med '''\"\$1\"'''. Dette er et ikkebeskrivende navn, der typisk er skabt automatisk af et digitalkamera. Vær venlig at vælge et mere beskrivende navn på dit billede.",
+'filename-prefix-blacklist' => ' #<!-- efterlad denne linje præcis som den er --> <pre>
+# Syntax is as follows:
+#   * Alt fra at "#" tegn til slutningen af linjen er en kommentar
+#   * Hver ikke tom linje er et præfiks for typiske filnavne automatisk tildelt af digitalkameraer
+CIMG # Casio
+DSC_ # Nikon
+DSCF # Fuji
+DSCN # Nikon
+DUW # nogen mobil telefoner
+IMG # generic
+JD # Jenoptik
+MGP # Pentax
+PICT # div.
+ #</pre> <!-- efterlad denne linje præcis som den er -->',
 'upload-success-subj' => 'Oplægningen er gennemført',
 'upload-success-msg' => 'Din upload fra [$2] lykkedes. Den er tilgængelig her: [[:{{ns:file}}:$1]]',
 'upload-failure-subj' => 'Upload problem',
@@ -1698,6 +1716,7 @@ Informer venligst en [[Special:ListUsers/sysop|systemadministrator]].',
 'backend-fail-notsame' => 'En ikke-identisk fil eksisterer allerede som $1.',
 'backend-fail-invalidpath' => '$1 er ikke en gyldig lagringssti.',
 'backend-fail-delete' => 'Kunne ikke slette filen $1.',
+'backend-fail-describe' => 'Kunne ikke ændre metadata for filen "$1".',
 'backend-fail-alreadyexists' => 'Filen $1 findes allerede.',
 'backend-fail-store' => 'Kunne ikke gemme filen $1 i $2.',
 'backend-fail-copy' => 'Kunne ikke kopiere filen $1 til $2.',
@@ -2084,7 +2103,7 @@ Se også [[Special:WantedCategories|ønskede kategorier]].',
 'linksearch-ok' => 'Søg',
 'linksearch-text' => 'Wildcards som "*.wikipedia.org" kan benyttes.
 Der skal som minimum angives et topniveau-domæne som f. eks. "*.org".<br />
-Understøttede protokoller: <code>$1</code> (tilføj ikke protokollerne til din søgning).',
+Understøttede protokoller: <code>$1</code> (bruger automatisk http:// hvis der ikke er angivet nogen protokol).',
 'linksearch-line' => '$2 linker til $1',
 'linksearch-error' => 'Wildcards må kun benyttes i starten af hostnavnet.',
 
@@ -2134,8 +2153,8 @@ Der findes muligvis [[{{MediaWiki:Listgrouprights-helppage}}|yderligere informat
 'emailuser-title-target' => 'Send email til denne {{GENDER:$1|bruger}}',
 'emailuser-title-notarget' => 'Send email til en bruger',
 'emailpage' => 'E-mail bruger',
-'emailpagetext' => 'Du kan bruge formularen nedenfor til at sende en e-mail til denne bruger.
-Den e-mail-adresse du har angivet i [[Special:Preferences|dine indstillinger]] vil dukke op i "fra"-feltet på e-mailen, så modtageren kan svare dig.',
+'emailpagetext' => 'Du kan bruge formularen nedenfor til at sende en e-mail til denne {{GENDER:$1|bruger}}.
+Den e-mail-adresse, du har angivet i [[Special:Preferences|dine indstillinger]], vil dukke op i "fra"-feltet på e-mailen, så modtageren kan svare dig.',
 'usermailererror' => 'E-mail-modulet returnerede en fejl:',
 'defemailsubject' => '{{SITENAME}}-email fra brugeren "$1"',
 'usermaildisabled' => 'Bruger-e-mail deaktiveret',
@@ -2166,7 +2185,7 @@ Den e-mail-adresse du har angivet i [[Special:Preferences|dine indstillinger]] v
 
 # Watchlist
 'watchlist' => 'Overvågningsliste',
-'mywatchlist' => 'Min overvågningsliste',
+'mywatchlist' => 'Overvågningsliste',
 'watchlistfor2' => 'For $1 $2',
 'nowatchlist' => 'Du har ingenting i din overvågningsliste.',
 'watchlistanontext' => 'Du skal $1, for at se din overvågningsliste eller ændre indholdet af den.',
@@ -2201,19 +2220,23 @@ Den e-mail-adresse du har angivet i [[Special:Preferences|dine indstillinger]] v
 
 'enotif_mailer' => '{{SITENAME}} informationsmail',
 'enotif_reset' => 'Marker alle sider som besøgt',
-'enotif_newpagetext' => 'Dette er en ny side.',
 'enotif_impersonal_salutation' => '{{SITENAME}} bruger',
-'changed' => 'ændret',
-'created' => 'oprettet',
-'enotif_subject' => '{{SITENAME}}-siden $PAGETITLE er blevet ændret af $PAGEEDITOR',
+'enotif_subject_deleted' => '{{SITENAME}} side $1 er blevet slettet af {{gender:$2|$2}}',
+'enotif_subject_created' => '{{SITENAME}} side $1 er blevet oprettet af {{gender:$2|$2}}',
+'enotif_subject_moved' => '{{SITENAME}} side $1 er blevet flyttet af {{gender:$2|$2}}',
+'enotif_subject_restored' => '{{SITENAME}} side $1 er blevet gendannet af {{gender:$2|$2}}',
+'enotif_subject_changed' => '{{SITENAME}} side $1 er blevet ændret af {{gender:$2|$2}}',
+'enotif_body_intro_deleted' => '{{SITENAME}} siden $1 er blevet slettet den $PAGEEDITDATE af {{gender:$2|$2}}, se $3 for den aktuelle version.',
+'enotif_body_intro_created' => '{{SITENAME}} siden $1 er blevet oprettet den $PAGEEDITDATE af {{gender:$2|$2}}, se $3 for den aktuelle version.',
+'enotif_body_intro_moved' => '{{SITENAME}} siden $1 er blevet flyttet den $PAGEEDITDATE af {{gender:$2|$2}}, se $3 for den aktuelle revision.',
+'enotif_body_intro_restored' => '{{SITENAME}} siden $1 er blevet gendannet den $PAGEEDITDATE af {{gender:$2|$2}}, se $3 for den aktuelle version.',
+'enotif_body_intro_changed' => '{{SITENAME}} siden $1 er blevet ændret den $PAGEEDITDATE af {{gender:$2|$2}}, se $3 for den aktuelle version.',
 'enotif_lastvisited' => 'Se $1 for alle ændringer siden dit sidste besøg.',
 'enotif_lastdiff' => 'Se $1 for at vise denne ændring.',
 'enotif_anon_editor' => 'anonym bruger $1',
 'enotif_body' => 'Kære $WATCHINGUSERNAME,
 
-{{SITENAME}}-siden $PAGETITLE er blevet $CHANGEDORCREATED den $PAGEEDITDATE af $PAGEEDITOR, se $PAGETITLE_URL for den aktuelle version.
-
-$NEWPAGE
+$PAGEINTRO $NEWPAGE
 
 Bidragyderens opsummering: $PAGESUMMARY $PAGEMINOREDIT
 
@@ -2221,13 +2244,12 @@ Kontakt bidragyderen:
 e-mail: $PAGEEDITOR_EMAIL
 wiki: $PAGEEDITOR_WIKI
 
-Du vil ikke modtage flere beskeder om yderligere ændringer medmindre du besøger denne side.
-På din overvågningsliste kan du også nulstille alle markeringer på de sider, du overvåger.
+Du vil ikke modtage flere beskeder om yderligere ændringer medmindre du besøger denne side. På din overvågningsliste kan du også nulstille alle markeringer på de sider, du overvåger.
 
              Med venlig hilsen {{SITENAME}}s informationssystem
 
 --
-For at ændre dine indstillinger for e-mail-notifikationer, besøg
+For at ændre dine indstillinger for email notifikationer, besøg
 {{canonicalurl:{{#special:Preferences}}}}
 
 For at ændre indstillingerne for din overvågningsliste, besøg
@@ -2420,7 +2442,7 @@ $1',
 # Contributions
 'contributions' => 'Brugerbidrag',
 'contributions-title' => 'Brugerbidrag for $1',
-'mycontris' => 'Mine bidrag',
+'mycontris' => 'Bidrag',
 'contribsub2' => 'For $1 ($2)',
 'nocontribs' => 'Ingen ændringer er fundet som opfylder disse kriterier.',
 'uctop' => ' (seneste)',
@@ -2460,7 +2482,7 @@ Den seneste post i blokeringsloggen vises nedenfor:',
 'whatlinkshere-hideredirs' => '$1 omdirigeringer',
 'whatlinkshere-hidetrans' => '$1 inkluderinger',
 'whatlinkshere-hidelinks' => '$1 henvisninger',
-'whatlinkshere-hideimages' => '$1 fillinks',
+'whatlinkshere-hideimages' => '$1 filhenvisninger',
 'whatlinkshere-filters' => 'Filtre',
 
 # Block/unblock
@@ -2545,7 +2567,7 @@ Se [[Special:BlockList|blokeringslisten]] for alle blokeringer.',
 'unblocklink' => 'ophæv blokering',
 'change-blocklink' => 'ændr blokering',
 'contribslink' => 'bidrag',
-'emaillink' => 'send email',
+'emaillink' => 'send e-mail',
 'autoblocker' => 'Du er automatisk blokeret, fordi du deler IP-adresse med "[[User:$1|$1]]".
 Begrundelse: "$2".',
 'blocklogpage' => 'Blokeringslog',
@@ -2913,7 +2935,7 @@ Dette skyldes sandsynligvis en henvisning til et sortlistet eksternt websted.',
 
 # Info page
 'pageinfo-title' => 'Information om "$1"',
-'pageinfo-not-current' => 'Oplysninger vises kun for den aktuelle version.',
+'pageinfo-not-current' => 'Beklager, det er umuligt at give denne information for gamle udgaver.',
 'pageinfo-header-basic' => 'Grundlæggende oplysninger',
 'pageinfo-header-edits' => 'Redigeringshistorik',
 'pageinfo-header-restrictions' => 'Sidebeskyttelse',
@@ -2922,6 +2944,7 @@ Dette skyldes sandsynligvis en henvisning til et sortlistet eksternt websted.',
 'pageinfo-default-sort' => 'Standardsorteringsnøgle',
 'pageinfo-length' => 'Sidelængde (i bytes)',
 'pageinfo-article-id' => 'Side-ID',
+'pageinfo-language' => 'Sprog for sideindholdet',
 'pageinfo-robot-policy' => 'Søgemaskinestatus',
 'pageinfo-robot-index' => 'Indekserbar',
 'pageinfo-robot-noindex' => 'Ikke indekserbar',
@@ -2970,6 +2993,8 @@ Dette skyldes sandsynligvis en henvisning til et sortlistet eksternt websted.',
 'markedaspatrollederror' => 'Markering som „kontrolleret“ ikke mulig.',
 'markedaspatrollederrortext' => 'Du skal vælge en sideændring.',
 'markedaspatrollederror-noautopatrol' => 'Du må ikke markere dine egne ændringer som kontrolleret.',
+'markedaspatrollednotify' => 'Denne ændring af $1 er blevet markeret som patruljeret.',
+'markedaspatrollederrornotify' => 'Markering som patruljeret mislykkedes.',
 
 # Patrol log
 'patrol-log-page' => 'Kontrollog',
@@ -3034,6 +3059,7 @@ Du kan beskadige dit system hvis du udfører den.",
 'hours' => '{{PLURAL: $1|$1 time|$1 timer}}',
 'days' => '{{PLURAL: $1|$1 dag|$1 dage}}',
 'ago' => '$1 siden',
+'just-now' => 'lige nu',
 
 # Bad image list
 'bad_image_list' => 'Formatet er:
@@ -3633,6 +3659,7 @@ Du kan også [[Special:EditWatchlist|bruge standard editoren]].',
 'version-license' => 'Licens',
 'version-poweredby-credits' => "Denne wiki er drevet af '''[//www.mediawiki.org/ MediaWiki ]''', copyright © 2001-$1 $2.",
 'version-poweredby-others' => 'andre',
+'version-credits-summary' => 'Vi vil gerne anerkende følgende personer for deres bidrag til [[Special:Version|MediaWiki]].',
 'version-license-info' => 'MediaWiki er fri software; du kan redistribuere det og/eller ændre det under betingelserne i GNU General Public License som offentliggjort af Free Software Foundation; enten version 2 af licensen eller (efter eget valg) enhver senere version. 
 
 MediaWiki distribueres i håb om at det vil være nyttigt, men UDEN NOGEN GARANTI; uden selv de underforståede garantier SALGBARHED eller EGNETHED TIL ET BESTEMT FORMÅL. Se GNU General Public License for yderligere detaljer. 
@@ -3771,9 +3798,9 @@ Billeder vises i fuld opløsning, og andre mediatyper vil blive aktiveret med de
 'logentry-move-move_redir-noredirect' => '$1 flyttede siden $3 til $4 hen over en omdirigering og uden at efterlade en omdirigering',
 'logentry-patrol-patrol' => '$1 markerede version $4 af siden $3 som patruljeret',
 'logentry-patrol-patrol-auto' => '$1 markerede automatisk version $4 af siden $3 som patruljeret',
-'logentry-newusers-newusers' => '$1 oprettede en brugerkonto',
-'logentry-newusers-create' => '$1 oprettede en brugerkonto',
-'logentry-newusers-create2' => '$1 oprettede brugerkontoen $3',
+'logentry-newusers-newusers' => 'Brugerkontoen $1 blev oprettet',
+'logentry-newusers-create' => 'Brugerkontoen $1 blev oprettet',
+'logentry-newusers-create2' => 'Brugerkontoen $3 blev oprettet af $1',
 'logentry-newusers-autocreate' => 'Kontoen $1 blev automatisk oprettet',
 'newuserlog-byemail' => 'kodeord tilsendt pr. e-mail',
 
@@ -3849,4 +3876,6 @@ Ellers kan du bruge den enkle formular nedenfor. Din kommentar vil blive tilføj
 'duration-centuries' => '$1 {{PLURAL:$1|århundrede|århundreder}}',
 'duration-millennia' => '$1 {{PLURAL:$1|årtusind|årtusinder}}',
 
+# Unknown messages
+'svg-long-error' => 'Ugyldig SVG-fil: $1',
 );

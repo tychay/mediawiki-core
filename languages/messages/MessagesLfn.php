@@ -152,7 +152,6 @@ $messages = array(
 'qbbrowse' => 'Surfa',
 'qbedit' => 'Edita',
 'qbpageoptions' => 'Esta paje',
-'qbpageinfo' => 'Situa',
 'qbmyoptions' => 'Me pajes',
 'qbspecialpages' => 'Pajes spesial',
 
@@ -687,9 +686,6 @@ Si tu vole sutrae la paje de tu lista de pajes oservada en la futur, clica a \"n
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching' => 'Oserva...',
 'unwatching' => 'No oserva...',
-
-'enotif_newpagetext' => 'Esta es un paje nova',
-'created' => 'Creada',
 
 # Delete
 'deletepage' => 'Sutrae la paje',

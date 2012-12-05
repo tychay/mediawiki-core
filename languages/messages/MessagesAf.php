@@ -54,7 +54,6 @@ $magicWords = array(
 	'forcetoc'                  => array( '0', '__DWINGIO__', '__FORCETOC__' ),
 	'toc'                       => array( '0', '__IO__', '__TOC__' ),
 	'noeditsection'             => array( '0', '__GEENNUWEAFDELING__', '__NOEDITSECTION__' ),
-	'noheader'                  => array( '0', '__GEENOPSKRIF__', '__NOHEADER__' ),
 	'currentmonth'              => array( '1', 'HUIDIGEMAAND', 'CURRENTMONTH', 'CURRENTMONTH2' ),
 	'currentmonth1'             => array( '1', 'HUIDIGEMAAND1', 'CURRENTMONTH1' ),
 	'currentmonthname'          => array( '1', 'HUIDIGEMAANDNAAM', 'CURRENTMONTHNAME' ),
@@ -617,9 +616,6 @@ Die rede hiervoor is "\'\'$3\'\'".',
 
 U kan aanhou om {{SITENAME}} anoniem te gebruik; of u kan weer <span class='plainlinks'>[$1 inteken]</span> as dieselfde of 'n ander gebruiker.
 Dit is moontlik dat sommige bladsye nog sal aandui dat u aangeteken is totdat u u webblaaier se kas skoonmaak.",
-'welcomecreation' => '== Welkom, $1! ==
-U rekening is geskep;
-moenie vergeet om u [[Special:Preferences|persoonlike voorkeure vir {{SITENAME}}]] te stel nie.',
 'yourname' => 'Gebruikersnaam:',
 'yourpassword' => 'Wagwoord:',
 'yourpasswordagain' => 'Herhaal wagwoord',
@@ -2242,11 +2238,7 @@ As u die bladsy later van u dophoulys wil verwyder, kliek \"verwyder van dophoul
 
 'enotif_mailer' => '{{SITENAME}} E-pos kennisgewings',
 'enotif_reset' => 'Merk alle bladsye as besoek',
-'enotif_newpagetext' => "Dis 'n nuwe bladsy.",
 'enotif_impersonal_salutation' => '{{SITENAME}} gebruiker',
-'changed' => 'verander',
-'created' => 'geskep',
-'enotif_subject' => 'Bladsy $PAGETITLE op {{SITENAME}} is $CHANGEDORCREATED deur $PAGEEDITOR',
 'enotif_lastvisited' => 'Sien $1 vir alle wysigings sedert u laaste besoek.',
 'enotif_lastdiff' => 'Sien $1 om hierdie wysiging te bekyk.',
 'enotif_anon_editor' => 'anonieme gebruiker $1',

@@ -263,8 +263,10 @@ abstract class ORMRow implements IORMRow {
 				switch ( $type ) {
 					case 'array':
 						$value = (array)$value;
+						// fall-through!
 					case 'blob':
 						$value = serialize( $value );
+						// fall-through!
 				}
 
 				$values[$this->table->getPrefixedField( $name )] = $value;
@@ -347,7 +349,7 @@ abstract class ORMRow implements IORMRow {
 	 * @return boolean Success indicator
 	 */
 	protected function saveExisting( $functionName = null ) {
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = $this->table->getWriteDbConnection();
 
 		$success = $dbw->update(
 			$this->table->getName(),
@@ -355,6 +357,8 @@ abstract class ORMRow implements IORMRow {
 			$this->table->getPrefixedValues( $this->getUpdateConditions() ),
 			is_null( $functionName ) ? __METHOD__ : $functionName
 		);
+
+		$this->table->releaseConnection( $dbw );
 
 		// DatabaseBase::update does not always return true for success as documented...
 		return $success !== false;
@@ -383,13 +387,13 @@ abstract class ORMRow implements IORMRow {
 	 * @return boolean Success indicator
 	 */
 	protected function insert( $functionName = null, array $options = null ) {
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = $this->table->getWriteDbConnection();
 
 		$success = $dbw->insert(
 			$this->table->getName(),
 			$this->getWriteValues(),
 			is_null( $functionName ) ? __METHOD__ : $functionName,
-			is_null( $options ) ? array( 'IGNORE' ) : $options
+			$options
 		);
 
 		// DatabaseBase::insert does not always return true for success as documented...
@@ -398,6 +402,8 @@ abstract class ORMRow implements IORMRow {
 		if ( $success ) {
 			$this->setField( 'id', $dbw->insertId() );
 		}
+
+		$this->table->releaseConnection( $dbw );
 
 		return $success;
 	}
@@ -558,7 +564,7 @@ abstract class ORMRow implements IORMRow {
 		$absoluteAmount = abs( $amount );
 		$isNegative = $amount < 0;
 
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = $this->table->getWriteDbConnection();
 
 		$fullField = $this->table->getPrefixedField( $field );
 
@@ -572,6 +578,8 @@ abstract class ORMRow implements IORMRow {
 		if ( $success && $this->hasField( $field ) ) {
 			$this->setField( $field, $this->getField( $field ) + $amount );
 		}
+
+		$this->table->releaseConnection( $dbw );
 
 		return $success;
 	}

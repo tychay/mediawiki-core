@@ -417,6 +417,9 @@ class PageArchive {
 		$logEntry->setPerformer( $user );
 		$logEntry->setTarget( $this->title );
 		$logEntry->setComment( $reason );
+
+		wfRunHooks( 'ArticleUndeleteLogEntry', array( $this, &$logEntry, $user ) );
+
 		$logid = $logEntry->insert();
 		$logEntry->publish( $logid );
 
@@ -575,6 +578,9 @@ class PageArchive {
 					return Status::newFatal( "undeleterevdel" );
 				}
 			}
+
+			$newid  = false;
+			$pageId = $article->getId();
 		}
 
 		$revision = null;
@@ -593,6 +599,7 @@ class PageArchive {
 			// unless we are specifically removing all restrictions...
 			$revision = Revision::newFromArchiveRow( $row,
 				array(
+					'page' => $pageId,
 					'title' => $this->title,
 					'deleted' => $unsuppress ? 0 : $row->ar_deleted
 				) );

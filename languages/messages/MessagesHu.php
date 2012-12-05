@@ -136,7 +136,6 @@ $specialPageAliases = array(
 	'Recentchanges'             => array( 'Friss_változtatások' ),
 	'Recentchangeslinked'       => array( 'Kapcsolódó_változtatások' ),
 	'Revisiondelete'            => array( 'Változat_törlése' ),
-	'RevisionMove'              => array( 'Változat_áthelyezése' ),
 	'Search'                    => array( 'Keresés' ),
 	'Shortpages'                => array( 'Rövid_lapok' ),
 	'Specialpages'              => array( 'Speciális_lapok' ),
@@ -360,7 +359,7 @@ $messages = array(
 
 'underline-always' => 'mindig',
 'underline-never' => 'soha',
-'underline-default' => 'a böngésző alapértelmezése szerint',
+'underline-default' => 'Felület és böngésző alapértelmezése szerint',
 
 # Font style option in Special:Preferences
 'editfont-style' => 'A szerkesztőterület betűtípusa:',
@@ -446,7 +445,7 @@ $messages = array(
 'cancel' => 'Mégse',
 'moredotdotdot' => 'Tovább…',
 'mypage' => 'Lapom',
-'mytalk' => 'Vitalapom',
+'mytalk' => 'Vitalap',
 'anontalk' => 'Az IP-címhez tartozó vitalap',
 'navigation' => 'Navigáció',
 'and' => '&#32;és',
@@ -717,9 +716,6 @@ A lezárást végrehajtó rendszergazda az alábbi indoklást adta meg: "$3".',
 
 Folytathatod névtelenül  a(z) {{SITENAME}} használatát, vagy <span class='plainlinks'>[$1 ismét bejelentkezhetsz]</span> ugyanezzel, vagy egy másik névvel.
 Lehetséges, hogy néhány oldalon továbbra is azt látod, be vagy jelentkezve, mindaddig, amíg nem üríted a böngésződ gyorsítótárát.",
-'welcomecreation' => '== Köszöntünk, $1! ==
-A felhasználói fiókodat létrehoztuk.
-Ne felejtsd el átnézni a [[Special:Preferences|személyes beállításaidat]].',
 'yourname' => 'Szerkesztőneved:',
 'yourpassword' => 'Jelszavad:',
 'yourpasswordagain' => 'Jelszavad ismét:',
@@ -1074,6 +1070,12 @@ Nem lett magyarázat csatolva.',
 Már létezik.',
 'defaultmessagetext' => 'Alapértelmezett szöveg',
 
+# Content models
+'content-model-wikitext' => 'wikiszöveg',
+'content-model-text' => 'egyszerű szöveg',
+'content-model-javascript' => 'JavaScript',
+'content-model-css' => 'CSS',
+
 # Parser/template warnings
 'expensive-parserfunction-warning' => 'Figyelem: ezen a lapon túl sok erőforrásigényes elemzőfüggvény-hívás található.
 
@@ -1345,7 +1347,7 @@ Győződj meg róla, hogy a laptörténet folytonossága megmarad.',
 
 # Preferences page
 'preferences' => 'Beállítások',
-'mypreferences' => 'Beállításaim',
+'mypreferences' => 'Beállítások',
 'prefs-edits' => 'Szerkesztéseid száma:',
 'prefsnologin' => 'Nem jelentkeztél be',
 'prefsnologintext' => 'Saját beállításaid elmentéséhez <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} be kell jelentkezned.] </span>',
@@ -1951,6 +1953,7 @@ A [$2 fájl ottani leírólapjának] másolata alább látható.',
 'shared-repo-from' => 'a(z) $1 megosztott tárhelyről',
 'shared-repo' => 'megosztott tárhely',
 'filepage.css' => '/* Az itt elhelyezett CSS a fájl leíró lapra kerül beillesztésre, a külföldi nyelvű kliens wikikbe is*/',
+'upload-disallowed-here' => 'Ezt a fájlt nem lehet felülírni.',
 
 # File reversion
 'filerevert' => '$1 visszaállítása',
@@ -2187,7 +2190,7 @@ Lásd még a [[Special:WantedCategories|keresett kategóriák]] listáját.',
 'linksearch-ns' => 'Névtér:',
 'linksearch-ok' => 'keresés',
 'linksearch-text' => 'Helyettesítő karaktereket is lehet használni, például "*.wikipedia.org". Legalább egy felső szintű tartománynak lennie kell, például "*.org"<br />
-Támogatott protokollok: <code>$1</code> (ezeket ne írd be a keresésbe).',
+Támogatott protokollok: <code>$1</code> (http:// az alapértelmezett, ha nincs protokoll megadva).',
 'linksearch-line' => '$1 hivatkozva innen: $2',
 'linksearch-error' => 'Helyettesítő karakterek csak a cím elején szerepelhetnek.',
 
@@ -2233,9 +2236,11 @@ Az egyes csoportokról további információt [[{{MediaWiki:Listgrouprights-help
 'mailnologin' => 'Nincs feladó',
 'mailnologintext' => 'Ahhoz hogy másoknak e-mailt küldhess, [[Special:UserLogin|be kell jelentkezned]] és meg kell adnod egy érvényes e-mail címet a [[Special:Preferences|beállításaidban]].',
 'emailuser' => 'E-mail küldése ezen szerkesztőnek',
+'emailuser-title-target' => 'E-mail küldése ennek a felhasználónak: $1',
+'emailuser-title-notarget' => 'E-mail küldése a felhasználónak',
 'emailpage' => 'E-mail küldése',
 'emailpagetext' => 'A szerkesztő e-mail-címére ezen űrlap kitöltésével üzenetet tudsz küldeni.
-Feladóként a [[Special:Preferences|beállításaid]]nál megadott e-mail-címed fog szerepelni, így a címzett közvetlenül neked tud majd válaszolni.',
+Feladóként a [[Special:Preferences|beállításaid]]nál megadott e-mail-címed fog szerepelni, így a címzett közvetlenül tud majd válaszolni neked.',
 'usermailererror' => 'A levélküldő objektum hibával tért vissza:',
 'defemailsubject' => '{{SITENAME}} e-mail a következő felhasználótól: „$1”',
 'usermaildisabled' => 'Email fogadás letiltva',
@@ -2266,7 +2271,7 @@ Feladóként a [[Special:Preferences|beállításaid]]nál megadott e-mail-címe
 
 # Watchlist
 'watchlist' => 'Figyelőlistám',
-'mywatchlist' => 'Figyelőlistám',
+'mywatchlist' => 'Figyelőlista',
 'watchlistfor2' => '$1 részére $2',
 'nowatchlist' => 'Nincs lap a figyelőlistádon.',
 'watchlistanontext' => 'A figyelőlistád megtekintéséhez és szerkesztéséhez $1.',
@@ -2302,11 +2307,7 @@ Ezután minden, a lapon vagy annak vitalapján történő változást ott fogsz 
 
 'enotif_mailer' => '{{SITENAME}} Értesítéspostázó',
 'enotif_reset' => 'Az összes lap megjelölése felkeresettként',
-'enotif_newpagetext' => 'Ez egy új lap.',
 'enotif_impersonal_salutation' => '{{SITENAME}} felhasználó',
-'changed' => 'megváltoztatta',
-'created' => 'létrehozta',
-'enotif_subject' => 'A(z) {{SITENAME}} $PAGETITLE című oldalát $CHANGEDORCREATED $PAGEEDITOR',
 'enotif_lastvisited' => 'Lásd a $1 lapot az utolsó látogatásod óta történt változtatásokért.',
 'enotif_lastdiff' => 'Lásd a $1 lapot ezen változtatás megtekintéséhez.',
 'enotif_anon_editor' => '$1 névtelen felhasználó',
@@ -2527,7 +2528,7 @@ $1',
 # Contributions
 'contributions' => 'Szerkesztő közreműködései',
 'contributions-title' => '$1 közreműködései',
-'mycontris' => 'Közreműködéseim',
+'mycontris' => 'Közreműködések',
 'contribsub2' => '$1 ($2)',
 'nocontribs' => 'Nem található a feltételeknek megfelelő változtatás.',
 'uctop' => ' (utolsó)',
@@ -2567,7 +2568,7 @@ A blokknapló legutóbbi ide vonatkozó bejegyzése a következő:',
 'whatlinkshere-hideredirs' => 'átirányítások $1',
 'whatlinkshere-hidetrans' => 'beillesztések $1',
 'whatlinkshere-hidelinks' => 'linkek $1',
-'whatlinkshere-hideimages' => 'képhivatkozás $1',
+'whatlinkshere-hideimages' => 'fájlhivatkozások $1',
 'whatlinkshere-filters' => 'Elemek szűrése',
 
 # Block/unblock
@@ -2912,6 +2913,7 @@ Mentsd el a számítógépedre, majd töltsd fel ide.',
 'import-error-invalid' => '„$1” lap nem került importálásra, mert a neve nem érvényes.',
 'import-options-wrong' => 'Rossz {{PLURAL:$2|opció|opciók}}: <nowiki>$1</nowiki>',
 'import-rootpage-invalid' => 'A megadott gyökér oldal címe érvénytelen.',
+'import-rootpage-nosubpage' => 'A(z) "$1" névtér nem engedi meg aloldalak használatát.',
 
 # Import log
 'importlogpage' => 'Importnapló',
@@ -3069,6 +3071,7 @@ Ez valószínűleg egy olyan link miatt van, ami egy feketelistán lévő oldalr
 'pageinfo-default-sort' => 'Alapértelmezett rendezési kulcs',
 'pageinfo-length' => 'Lap hossza (bájtokban)',
 'pageinfo-article-id' => 'Lapazonosító',
+'pageinfo-language' => 'Laptartalom nyelve',
 'pageinfo-robot-policy' => 'Kereső motor státusz',
 'pageinfo-robot-index' => 'Indexelhető',
 'pageinfo-robot-noindex' => 'Nem indexelhető',
@@ -3088,6 +3091,12 @@ Ez valószínűleg egy olyan link miatt van, ami egy feketelistán lévő oldalr
 'pageinfo-magic-words' => 'Varázs{{PLURAL:$1|szó|szavak}} ($1)',
 'pageinfo-hidden-categories' => 'Rejtett {{PLURAL:$1|kategória|kategóriák}} ($1)',
 'pageinfo-templates' => 'Felhasznált {{PLURAL:$1|sablon|sablonok}} ($1)',
+'pageinfo-toolboxlink' => 'Lapinformációk',
+'pageinfo-redirectsto' => 'Átirányítás ide',
+'pageinfo-redirectsto-info' => 'infó',
+'pageinfo-contentpage' => 'Tartalmi lapnak számít',
+'pageinfo-contentpage-yes' => 'Igen',
+'pageinfo-protect-cascading-yes' => 'Igen',
 
 # Skin names
 'skinname-standard' => 'Klasszikus',
@@ -3109,6 +3118,8 @@ Ez valószínűleg egy olyan link miatt van, ami egy feketelistán lévő oldalr
 'markedaspatrollederror' => 'Nem lehet ellenőrzöttnek jelölni',
 'markedaspatrollederrortext' => 'Meg kell adnod egy ellenőrzöttként megjelölt változatot.',
 'markedaspatrollederror-noautopatrol' => 'A saját változtatásaid megjelölése ellenőrzöttként nem engedélyezett.',
+'markedaspatrollednotify' => '$1 változtatása ellenőrzöttnek lett jelölve.',
+'markedaspatrollederrornotify' => 'Nem sikerült ellenőrzöttnek jelölni.',
 
 # Patrol log
 'patrol-log-page' => 'Ellenőrzési napló (patrol)',

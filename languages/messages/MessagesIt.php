@@ -19,6 +19,7 @@
  * @author Brownout
  * @author Candalua
  * @author Civvì
+ * @author Codicorumus
  * @author Cruccone
  * @author Cryptex
  * @author Dakrismeno
@@ -316,7 +317,7 @@ $messages = array(
 
 'underline-always' => 'Sempre',
 'underline-never' => 'Mai',
-'underline-default' => 'Mantieni le impostazioni del browser',
+'underline-default' => 'Mantieni le impostazioni del browser o della skin',
 
 # Font style option in Special:Preferences
 'editfont-style' => 'Stile del carattere nella casella di modifica:',
@@ -401,8 +402,8 @@ $messages = array(
 'newwindow' => '(si apre in una nuova finestra)',
 'cancel' => 'Annulla',
 'moredotdotdot' => 'Altro...',
-'mypage' => 'La mia pagina',
-'mytalk' => 'mie discussioni',
+'mypage' => 'Pagina',
+'mytalk' => 'discussioni',
 'anontalk' => 'Discussioni per questo IP',
 'navigation' => 'Navigazione',
 'and' => '&#32;e',
@@ -434,6 +435,7 @@ $messages = array(
 'namespaces' => 'Namespace',
 'variants' => 'Varianti',
 
+'navigation-heading' => 'Menu di navigazione',
 'errorpagetitle' => 'Errore',
 'returnto' => 'Torna a $1.',
 'tagline' => 'Da {{SITENAME}}.',
@@ -641,7 +643,7 @@ Query: $2',
 'viewsource-title' => 'Visualizza sorgente di $1',
 'actionthrottled' => 'Azione ritardata',
 'actionthrottledtext' => "Come misura di sicurezza contro lo spam, l'esecuzione di alcune azioni è limitata a un numero massimo di volte in un determinato periodo di tempo, limite che in questo caso è stato superato. Si prega di riprovare tra qualche minuto.",
-'protectedpagetext' => 'Questa pagina è stata protetta per impedirne la modifica.',
+'protectedpagetext' => 'Questa pagina è stata protetta per impedirne la modifica o altre operazioni.',
 'viewsourcetext' => 'È possibile visualizzare e copiare il codice sorgente di questa pagina:',
 'viewyourtext' => "È possibile visualizzare e copiare il codice sorgente delle '''tue modifiche''' a questa pagina:",
 'protectedinterface' => "Questa pagina contiene un elemento che fa parte dell'interfaccia utente del software di questo sito ed è protetta per evitare possibili abusi.
@@ -675,9 +677,9 @@ L\'amministratore che lo ha bloccato ha fornito questa motivazione: "$3".',
 
 Si può continuare ad usare {{SITENAME}} come utente anonimo oppure <span class='plainlinks'>[$1 eseguire un nuovo accesso]</span>, con lo stesso nome utente o un nome diverso.
 Nota che alcune pagine potrebbero continuare ad apparire come se il logout non fosse avvenuto finché non viene pulita la cache del proprio browser.",
-'welcomecreation' => "== Benvenuto, $1! ==
-
-L'account è stato creato correttamente. Non dimenticare di personalizzare le [[Special:Preferences|preferenze di {{SITENAME}}]].",
+'welcomeuser' => 'Benvenuto, $1!',
+'welcomecreation-msg' => "L'account è stato creato correttamente.
+Non dimenticare di personalizzare le [[Special:Preferences|preferenze di {{SITENAME}}]].",
 'yourname' => 'Nome utente:',
 'yourpassword' => 'Password:',
 'yourpasswordagain' => 'Ripeti la password:',
@@ -941,7 +943,7 @@ L'ultimo elemento del registro dei blocchi è riportato di seguito per informazi
 'note' => "'''Nota:'''",
 'previewnote' => "'''Ricorda che questa è solo un'anteprima.'''
 Le tue modifiche NON sono ancora state salvate!",
-'continue-editing' => 'Continua a modificare',
+'continue-editing' => "Vai all'area di modifica",
 'previewconflict' => 'L\'anteprima corrisponde al testo presente nella casella di modifica superiore e rappresenta la pagina come apparirà se si sceglie di premere "Salva la pagina" in questo momento.',
 'session_fail_preview' => "'''Non è stato possibile elaborare la modifica perché sono andati persi i dati relativi alla sessione.
 Riprovare.
@@ -1102,7 +1104,7 @@ Legenda: '''({{int:cur}})''' = differenze con la versione attuale, '''({{int:las
 'rev-deleted-text-permission' => "Questa versione della pagina è stata '''cancellata'''.
 Consultare il [{{fullurl:{{#Special:Log}}/delete|page={{PAGENAMEE}}}} log delle cancellazioni] per ulteriori dettagli.",
 'rev-deleted-text-unhide' => "Questa versione della pagina è stata '''cancellata'''.
-Consultare il [{{fullurl:{{#Special:Log}}/delete|page={{PAGENAMEE}}}} log delle cancellazioni] per ulteriori dettagli.
+Consultare il [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} log delle cancellazioni] per ulteriori dettagli.
 Agli amministratori è ancora consentito [$1 visualizzare questa versione] se necessario.",
 'rev-suppressed-text-unhide' => "Questa versione della pagina è stata '''rimossa'''.
 Consultare il [{{fullurl:{{#Special:Log}}/suppress|page={{PAGENAMEE}}}} log di rimozione] per ulteriori dettagli.
@@ -1538,6 +1540,9 @@ Il tuo indirizzo non viene rivelato quando gli altri utenti ti contattano.',
 'rightslogtext' => 'Di seguito sono elencate le modifiche ai diritti assegnati agli utenti.',
 'rightslogentry' => "ha modificato l'appartenenza di $1 dal gruppo $2 al gruppo $3",
 'rightslogentry-autopromote' => 'è stato/a automaticamente promosso/a da $2 a $3',
+'logentry-rights-rights' => "$1 ha modificato l'appartenenza di $3 dal gruppo $4 al gruppo $5",
+'logentry-rights-rights-legacy' => "$1 ha modificato l'appartenenza a gruppi di $3",
+'logentry-rights-autopromote' => '$1 è stato/a automaticamente promosso/a da $4 a $5',
 'rightsnone' => '(nessuno)',
 
 # Associated actions - in the sentence "You do not have permission to X"
@@ -1767,6 +1772,7 @@ $1',
 'backend-fail-notsame' => 'Esiste già un file non identico a  $1 .',
 'backend-fail-invalidpath' => '$1 non è un percorso di archiviazione valido.',
 'backend-fail-delete' => 'Impossibile cancellare il file $1.',
+'backend-fail-describe' => 'Impossibile modificare i metadati del file "$1".',
 'backend-fail-alreadyexists' => 'Il file $1 esiste già.',
 'backend-fail-store' => 'Impossibilie memorizzare file  $1  in  $2 .',
 'backend-fail-copy' => 'Impossibile copiare il file  $1  in  $2 .',
@@ -2021,7 +2027,7 @@ I redirect <del>cancellati</del> sono stati corretti.',
 'fewestrevisions' => 'Pagine con meno revisioni',
 
 # Miscellaneous special pages
-'nbytes' => '$1 {{PLURAL:$1|byte|byte}}',
+'nbytes' => '$1 {{PLURAL:$1|byte}}',
 'ncategories' => '$1 {{PLURAL:$1|categoria|categorie}}',
 'ninterwikis' => '$1 {{PLURAL:$1|interwiki}}',
 'nlinks' => '$1 {{PLURAL:$1|collegamento|collegamenti}}',
@@ -2153,7 +2159,7 @@ Vedi anche le [[Special:WantedCategories|categorie richieste]].',
 'linksearch-ok' => 'Cerca',
 'linksearch-text' => 'È possibile fare uso di metacaratteri, ad esempio "*.wikipedia.org".<br />
 È necessario almeno un dominio di primo livello, ad esempio "*.org".<br />
-Protocolli supportati: <code>$1</code> (non aggiungere nessuno di questi nella tua ricerca).',
+Protocolli supportati: <code>$1</code> (predefinito http:// se nessun protocollo è specificato).',
 'linksearch-line' => '$1 presente nella pagina $2',
 'linksearch-error' => "I metacaratteri possono essere usati solo all'inizio dell'indirizzo.",
 
@@ -2202,7 +2208,7 @@ Potrebbero esserci [[{{MediaWiki:Listgrouprights-helppage}}|ulteriori informazio
 'emailuser-title-target' => 'Invia una e-mail a questo {{GENDER:$1|utente}}',
 'emailuser-title-notarget' => 'Invia una e-mail a un utente',
 'emailpage' => "Invia un messaggio e-mail all'utente",
-'emailpagetext' => 'Usare il modulo sottostante per inviare un messaggio e-mail all\'utente indicato. L\'indirizzo specificato nelle [[Special:Preferences|preferenze]] del mittente apparirà nel campo "Da:" del messaggio per consentire al destinatario di rispondere direttamente.',
+'emailpagetext' => 'Usare il modulo sottostante per inviare un messaggio e-mail all\'{{GENDER:$1|utente}} indicato. L\'indirizzo specificato nelle [[Special:Preferences|preferenze]] del mittente apparirà nel campo "Da:" del messaggio per consentire al destinatario di rispondere direttamente.',
 'usermailererror' => "L'oggetto mail ha restituito l'errore:",
 'defemailsubject' => 'Messaggio da {{SITENAME}} dall\'utente "$1"',
 'usermaildisabled' => 'e-mail utente disabilitata',
@@ -2271,19 +2277,23 @@ il titolo della pagina apparirà in '''grassetto''' nella pagina delle [[Special
 
 'enotif_mailer' => 'Sistema di notifica via e-mail di {{SITENAME}}',
 'enotif_reset' => 'Segna tutte le pagine come già visitate',
-'enotif_newpagetext' => 'Questa è una nuova pagina.',
 'enotif_impersonal_salutation' => 'Utente di {{SITENAME}}',
-'changed' => 'modificata',
-'created' => 'creata',
-'enotif_subject' => 'La pagina $PAGETITLE di {{SITENAME}} è stata $CHANGEDORCREATED da $PAGEEDITOR',
+'enotif_subject_deleted' => 'La pagina $1 di {{SITENAME}} è stata cancellata da {{gender:$2|$2}}',
+'enotif_subject_created' => 'La pagina $1 di {{SITENAME}} è stata creata da {{gender:$2|$2}}',
+'enotif_subject_moved' => 'La pagina $1 di {{SITENAME}} è stata spostata da {{gender:$2|$2}}',
+'enotif_subject_restored' => 'La pagina $1 di {{SITENAME}} è stata ripristinata da {{gender:$2|$2}}',
+'enotif_subject_changed' => 'La pagina $1 di {{SITENAME}} è stata modificata da {{gender:$2|$2}}',
+'enotif_body_intro_deleted' => 'La pagina $1 di {{SITENAME}} è stata cancellata da {{gender:$2|$2}} il $PAGEEDITDATE, vedi $3 per la versione attuale.',
+'enotif_body_intro_created' => 'La pagina $1 di {{SITENAME}} è stata creata da {{gender:$2|$2}} il $PAGEEDITDATE, vedi $3 per la versione attuale.',
+'enotif_body_intro_moved' => 'La pagina $1 di {{SITENAME}} è stata spostata da {{gender:$2|$2}} il $PAGEEDITDATE, vedi $3 per la versione attuale.',
+'enotif_body_intro_restored' => 'La pagina $1 di {{SITENAME}} è stata ripristinata da {{gender:$2|$2}} il $PAGEEDITDATE, vedi $3 per la versione attuale.',
+'enotif_body_intro_changed' => 'La pagina $1 di {{SITENAME}} è stata modificata da {{gender:$2|$2}} il $PAGEEDITDATE, vedi $3 per la versione attuale.',
 'enotif_lastvisited' => "Consultare $1 per vedere tutte le modifiche dall'ultima visita.",
 'enotif_lastdiff' => 'Vedere $1 per visualizzare la modifica.',
 'enotif_anon_editor' => 'utente anonimo $1',
 'enotif_body' => 'Gentile $WATCHINGUSERNAME,
 
-la pagina $PAGETITLE di {{SITENAME}} è stata $CHANGEDORCREATED in data $PAGEEDITDATE da $PAGEEDITOR; la versione attuale si trova all\'indirizzo $PAGETITLE_URL.
-
-$NEWPAGE
+$PAGEINTRO $NEWPAGE
 
 Oggetto della modifica, inserito dall\'autore: $PAGESUMMARY $PAGEMINOREDIT
 
@@ -2296,7 +2306,7 @@ Non verranno inviate altre notifiche in caso di ulteriori cambiamenti, a meno ch
              Il sistema di notifica di {{SITENAME}}, al tuo servizio
 
 --
-Per modificare le impostazioni delle notifiche via e-mail, visita 
+Per modificare le impostazioni delle notifiche via email, visita 
 {{canonicalurl:{{#special:Preferences}}}}
 
 Per modificare la lista degli osservati speciali, visita 
@@ -2482,9 +2492,9 @@ $1',
 'blanknamespace' => '(Principale)',
 
 # Contributions
-'contributions' => 'Contributi utente',
+'contributions' => 'Contributi {{GENDER:$1|utente}}',
 'contributions-title' => 'Contributi di $1',
-'mycontris' => 'miei contributi',
+'mycontris' => 'contributi',
 'contribsub2' => 'Per $1 ($2)',
 'nocontribs' => 'Non sono state trovate modifiche che soddisfino i criteri di ricerca.',
 'uctop' => '(ultima per la pagina)',
@@ -2523,7 +2533,7 @@ $1',
 'whatlinkshere-hideredirs' => '$1 redirect',
 'whatlinkshere-hidetrans' => '$1 inclusioni',
 'whatlinkshere-hidelinks' => '$1 link',
-'whatlinkshere-hideimages' => '$1 link da immagini',
+'whatlinkshere-hideimages' => '$1 link da file',
 'whatlinkshere-filters' => 'Filtri',
 
 # Block/unblock
@@ -3002,7 +3012,7 @@ Tutte le operazioni di importazione trans-wiki sono registrate nel [[Special:Log
 
 # Info page
 'pageinfo-title' => 'Informazioni per "$1"',
-'pageinfo-not-current' => 'Le informazioni possono essere visualizzate solo per la versione corrente.',
+'pageinfo-not-current' => "Spiacente, ma è impossibile fornire quest'informazione per vecchie versioni.",
 'pageinfo-header-basic' => 'Informazioni di base',
 'pageinfo-header-edits' => 'Cronologia delle modifiche',
 'pageinfo-header-restrictions' => 'Protezione della pagina',
@@ -3011,11 +3021,12 @@ Tutte le operazioni di importazione trans-wiki sono registrate nel [[Special:Log
 'pageinfo-default-sort' => 'Criterio di ordinamento predefinito',
 'pageinfo-length' => 'Lunghezza della pagina (in byte)',
 'pageinfo-article-id' => 'ID della pagina',
+'pageinfo-language' => 'Lingua del contenuto della pagina',
 'pageinfo-robot-policy' => 'Stato per i motori di ricerca',
 'pageinfo-robot-index' => 'Indicizzabile',
 'pageinfo-robot-noindex' => 'Non indicizzabile',
 'pageinfo-views' => 'Numero di visualizzazioni',
-'pageinfo-watchers' => 'Numero di utenti che hanno la pagina nei loro Osservati Speciali',
+'pageinfo-watchers' => 'Numero di utenti che hanno la pagina nei loro osservati speciali',
 'pageinfo-redirects-name' => 'Redirect a questa pagina',
 'pageinfo-subpages-name' => 'Sottopagine di questa pagina',
 'pageinfo-subpages-value' => '$1 ($2 {{PLURAL:$2|redirect}}; $3 {{PLURAL:$3|non redirect}})',
@@ -3049,6 +3060,8 @@ Tutte le operazioni di importazione trans-wiki sono registrate nel [[Special:Log
 'markedaspatrollederror' => 'Impossibile contrassegnare la voce come verificata',
 'markedaspatrollederrortext' => 'Occorre specificare una modifica da contrassegnare come verificata.',
 'markedaspatrollederror-noautopatrol' => 'Non si dispone dei permessi necessari per segnare le proprie modifiche come verificate.',
+'markedaspatrollednotify' => 'La modifica a $1 è stata contrassegnata come verificata.',
+'markedaspatrollederrornotify' => 'Errore durante la verifica.',
 
 # Patrol log
 'patrol-log-page' => 'Modifiche verificate',
@@ -3115,6 +3128,7 @@ $1',
 'hours' => "{{PLURAL:$1|un'ora|$1 ore}}",
 'days' => '{{PLURAL:$1|un giorno|$1 giorni}}',
 'ago' => '$1 fa',
+'just-now' => 'proprio ora',
 
 # Bad image list
 'bad_image_list' => "Il formato è il seguente:
@@ -3734,6 +3748,7 @@ Si noti che è anche possibile [[Special:EditWatchlist|modificare la lista con l
 'version-license' => 'Licenza',
 'version-poweredby-credits' => "Questo wiki è realizzato con '''[//www.mediawiki.org/ MediaWiki]''', copyright © 2001-$1 $2.",
 'version-poweredby-others' => 'altri',
+'version-credits-summary' => 'Siamo lieti di riconoscere le seguenti persone per aver contribuito a [[Special:Version|MediaWiki]].',
 'version-license-info' => 'MediaWiki è un software libero; puoi redistribuirlo e/o modificarlo secondo i termini della GNU General Public License, come pubblicata dalla Free Software Foundation; o la versione 2 della Licenza o (a propria scelta) qualunque versione successiva.
 
 MediaWiki è distribuito nella speranza che sia utile, ma SENZA ALCUNA GARANZIA; senza neppure la garanzia implicita di NEGOZIABILITÀ o di APPLICABILITÀ PER UN PARTICOLARE SCOPO. Si veda la GNU General Public License per maggiori dettagli.
@@ -3875,9 +3890,9 @@ Le immagini vengono mostrate alla massima risoluzione disponibile, per gli altri
 'logentry-move-move_redir-noredirect' => '$1 ha spostato la pagina $3 a $4 al posto di un redirect senza lasciare redirect',
 'logentry-patrol-patrol' => '$1 ha segnato la versione $4 della pagina $3 come verificata',
 'logentry-patrol-patrol-auto' => '$1 ha segnato automaticamente la versione $4 della pagina $3 come verificata',
-'logentry-newusers-newusers' => "$1 ha creato un'utenza",
-'logentry-newusers-create' => "$1 ha creato un'utenza",
-'logentry-newusers-create2' => "$1 ha creato un'utenza $3",
+'logentry-newusers-newusers' => "L'account utente $1 è stato creato",
+'logentry-newusers-create' => "L'account utente $1 è stato creato",
+'logentry-newusers-create2' => "L'account utente $3 è stato creato da $1",
 'logentry-newusers-autocreate' => "L'utenza $1 è stata creata automaticamente",
 'newuserlog-byemail' => 'password inviata via mail',
 
@@ -3952,4 +3967,6 @@ Le immagini vengono mostrate alla massima risoluzione disponibile, per gli altri
 'duration-centuries' => '$1 {{PLURAL:$1|secolo|secoli}}',
 'duration-millennia' => '$1 {{PLURAL:$1|millennio|millenni}}',
 
+# Unknown messages
+'svg-long-error' => 'File SVG non valido: $1',
 );

@@ -26,11 +26,13 @@
  * Class to handle enqueueing and running of background jobs
  *
  * @ingroup JobQueue
- * @since 1.20
+ * @since 1.21
  */
 abstract class JobQueue {
 	protected $wiki; // string; wiki ID
 	protected $type; // string; job type
+	protected $order; // string; job priority for pop()
+	protected $claimTTL; // integer; seconds
 
 	const QoS_Atomic = 1; // integer; "all-or-nothing" job insertions
 
@@ -38,16 +40,28 @@ abstract class JobQueue {
 	 * @param $params array
 	 */
 	protected function __construct( array $params ) {
-		$this->wiki = $params['wiki'];
-		$this->type = $params['type'];
+		$this->wiki     = $params['wiki'];
+		$this->type     = $params['type'];
+		$this->order    = isset( $params['order'] ) ? $params['order'] : 'random';
+		$this->claimTTL = isset( $params['claimTTL'] ) ? $params['claimTTL'] : 0;
 	}
 
 	/**
 	 * Get a job queue object of the specified type.
 	 * $params includes:
-	 *     class : what job class to use (determines job type)
-	 *     wiki  : wiki ID of the wiki the jobs are for (defaults to current wiki)
-	 *     type  : The name of the job types this queue handles
+	 *   class    : What job class to use (determines job type)
+	 *   wiki     : wiki ID of the wiki the jobs are for (defaults to current wiki)
+	 *   type     : The name of the job types this queue handles
+	 *   order    : Order that pop() selects jobs, one of "fifo", "timestamp" or "random".
+	 *              If "fifo" is used, the queue will effectively be FIFO. Note that
+	 *              job completion will not appear to be exactly FIFO if there are multiple
+	 *              job runners since jobs can take different times to finish once popped.
+	 *              If "timestamp" is used, the queue will at least be loosely ordered
+	 *              by timestamp, allowing for some jobs to be popped off out of order.
+	 *              If "random" is used, pop() will pick jobs in random order. This might be
+	 *              useful for improving concurrency depending on the queue storage medium.
+	 *   claimTTL : If supported, the queue will recycle jobs that have been popped
+	 *              but not acknowledged as completed after this many seconds.
 	 *
 	 * @param $params array
 	 * @return JobQueue
@@ -80,7 +94,10 @@ abstract class JobQueue {
 	}
 
 	/**
-	 * @return bool Quickly check if the queue is empty
+	 * Quickly check if the queue is empty.
+	 * Queue classes should use caching if they are any slower without memcached.
+	 *
+	 * @return bool
 	 */
 	final public function isEmpty() {
 		wfProfileIn( __METHOD__ );
@@ -165,6 +182,53 @@ abstract class JobQueue {
 	 * @return bool
 	 */
 	abstract protected function doAck( Job $job );
+
+	/**
+	 * Register the "root job" of a given job into the queue for de-duplication.
+	 * This should only be called right *after* all the new jobs have been inserted.
+	 * This is used to turn older, duplicate, job entries into no-ops. The root job
+	 * information will remain in the registry until it simply falls out of cache.
+	 *
+	 * This requires that $job has two special fields in the "params" array:
+	 *   - rootJobSignature : hash (e.g. SHA1) that identifies the task
+	 *   - rootJobTimestamp : TS_MW timestamp of this instance of the task
+	 *
+	 * A "root job" is a conceptual job that consist of potentially many smaller jobs
+	 * that are actually inserted into the queue. For example, "refreshLinks" jobs are
+	 * spawned when a template is edited. One can think of the task as "update links
+	 * of pages that use template X" and an instance of that task as a "root job".
+	 * However, what actually goes into the queue are potentially many refreshLinks2 jobs.
+	 * Since these jobs include things like page ID ranges and DB master positions, and morph
+	 * into smaller refreshLinks2 jobs recursively, simple duplicate detection (like job_sha1)
+	 * for individual jobs being identical is not useful.
+	 *
+	 * In the case of "refreshLinks", if these jobs are still in the queue when the template
+	 * is edited again, we want all of these old refreshLinks jobs for that template to become
+	 * no-ops. This can greatly reduce server load, since refreshLinks jobs involves parsing.
+	 * Essentially, the new batch of jobs belong to a new "root job" and the older ones to a
+	 * previous "root job" for the same task of "update links of pages that use template X".
+	 *
+	 * @param $job Job
+	 * @return bool
+	 */
+	final public function deduplicateRootJob( Job $job ) {
+		if ( $job->getType() !== $this->type ) {
+			throw new MWException( "Got '{$job->getType()}' job; expected '{$this->type}'." );
+		}
+		wfProfileIn( __METHOD__ );
+		$ok = $this->doDeduplicateRootJob( $job );
+		wfProfileOut( __METHOD__ );
+		return $ok;
+	}
+
+	/**
+	 * @see JobQueue::deduplicateRootJob()
+	 * @param $job Job
+	 * @return bool
+	 */
+	protected function doDeduplicateRootJob( Job $job ) {
+		return true;
+	}
 
 	/**
 	 * Wait for any slaves or backup servers to catch up

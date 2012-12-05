@@ -398,7 +398,7 @@ class SkinTemplate extends Skin {
 		# not for special pages or file pages AND only when viewing AND if the page exists
 		# (or is in MW namespace, because that has default content)
 		if ( !in_array( $title->getNamespace(), array( NS_SPECIAL, NS_FILE ) ) &&
-			in_array( $request->getVal( 'action', 'view' ), array( 'view', 'historysubmit' ) ) &&
+			Action::getActionName( $this ) === 'view' &&
 			( $title->exists() || $title->getNamespace() == NS_MEDIAWIKI ) ) {
 			$pageLang = $title->getPageViewLanguage();
 			$realBodyAttribs['lang'] = $pageLang->getHtmlCode();
@@ -555,7 +555,11 @@ class SkinTemplate extends Skin {
 		# $this->getTitle() will just give Special:Badtitle, which is
 		# not especially useful as a returnto parameter. Use the title
 		# from the request instead, if there was one.
-		$page = Title::newFromURL( $request->getVal( 'title', '' ) );
+		if ( $this->getUser()->isAllowed( 'read' ) ) {
+			$page = $this->getTitle();
+		} else {
+			$page = Title::newFromText( $request->getVal( 'title', '' ) );
+		}
 		$page = $request->getVal( 'returnto', $page );
 		$a = array();
 		if ( strval( $page ) !== '' ) {
@@ -639,7 +643,6 @@ class SkinTemplate extends Skin {
 			$is_signup = $request->getText( 'type' ) == 'signup';
 
 			# anonlogin & login are the same
-			global $wgSecureLogin;
 			$proto = $wgSecureLogin ? PROTO_HTTPS : null;
 
 			$login_id = $this->showIPinHeader() ? 'anonlogin' : 'login';
@@ -1177,11 +1180,6 @@ class SkinTemplate extends Skin {
 				);
 			}
 
-			$nav_urls['info'] = array(
-				'text' => $this->msg( 'pageinfo-toolboxlink' )->text(),
-				'href' => $out->getTitle()->getLocalURL( "action=info" )
-			);
-
 			// Use the copy of revision ID in case this undocumented, shady hook tries to mess with internals
 			wfRunHooks( 'SkinTemplateBuildNavUrlsNav_urlsAfterPermalink',
 				array( &$this, &$nav_urls, &$revid, &$revid ) );
@@ -1191,6 +1189,12 @@ class SkinTemplate extends Skin {
 			$nav_urls['whatlinkshere'] = array(
 				'href' => SpecialPage::getTitleFor( 'Whatlinkshere', $this->thispage )->getLocalUrl()
 			);
+
+			$nav_urls['info'] = array(
+				'text' => $this->msg( 'pageinfo-toolboxlink' )->text(),
+				'href' => $this->getTitle()->getLocalURL( "action=info" )
+			);
+
 			if ( $this->getTitle()->getArticleID() ) {
 				$nav_urls['recentchangeslinked'] = array(
 					'href' => SpecialPage::getTitleFor( 'Recentchangeslinked', $this->thispage )->getLocalUrl()
@@ -1203,6 +1207,7 @@ class SkinTemplate extends Skin {
 			$rootUser = $user->getName();
 
 			$nav_urls['contributions'] = array(
+				'text' => $this->msg( 'contributions', $rootUser )->text(),
 				'href' => self::makeSpecialUrlSubpage( 'Contributions', $rootUser )
 			);
 

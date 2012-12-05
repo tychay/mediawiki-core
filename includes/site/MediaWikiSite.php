@@ -1,17 +1,36 @@
 <?php
+/**
+ * Class representing a MediaWiki site.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
+ * @ingroup Site
+ * @license GNU GPL v2+
+ * @author John Erling Blad < jeblad@gmail.com >
+ * @author Daniel Kinzler
+ * @author Jeroen De Dauw < jeroendedauw@gmail.com >
+ */
 
 /**
  * Class representing a MediaWiki site.
  *
  * @since 1.21
  *
- * @file
  * @ingroup Site
- *
- * @license GNU GPL v2+
- * @author John Erling Blad < jeblad@gmail.com >
- * @author Daniel Kinzler
- * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class MediaWikiSite extends SiteObject {
 
@@ -52,9 +71,8 @@ class MediaWikiSite extends SiteObject {
 	 * @note  : This actually makes an API request to the remote site, so beware that this function is slow and depends
 	 *          on an external service.
 	 *
-	 * @note  : If MW_PHPUNIT_TEST is defined or $egWBRemoteTitleNormalization is set to false, the call to the
-	 *          external site is skipped, and the title is normalized using the local normalization rules as
-	 *          implemented by the Title class.
+	 * @note  : If MW_PHPUNIT_TEST is defined, the call to the external site is skipped, and the title
+	 *          is normalized using the local normalization rules as implemented by the Title class.
 	 *
 	 * @see Site::normalizePageName
 	 *
@@ -66,7 +84,6 @@ class MediaWikiSite extends SiteObject {
 	 * @throws MWException
 	 */
 	public function normalizePageName( $pageName ) {
-		global $egWBRemoteTitleNormalization;
 
 		// Check if we have strings as arguments.
 		if ( !is_string( $pageName ) ) {

@@ -413,9 +413,6 @@ $messages = array(
 تسی   {{SITENAME}} نوں گمنامی چ ورت سکدے او یا تسی <span class='plainlinks'>[$1 لاگ ان دوبارہ]</span> ہوجاؤ اوسے ناں توں یا وکھرے ورتن والے توں۔ اے گل چیتے رکھنا جے کج صفیاں تے تسی لاگ ان دسے جاؤگے جدوں تک تسی اپنے براؤزر دے کاشے نوں صاف ناں کرلو۔
 You can continue to use {{SITENAME}} anonymously, or you can <span class='plainlinks'>[$1 log in again]</span> as the same or as a different user.
 Note that some pages may continue to be displayed as if you were still logged in, until you clear your browser cache.",
-'welcomecreation' => '== جی آیاں نوں, $1! ==
-تواڈا کھاتا بن گیا اے۔
-اپنیاں [[Special:Preferences|{{SITENAME}} تانگاں]] بدلنا نا پلنا۔',
 'yourname' => 'ورتن والہ:',
 'yourpassword' => 'کنجی:',
 'yourpasswordagain' => 'کنجی دوبارہ لکھو:',
@@ -1990,11 +1987,7 @@ $1",
 
 'enotif_mailer' => '{{سائٹ ناں}} نوٹینیکیشن میلر',
 'enotif_reset' => 'سارے ویکھے گۓ صفحیاں تے نشان لاؤ',
-'enotif_newpagetext' => 'اے نواں صفہ اے۔',
 'enotif_impersonal_salutation' => '{{SITENAME}} ورتن والا',
-'changed' => 'بدلیا',
-'created' => 'بن گیا',
-'enotif_subject' => '{{سائیٹتھاں}} صفہ $صفہ سرخی  $تبدیلی بنائی  $صفہ لکھاری',
 'enotif_lastvisited' => '$1 تبدیلیاں ویکھو اپنے آخری واری آن مکروں',
 'enotif_lastdiff' => '$1 ویکھو ایس تبدیلی نون ویکھن لئی۔',
 'enotif_anon_editor' => 'گم نام ورتن آلا $1',

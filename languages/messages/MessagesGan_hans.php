@@ -401,9 +401,6 @@ $2',
 'logouttext' => "'''汝退出正哩。'''
 
 接到汝得匿名使用{{SITENAME}}，或<span class='plainlinks'>[$1 登入过]</span>。除非汝删吥浏览器缓存，只把子页面可能会接到话汝系登入状态。",
-'welcomecreation' => '== 欢迎, $1! ==
-
-建正哩汝𠮶帐户，莫𫍧记设置 [[Special:Preferences|{{SITENAME}}𠮶个人参数]]。',
 'yourname' => '用户名：',
 'yourpassword' => '密码：',
 'yourpasswordagain' => '输过道密码：',
@@ -1293,11 +1290,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 
 'enotif_mailer' => '{{SITENAME}}邮件报告员',
 'enotif_reset' => '拿全部文章标成已读',
-'enotif_newpagetext' => '个系新开𠮶页面。',
 'enotif_impersonal_salutation' => '{{SITENAME}}用户',
-'changed' => '改卟嘞',
-'created' => '建正嘞',
-'enotif_subject' => '{{SITENAME}}有页面 $PAGETITLE拖$PAGEEDITOR $CHANGEDORCREATED',
 'enotif_lastvisited' => '眵倷上回访问后𠮶全部改动请去$1。',
 'enotif_lastdiff' => '想眵改动请去$1。',
 'enotif_anon_editor' => '匿名用户$1',

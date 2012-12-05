@@ -32,8 +32,11 @@ class NewParserTest extends MediaWikiTestCase {
 	protected $file = false;
 
 	protected function setUp() {
-		global $wgContLang, $wgNamespaceProtection, $wgNamespaceAliases;
+		global $wgContLang, $wgLanguageCode;
+		global $wgNamespaceProtection, $wgNamespaceAliases;
 		global $wgHooks, $IP;
+
+		$wgLanguageCode = 'en';
 		$wgContLang = Language::factory( 'en' );
 
 		//Setup CLI arguments
@@ -326,7 +329,6 @@ class NewParserTest extends MediaWikiTestCase {
 			'wgExternalLinkTarget' => false,
 			'wgAlwaysUseTidy' => false,
 			'wgHtml5' => true,
-			'wgCleanupPresentationalAttributes' => true,
 			'wgWellFormedXml' => true,
 			'wgAllowMicrodataAttributes' => true,
 			'wgAdaptiveMessageCache' => true,
@@ -466,6 +468,16 @@ class NewParserTest extends MediaWikiTestCase {
 				"$base/local-thumb/3/3a/Foobar.jpg/200px-Foobar.jpg",
 				"$base/local-thumb/3/3a/Foobar.jpg/640px-Foobar.jpg",
 				"$base/local-thumb/3/3a/Foobar.jpg/120px-Foobar.jpg",
+				"$base/local-thumb/3/3a/Foobar.jpg/1280px-Foobar.jpg",
+				"$base/local-thumb/3/3a/Foobar.jpg/20px-Foobar.jpg",
+				"$base/local-thumb/3/3a/Foobar.jpg/270px-Foobar.jpg",
+				"$base/local-thumb/3/3a/Foobar.jpg/300px-Foobar.jpg",
+				"$base/local-thumb/3/3a/Foobar.jpg/30px-Foobar.jpg",
+				"$base/local-thumb/3/3a/Foobar.jpg/360px-Foobar.jpg",
+				"$base/local-thumb/3/3a/Foobar.jpg/400px-Foobar.jpg",
+				"$base/local-thumb/3/3a/Foobar.jpg/40px-Foobar.jpg",
+				"$base/local-thumb/3/3a/Foobar.jpg/70px-Foobar.jpg",
+				"$base/local-thumb/3/3a/Foobar.jpg/960px-Foobar.jpg",
 
 				"$base/local-public/0/09/Bad.jpg",
 				"$base/local-thumb/0/09/Bad.jpg",

@@ -444,8 +444,6 @@ Batdume : ''$2''.",
 # Login and logout pages
 'logouttext' => 'Rin daletoe til solgluyanaf.
 Rin va {{SITENAME}} yoltiskon ware rofavel oke, bifoton kan ar yolt, va int toldogluyal.',
-'welcomecreation' => '<h2>Til drumbaf, $1!</h2><p>Rinaf favesikpata su zo redur.
-Me vulkul da rupeson va "Lodamaceem" bu va intaf {{SITENAME}} rotuilkal.',
 'yourname' => 'Rinaf favesikyolt',
 'yourpassword' => 'Rinaf remravlem',
 'yourpasswordagain' => 'Va rinaf remravlem tolon bazel',
@@ -1492,11 +1490,7 @@ Ta sulara va batu bu div rinafi suzdasiki, koe grablexo va « Mea suzdá » vule
 
 'enotif_mailer' => '{{SITENAME}} Kowalzesi Staksasiki',
 'enotif_reset' => 'Va kotu woranu bu tcalar',
-'enotif_newpagetext' => 'Batcoba tir warzafu bu',
 'enotif_impersonal_salutation' => '{{SITENAME}} favesik',
-'changed' => 'betayan',
-'created' => 'reduyun',
-'enotif_subject' => '{{SITENAME}} bu $PAGETITLE su zo $CHANGEDORCREATED gan $PAGEEDITOR',
 'enotif_lastvisited' => 'Va $1 disukel ta da va kot betaks mali ironokafa worara wil.',
 'enotif_lastdiff' => 'Ta wira va bat betaks va $1 disukel.',
 'enotif_anon_editor' => '$1 yoltiskaf favesik',

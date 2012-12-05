@@ -514,12 +514,12 @@ class ChangesList extends ContextSource {
 			if ( $this->getUser()->isAllowed('rollback') && $rc->mAttribs['page_latest'] == $rc->mAttribs['rc_this_oldid'] )
 			{
 				$rev = new Revision( array(
+					'title'     => $page,
 					'id'        => $rc->mAttribs['rc_this_oldid'],
 					'user'      => $rc->mAttribs['rc_user'],
 					'user_text' => $rc->mAttribs['rc_user_text'],
 					'deleted'   => $rc->mAttribs['rc_deleted']
 				) );
-				$rev->setTitle( $page );
 				$s .= ' '.Linker::generateRollback( $rev, $this->getContext() );
 			}
 		}
@@ -862,6 +862,8 @@ class EnhancedChangesList extends ChangesList {
 		# Other properties
 		$unpatrolled = false;
 		$isnew = false;
+		$allBots = true;
+		$allMinors = true;
 		$curId = $currentRevision = 0;
 		# Some catalyst variables...
 		$namehidden = true;
@@ -895,7 +897,13 @@ class EnhancedChangesList extends ChangesList {
 				$currentRevision = $rcObj->mAttribs['rc_this_oldid'];
 			}
 
-			$bot = $rcObj->mAttribs['rc_bot'];
+			if( !$rcObj->mAttribs['rc_bot'] ) {
+				$allBots = false;
+			}
+			if( !$rcObj->mAttribs['rc_minor'] ) {
+				$allMinors = false;
+			}
+
 			$userlinks[$u]++;
 		}
 
@@ -922,10 +930,10 @@ class EnhancedChangesList extends ChangesList {
 
 		# Main line
 		$r .= '<td class="mw-enhanced-rc">' . $this->recentChangesFlags( array(
-			'newpage' => $isnew,
-			'minor' => false,
-			'unpatrolled' => $unpatrolled,
-			'bot' => $bot ,
+			'newpage' => $isnew, # show, when one have this flag
+			'minor' => $allMinors, # show only, when all have this flag
+			'unpatrolled' => $unpatrolled, # show, when one have this flag
+			'bot' => $allBots, # show only, when all have this flag
 		) );
 
 		# Timestamp

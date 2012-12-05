@@ -430,9 +430,6 @@ Norādītais iemesls bija ''$2''.",
 
 Vari turpināt to izmantot anonīmi, vari <span class='plainlinks'>[$1 atgriezties]</span> kā cits lietotājs vai varbūt tas pats.
 Ņem vērā, ka arī pēc iziešanas, dažas lapas var tikt parādītas tā, it kā tu vēl būtu iekšā, līdz tiks iztīrīta pārlūka kešatmiņa.",
-'welcomecreation' => '== Laipni lūdzam, $1! ==
-
-Tavs lietotāja konts ir izveidots. Neaizmirsti, ka ir iespējams mainīt [[Special:Preferences|{{grammar:ģenitīvs|{{SITENAME}}}} izmantošanas izvēles]].',
 'yourname' => 'Tavs lietotājvārds',
 'yourpassword' => 'Tava parole:',
 'yourpasswordagain' => 'Atkārto paroli',
@@ -1812,11 +1809,7 @@ Ja vēlāk pārdomāsi un nevēlēsies vairs uzraudzīt šo lapu, klikšķini uz
 
 'enotif_mailer' => '{{SITENAME}} paziņojumu izsūtīšana',
 'enotif_reset' => 'Atzīmēt visas lapas kā apskatītas',
-'enotif_newpagetext' => 'Šī ir jauna lapa.',
 'enotif_impersonal_salutation' => '{{SITENAME}} lietotājs',
-'changed' => 'izmainīja',
-'created' => 'izveidoja',
-'enotif_subject' => '{{grammar:ģenitīvs|{{SITENAME}}}} lapu $PAGETITLE $CHANGEDORCREATED lietotājs $PAGEEDITOR',
 'enotif_lastvisited' => '$1 lai apskatītos visas izmaiņas kopš tava pēdējā apmeklējuma.',
 'enotif_lastdiff' => '$1 lai apskatītos šo izmaiņu.',
 'enotif_anon_editor' => 'anonīms lietotājs $1',

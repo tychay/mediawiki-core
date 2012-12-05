@@ -277,7 +277,7 @@ class Language {
 			throw new MWException( __METHOD__ . " must be passed a string, $type given$addmsg" );
 		}
 
-		return preg_match( '/^[a-z0-9-]+$/i', $code );
+		return (bool)preg_match( '/^[a-z0-9-]+$/i', $code );
 	}
 
 	/**
@@ -3482,8 +3482,22 @@ class Language {
 				}
 			}
 		}
-		// If all else fails, return the original string.
-		return $str;
+
+		// If all else fails, return a standard duration or timestamp description.
+		$time = strtotime( $str, 0 );
+		if ( $time === false ) { // Unknown format. Return it as-is in case.
+			return $str;
+		} elseif ( $time !== strtotime( $str, 1 ) ) { // It's a relative timestamp.
+			// $time is relative to 0 so it's a duration length.
+			return $this->formatDuration( $time );
+		} else { // It's an absolute timestamp.
+			if ( $time === 0 ) {
+				// wfTimestamp() handles 0 as current time instead of epoch.
+				return $this->timeanddate( '19700101000000' );
+			} else {
+				return $this->timeanddate( $time );
+			}
+		}
 	}
 
 	/**
@@ -3690,15 +3704,24 @@ class Language {
 	}
 
 	/**
-	 * Enclose a string with the "no conversion" tag. This is used by
-	 * various functions in the Parser
+	 * Prepare external link text for conversion. When the text is
+	 * a URL, it shouldn't be converted, and it'll be wrapped in
+	 * the "raw" tag (-{R| }-) to prevent conversion.
 	 *
-	 * @param $text String: text to be tagged for no conversion
-	 * @param $noParse bool
+	 * This function is called "markNoConversion" for historical
+	 * reasons.
+	 *
+	 * @param $text String: text to be used for external link
+	 * @param $noParse bool: wrap it without confirming it's a real URL first
 	 * @return string the tagged text
 	 */
 	public function markNoConversion( $text, $noParse = false ) {
-		return $this->mConverter->markNoConversion( $text, $noParse );
+		// Excluding protocal-relative URLs may avoid many false positives.
+		if ( $noParse || preg_match( '/^(?:' . wfUrlProtocolsWithoutProtRel() . ')/', $text ) ) {
+			return $this->mConverter->markNoConversion( $text );
+		} else {
+			return $text;
+		}
 	}
 
 	/**

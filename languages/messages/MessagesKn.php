@@ -196,7 +196,7 @@ $messages = array(
 'cancel' => 'ವಜಾ ಮಾಡಿ',
 'moredotdotdot' => 'ಇನ್ನಷ್ಟು...',
 'mypage' => 'ನನ್ನ ಪುಟ',
-'mytalk' => 'ನನ್ನ ಚರ್ಚೆ',
+'mytalk' => 'ಚರ್ಚೆ',
 'anontalk' => 'ಈ ಐ.ಪಿ ಗೆ ಮಾತನಾಡಿ',
 'navigation' => 'ಸಂಚರಣೆ',
 'and' => '&#32;ಮತ್ತು',
@@ -438,9 +438,6 @@ $2',
 
 ನೀವು {{SITENAME}} ಅನ್ನು ಅನಾಮಧೇಯವಾಗಿ ಉಪಯೋಗಿಸಬಹುದು, ಅಥವ ಮತ್ತೆ ಇದೇ ಹೆಸರಿನಲ್ಲಿ ಅಥವ ಬೇರೆ ಹೆಸರಿನಲ್ಲಿ <span class='plainlinks'>[$1 ಲಾಗ್ ಇನ್]</span> ಆಗಬಹುದು.
 ಗಮನಿಸಿ: ನಿಮ್ಮ ಬ್ರೌಸರ್‍ನ cache ಅನ್ನು ಅಳಿಸುವವರೆಗೂ ಕೆಲವು ಪುಟಗಳು ನೀವಿನ್ನೂ ಲಾಗ್ ಇನ್ ಆಗಿರುವಂತೆ ಪ್ರದರ್ಶಿತವಾಗಬಹುದು.",
-'welcomecreation' => '== ಸುಸ್ವಾಗತ, $1! ==
-ನಿಮ್ಮ ಅಕೌಂಟನ್ನು ಸೃಷ್ಟಿಸಲಾಗಿದೆ.
-ನಿಮ್ಮ [[Special:Preferences|{{SITENAME}} ಪ್ರಾಶಸ್ತ್ಯಗಳನ್ನು]] ಬದಲಾಯಿಸುವುದನ್ನು ಮರೆಯಬೇಡಿ.',
 'yourname' => 'ನಿಮ್ಮ ಬಳಕೆಯ ಹೆಸರು',
 'yourpassword' => 'ನಿಮ್ಮ ಪ್ರವೇಶಪದ',
 'yourpasswordagain' => 'ಪ್ರವೇಶ ಪದ ಮತ್ತೊಮ್ಮೆ ಟೈಪ್ ಮಾಡಿ',
@@ -875,7 +872,7 @@ $2',
 
 # Preferences page
 'preferences' => 'ಪ್ರಾಶಸ್ತ್ಯಗಳು',
-'mypreferences' => 'ನನ್ನ ಪ್ರಾಶಸ್ತ್ಯಗಳು',
+'mypreferences' => 'ಪ್ರಾಶಸ್ತ್ಯಗಳು',
 'prefs-edits' => 'ಸಂಪಾದನೆಗಳ ಸಂಖ್ಯೆ:',
 'prefsnologin' => 'ಲಾಗಿನ್ ಆಗಿಲ್ಲ',
 'prefsnologintext' => 'ಬಳಕೆದಾರ ಪ್ರಾಶಸ್ತ್ಯಗಳನ್ನು ಬದಲಾಯಿಸಲು ನೀವು <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} ಲಾಗ್ ಇನ್]</span> ಆಗಿರಬೇಕು.',
@@ -1404,7 +1401,7 @@ $2',
 
 # Watchlist
 'watchlist' => 'ವೀಕ್ಷಣಾ ಪಟ್ಟಿ',
-'mywatchlist' => 'ನನ್ನ ವೀಕ್ಷಣಾಪಟ್ಟಿ',
+'mywatchlist' => 'ವೀಕ್ಷಣಾಪಟ್ಟಿ',
 'watchlistfor2' => '$1 ($2) ಗೆ',
 'nowatchlist' => 'ನಿಮ್ಮ ವೀಕ್ಷಣಾಪಟ್ಟಿಯಲ್ಲಿ ಯಾವುದೇ ಪುಟಗಳಿಲ್ಲ',
 'watchlistanontext' => 'ನಿಮ್ಮ ವೀಕ್ಷಣಾಪಟ್ಟಿಯನ್ನು ನೋಡಲು ಅಥವ ಸಂಪಾದಿಸಲು ದಯವಿಟ್ಟು $1 ಮಾಡಿ.',
@@ -1432,10 +1429,7 @@ $2',
 'unwatching' => 'ವೀಕ್ಷಣೆಯಿಂದ ತೆಗೆಯಲಾಗುತ್ತಿದೆ...',
 
 'enotif_reset' => 'ಭೇಟಿಯಿತ್ತ ಎಲ್ಲಾ ಪುಟಗಳನ್ನು ಗುರುತು ಮಾಡಿ',
-'enotif_newpagetext' => 'ಇದೊಂದು ಹೊಸ ಪುಟ.',
 'enotif_impersonal_salutation' => '{{SITENAME}} ಸದಸ್ಯ',
-'changed' => 'ಬದಲಾಯಿಸಲಾಗಿದೆ',
-'created' => 'ಸೃಷ್ಟಿಸಲ್ಪಟ್ಟಿದೆ',
 'enotif_lastvisited' => 'ನಿಮ್ಮ ಕಳೆದ ಭೇಟಿಯ ನಂತರದ ಎಲ್ಲಾ ಬದಲಾವಣೆಗಳಿಗೆ $1 ನೋಡಿ.',
 'enotif_anon_editor' => 'ಅನಾಮಧೇಯ ಸದಸ್ಯ $1',
 
@@ -1541,7 +1535,7 @@ $2',
 # Contributions
 'contributions' => 'ಸದಸ್ಯರ ಕಾಣಿಕೆಗಳು',
 'contributions-title' => '$1 ಸದಸ್ಯರ ಕಾಣಿಕೆಗಳು',
-'mycontris' => 'ನನ್ನ ಕಾಣಿಕೆಗಳು',
+'mycontris' => 'ಕಾಣಿಕೆಗಳು',
 'contribsub2' => '$1 ($2) ಗೆ',
 'uctop' => ' (ಮೇಲಕ್ಕೆ)',
 'month' => 'ಈ ತಿಂಗಳಿಂದ (ಮತ್ತು ಮುಂಚಿನ):',
@@ -1811,6 +1805,10 @@ $2',
 'others' => 'ಇತರರು',
 'siteusers' => '{{SITENAME}} {{PLURAL:$2|ಸದಸ್ಯ|ಸದಸ್ಯರು}} $1',
 'creditspage' => 'ಪುಟದ ಗೌರವಗಳು',
+
+# Info page
+'pageinfo-toolboxlink' => 'ಪುಟದ ಮಾಹಿತಿ',
+'pageinfo-redirectsto' => 'ಪುನರ್ನಿರ್ದೇಶನ:',
 
 # Image deletion
 'deletedrevision' => 'ಹಳೆ ಆವೃತ್ತಿ $1 ಅನ್ನು ಅಳಿಸಲಾಗಿದೆ',
@@ -2120,5 +2118,16 @@ $5
 # New logging system
 'revdelete-restricted' => 'ನಿರ್ವಾಹಕರಿಗೆ ನಿಬಂಧನೆಗಳನ್ನು ಅನ್ವಯಿಸಲಾಯಿತು',
 'revdelete-unrestricted' => 'ನಿರ್ವಾಹಕರ ನಿಬಂಧನೆಗಳನ್ನು ತೆಗೆಯಲಾಯಿತು',
+
+# Durations
+'duration-seconds' => '$1 {{PLURAL:$1|ಕ್ಷಣ|ಕ್ಷಣಗಳು}}',
+'duration-minutes' => '$1 {{PLURAL:$1|ನಿಮಿಷ|ನಿಮಿಷಗಳು}}',
+'duration-hours' => '$1 {{PLURAL:$1|ಘಂಟೆ|ಘಂಟೆಗಳು}}',
+'duration-days' => '$1 {{PLURAL:$1|ದಿನ|ದಿನಗಳು}}',
+'duration-weeks' => '$1 {{PLURAL:$1|ವಾರ|ವಾರಗಳು}}',
+'duration-years' => '$1 {{PLURAL:$1|ವರ್ಷ|ವರ್ಷಗಳು}}',
+'duration-decades' => '$1 {{PLURAL:$1|ದಶಕ|ದಶಕಗಳು}}',
+'duration-centuries' => '$1 {{PLURAL:$1|ಶತಮಾನ|ಶತಮಾನಗಳು}}',
+'duration-millennia' => '$1 {{PLURAL:$1|ಸಹಸ್ರಮಾನ|ಸಹಸ್ರಮಾನಗಳು}}',
 
 );

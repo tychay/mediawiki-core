@@ -54,28 +54,6 @@ class ApiEditPage extends ApiBase {
 			$this->dieUsageMsg( array( 'invalidtitle', $params['title'] ) );
 		}
 
-		if ( !isset( $params['contentmodel'] ) || $params['contentmodel'] == '' ) {
-			$contentHandler = $pageObj->getContentHandler();
-		} else {
-			$contentHandler = ContentHandler::getForModelID( $params['contentmodel'] );
-		}
-
-		// @todo ask handler whether direct editing is supported at all! make allowFlatEdit() method or some such
-
-		if ( !isset( $params['contentformat'] ) || $params['contentformat'] == '' ) {
-			$params['contentformat'] = $contentHandler->getDefaultFormat();
-		}
-
-		$contentFormat = $params['contentformat'];
-
-		if ( !$contentHandler->isSupportedFormat( $contentFormat ) ) {
-			$name = $titleObj->getPrefixedDBkey();
-			$model = $contentHandler->getModelID();
-
-			$this->dieUsage( "The requested format $contentFormat is not supported for content model ".
-							" $model used by $name", 'badformat' );
-		}
-
 		$apiResult = $this->getResult();
 
 		if ( $params['redirect'] ) {
@@ -104,7 +82,32 @@ class ApiEditPage extends ApiBase {
 
 				$apiResult->setIndexedTagName( $redirValues, 'r' );
 				$apiResult->addValue( null, 'redirects', $redirValues );
+
+				// Since the page changed, update $pageObj
+				$pageObj = WikiPage::factory( $titleObj );
 			}
+		}
+
+		if ( !isset( $params['contentmodel'] ) || $params['contentmodel'] == '' ) {
+			$contentHandler = $pageObj->getContentHandler();
+		} else {
+			$contentHandler = ContentHandler::getForModelID( $params['contentmodel'] );
+		}
+
+		// @todo ask handler whether direct editing is supported at all! make allowFlatEdit() method or some such
+
+		if ( !isset( $params['contentformat'] ) || $params['contentformat'] == '' ) {
+			$params['contentformat'] = $contentHandler->getDefaultFormat();
+		}
+
+		$contentFormat = $params['contentformat'];
+
+		if ( !$contentHandler->isSupportedFormat( $contentFormat ) ) {
+			$name = $titleObj->getPrefixedDBkey();
+			$model = $contentHandler->getModelID();
+
+			$this->dieUsage( "The requested format $contentFormat is not supported for content model ".
+							" $model used by $name", 'badformat' );
 		}
 
 		if ( $params['createonly'] && $titleObj->exists() ) {
@@ -244,6 +247,11 @@ class ApiEditPage extends ApiBase {
 
 		if ( !is_null( $params['sectiontitle'] ) ) {
 			$requestArray['wpSectionTitle'] = $params['sectiontitle'];
+		}
+
+		// TODO: Pass along information from 'undoafter' as well
+		if ( $params['undo'] > 0 ) {
+			$requestArray['wpUndidRevision'] = $params['undo'];
 		}
 
 		// Watch out for basetimestamp == ''
@@ -399,6 +407,7 @@ class ApiEditPage extends ApiBase {
 				} else {
 					$r['oldrevid'] = intval( $oldRevId );
 					$r['newrevid'] = intval( $newRevId );
+					$pageObj->clear();
 					$r['newtimestamp'] = wfTimestamp( TS_ISO_8601,
 						$pageObj->getTimestamp() );
 				}
@@ -568,7 +577,7 @@ class ApiEditPage extends ApiBase {
 			'watch' => 'Add the page to your watchlist',
 			'unwatch' => 'Remove the page from your watchlist',
 			'watchlist' => 'Unconditionally add or remove the page from your watchlist, use preferences or do not change watch',
-			'md5' => array(	"The MD5 hash of the {$p}text parameter, or the {$p}prependtext and {$p}appendtext parameters concatenated.",
+			'md5' => array( "The MD5 hash of the {$p}text parameter, or the {$p}prependtext and {$p}appendtext parameters concatenated.",
 					'If set, the edit won\'t be done unless the hash is correct' ),
 			'prependtext' => "Add this text to the beginning of the page. Overrides {$p}text",
 			'appendtext' => array( "Add this text to the end of the page. Overrides {$p}text.",

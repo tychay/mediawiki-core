@@ -259,7 +259,7 @@ $messages = array(
 'cancel' => 'Batilisha',
 'moredotdotdot' => 'Zaidi...',
 'mypage' => 'Ukurasa wangu',
-'mytalk' => 'Majadiliano yangu',
+'mytalk' => 'Majadiliano',
 'anontalk' => 'Majadiliano ya IP hii',
 'navigation' => 'Urambazaji',
 'and' => '&#32;na',
@@ -291,6 +291,7 @@ $messages = array(
 'namespaces' => 'Maeneo ya wiki',
 'variants' => 'Vibadala',
 
+'navigation-heading' => 'Urambazaji',
 'errorpagetitle' => 'Hitilafu',
 'returnto' => 'Rudia $1.',
 'tagline' => 'Kutoka {{SITENAME}}',
@@ -520,16 +521,14 @@ Sababu zilizotolewa ni "\'\'$2\'\'".',
 
 # Virus scanner
 'virus-badscanner' => "Usanidi mbaya: kiskani virusi hakijulikani: ''$1''",
-'virus-scanfailed' => 'skani imeshindwa (kodi $1)',
+'virus-scanfailed' => 'skani imeshindwa (msimbo $1)',
 'virus-unknownscanner' => 'kipambana na virusi haijulikani:',
 
 # Login and logout pages
 'logouttext' => "'''Umetoka kwenye akaunti yako.'''
 
 Unaweza kuendelea kutumia {{SITENAME}} bila kutaja jina lako, au unaweza <span class='plainlinks'>[$1 kuingia tena]</span> kwenye akaunti yako. Kumbuka kwamba kurasa nyingine zitaendelea kuonekana kana kwamba bado hujatoka kwenye akaunti yako, hadi utakaposafisha kache ya kivinjari.",
-'welcomecreation' => '== Karibu, $1! ==
-Ushafunguliwa akaunti yako tayari.
-Usisahau kubadilisha mapendekezo yako ya [[Special:Preferences|{{SITENAME}}]].',
+'welcomeuser' => 'Karibu, $1!',
 'yourname' => 'Jina la mtumiaji:',
 'yourpassword' => 'Neno la siri:',
 'yourpasswordagain' => 'Andika tena neno la siri',
@@ -632,7 +631,7 @@ Tafadhali subiri kwanza kabla ya kujaribu tena.',
 
 # Change password dialog
 'resetpass' => 'Kubadilisha neno la siri',
-'resetpass_announce' => 'Umeingia na kodi za barua pepe za muda tu.
+'resetpass_announce' => 'Umeingia na msimbo wa barua pepe wa muda tu.
 Kumalizia kuingia ndani, ni lazima urekebishe neno la siri jipya hapa:',
 'resetpass_header' => 'Kubadilisha neno la siri la akaunti',
 'oldpassword' => 'Neno la siri la zamani',
@@ -778,7 +777,7 @@ Labda itakusumbua kwamba kuna maoni mengine yanawekwa hapa na unaamini kwamba ha
 'noarticletext' => 'Ukurasa huu haujaandikwa bado. [[Special:Search/{{PAGENAME}}|tafutia jina hili]] katika kurasa nyingine, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} tafuta kumbukumbu zinazohusika], au [{{fullurl:{{FULLPAGENAME}}|action=edit}} hariri ukurasa huu]</span>.',
 'noarticletext-nopermission' => 'Kwa sasa hakuna maandishi katika ukurasa huu.
 Unaweza [[Special:Search/{{PAGENAME}}|kutafuta jina la ukurasa huu]] katika kurasa nyingine,
-au <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} tafuta ingizo linalofanana]</span>.',
+au <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} tafuta kumbukumbu zinazohusika]</span>, lakini huruhusiwi kuanzisha ukurasa huu.',
 'userpage-userdoesnotexist' => 'Akaunti ya mtumiaji "<nowiki>$1</nowiki>" haijasajilishwa.
 Ukitaka kuanzisha au kuhariri ukurasa huu tafadhali ucheki jina la akaunti.',
 'userpage-userdoesnotexist-view' => 'Akaunti ya mtumiaji "$1" haijasajilishwa.',
@@ -1131,7 +1130,7 @@ Ujue lakini kwamba kumbukumbu za {{SITENAME}} kule Google labda zilipitwa na wak
 
 # Preferences page
 'preferences' => 'Mapendekezo',
-'mypreferences' => 'Mapendekezo yangu',
+'mypreferences' => 'Mapendekezo',
 'prefs-edits' => 'Idadi ya marekebisho:',
 'prefsnologin' => 'Hujaingia',
 'prefsnologintext' => 'Inabidi <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} uingie akaunti yako]</span> ili ubadilishe mapendekezo yako.',
@@ -1980,7 +1979,7 @@ Anwani yako ya barua pepe ulioitaja katika [[Special:Preferences|mapendekezo yak
 
 # Watchlist
 'watchlist' => 'Maangalizi yangu',
-'mywatchlist' => 'Maangalizi yangu',
+'mywatchlist' => 'Maangalizi',
 'watchlistfor2' => 'Kwa ajili ya $1 $2',
 'nowatchlist' => 'Hamna vitu katika maangalizi yako.',
 'watchlistanontext' => 'Tafadhali $1 ili kutazama au kuhariri vitu vilivyopo katika orodha yako ya maangalizi.',
@@ -2020,11 +2019,7 @@ Ukitaka kufuta ukurasa huo kutoka maangalizi yako baadaye, bonyeza \"Acha kufuat
 
 'enotif_mailer' => 'Huduma ya taarifa ya barua pepe kutoka kwa {{SITENAME}}',
 'enotif_reset' => 'Weka alama kwa kurasa zote zilizotembelewa',
-'enotif_newpagetext' => 'Ukurasa huu ni mpya.',
 'enotif_impersonal_salutation' => 'Kwa mtumiaji wa {{SITENAME}}',
-'changed' => 'alibadilisha',
-'created' => 'alianzisha',
-'enotif_subject' => '$PAGEEDITOR $CHANGEDORCREATED ukurasa wa $PAGETITLE kwenye {{SITENAME}}',
 'enotif_lastvisited' => 'Tazama $1 kwa mabadiliko yote tangu ziara yako ya mwisho.',
 'enotif_lastdiff' => 'Tazama badiliko hili hapo $1.',
 'enotif_anon_editor' => 'mtumiaji bila jina $1',
@@ -2201,7 +2196,7 @@ $1',
 # Contributions
 'contributions' => 'Michango ya mtumiaji',
 'contributions-title' => 'Michango ya mtumiaji $1',
-'mycontris' => 'Michango yangu',
+'mycontris' => 'Michango',
 'contribsub2' => 'Kwa $1 ($2)',
 'nocontribs' => 'Mabadiliko yanayolingana na vigezo vilivyoulizwa hayakupatikana.',
 'uctop' => '(juu)',
@@ -2569,6 +2564,8 @@ Tafadhali jaribu tena.',
 'pageinfo-header-edits' => 'Maharirio',
 'pageinfo-watchers' => 'Idadi ya wanaofuatilia',
 'pageinfo-edits' => 'Idadi ya maharirio',
+'pageinfo-contentpage-yes' => 'Ndiyo',
+'pageinfo-protect-cascading-yes' => 'Ndiyo',
 
 # Image deletion
 'deletedrevision' => 'Pitio la awali lililofutwa $1',
@@ -2691,7 +2688,7 @@ likifupishwa. Nyuga zingine zitafichwa kama chaguo-msingi.
 'exif-keywords' => 'Maneno yahusika',
 'exif-worldregioncreated' => 'Eneo la dunia palipopigwa picha',
 'exif-countrycreated' => 'Nchi palipopigwa picha',
-'exif-countrycodecreated' => 'Kodi ya nchi picha palipopigwa',
+'exif-countrycodecreated' => 'Msimbo wa nchi picha palipopigwa',
 'exif-countrydest' => 'Nchi inayoonyeshwa',
 'exif-citydest' => 'Mji umeonyeshwa',
 'exif-objectname' => 'Jina fupi',
@@ -2887,7 +2884,7 @@ na kama *huja* sajili akaunti hii, fuata kiungo hiki ili kubatilisha uthibitisho
 
 $5
 
-Kodi hizi za uthibitisho zitaishia mnamo $4.',
+Msimbo huu wa uthibitisho utaishia mnamo $4.',
 'confirmemail_body_changed' => 'Kuna mtu, huenda ikawa wewe, kutoka anwani ya IP $1, ambaye amebadilisha anwani ya barua pepe ya akaunti "$2" iwe anwani ya barua pepe hii, kule {{SITENAME}}.
 
 Ili kuthibitisha ya kwamba akaunti hii inamilikiwa na wewe, pamoja na kuwezesha upya zana zinazotumia barua pepe kule {{SITENAME}}, ufungue kiungo hiki katika kivinjari chako:

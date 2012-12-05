@@ -548,9 +548,6 @@ $2',
 
 Тондейть ули кода ащемс {{SITENAME}}са апак содак эли <span class='plainlinks'>[$1 сувак тага весть]</span> кода сяка эли иля тиись.
 Кой-кона лопатне илядсть стамкс кодамкс синь ульсть тонь лисемада инголе мъзярс тонь интернет полатксце изь аруяфтов эсь ванфневи файлхнень эзда.",
-'welcomecreation' => '== Сувак, $1! ==
-
-Тонь сёрматфтомаце анок. Тят юкста полафнемс эсь [[Special:Preferences|{{SITENAME}} латцематне]].',
 'yourname' => 'Тиить лемоц:',
 'yourpassword' => 'Сувама валце:',
 'yourpasswordagain' => 'Сёрматк сувама валце омбоцекс:',
@@ -1754,11 +1751,7 @@ $3 макссь туфталсь - ''$2''",
 
 'enotif_mailer' => '{{SITENAME}} Пачфнематнень Кучи',
 'enotif_reset' => 'Путомс тяшкс сембе суваф лопатнень лангс',
-'enotif_newpagetext' => 'Тя од лопа.',
 'enotif_impersonal_salutation' => '{{SITENAME}} тиись',
-'changed' => 'полафтсь',
-'created' => 'тиф',
-'enotif_subject' => '{{SITENAME}} page $PAGETITLE has been $CHANGEDORCREATED by $PAGEEDITOR',
 'enotif_lastvisited' => 'Ванк $1 тонь мекольце самдот меле сембе поланематнень няфтеманкса.',
 'enotif_lastdiff' => 'Ванк $1 тя полафнемать няфтеманкса.',
 'enotif_anon_editor' => 'лемфтома тиись $1',

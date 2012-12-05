@@ -10,6 +10,7 @@
  * @author Aushulz
  * @author Gmelfi
  * @author Kaganer
+ * @author Markos90
  * @author Melos
  * @author Omnipaedista
  * @author Santu
@@ -306,7 +307,7 @@ $messages = array(
 'returnto' => 'Ritorna a $1.',
 'tagline' => 'Di {{SITENAME}}',
 'help' => 'Aiutu',
-'search' => 'Trova',
+'search' => 'Arriscedi',
 'searchbutton' => "Va' cerca",
 'go' => 'Trova',
 'searcharticle' => 'Vai',
@@ -521,9 +522,6 @@ La mutivazzioni è chista: ''$2''.",
 
 Poi cuntinuari a usari {{SITENAME}} di manera anònima, o poi <span class='plainlinks'>[$1 tràsiri n'àutra vota]</span> cu lu stissu o cu n'àutru nomu d'utenti.
 Accura chi quarchi pàggina pò cuntinuari a èssiri ammustrata comu si nun avissi nisciutu nzinu a quannu tu nun scancelli tutta la mimoria dû tò browser.",
-'welcomecreation' => "== Bonvinutu, $1! ==
-
-L'account hà statu criatu currettamenti. Nun ti scurdari di pirsunalizzari li [[Special:Preferences|prifirenzi di {{SITENAME}}]].",
 'yourname' => "Lu tò nomu d'utenti (''user name'')",
 'yourpassword' => "La tò ''password''",
 'yourpasswordagain' => "Scrivi la password n'àutra vota",
@@ -1796,11 +1794,7 @@ Protucolli suppurtati: <code>$1</code>',
 
 'enotif_mailer' => 'Sistema di nutìfica via e-mail di {{SITENAME}}',
 'enotif_reset' => 'Segna tutti li pàggini comu già visitati',
-'enotif_newpagetext' => 'Chista è na pàggina nova.',
 'enotif_impersonal_salutation' => 'Utenti di {{SITENAME}}',
-'changed' => 'canciatu',
-'created' => 'criatu',
-'enotif_subject' => 'La pàggina $PAGETITLE di {{SITENAME}} hà stata $CHANGEDORCREATED di $PAGEEDITOR',
 'enotif_lastvisited' => 'Cunzurta $1 pi vìdiri tutti li canciamenti dâ tò ùrtima vìsita.',
 'enotif_lastdiff' => 'Vìdiri $1 pi visualizzari lu canciamentu.',
 'enotif_anon_editor' => 'utenti anonimu $1',
@@ -2322,8 +2316,8 @@ Visita [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] e [//trans
 'tooltip-ca-watch' => 'Agghiunci sta pàggina â tò lista di ossirvati spiciali',
 'tooltip-ca-unwatch' => 'Elìmina sta pàggina dâ tò lista di ossirvati spiciali',
 'tooltip-search' => "Cerca 'n {{SITENAME}}",
-'tooltip-search-go' => 'Vai a na pàggina cu chistu nomu esattu si asisti',
-'tooltip-search-fulltext' => 'Attrova pàggini pi chistu testu',
+'tooltip-search-go' => 'Vai a na pàggina cu chistu nomu esattu siddu asisti',
+'tooltip-search-fulltext' => 'Arriscedi pàggini pi chistu testu',
 'tooltip-p-logo' => 'Pàggina principali',
 'tooltip-n-mainpage' => 'Vìsita la pàggina principali',
 'tooltip-n-mainpage-description' => 'Talìa la pàggina principali',

@@ -48,7 +48,7 @@ Template:Blank
 !! endarticle
 
 !! article
-Template:!
+Template:pipe
 !! text
 |
 !! endarticle
@@ -63,6 +63,24 @@ MediaWiki:bad image list
 Template:inner list
 !! text
 * item 1
+!! endarticle
+
+!! article
+Template:tbl-start
+!! text
+{|
+!! endarticle
+
+!! article
+Template:tbl-end
+!! text
+|}
+!! endarticle
+
+!! article
+Template:!
+!! text
+|
 !! endarticle
 
 !! article
@@ -87,6 +105,19 @@ Template:echo_with_div
 Template:attr_str
 !! text
 {{{1}}}="{{{2}}}"
+!! endarticle
+
+!! article
+Template:table_attribs
+!! text
+<noinclude>
+|</noinclude>style="color: red"| Foo
+!! endarticle
+
+!! article
+A?b
+!! text
+Weirdo titles!
 !! endarticle
 
 ###
@@ -523,7 +554,7 @@ nowiki 3
 ### Comments
 ###
 !! test
-Comments and Pre
+Comments and Indent-Pre
 !! input
 <!-- comment 1 --> asdf
 
@@ -775,6 +806,17 @@ And a <a href="/wiki/Main_Page" title="Main Page">link</a>
 !! end
 
 !! test
+Ident preformatting with inline content
+!! input
+ a
+ ''b''
+!! result
+<pre>a
+<i>b</i>
+</pre>
+!! end
+
+!! test
 <pre> with <nowiki> inside (compatibility with 1.6 and earlier)
 !! input
 <pre><nowiki>
@@ -908,8 +950,17 @@ Bug 6200: Preformatted in <blockquote>
 </p>
 !! end
 
+!! test
+</pre> inside nowiki
+!! input
+<nowiki></pre></nowiki>
+!! result
+<p>&lt;/pre&gt;
+</p>
+!! end
+
 !!test
-Templates: Pre: 1a. Templates that break a line should suppress <pre>
+Templates: Indent-Pre: 1a. Templates that break a line should suppress <pre>
 !!input
  {{echo|}}
 !!result
@@ -917,7 +968,7 @@ Templates: Pre: 1a. Templates that break a line should suppress <pre>
 !!end
 
 !!test
-Templates: Pre: 1b. Templates that break a line should suppress <pre>
+Templates: Indent-Pre: 1b. Templates that break a line should suppress <pre>
 !!input
  {{echo|
 foo}}
@@ -927,7 +978,7 @@ foo}}
 !!end
 
 !! test
-Templates: Pre: 1c: Wrapping should be based on expanded content
+Templates: Indent-Pre: 1c: Wrapping should be based on expanded content
 !! input
  {{echo|a
 b}}
@@ -939,7 +990,7 @@ b}}
 !!end
 
 !! test
-Templates: Pre: 1d: Wrapping should be based on expanded content
+Templates: Indent-Pre: 1d: Wrapping should be based on expanded content
 !! input
  {{echo|a
 b
@@ -960,9 +1011,11 @@ c
 !!end
 
 !!test
-Templates: Pre: 1e. Wrapping should be based on expanded content
+Templates: Indent-Pre: 1e. Wrapping should be based on expanded content
 !!input
 {{echo| foo}}
+
+{{echo| foo}}{{echo| bar}}
 
 {{echo| foo}}
 {{echo| bar}}
@@ -975,6 +1028,8 @@ Templates: Pre: 1e. Wrapping should be based on expanded content
 !!result
 <pre>foo
 </pre>
+<pre>foo bar
+</pre>
 <pre>foo
 bar
 </pre>
@@ -986,12 +1041,98 @@ bar
 </pre>
 !!end
 
+!! test
+Templates: Indent-Pre: 1f: Wrapping should be based on expanded content
+!! input
+{{echo| }}a
+
+{{echo|
+ }}a
+
+{{echo|
+ b}}
+
+{{echo|a
+ }}b
+
+{{echo|a
+}} b
+!!result
+<pre>a
+</pre>
+<p><br />
+</p>
+<pre>a
+</pre>
+<p><br />
+</p>
+<pre>b
+</pre>
+<p>a
+</p>
+<pre>b
+</pre>
+<p>a
+</p>
+<pre>b
+</pre>
+!!end
+
+!! test
+Templates: Single-line variant of parameter whitespace stripping test
+!! input
+{{echo| a}}
+
+{{echo|1= a}}
+
+{{echo|{{echo| a}}}}
+
+{{echo|1={{echo| a}}}}
+!! result
+<pre>a
+</pre>
+<p>a
+</p>
+<pre>a
+</pre>
+<p>a
+</p>
+!! end
+
+!! test
+Templates: Strip whitespace from named parameters, but not positional ones
+!! input
+{{echo|
+ foo}}
+
+{{echo|
+* foo}}
+
+{{echo| 1 =
+ foo}}
+
+{{echo| 1 =
+* foo}}
+!! result
+<pre>foo
+</pre>
+<p><br />
+</p>
+<ul><li> foo
+</li></ul>
+<p>foo
+</p>
+<ul><li> foo
+</li></ul>
+
+!! end
+
 ###
 ### Parsoid-centric tests for testing RT edge cases for pre
 ###
 
 !!test
-1a. Pre and Comments
+1a. Indent-Pre and Comments
 !!input
  a
 <!--a-->
@@ -1004,7 +1145,7 @@ c
 !!end
 
 !!test
-1b. Pre and Comments
+1b. Indent-Pre and Comments
 !!input
  a
  <!--a-->
@@ -1017,7 +1158,7 @@ c
 !!end
 
 !!test
-1c. Pre and Comments
+1c. Indent-Pre and Comments
 !!input
 <!--a-->  a
 
@@ -1030,7 +1171,7 @@ c
 !!end
 
 !!test
-2a. Pre and tables
+2a. Indent-Pre and tables
 !!input
  {|
  |-
@@ -1051,7 +1192,7 @@ c
 !!end
 
 !!test
-2b. Pre and tables
+2b. Indent-Pre and tables
 !!input
   {|
  |-
@@ -1067,7 +1208,7 @@ c
 !!end
 
 !!test
-3. Pre and block tags
+3a. Indent-Pre and block tags (single-line html)
 !!input
  <p> foo </p>
  <div> foo </div>
@@ -1077,6 +1218,58 @@ c
  <div> foo </div>
 <pre><span> foo </span>
 </pre>
+!!end
+
+!!test
+3b. Indent-Pre and block tags (pre-content on separate line)
+!!input
+<p>
+ foo
+</p>
+
+<div>
+ foo
+</div>
+
+<center>
+ foo
+</center>
+
+<blockquote>
+ foo
+</blockquote>
+
+<table><tr><td>
+ foo
+</td></tr></table>
+
+<ul><li>
+  foo
+</li></ul>
+
+!!result
+<p>
+ foo
+</p>
+<div>
+<pre>foo
+</pre>
+</div>
+<center>
+<pre>foo
+</pre>
+</center>
+<blockquote>
+ foo
+</blockquote>
+<table><tr><td>
+<pre>foo
+</pre>
+</td></tr></table>
+<ul><li>
+  foo
+</li></ul>
+
 !!end
 
 !!test
@@ -1095,6 +1288,80 @@ c
 <tr>
 <td>foo
 </td></tr></table>
+
+!!end
+
+###
+### HTML-pre (some to spec PHP parser behavior and some Parsoid-RT-centric)
+###
+
+!!test
+HTML-pre: 1. embedded newlines
+!!input
+<pre>foo</pre>
+
+<pre>
+foo
+</pre>
+
+<pre>
+
+foo
+</pre>
+
+<pre>
+
+
+foo
+</pre>
+!!result
+<pre>foo</pre>
+<pre>
+foo
+</pre>
+<pre>
+
+foo
+</pre>
+<pre>
+
+
+foo
+</pre>
+
+!!end
+
+!!test
+HTML-pre: 2: indented text
+!!input
+<pre>
+ foo
+</pre>
+!!result
+<pre>
+ foo
+</pre>
+
+!!end
+
+!!test
+HTML-pre: 3: other wikitext
+!!input
+<pre>
+* foo
+# bar
+= no-h =
+'' no-italic ''
+[[ NoLink ]]
+</pre>
+!!result
+<pre>
+* foo
+# bar
+= no-h =
+'' no-italic ''
+[[ NoLink ]]
+</pre>
 
 !!end
 
@@ -1202,7 +1469,6 @@ Definition lists: colon in HTML attribute
 
 !! end
 
-
 !! test
 Definition lists: self-closed tag
 !! input
@@ -1215,8 +1481,6 @@ Definition lists: self-closed tag
 
 !! test
 Bug 11748: Literal closing tags
-!! options
-disabled
 !! input
 <dl>
 <dt>test 1</dt>
@@ -1231,19 +1495,20 @@ disabled
 <dt>test 2</dt>
 <dd>test test test test test</dd>
 </dl>
+
 !! end
 
 !! test
 Definition and unordered list using wiki syntax nested in unordered list using html tags.
 !! input
 <ul><li>
-; term : description 
+; term : description
 * unordered
 </li>
 </ul>
 !! result
 <ul><li>
-<dl><dt> term&#160;</dt><dd> description 
+<dl><dt> term&#160;</dt><dd> description
 </dd></dl>
 <ul><li> unordered
 </li></ul>
@@ -1253,6 +1518,7 @@ Definition and unordered list using wiki syntax nested in unordered list using h
 !! end
 
 !! test
+
 Definition list with empty definition and following paragraph
 !! input
 ; term:
@@ -1262,6 +1528,23 @@ Paragraph text
 </dd></dl>
 <p>Paragraph text
 </p>
+!! end
+
+!! test
+Nested definition lists using html syntax
+!! input
+<dl><dd>
+<dl>
+<dd>Foo</dd>
+</dl>
+</dd></dl>
+!! result
+<dl><dd>
+<dl>
+<dd>Foo</dd>
+</dl>
+</dd></dl>
+
 !! end
 
 !! test
@@ -1374,6 +1657,66 @@ should be left alone
 ##
 ## See also: https://bugzilla.wikimedia.org/show_bug.cgi?id=6569
 ## and http://lists.wikimedia.org/pipermail/wikitext-l/2011-November/000483.html
+
+!! test
+Table / list interaction: indented table with lists in table contents
+!! input
+:{|
+|-
+| a
+* b
+|-
+| c
+* d
+|}
+!! result
+<dl><dd><table>
+
+<tr>
+<td> a
+<ul><li> b
+</li></ul>
+</td></tr>
+<tr>
+<td> c
+<ul><li> d
+</li></ul>
+</td></tr></table></dd></dl>
+
+!! end
+
+!!test
+Table / list interaction: lists nested in tables nested in indented lists
+!!input
+:{|
+|
+:a
+:b
+|
+*c
+*d
+|}
+
+*e
+*f
+!!result
+<dl><dd><table>
+<tr>
+<td>
+<dl><dd>a
+</dd><dd>b
+</dd></dl>
+</td>
+<td>
+<ul><li>c
+</li><li>d
+</li></ul>
+</td></tr></table></dd></dl>
+<ul><li>e
+</li><li>f
+</li></ul>
+
+!!end
 
 !! test
 Definition Lists: Nesting: Multi-level (Parsoid only)
@@ -2090,6 +2433,15 @@ http:/example.com
 !! end
 
 !! test
+Bracketed external links with template-generated invalid target
+!! input
+[{{echo|http:/example.com}} title]
+!! result
+<p>[http:/example.com title]
+</p>
+!! end
+
+!! test
 Bug 2702: Mismatched <i>, <b> and <a> tags are invalid
 !! input
 ''[http://example.com text'']
@@ -2260,6 +2612,33 @@ http://[2404:130:0:1000::187:2]/index.php
 </p>
 !! end
 
+!! test
+Non-extlinks in brackets
+!! input
+[foo]
+[foo bar]
+[foo ''bar'']
+[fool's] errand
+[fool's errand]
+[{{echo|foo}}]
+[{{echo|foo}} bar]
+[{{echo|foo}} ''bar'']
+[{{echo|foo}}l's] errand
+[{{echo|foo}}l's errand]
+!! result
+<p>[foo]
+[foo bar]
+[foo <i>bar</i>]
+[fool's] errand
+[fool's errand]
+[foo]
+[foo bar]
+[foo <i>bar</i>]
+[fool's] errand
+[fool's errand]
+</p>
+!! end
+
 ###
 ### Quotes
 ###
@@ -2346,11 +2725,36 @@ A table with nothing but a caption
 !! end
 
 !! test
+Table td-cell syntax variations
+!! input
+{|
+| foo bar foo | baz
+| foo bar foo || baz
+| style='color:red;' | baz
+| style='color:red;' || baz
+|}
+!! result
+<table>
+<tr>
+<td> baz
+</td>
+<td> foo bar foo </td>
+<td> baz
+</td>
+<td style="color:red;"> baz
+</td>
+<td> style='color:red;' </td>
+<td> baz
+</td></tr></table>
+
+!! end
+
+!! test
 Simple table
 !! input
-{| 
+{|
 | 1 || 2
-|- 
+|-
 | 3 || 4
 |}
 !! result
@@ -2369,7 +2773,7 @@ Simple table
 !! test
 Simple table but with multiple dashes for row wikitext
 !! input
-{| 
+{|
 | foo
 |-----
 | bar
@@ -2455,25 +2859,104 @@ Multiplication table
 
 !! end
 
+!! test
+Accept "||" in table headings
+!! input
+{|
+!h1 || h2
+|}
+!! result
+<table>
+<tr>
+<th>h1 </th>
+<th> h2
+</th></tr></table>
+
+!! end
+
+!! test
+Accept "||" in indented table headings
+!! input
+:{|
+!h1 || h2
+|}
+!! result
+<dl><dd><table>
+<tr>
+<th>h1 </th>
+<th> h2
+</th></tr></table></dd></dl>
+
+!! end
+
+!! test
+Accept empty attributes in td/th cells (td/th cells starting with leading ||)
+!! input
+{|
+!| h1
+|| a
+|}
+!! result
+<table>
+<tr>
+<th> h1
+</th>
+<td> a
+</td></tr></table>
+
+!! end
+
 !!test
-Allow +/- in 2nd and later cells in a row
+Accept "| !" at start of line in tables (ignore !-attribute)
 !!input
 {|
-| 1 || 2 || 3
 |-
-| 1 || +2 || -3
+| !style="color:red" | bar
 |}
 !!result
 <table>
+
+<tr>
+<td> bar
+</td></tr></table>
+
+!!end
+
+!!test
+Allow +/- in 2nd and later cells in a row, in 1st cell when td-attrs are present, or in 1st cell when there is a space between "|" and +/- 
+!!input
+{|
+|-
+|style='color:red;'|+1
+|style='color:blue;'|-1
+|-
+| 1 || 2 || 3
+| 1 ||+2 ||-3
+|-
+| +1
+| -1
+|}
+!!result
+<table>
+
+<tr>
+<td style="color:red;">+1
+</td>
+<td style="color:blue;">-1
+</td></tr>
 <tr>
 <td> 1 </td>
 <td> 2 </td>
 <td> 3
+</td>
+<td> 1 </td>
+<td>+2 </td>
+<td>-3
 </td></tr>
 <tr>
-<td> 1 </td>
-<td> +2 </td>
-<td> -3
+<td> +1
+</td>
+<td> -1
 </td></tr></table>
 
 !!end
@@ -2482,12 +2965,12 @@ Allow +/- in 2nd and later cells in a row
 Table rowspan
 !! input
 {| border=1
-| Cell 1, row 1 
-|rowspan=2| Cell 2, row 1 (and 2) 
-| Cell 3, row 1 
-|- 
-| Cell 1, row 2 
-| Cell 3, row 2 
+| Cell 1, row 1
+|rowspan=2| Cell 2, row 1 (and 2)
+| Cell 3, row 1
+|-
+| Cell 1, row 2
+| Cell 3, row 2
 |}
 !! result
 <table border="1">
@@ -2592,6 +3075,55 @@ Indented table markup mixed with indented pre content (proposed in bug 6200)
 
 !! end
 
+!! test
+Template-generated table cell attributes and cell content
+!! input
+{|
+|{{table_attribs}}
+|}
+!! result
+<table>
+<tr>
+<td style="color: red"> Foo
+</td></tr></table>
+
+!! end
+
+!! test
+Table with row followed by newlines and table heading
+!! input
+{|
+|-
+
+! foo
+|}
+!! result
+<table>
+
+
+<tr>
+<th> foo
+</th></tr></table>
+
+!! end
+
+# FIXME: Preserve the attribute properly (with an empty string as value) in
+# the PHP parser. Parsoid implements the behavior below.
+!! test
+Table attributes with empty value
+!! options
+disabled
+!! input
+{|
+| style=| hello
+|}
+!! result
+<table>
+<tr>
+<td style=""> hello
+</td></tr></table>
+
+!! end
 
 ###
 ### Internal links
@@ -2674,6 +3206,15 @@ Link with suffix
 [[Main Page]]xxx, [[Main Page]]XXX, [[Main Page]]!!!
 !! result
 <p><a href="/wiki/Main_Page" title="Main Page">Main Pagexxx</a>, <a href="/wiki/Main_Page" title="Main Page">Main Page</a>XXX, <a href="/wiki/Main_Page" title="Main Page">Main Page</a>!!!
+</p>
+!! end
+
+!! test
+Link with HTML entity in suffix / tail
+!! input
+[[Main Page]]&quot;, [[Main Page]]&#97;
+!! result
+<p><a href="/wiki/Main_Page" title="Main Page">Main Page</a>&quot;, <a href="/wiki/Main_Page" title="Main Page">Main Page</a>&#97;
 </p>
 !! end
 
@@ -2870,6 +3411,18 @@ Plain link to protocol-relative URL with link text
 [[//www.example.com Link text]]
 !! result
 <p>[<a rel="nofollow" class="external text" href="//www.example.com">Link text</a>]
+</p>
+!! end
+
+!! test
+Plain link to page with question mark in title
+!! input
+[[A?b]]
+
+[[A?b|Baz]]
+!! result
+<p><a href="/wiki/A%3Fb" title="A?b">A?b</a>
+</p><p><a href="/wiki/A%3Fb" title="A?b">Baz</a>
 </p>
 !! end
 
@@ -3140,6 +3693,15 @@ language=ln
 !! end
 
 !! test
+Broken br tag sanitization
+!! input
+</br>
+!! result
+<p>&lt;/br&gt;
+</p>
+!! end
+
+!! test
 Incorrecly removing closing slashes from correctly formed XHTML
 !! input
 <br style="clear:both;" />
@@ -3252,6 +3814,15 @@ Horizontal ruler -- <4 dashes render as plain text
 !! result
 <p>---
 </p>
+!! end
+
+!! test
+Horizontal ruler -- Supports content following dashes on same line
+!! input
+---- Foo
+!! result
+<hr /> Foo
+
 !! end
 
 ###
@@ -3534,6 +4105,20 @@ List interrupted by empty line or heading
 
 !!end
 
+!!test
+Multiple list tags generated by templates
+!!input
+{{echo|<li>}}a
+{{echo|<li>}}b
+{{echo|<li>}}c
+!!result
+<li>a
+<li>b
+<li>c</li>
+</li>
+</li>
+
+!!end
 
 ###
 ### Magic Words
@@ -3980,6 +4565,24 @@ Nonexistent template
 </p>
 !! end
 
+!! test
+Template with invalid target containing tags
+!! input
+{{a<b>b</b>|{{echo|foo}}|{{echo|a}}={{echo|b}}|a = b}}
+!! result
+<p>{{a<b>b</b>|foo|a=b|a = b}}
+</p>
+!! end
+
+!! test
+Template with invalid target containing unclosed tag
+!! input
+{{a<b>|{{echo|foo}}|{{echo|a}}={{echo|b}}|a = b}}
+!! result
+<p>{{a<b>|foo|a=b|a = b}}</b>
+</p>
+!! end
+
 !! article
 Template:test
 !! text
@@ -4183,7 +4786,7 @@ Template with complex arguments
 !! test
 BUG 553: link with two variables in a piped link
 !! input
-{| 
+{|
 |[[{{{1}}}|{{{2}}}]]
 |}
 !! result
@@ -4291,9 +4894,9 @@ Template from main namespace
 !! article
 Template:table
 !! text
-{| 
+{|
 | 1 || 2
-|- 
+|-
 | 3 || 4
 |}
 !! endarticle
@@ -4346,6 +4949,20 @@ BUG 41: Template parameters shown as broken links
 </p>
 !! end
 
+!! test
+Template with targets containing wikilinks
+!! input
+{{[[foo]]}}
+
+{{[[{{echo|foo}}]]}}
+
+{{{{echo|[[foo}}]]}}
+!! result
+<p>{{<a href="/index.php?title=Foo&amp;action=edit&amp;redlink=1" class="new" title="Foo (page does not exist)">foo</a>}}
+</p><p>{{<a href="/index.php?title=Foo&amp;action=edit&amp;redlink=1" class="new" title="Foo (page does not exist)">foo</a>}}
+</p><p>{{[[foo}}]]
+</p>
+!! end
 
 !! article
 Template:MSGNW test
@@ -4436,6 +5053,13 @@ Foo<noinclude>zar</noinclude><includeonly>bar</includeonly>
 !! end
 
 !! test
+Un-closed <noinclude>
+!! input
+<noinclude>
+!! result
+!! end
+
+!! test
 <onlyinclude> on a page
 !! input
 <onlyinclude>Foo</onlyinclude>bar
@@ -4443,6 +5067,47 @@ Foo<noinclude>zar</noinclude><includeonly>bar</includeonly>
 <p>Foobar
 </p>
 !! end
+
+!! test
+Un-closed <onlyinclude>
+!! input
+<onlyinclude>
+!! result
+!! end
+
+!!test
+Self-closed noinclude, includeonly, onlyinclude tags
+!!input
+<noinclude />
+<includeonly />
+<onlyinclude />
+!!result
+<p><br />
+</p>
+!!end
+
+!!test
+Unbalanced includeonly and noinclude tags
+!!input
+{|
+|a</noinclude>
+|b</noinclude></noinclude>
+|c</noinclude></includeonly>
+|d</includeonly></includeonly>
+|}
+!!result
+<table>
+<tr>
+<td>a
+</td>
+<td>b
+</td>
+<td>c&lt;/includeonly&gt;
+</td>
+<td>d&lt;/includeonly&gt;&lt;/includeonly&gt;
+</td></tr></table>
+
+!!end
 
 !! article
 Template:Includeonly section
@@ -4500,6 +5165,13 @@ section=1
 ==Section 1==
 !! result
 ==Section 1==
+!! end
+
+!! test
+Un-closed <includeonly>
+!! input
+<includeonly>
+!! result
 !! end
 
 ###
@@ -4785,7 +5457,7 @@ Templates: HTML Tag: 6. Generation of end piece of HTML attr value
 !!end
 
 !!test
-Templates: Tables: 1. Generating start of a HTML table
+Templates: HTML Tables: 1. Generating start of a HTML table
 !!input
 {{echo|<table><tr><td>foo</td>}}</tr></table>
 !!result
@@ -4794,7 +5466,7 @@ Templates: Tables: 1. Generating start of a HTML table
 !!end
 
 !!test
-Templates: Tables: 2a. Generating middle of a HTML table
+Templates: HTML Tables: 2a. Generating middle of a HTML table
 !!input
 <table><tr>{{echo|<td>foo</td>}}</tr></table>
 !!result
@@ -4803,7 +5475,7 @@ Templates: Tables: 2a. Generating middle of a HTML table
 !!end
 
 !!test
-Templates: Tables: 2b. Generating middle of a HTML table
+Templates: HTML Tables: 2b. Generating middle of a HTML table
 !!input
 <table>{{echo|<tr><td>foo</td></tr>}}</table>
 !!result
@@ -4812,7 +5484,7 @@ Templates: Tables: 2b. Generating middle of a HTML table
 !!end
 
 !!test
-Templates: Tables: 3. Generating end of a HTML table
+Templates: HTML Tables: 3. Generating end of a HTML table
 !!input
 <table><tr>{{echo|<td>foo</td></tr></table>}}
 !!result
@@ -4821,7 +5493,7 @@ Templates: Tables: 3. Generating end of a HTML table
 !!end
 
 !!test
-Templates: Tables: 4a. Generating a single tag of a HTML table
+Templates: HTML Tables: 4a. Generating a single tag of a HTML table
 !!input
 {{echo|<table>}}<tr><td>foo</td></tr></table>
 !!result
@@ -4830,7 +5502,7 @@ Templates: Tables: 4a. Generating a single tag of a HTML table
 !!end
 
 !!test
-Templates: Tables: 4b. Generating a single tag of a HTML table
+Templates: HTML Tables: 4b. Generating a single tag of a HTML table
 !!input
 <table>{{echo|<tr>}}<td>foo</td></tr></table>
 !!result
@@ -4839,7 +5511,7 @@ Templates: Tables: 4b. Generating a single tag of a HTML table
 !!end
 
 !!test
-Templates: Tables: 4c. Generating a single tag of a HTML table
+Templates: HTML Tables: 4c. Generating a single tag of a HTML table
 !!input
 <table><tr>{{echo|<td>}}foo</td></tr></table>
 !!result
@@ -4848,7 +5520,7 @@ Templates: Tables: 4c. Generating a single tag of a HTML table
 !!end
 
 !!test
-Templates: Tables: 4d. Generating a single tag of a HTML table
+Templates: HTML Tables: 4d. Generating a single tag of a HTML table
 !!input
 <table><tr><td>foo{{echo|</td>}}</tr></table>
 !!result
@@ -4857,7 +5529,7 @@ Templates: Tables: 4d. Generating a single tag of a HTML table
 !!end
 
 !!test
-Templates: Tables: 4e. Generating a single tag of a HTML table
+Templates: HTML Tables: 4e. Generating a single tag of a HTML table
 !!input
 <table><tr><td>foo</td>{{echo|</tr>}}</table>
 !!result
@@ -4866,11 +5538,106 @@ Templates: Tables: 4e. Generating a single tag of a HTML table
 !!end
 
 !!test
-Templates: Tables: 4f. Generating a single tag of a HTML table
+Templates: HTML Tables: 4f. Generating a single tag of a HTML table
 !!input
 <table><tr><td>foo</td></tr>{{echo|</table>}}
 !!result
 <table><tr><td>foo</td></tr></table>
+
+!!end
+
+!!test
+Templates: Wiki Tables: 1. Fostering of entire template content
+!!input
+{|
+{{echo|a}}
+|}
+!!result
+<table>
+a
+<tr><td></td></tr></table>
+
+!!end
+
+!!test
+Templates: Wiki Tables: 2. Fostering of partial template content
+!!input
+{|
+{{echo|a
+<div>b</div>}}
+|}
+!!result
+<table>
+a
+<div>b</div>
+<tr><td></td></tr></table>
+
+!!end
+
+!!test
+Templates: Wiki Tables: 3. td-content via multiple templates
+!!input
+{|
+{{echo|{{pipe}}a}}{{echo|b}}
+|}
+!!result
+<table>
+<tr>
+<td>ab
+</td></tr></table>
+
+!!end
+
+!!test
+Templates: Wiki Tables: 4. Templated tags, no content
+!!input
+{{tbl-start}}
+{{tbl-end}}
+!!result
+<table>
+<tr><td></td></tr></table>
+
+!!end
+
+!!test
+Templates: Wiki Tables: 4. Templated tags, regular td-tags
+!!input
+{{tbl-start}}
+|foo
+{{tbl-end}}
+!!result
+<table>
+<tr>
+<td>foo
+</td></tr></table>
+
+!!end
+
+!!test
+Templates: Wiki Tables: 4. Templated tags, templated td-tags
+!!input
+{{tbl-start}}
+{{!}}foo
+{{tbl-end}}
+!!result
+<table>
+<tr>
+<td>foo
+</td></tr></table>
+
+!!end
+
+!!test
+Templates: Lists: Multi-line list-items via templates
+!!input
+*{{echo|a {{nonexistent|
+unused}}}}
+*{{echo|b {{nonexistent|
+unused}}}}
+!!result
+<ul><li>a <a href="/index.php?title=Template:Nonexistent&amp;action=edit&amp;redlink=1" class="new" title="Template:Nonexistent (page does not exist)">Template:Nonexistent</a>
+</li><li>b <a href="/index.php?title=Template:Nonexistent&amp;action=edit&amp;redlink=1" class="new" title="Template:Nonexistent (page does not exist)">Template:Nonexistent</a>
+</li></ul>
 
 !!end
 
@@ -5691,6 +6458,19 @@ Image with multiple captions -- only last one is accepted
 !! end
 
 !! test
+Image with width attribute at different positions
+!! input
+[[Image:foobar.jpg|200px|right|Caption]]
+[[Image:foobar.jpg|right|200px|Caption]]
+[[Image:foobar.jpg|right|Caption|200px]]
+!! result
+<div class="floatright"><a href="/wiki/File:Foobar.jpg" class="image" title="Caption"><img alt="Caption" src="http://example.com/images/thumb/3/3a/Foobar.jpg/200px-Foobar.jpg" width="200" height="23" srcset="http://example.com/images/thumb/3/3a/Foobar.jpg/300px-Foobar.jpg 1.5x, http://example.com/images/thumb/3/3a/Foobar.jpg/400px-Foobar.jpg 2x" /></a></div>
+<div class="floatright"><a href="/wiki/File:Foobar.jpg" class="image" title="Caption"><img alt="Caption" src="http://example.com/images/thumb/3/3a/Foobar.jpg/200px-Foobar.jpg" width="200" height="23" srcset="http://example.com/images/thumb/3/3a/Foobar.jpg/300px-Foobar.jpg 1.5x, http://example.com/images/thumb/3/3a/Foobar.jpg/400px-Foobar.jpg 2x" /></a></div>
+<div class="floatright"><a href="/wiki/File:Foobar.jpg" class="image" title="Caption"><img alt="Caption" src="http://example.com/images/thumb/3/3a/Foobar.jpg/200px-Foobar.jpg" width="200" height="23" srcset="http://example.com/images/thumb/3/3a/Foobar.jpg/300px-Foobar.jpg 1.5x, http://example.com/images/thumb/3/3a/Foobar.jpg/400px-Foobar.jpg 2x" /></a></div>
+
+!! end
+
+!! test
 Image with link parameter, wiki target
 !! input
 [[Image:foobar.jpg|link=Target page]]
@@ -6199,6 +6979,46 @@ pst
 [[Category:{{echo|Foo}}|{{echo|Bar}}]]
 !! result
 [[Category:{{echo|Foo}}|{{echo|Bar}}]]
+!! end
+
+!! test
+Category / paragraph interactions
+!! input
+Foo [[Category:Baz]] Bar
+
+Foo [[Category:Baz]]
+Bar
+
+Foo
+[[Category:Baz]]
+Bar
+
+Foo
+[[Category:Baz]] Bar
+
+Foo
+[[Category:Baz]]
+ [[Category:Baz]]
+[[Category:Baz]]
+Bar
+
+[[Category:Baz]]
+ [[Category:Baz]]
+[[Category:Baz]]
+
+[[Category:Baz]]
+ {{echo|[[Category:Baz]]}}
+[[Category:Baz]]
+!! result
+<p>Foo Bar
+</p><p>Foo
+Bar
+</p><p>Foo
+Bar
+</p><p>Foo Bar
+</p><p>Foo
+Bar
+</p>
 !! end
 
 ###
@@ -6730,6 +7550,37 @@ div with illegal double attributes
 
 !!end
 
+# FIXME: produce empty string instead of "class" in the PHP parser, following
+# the HTML5 spec.
+!! test
+div with empty attribute value, space before equals
+!! options
+disabled
+!! input
+<div class =>HTML rocks</div>
+!! result
+<div class="">HTML rocks</div>
+
+!! end
+
+# This it very inconsistent in the PHP parser: it returns 
+# class="class" if there is a space between the name and the equal sign (see
+# 'div with empty attribute value, space before equals'), but strips the
+# attribute completely if the space is missing. We hope that not much content
+# depends on this, so are implementing the behavior below in Parsoid for
+# consistencies' sake. Disabled for the PHP parser. 
+# FIXME: fix this behavior in the PHP parser?
+!! test
+div with empty attribute value, no space before equals
+!! options
+disabled
+!! input
+<div class=>HTML rocks</div>
+!! result
+<div class="">HTML rocks</div>
+
+!! end
+
 !! test
 HTML multiple attributes correction
 !! input
@@ -6762,6 +7613,23 @@ DIV IN UPPERCASE
 
 !!end
 
+!! test
+Non-ASCII pseudo-tags are rendered as text
+!! input
+<khyô>
+!! result
+<p>&lt;khyô&gt;
+</p>
+!! end
+
+!! test
+Pseudo-tag with URL 'name' renders as url link
+!! input
+<http://example.com/>
+!! result
+<p>&lt;<a rel="nofollow" class="external free" href="http://example.com/">http://example.com/</a>&gt;
+</p>
+!! end
 
 !! test
 text with amp in the middle of nowhere
@@ -7546,6 +8414,30 @@ disabled
 <br id="foo" /><br id="foo" />
 !! result
 Something need to be done. foo-2 ? 
+!! end
+
+!! test
+Sanitizer: Validating that <meta> and <link> work, but only for Microdata
+!! input
+<div itemscope>
+	<meta itemprop="hello" content="world">
+	<meta http-equiv="refresh" content="5">
+	<meta itemprop="hello" http-equiv="refresh" content="5">
+	<link itemprop="hello" href="{{SERVER}}">
+	<link rel="stylesheet" href="{{SERVER}}">
+	<link rel="stylesheet" itemprop="hello" href="{{SERVER}}">
+</div>
+!! result
+<div itemscope="itemscope">
+<p>	<meta itemprop="hello" content="world" />
+	&lt;meta http-equiv="refresh" content="5"&gt;
+	<meta itemprop="hello" content="5" />
+</p>
+	<link itemprop="hello" href="http&#58;//Britney-Spears" />
+	&lt;link rel="stylesheet" href="<a rel="nofollow" class="external free" href="http://Britney-Spears">http://Britney-Spears</a>"&gt;
+	<link itemprop="hello" href="http&#58;//Britney-Spears" />
+</div>
+
 !! end
 
 !! test
@@ -10071,6 +10963,29 @@ Nested: -{zh-hans:Hi -{zh-cn:China;zh-sg:Singapore;}-;zh-hant:Hello -{zh-tw:Taiw
 !! end
 
 !! test
+Proper conversion of text in external links
+!! options
+language=sr variant=sr-ec
+!! input
+http://www.google.com
+gopher://www.google.com
+[http://www.google.com http://www.google.com]
+[gopher://www.google.com gopher://www.google.com]
+[https://www.google.com irc://www.google.com]
+[ftp://www.google.com www.google.com/ftp://dir]
+[//www.google.com www.google.com]
+!! result
+<p><a rel="nofollow" class="external free" href="http://www.google.com">http://www.google.com</a>
+<a rel="nofollow" class="external free" href="gopher://www.google.com">gopher://www.google.com</a>
+<a rel="nofollow" class="external free" href="http://www.google.com">http://www.google.com</a>
+<a rel="nofollow" class="external free" href="gopher://www.google.com">gopher://www.google.com</a>
+<a rel="nofollow" class="external text" href="https://www.google.com">irc://www.google.com</a>
+<a rel="nofollow" class="external text" href="ftp://www.google.com">www.гоогле.цом/фтп://дир</a>
+<a rel="nofollow" class="external text" href="//www.google.com">www.гоогле.цом</a>
+</p>
+!! end
+
+!! test
 Do not convert roman numbers to language variants
 !! options
 language=sr variant=sr-ec
@@ -10115,6 +11030,29 @@ Bug 529: Uncovered bullet
 * Foo {{bullet}}
 !! result
 <ul><li> Foo 
+</li><li> Bar
+</li></ul>
+
+!! end
+
+# Plain MediaWiki does not remove empty lists, but tidy actually does.
+# Templates in Wikipedia rely on this behavior, as tidy has always been
+# enabled there. These tests are normally run *without* tidy, so specify the
+# full output here. 
+# To test realistic parsing behavior, apply a tidy-like transformation to both
+# the expected output and your parser's output.
+!! test
+Bug 529: Uncovered bullet leaving empty list, normally removed by tidy
+!! input
+******* Foo {{bullet}}
+!! result
+<ul><li><ul><li><ul><li><ul><li><ul><li><ul><li><ul><li> Foo 
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ul>
 </li><li> Bar
 </li></ul>
 
@@ -11016,22 +11954,6 @@ Bug 31098 Template which includes system messages which includes the template
 !! end
 
 !! test
-Deprecated presentational attributes are converted to css
-!! input
-{|
-| valign=top align=left width=100 height=25% | Asdf
-|}
-<ul type="disc"></ul>
-!! result
-<table>
-<tr>
-<td style="text-align: left; height: 25%; vertical-align: top; width: 100px;"> Asdf
-</td></tr></table>
-<ul style="list-style-type: disc;"></ul>
-
-!! end
-
-!! test
 Bug31490 Turkish: ucfirst 'blah'
 !! options
 language=tr
@@ -11500,6 +12422,782 @@ disabled
 :a
 </p>
 !!end
+
+#### The following section of tests are primarily to test
+#### wikitext escaping capabilities of Parsoid.
+#### A lot of the tests are disabled for the PHP parser either
+#### because of minor newline diffs or other reasons.
+#### As Parsoid serializer can handle newlines and other HTML
+#### more robustly, some of these tests might get reenabled
+#### for the PHP parser.
+
+#### --------------- Headings ---------------
+#### 0. Unnested
+#### 1. Nested inside html <h1>=foo=</h1>
+#### 2. Outside heading nest on a single line <h1>foo</h1>*bar
+#### 3. Nested inside html with wikitext split by html tags
+#### 4. No escape needed
+#### 5. Empty headings <h1></h1>
+#### 6. Heading chars in SOL context
+#### ----------------------------------------
+!! test
+Headings: 0. Unnested
+!! input
+<nowiki>=foo=</nowiki>
+
+<nowiki>=foo</nowiki>''a''=
+!! result
+<p>=foo=
+</p><p>=foo<i>a</i>=
+</p>
+!!end
+
+!! test
+Headings: 1. Nested inside html
+!! options
+disabled
+!! input
+=<nowiki>=foo=</nowiki>=
+==<nowiki>=foo=</nowiki>==
+===<nowiki>=foo=</nowiki>===
+====<nowiki>=foo=</nowiki>====
+=====<nowiki>=foo=</nowiki>=====
+======<nowiki>=foo=</nowiki>======
+!! result
+<h1>=foo=</h1>
+<h2>=foo=</h2>
+<h3>=foo=</h3>
+<h4>=foo=</h4>
+<h5>=foo=</h5>
+<h6>=foo=</h6>
+!!end
+
+!! test
+Headings: 2. Outside heading nest on a single line <h1>foo</h1>*bar
+!! options
+disabled
+!! input
+=foo=
+<nowiki>*bar</nowiki>
+=foo=
+=bar
+=foo=
+<nowiki>=bar=</nowiki>
+!! result
+<h1>foo</h1>*bar
+<h1>foo</h1>=bar
+<h1>foo</h1>=bar=
+!!end
+
+!! test
+Headings: 3. Nested inside html with wikitext split by html tags
+!! options
+disabled
+!! input
+=<nowiki>=</nowiki>'''bold'''foo==
+!! result
+<h1>=<b>bold</b>foo=</h1>
+!!end
+
+!! test
+Headings: 4. No escaping needed (testing just h1 and h2)
+!! options
+disabled
+!! input
+==foo=
+=foo==
+===foo==
+==foo===
+=''=''foo==
+===
+!! result
+<h1>=foo</h1>
+<h1>foo=</h1>
+<h2>=foo</h2>
+<h2>foo=</h2>
+<h1><i>=</i>foo=</h1>
+<h1>=</h1>
+!!end
+
+!! test
+Headings: 5. Empty headings
+!! options
+disabled
+!! input
+=<nowiki></nowiki>=
+==<nowiki></nowiki>==
+===<nowiki></nowiki>===
+====<nowiki></nowiki>====
+=====<nowiki></nowiki>=====
+======<nowiki></nowiki>======
+!! result
+<h1></h1>
+<h2></h2>
+<h3></h3>
+<h4></h4>
+<h5></h5>
+<h6></h6>
+!!end
+
+!! test
+Headings: 6. Heading chars in SOL context
+!! options
+disabled
+!! input
+<!--cmt--><nowiki>=h1=</nowiki>
+!! result
+<p><!--cmt-->=h1=
+</p>
+!!end
+
+#### --------------- Lists ---------------
+#### 0. Outside nests (*foo, etc.)
+#### 1. Nested inside html <ul><li>*foo</li></ul>
+#### 2. Inside definition lists
+#### 3. Only bullets at start should be escaped
+#### 4. No escapes needed
+#### 5. No unnecessary escapes
+#### 6. Escape bullets in SOL position
+#### 7. Escape bullets in a multi-line context
+#### ----------------------------------------
+
+!! test
+Lists: 0. Outside nests
+!! input
+<nowiki>*foo</nowiki>
+
+<nowiki>#foo</nowiki>
+!! result
+<p>*foo
+</p><p>#foo
+</p>
+!!end
+
+!! test
+Lists: 1. Nested inside html
+!! input
+*<nowiki>*foo</nowiki>
+
+*<nowiki>#foo</nowiki>
+
+*<nowiki>:foo</nowiki>
+
+*<nowiki>;foo</nowiki>
+
+#<nowiki>*foo</nowiki>
+
+#<nowiki>#foo</nowiki>
+
+#<nowiki>:foo</nowiki>
+
+#<nowiki>;foo</nowiki>
+!! result
+<ul><li>*foo
+</li></ul>
+<ul><li>#foo
+</li></ul>
+<ul><li>:foo
+</li></ul>
+<ul><li>;foo
+</li></ul>
+<ol><li>*foo
+</li></ol>
+<ol><li>#foo
+</li></ol>
+<ol><li>:foo
+</li></ol>
+<ol><li>;foo
+</li></ol>
+
+!!end
+
+!! test
+Lists: 2. Inside definition lists
+!! input
+;<nowiki>;foo</nowiki>
+
+;<nowiki>:foo</nowiki>
+
+;<nowiki>:foo</nowiki>
+:bar
+
+:<nowiki>:foo</nowiki>
+!! result
+<dl><dt>;foo
+</dt></dl>
+<dl><dt>:foo
+</dt></dl>
+<dl><dt>:foo
+</dt><dd>bar
+</dd></dl>
+<dl><dd>:foo
+</dd></dl>
+
+!!end
+
+!! test
+Lists: 3. Only bullets at start of text should be escaped
+!! input
+*<nowiki>*foo*bar</nowiki>
+
+*<nowiki>*foo</nowiki>''it''*bar
+!! result
+<ul><li>*foo*bar
+</li></ul>
+<ul><li>*foo<i>it</i>*bar
+</li></ul>
+
+!!end
+
+!! test
+Lists: 4. No escapes needed
+!! options
+disabled
+!! input
+*foo*bar
+
+*''foo''*bar
+
+*[[Foo]]: bar
+!! result
+<ul><li>foo*bar
+</li></ul>
+<ul><li><i>foo</i>*bar
+</li></ul>
+<ul><li><a href="Foo" rel="mw:WikiLink">Foo</a>: bar
+</li></ul>
+!!end
+
+!! test
+Lists: 5. No unnecessary escapes
+!! input
+* bar <span><nowiki>[[foo]]</nowiki></span>
+
+*=bar <span><nowiki>[[foo]]</nowiki></span>
+
+*[[bar <span><nowiki>[[foo]]</nowiki></span>
+
+*<nowiki>]]bar </nowiki><span><nowiki>[[foo]]</nowiki></span>
+
+*=bar <span>foo]]</span>=
+!! result
+<ul><li> bar <span>[[foo]]</span>
+</li></ul>
+<ul><li>=bar <span>[[foo]]</span>
+</li></ul>
+<ul><li>[[bar <span>[[foo]]</span>
+</li></ul>
+<ul><li>]]bar <span>[[foo]]</span>
+</li></ul>
+<ul><li>=bar <span>foo]]</span>=
+</li></ul>
+
+!!end
+
+!! test
+Lists: 6. Escape bullets in SOL position
+!! options
+disabled
+!! input
+<!--cmt--><nowiki>*foo</nowiki>
+!! result
+<p><!--cmt-->*foo
+</p>
+!!end
+
+!! test
+Lists: 7. Escape bullets in a multi-line context
+!! input
+<nowiki>a
+*b</nowiki>
+!! result
+<p>a
+*b
+</p>
+!!end
+
+#### --------------- HRs ---------------
+#### 1. Single line
+#### -----------------------------------
+
+!! test
+HRs: 1. Single line
+!! options
+disabled
+!! input
+----
+<nowiki>----</nowiki>
+----
+<nowiki>=foo=</nowiki>
+----
+<nowiki>*foo</nowiki>
+!! result
+<hr/>----
+<hr/>=foo=
+<hr/>*foo
+!! end
+
+#### --------------- Tables ---------------
+#### 1a. Simple example
+#### 1b. No escaping needed (!foo)
+#### 1c. No escaping needed (|foo)
+#### 1d. No escaping needed (|}foo)
+####
+#### 2a. Nested in td (<td>foo|bar</td>)
+#### 2b. Nested in td (<td>foo||bar</td>)
+#### 2c. Nested in td -- no escaping needed(<td>foo!!bar</td>)
+####
+#### 3a. Nested in th (<th>foo!bar</th>)
+#### 3b. Nested in th (<th>foo!!bar</th>)
+#### 3c. Nested in th -- no escaping needed(<th>foo||bar</th>)
+####
+#### 4a. Escape -
+#### 4b. Escape +
+#### 4c. No escaping needed
+#### --------------------------------------
+
+!! test
+Tables: 1a. Simple example
+!! input
+<nowiki>{|
+|}</nowiki>
+!! result
+<p>{|
+|}
+</p>
+!! end
+
+!! test
+Tables: 1b. No escaping needed
+!! input
+!foo
+!! result
+<p>!foo
+</p>
+!! end
+
+!! test
+Tables: 1c. No escaping needed
+!! input
+|foo
+!! result
+<p>|foo
+</p>
+!! end
+
+!! test
+Tables: 1d. No escaping needed
+!! input
+|}foo
+!! result
+<p>|}foo
+</p>
+!! end
+
+!! test
+Tables: 2a. Nested in td
+!! options
+disabled
+!! input
+{|
+|<nowiki>foo|bar</nowiki>
+|}
+!! result
+<table>
+<tr><td>foo|bar
+</td></tr></table>
+
+!! end
+
+!! test
+Tables: 2b. Nested in td
+!! options
+disabled
+!! input
+{|
+|<nowiki>foo||bar</nowiki>
+|''it''<nowiki>foo||bar</nowiki>
+|}
+!! result
+<table>
+<tr><td>foo||bar
+</td><td><i>it</i>foo||bar
+</td></tr></table>
+
+!! end
+
+!! test
+Tables: 2c. Nested in td -- no escaping needed
+!! options
+disabled
+!! input
+{|
+|foo!!bar
+|}
+!! result
+<table>
+<tr><td>foo!!bar
+</td></tr></table>
+
+!! end
+
+!! test
+Tables: 3a. Nested in th
+!! options
+disabled
+!! input
+{|
+!foo!bar
+|}
+!! result
+<table>
+<tr><th>foo!bar
+</th></tr></table>
+
+!! end
+
+!! test
+Tables: 3b. Nested in th
+!! options
+disabled
+!! input
+{|
+!<nowiki>foo!!bar</nowiki>
+|}
+!! result
+<table>
+<tr><th>foo!!bar
+</th></tr></table>
+
+!! end
+
+!! test
+Tables: 3c. Nested in th -- no escaping needed
+!! options
+disabled
+!! input
+{|
+!foo||bar
+|}
+!! result
+<table>
+<tr><th>foo||bar
+</th></tr></table>
+
+!! end
+
+!! test
+Tables: 4a. Escape -
+!! options
+disabled
+!! input
+{|
+|-
+!-bar
+|-
+|<nowiki>-bar</nowiki>
+|}
+!! result
+<table><tbody>
+<tr><th>-bar</th></tr>
+<tr><td>-bar</td></tr>
+</tbody></table>
+!! end
+
+!! test
+Tables: 4b. Escape +
+!! options
+disabled
+!! input
+{|
+|-
+!+bar
+|-
+|<nowiki>+bar</nowiki>
+|}
+!! result
+<table><tbody>
+<tr><th>+bar</th></tr>
+<tr><td>+bar</td></tr>
+</tbody></table>
+!! end
+
+!! test
+Tables: 4c. No escaping needed
+!! options
+disabled
+!! input
+{|
+|-
+|foo-bar
+|foo+bar
+|-
+|''foo''-bar
+|''foo''+bar
+|}
+!! result
+<table><tbody>
+<tr><td>foo-bar</td><td>foo+bar</td></tr>
+<tr><td><i>foo</i>-bar</td><td><i>foo</i>+bar</td></tr>
+</tbody></table>
+!! end
+
+#### --------------- Links ---------------
+#### 1. Quote marks in link text
+#### 2. Wikilinks: Escapes needed
+#### 3. Wikilinks: No escapes needed
+#### 4. Extlinks: Escapes needed
+#### 5. Extlinks: No escapes needed
+#### --------------------------------------
+!! test
+Links 1. Quote marks in link text
+!! options
+disabled
+!! input
+[[Foo|<nowiki>Foo''boo''</nowiki>]]
+!! result
+<a rel="mw:WikiLink" href="Foo" data-parsoid="{&quot;tsr&quot;:[0,7],&quot;contentPos&quot;:[5,5],&quot;src&quot;:&quot;[[Foo]]&quot;,&quot;bsp&quot;:[0,7],&quot;stx&quot;:&quot;simple&quot;}">Foo''boo''</a>
+!! end
+
+!! test
+Links 2. WikiLinks: Escapes needed
+!! options
+disabled
+!! input
+[[Foo|<nowiki>[Foobar]</nowiki>]]
+[[Foo|<nowiki>Foobar]</nowiki>]]
+[[Foo|<nowiki>x [Foobar] x</nowiki>]]
+[[Foo|<nowiki>x [http://google.com g] x</nowiki>]]
+[[Foo|<nowiki>[[Bar]]</nowiki>]]
+[[Foo|<nowiki>x [[Bar]] x</nowiki>]]
+[[Foo|<nowiki>|Bar</nowiki>]]
+!! result
+<a href="Foo" rel="mw:WikiLink">[Foobar]</a>
+<a href="Foo" rel="mw:WikiLink">Foobar]</a>
+<a href="Foo" rel="mw:WikiLink">x [Foobar] x</a>
+<a href="Foo" rel="mw:WikiLink">x [http://google.com g] x</a>
+<a href="Foo" rel="mw:WikiLink">[[Bar]]</a>
+<a href="Foo" rel="mw:WikiLink">x [[Bar]] x</a>
+<a href="Foo" rel="mw:WikiLink">|Bar</a>
+!! end
+
+!! test
+Links 3. WikiLinks: No escapes needed
+!! options
+disabled
+!! input
+[[Foo|[Foobar]]
+[[Foo|foo|bar]]
+!! result
+<a href="Foo" rel="mw:WikiLink">[Foobar</a>
+<a href="Foo" rel="mw:WikiLink">foo|bar</a>
+!! end
+
+!! test
+Links 4. ExtLinks: Escapes needed
+!! options
+disabled
+!! input
+[http://google.com <nowiki>[google]</nowiki>]
+[http://google.com <nowiki>google]</nowiki>]
+!! result
+<a href="http://google.com" rel="mw:ExtLink">[google]</a>
+<a href="http://google.com" rel="mw:ExtLink">google]</a>
+!! end
+
+!! test
+Links 5. ExtLinks: No escapes needed
+!! options
+disabled
+!! input
+[http://google.com [google]
+!! result
+<a href="http://google.com" rel="mw:ExtLink">[google</a>
+!! end
+
+#### --------------- Quotes ---------------
+#### 1. Quotes inside <b> and <i>
+#### 2. Link fragments separated by <i> and <b> tags
+#### 3. Link fragments inside <i> and <b>
+#### --------------------------------------
+!! test
+1. Quotes inside <b> and <i>
+!! input
+''<nowiki>'foo'</nowiki>''
+''<nowiki>''foo''</nowiki>''
+''<nowiki>'''foo'''</nowiki>''
+'''<nowiki>'foo'</nowiki>'''
+'''<nowiki>''foo''</nowiki>'''
+'''<nowiki>'''foo'''</nowiki>'''
+'''<nowiki>foo'</nowiki>''<nowiki>bar'</nowiki>''baz'''
+!! result
+<p><i>'foo'</i>
+<i>''foo''</i>
+<i>'''foo'''</i>
+<b>'foo'</b>
+<b>''foo''</b>
+<b>'''foo'''</b>
+<b>foo'<i>bar'</i>baz</b>
+</p>
+!! end
+
+!! test
+2. Link fragments separated by <i> and <b> tags
+!! input
+[[''foo''<nowiki>hello]]</nowiki>
+
+[['''foo'''<nowiki>hello]]</nowiki>
+!! result
+<p>[[<i>foo</i>hello]]
+</p><p>[[<b>foo</b>hello]]
+</p>
+!! end
+
+!! test
+2. Link fragments inside <i> and <b>
+(FIXME: Escaping one or both of [[ and ]] is also acceptable --
+ this is one of the shortcomings of this format)
+!! input
+''[[foo''<nowiki>]]</nowiki>
+
+'''[[foo'''<nowiki>]]</nowiki>
+!! result
+<p><i>[[foo</i>]]
+</p><p><b>[[foo</b>]]
+</p>
+!! end
+
+#### --------------- Paragraphs ---------------
+#### 1. No unnecessary escapes
+#### --------------------------------------
+
+!! test
+1. No unnecessary escapes
+!! input
+bar <span><nowiki>[[foo]]</nowiki></span>
+
+=bar <span><nowiki>[[foo]]</nowiki></span>
+
+[[bar <span><nowiki>[[foo]]</nowiki></span>
+
+<nowiki>]]bar </nowiki><span><nowiki>[[foo]]</nowiki></span>
+
+<nowiki>=bar </nowiki><span>foo]]</span>=
+!! result
+<p>bar <span>[[foo]]</span>
+</p><p>=bar <span>[[foo]]</span>
+</p><p>[[bar <span>[[foo]]</span>
+</p><p>]]bar <span>[[foo]]</span>
+</p><p>=bar <span>foo]]</span>=
+</p>
+!!end
+
+#### --------------- PRE ------------------
+#### 1. Leading space in SOL context should be escaped
+#### --------------------------------------
+!! test
+1. Leading space in SOL context should be escaped
+!! options
+disabled
+!! input
+<nowiki> foo</nowiki>
+<!--cmt--><nowiki> foo</nowiki>
+!! result
+<p> foo
+<!--cmt--> foo
+</p>
+!! end
+
+#### --------------- HTML tags ---------------
+#### 1. a tags
+#### 2. other tags
+#### 3. multi-line html tag
+#### --------------------------------------
+!! test
+1. a tags
+!! options
+disabled
+!! input
+<a href="http://google.com">google</a>
+!! result
+&lt;a href=&quot;http://google.com&quot;&gt;google&lt;/a&gt;
+!! end
+
+!! test
+2. other tags
+!! input
+<nowiki><div>foo</div>
+<div style="color:red">foo</div></nowiki>
+!! result
+<p>&lt;div&gt;foo&lt;/div&gt;
+&lt;div style=&quot;color:red&quot;&gt;foo&lt;/div&gt;
+</p>
+!! end
+
+!! test
+3. multi-line html tag
+!! input
+<nowiki><div
+>foo</div
+></nowiki>
+!! result
+<p>&lt;div
+&gt;foo&lt;/div
+&gt;
+</p>
+!! end
+
+#### --------------- Others ---------------
+!! test
+Escaping nowikis
+!! input
+&lt;nowiki&gt;foo&lt;/nowiki&gt;
+!! result
+<p>&lt;nowiki&gt;foo&lt;/nowiki&gt;
+</p>
+!! end
+
+!! test
+Tag-like HTML structures are passed through as text
+!! input
+<x y>
+
+<x.y>
+
+<x-y>
+
+1>2
+
+x<y
+
+a>b
+
+1<d e>f
+!! result
+<p>&lt;x y&gt;
+</p><p>&lt;x.y&gt;
+</p><p>&lt;x-y&gt;
+</p><p>1&gt;2
+</p><p>x&lt;y
+</p><p>a&gt;b
+</p><p>1&lt;d e&gt;f
+</p>
+!! end
+
+
+# This fails in the PHP parser (see bug 40670,
+# https://bugzilla.wikimedia.org/show_bug.cgi?id=40670), so disabled for it.
+!! test
+Tag names followed by punctuation should not be recognized as tags
+!! options
+disabled
+!! input
+<s.ome> text
+!! result
+<p>&lt;s.ome&gt text
+</p>
+!! end
+
 
 TODO:
 more images

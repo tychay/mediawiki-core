@@ -122,223 +122,79 @@ class CologneBlueTemplate extends BaseTemplate {
 		return $this->getSkin()->getLanguage()->pipeList( $s );
 	}
 
+	/**
+	 * Used in bottomLinks() to eliminate repetitive code.
+	 *
+	 * @param $key string Key to be passed to makeListItem()
+	 * @param $navlink array Navlink suitable for processNavlinkForDocument()
+	 * @param $message string Key of the message to use in place of standard text
+	 *
+	 * @return string
+	 * @fixed
+	 */
+	function processBottomLink( $key, $navlink, $message=null ) {
+		if ( !$navlink ) {
+			// Empty navlinks might be passed.
+			return null;
+		}
+
+		if ( $message ) {
+			$navlink['text'] = wfMessage( $message )->escaped();
+		}
+
+		return $this->makeListItem( $key, $this->processNavlinkForDocument( $navlink ), array( 'tag' => 'span' ) );
+	}
+
+	// @fixed
 	function bottomLinks() {
-		$sep = wfMessage( 'pipe-separator' )->escaped() . "\n";
+		$toolbox = $this->getToolbox();
+		$content_nav = $this->data['content_navigation'];
 
-		$s = '';
+		$lines = array();
+
 		if ( $this->getSkin()->getOutput()->isArticleRelated() ) {
-			$element[] = '<strong>' . $this->editThisPage() . '</strong>';
+			// First row. Regular actions.
+			$element = array();
 
-			if ( $this->getSkin()->getUser()->isLoggedIn() ) {
-				$element[] = $this->watchThisPage();
-			}
+			$editLinkMessage = $this->getSkin()->getTitle()->exists() ? 'editthispage' : 'create-this-page';
+			$element[] = $this->processBottomLink( 'edit', $content_nav['views']['edit'], $editLinkMessage );
+			$element[] = $this->processBottomLink( 'viewsource', $content_nav['views']['viewsource'], 'viewsource' );
+
+			$element[] = $this->processBottomLink( 'watch', $content_nav['actions']['watch'], 'watchthispage' );
+			$element[] = $this->processBottomLink( 'unwatch', $content_nav['actions']['unwatch'], 'unwatchthispage' );
 
 			$element[] = $this->talkLink();
-			$element[] = $this->historyLink();
-			$element[] = $this->whatLinksHere();
-			$element[] = $this->watchPageLinksLink();
 
-			$title = $this->getSkin()->getTitle();
+			$element[] = $this->processBottomLink( 'history', $content_nav['views']['history'], 'history' );
+			$element[] = $this->processBottomLink( 'info', $toolbox['info'] );
+			$element[] = $this->processBottomLink( 'whatlinkshere', $toolbox['whatlinkshere'] );
+			$element[] = $this->processBottomLink( 'recentchangeslinked', $toolbox['recentchangeslinked'] );
 
-			if (
-				$title->getNamespace() == NS_USER ||
-				$title->getNamespace() == NS_USER_TALK
-			) {
-				$id = User::idFromName( $title->getText() );
-				$ip = User::isIP( $title->getText() );
+			$element[] = $this->processBottomLink( 'contributions', $toolbox['contributions'] );
+			$element[] = $this->processBottomLink( 'emailuser', $toolbox['emailuser'] );
 
-				# Both anons and non-anons have contributions list
-				if ( $id || $ip ) {
-					$element[] = $this->userContribsLink();
-				}
+			$lines[] = $this->getSkin()->getLanguage()->pipeList( array_filter( $element ) );
 
-				if ( $this->getSkin()->showEmailUser( $id ) ) {
-					$element[] = $this->emailUserLink();
-				}
-			}
 
-			$s = implode( $element, $sep );
+			// Second row. Privileged actions.
+			$element = array();
 
-			if ( $title->getArticleID() ) {
-				$s .= "\n<br />";
+			$element[] = $this->processBottomLink( 'delete', $content_nav['actions']['delete'], 'deletethispage' );
+			$element[] = $this->processBottomLink( 'undelete', $content_nav['actions']['undelete'], 'undeletethispage' );
 
-				// Delete/protect/move links for privileged users
-				if ( $this->getSkin()->getUser()->isAllowed( 'delete' ) ) {
-					$s .= $this->deleteThisPage();
-				}
+			$element[] = $this->processBottomLink( 'protect', $content_nav['actions']['protect'], 'protectthispage' );
+			$element[] = $this->processBottomLink( 'unprotect', $content_nav['actions']['unprotect'], 'unprotectthispage' );
 
-				if ( $this->getSkin()->getUser()->isAllowed( 'protect' ) ) {
-					$s .= $sep . $this->protectThisPage();
-				}
+			$element[] = $this->processBottomLink( 'move', $content_nav['actions']['move'], 'movethispage' );
 
-				if ( $this->getSkin()->getUser()->isAllowed( 'move' ) ) {
-					$s .= $sep . $this->moveThisPage();
-				}
-			}
+			$lines[] = $this->getSkin()->getLanguage()->pipeList( array_filter( $element ) );
 
-			$s .= "<br />\n" . $this->otherLanguages();
+
+			// Third row. Language links.
+			$lines[] = $this->otherLanguages();
 		}
 
-		return $s;
-	}
-
-	function editThisPage() {
-		if ( !$this->getSkin()->getOutput()->isArticleRelated() ) {
-			$s = wfMessage( 'protectedpage' )->text();
-		} else {
-			$title = $this->getSkin()->getTitle();
-			if ( $title->quickUserCan( 'edit' ) && $title->exists() ) {
-				$t = wfMessage( 'editthispage' )->text();
-			} elseif ( $title->quickUserCan( 'create' ) && !$title->exists() ) {
-				$t = wfMessage( 'create-this-page' )->text();
-			} else {
-				$t = wfMessage( 'viewsource' )->text();
-			}
-
-			$s = Linker::linkKnown(
-				$title,
-				$t,
-				array(),
-				$this->getSkin()->editUrlOptions()
-			);
-		}
-
-		return $s;
-	}
-
-	function deleteThisPage() {
-		$diff = $this->getSkin()->getRequest()->getVal( 'diff' );
-		$title = $this->getSkin()->getTitle();
-
-		if ( $title->getArticleID() && ( !$diff ) && $this->getSkin()->getUser()->isAllowed( 'delete' ) ) {
-			$t = wfMessage( 'deletethispage' )->text();
-
-			$s = Linker::linkKnown(
-				$title,
-				$t,
-				array(),
-				array( 'action' => 'delete' )
-			);
-		} else {
-			$s = '';
-		}
-
-		return $s;
-	}
-
-	function protectThisPage() {
-		$diff = $this->getSkin()->getRequest()->getVal( 'diff' );
-		$title = $this->getSkin()->getTitle();
-
-		if ( $title->getArticleID() && ( ! $diff ) && $this->getSkin()->getUser()->isAllowed( 'protect' ) ) {
-			if ( $title->isProtected() ) {
-				$text = wfMessage( 'unprotectthispage' )->text();
-				$query = array( 'action' => 'unprotect' );
-			} else {
-				$text = wfMessage( 'protectthispage' )->text();
-				$query = array( 'action' => 'protect' );
-			}
-
-			$s = Linker::linkKnown(
-				$title,
-				$text,
-				array(),
-				$query
-			);
-		} else {
-			$s = '';
-		}
-
-		return $s;
-	}
-
-	function watchThisPage() {
-		// Cache
-		$title = $this->getSkin()->getTitle();
-
-		if ( $this->getSkin()->getOutput()->isArticleRelated() ) {
-			if ( $this->getSkin()->getUser()->isWatched( $title ) ) {
-				$text = wfMessage( 'unwatchthispage' )->text();
-				$query = array(
-					'action' => 'unwatch',
-					'token' => UnwatchAction::getUnwatchToken( $title, $this->getSkin()->getUser() ),
-				);
-				$id = 'mw-unwatch-link';
-			} else {
-				$text = wfMessage( 'watchthispage' )->text();
-				$query = array(
-					'action' => 'watch',
-					'token' => WatchAction::getWatchToken( $title, $this->getSkin()->getUser() ),
-				);
-				$id = 'mw-watch-link';
-			}
-
-			$s = Linker::linkKnown(
-				$title,
-				$text,
-				array( 'id' => $id ),
-				$query
-			);
-		} else {
-			$s = wfMessage( 'notanarticle' )->text();
-		}
-
-		return $s;
-	}
-
-	function moveThisPage() {
-		if ( $this->getSkin()->getTitle()->quickUserCan( 'move' ) ) {
-			return Linker::linkKnown(
-				SpecialPage::getTitleFor( 'Movepage' ),
-				wfMessage( 'movethispage' )->text(),
-				array(),
-				array( 'target' => $this->getSkin()->getTitle()->getPrefixedDBkey() )
-			);
-		} else {
-			// no message if page is protected - would be redundant
-			return '';
-		}
-	}
-
-	function historyLink() {
-		return Linker::link(
-			$this->getSkin()->getTitle(),
-			wfMessage( 'history' )->escaped(),
-			array( 'rel' => 'archives' ),
-			array( 'action' => 'history' )
-		);
-	}
-
-	function whatLinksHere() {
-		return Linker::linkKnown(
-			SpecialPage::getTitleFor( 'Whatlinkshere', $this->getSkin()->getTitle()->getPrefixedDBkey() ),
-			wfMessage( 'whatlinkshere' )->escaped()
-		);
-	}
-
-	function userContribsLink() {
-		return Linker::linkKnown(
-			SpecialPage::getTitleFor( 'Contributions', $this->getSkin()->getTitle()->getDBkey() ),
-			wfMessage( 'contributions' )->escaped()
-		);
-	}
-
-	function emailUserLink() {
-		return Linker::linkKnown(
-			SpecialPage::getTitleFor( 'Emailuser', $this->getSkin()->getTitle()->getDBkey() ),
-			wfMessage( 'emailuser' )->escaped()
-		);
-	}
-
-	function watchPageLinksLink() {
-		if ( !$this->getSkin()->getOutput()->isArticleRelated() ) {
-			return wfMessage( 'parentheses', wfMessage( 'notanarticle' )->text() )->escaped();
-		} else {
-			return Linker::linkKnown(
-				SpecialPage::getTitleFor( 'Recentchangeslinked', $this->getSkin()->getTitle()->getPrefixedDBkey() ),
-				wfMessage( 'recentchangeslinked-toolbox' )->escaped()
-			);
-		}
+		return implode( array_filter( $lines ), "<br />\n" ) . "<br />\n";
 	}
 
 	// @fixed
@@ -385,10 +241,7 @@ class CologneBlueTemplate extends BaseTemplate {
 
 		// Use the regular navigational link, but replace its text. Everything else stays unmodified.
 		$namespacesLinks = $this->data['content_navigation']['namespaces'];
-		$link = $this->processNavlinkForDocument( $namespacesLinks[ $key ] );
-		$link['text'] = wfMessage( $message )->text();
-
-		return $this->makeListItem( $message, $link, array( 'tag' => 'span' ) );
+		return $this->processBottomLink( $message,  $namespacesLinks[$key], $message );
 	}
 
 	/**
@@ -426,17 +279,13 @@ class CologneBlueTemplate extends BaseTemplate {
 ?>
 <div id="content">
 	<div id="topbar">
-		<p id="sitetitle">
+		<p id="sitetitle" role="banner">
 			<a href="<?php echo htmlspecialchars( $this->data['nav_urls']['mainpage']['href'] ) ?>">
 				<?php echo wfMessage( 'sitetitle' )->escaped() ?>
 			</a>
 		</p>
 		<p id="sitesub"><?php echo wfMessage( 'sitesubtitle' )->escaped() ?></p>
-		<div id="toplinks">
-			<p id="syslinks"><?php echo $this->sysLinks() ?></p>
-			<p id="variantlinks"><?php echo $this->variantLinks() ?></p>
-		</div>
-		<div id="linkcollection">
+		<div id="linkcollection" role="navigation">
 			<div id="langlinks"><?php echo str_replace( '<br />', '', $this->otherLanguages() ) ?></div>
 			<?php echo $this->getSkin()->getCategories() ?>
 			<div id="titlelinks"><?php echo $this->pageTitleLinks() ?></div>
@@ -445,11 +294,14 @@ class CologneBlueTemplate extends BaseTemplate {
 			<?php } ?>
 		</div>
 	</div>
-	<div id="article">
+	<div id="article" role="main">
 		<?php if ( $this->getSkin()->getSiteNotice() ) { ?>
 		<div id="siteNotice"><?php echo $this->getSkin()->getSiteNotice() ?></div>
 		<?php } ?>
-		<h1 id="firstHeading"><span dir="auto"><?php echo $this->data['title'] ?></span></h1>
+		<h1 id="firstHeading" lang="<?php
+			$this->data['pageLanguage'] = $this->getSkin()->getTitle()->getPageLanguage()->getCode();
+			$this->html( 'pageLanguage' );
+		?>"><span dir="auto"><?php echo $this->data['title'] ?></span></h1>
 		<?php if ( $this->translator->translate( 'tagline' ) ) { ?>
 		<p class="tagline"><?php echo htmlspecialchars( $this->translator->translate( 'tagline' ) ) ?></p>
 		<?php } ?>
@@ -475,7 +327,7 @@ class CologneBlueTemplate extends BaseTemplate {
 		ob_start();
 ?>
 	</div>
-	<div id='footer'>
+	<div id="footer" role="contentinfo">
 <?php
 		// Page-related links
 		echo $this->bottomLinks();
@@ -499,7 +351,14 @@ class CologneBlueTemplate extends BaseTemplate {
 ?>
 	</div>
 </div>
-<?php echo $this->quickBar() ?>
+<div id="mw-navigation">
+	<h2><?php echo wfMessage( 'navigation-heading' )->escaped() ?></h2>
+	<div id="toplinks" role="navigation">
+		<p id="syslinks"><?php echo $this->sysLinks() ?></p>
+		<p id="variantlinks"><?php echo $this->variantLinks() ?></p>
+	</div>
+	<?php echo $this->quickBar() ?>
+</div>
 <?php
 		$s = ob_get_contents();
 		ob_end_clean();
@@ -540,13 +399,49 @@ class CologneBlueTemplate extends BaseTemplate {
 	}
 
 	/**
-	 * @param $heading string
-	 * @return string
+	 * Adds CologneBlue-specific items to the sidebar: qbedit, qbpageoptions and qbmyoptions menus.
+	 *
+	 * @param $bar sidebar data
+	 * @return array modified sidebar data
 	 *
 	 * @fixed
 	 */
-	function menuHead( $heading ) {
-		return "\n<h6>" . htmlspecialchars( $heading ) . "</h6>";
+	function sidebarAdditions( $bar ) {
+		// "This page" and "Edit" menus
+		// We need to do some massaging here... we reuse all of the items, except for $...['views']['view'],
+		// as $...['namespaces']['main'] and $...['namespaces']['talk'] together serve the same purpose.
+		// We also don't use $...['variants'], these are displayed in the top menu.
+		$content_navigation = $this->data['content_navigation'];
+		$qbpageoptions = array_merge(
+			$content_navigation['namespaces'],
+			array(
+				'history' => $content_navigation['views']['history'],
+				'watch' => $content_navigation['actions']['watch'],
+				'unwatch' => $content_navigation['actions']['unwatch'],
+			)
+		);
+		$content_navigation['actions']['watch'] = null;
+		$content_navigation['actions']['unwatch'] = null;
+		$qbedit = array_merge(
+			array(
+				'edit' => $content_navigation['views']['edit'],
+				'addsection' => $content_navigation['views']['addsection'],
+			),
+			$content_navigation['actions']
+		);
+
+		// Personal tools ("My pages")
+		$qbmyoptions = $this->getPersonalTools();
+		foreach ( array ( 'logout', 'createaccount', 'login', 'anonlogin' ) as $key ) {
+			$qbmyoptions[$key] = null;
+		}
+
+		// Use the closest reasonable name
+		$bar['cactions'] = $qbedit;
+		$bar['pageoptions'] = $qbpageoptions; // this is a non-standard portlet name, but nothing fits
+		$bar['personal'] = $qbmyoptions;
+
+		return $bar;
 	}
 
 	/**
@@ -557,117 +452,91 @@ class CologneBlueTemplate extends BaseTemplate {
 	 *
 	 * @fixed
 	 */
-	function quickBar(){
-		$s = "\n<div id='quickbar'>";
-
-		$sep = "<br />\n";
-
-		$plain_bar = $this->data['sidebar'];
+	function quickBar() {
+		// Massage the sidebar. We want to:
+		// * place SEARCH at the beginning
+		// * add new portlets before TOOLBOX (or at the end, if it's missing)
+		// * remove LANGUAGES (langlinks are displayed elsewhere)
+		$orig_bar = $this->data['sidebar'];
 		$bar = array();
+		$hasToolbox = false;
 
-		// Massage the sidebar
-		// We want to place SEARCH at the beginning and a lot of stuff before TOOLBOX (or at the end, if it's missing)
-		$additions_done = false;
-		while ( !$additions_done ) {
-			$bar = array(); // Empty it out
-
-			// Always display search on top
-			$bar['SEARCH'] = true;
-
-			foreach ( $plain_bar as $heading => $links ) {
-				if ( $heading == 'TOOLBOX' ) {
-					if( $links !== NULL ) {
-						// If this is not a toolbox prosthetic we inserted outselves, fill it out
-						$plain_bar['TOOLBOX'] = $this->getToolbox();
-					}
-
-					// And insert the stuff
-
-					// "This page" and "Edit" menus
-					// We need to do some massaging here... we reuse all of the items, except for $...['views']['view'],
-					// as $...['namespaces']['main'] and $...['namespaces']['talk'] together serve the same purpose.
-					// We also don't use $...['variants'], these are displayed in the top menu.
-					$content_navigation = $this->data['content_navigation'];
-					$qbpageoptions = array_merge(
-						$content_navigation['namespaces'],
-						array(
-							'history' => $content_navigation['views']['history'],
-							'watch' => $content_navigation['actions']['watch'],
-							'unwatch' => $content_navigation['actions']['unwatch'],
-						)
-					);
-					$content_navigation['actions']['watch'] = null;
-					$content_navigation['actions']['unwatch'] = null;
-					$qbedit = array_merge(
-						array(
-							'edit' => $content_navigation['views']['edit'],
-							'addsection' => $content_navigation['views']['addsection'],
-						),
-						$content_navigation['actions']
-					);
-					$bar['qbedit'] = $qbedit;
-					$bar['qbpageoptions'] = $qbpageoptions;
-
-					// Personal tools ("My pages")
-					$bar['qbmyoptions'] = $this->getPersonalTools();
-					foreach ( array ( 'logout', 'createaccount', 'login', 'anonlogin' ) as $key ) {
-						$bar['qbmyoptions'][$key] = null;
-					}
-
-					$additions_done = true;
-				}
-
-				// Re-insert current heading, unless it's SEARCH
-				if ( $heading != 'SEARCH' ) {
-					$bar[$heading] = $plain_bar[$heading];
-				}
+		// Always display search first
+		$bar['SEARCH'] = true;
+		// Copy everything except for langlinks, inserting new items before toolbox
+		foreach ( $orig_bar as $heading => $data ) {
+			if ( $heading == 'TOOLBOX' ) {
+				// Insert the stuff
+				$bar = $this->sidebarAdditions( $bar );
+				$hasToolbox = true;
 			}
 
-			// If TOOLBOX is missing, $additions_done is still false
-			if ( !$additions_done ) {
-				$plain_bar['TOOLBOX'] = false;
+			if ( $heading != 'LANGUAGES' ) {
+				$bar[$heading] = $data;
 			}
 		}
+		// If toolbox is missing, add our items at the end
+		if ( !$hasToolbox ) {
+			$bar = $this->sidebarAdditions( $bar );
+		}
 
-		foreach ( $bar as $heading => $links ) {
+
+		// Fill out special sidebar items with content
+		$orig_bar = $bar;
+		$bar = array();
+		foreach ( $orig_bar as $heading => $data ) {
 			if ( $heading == 'SEARCH' ) {
-				$s .= $this->menuHead( wfMessage( 'qbfind' )->text() );
-				$s .= $this->searchForm( 'sidebar' );
-			} elseif ( $heading == 'LANGUAGES' ) {
-				// discard these; we display languages below page content
-			} elseif ( $links ) {
-				if ( is_array( $links ) ) {
-					// Use the navigation heading from standard sidebar as the "browse" section
-					if ( $heading == 'navigation' ) {
-						$heading = 'qbbrowse';
-					}
-					if ( $heading == 'TOOLBOX' ) {
-						$heading = 'toolbox';
-					}
-
-					$headingMsg = wfMessage( $heading );
-					$any_link = false;
-					$t = $this->menuHead( $headingMsg->exists() ? $headingMsg->text() : $heading );
-
-					foreach ( $links as $key => $link ) {
-						// Can be empty due to rampant sidebar massaging we're doing above
-						if ( $link ) {
-							$any_link = true;
-							$t .= $this->makeListItem( $key, $link, array( 'tag' => 'span' ) ) . $sep;
-						}
-					}
-
-					if ( $any_link ) {
-						$s .= $t;
-					}
-				} else {
-					// $links can be a HTML string
-					$s .= $links;
-				}
+				$bar['search'] = $this->searchForm( 'sidebar' );
+			} elseif ( $heading == 'TOOLBOX' ) {
+				$bar['tb'] = $this->getToolbox();
+			} else {
+				$bar[$heading] = $data;
 			}
 		}
 
-		$s .= $sep . "\n</div>\n";
+
+		// Output the sidebar
+		// CologneBlue uses custom messages for some portlets, but we should keep the ids for consistency
+		$idToMessage = array(
+			'search' => 'qbfind',
+			'navigation' => 'qbbrowse',
+			'tb' => 'toolbox',
+			'cactions' => 'qbedit',
+			'personal' => 'qbmyoptions',
+			'pageoptions' => 'qbpageoptions',
+		);
+
+		$s = "<div id='quickbar'>\n";
+
+		foreach ( $bar as $heading => $data ) {
+			$portletId = Sanitizer::escapeId( "p-$heading" );
+			$headingMsg = wfMessage( $idToMessage[$heading] ? $idToMessage[$heading] : $heading );
+			$headingHTML = "<h3>" . ( $headingMsg->exists() ? $headingMsg->escaped() : htmlspecialchars( $heading ) ) . "</h3>";
+			$listHTML = "";
+
+			if ( is_array( $data ) ) {
+				// $data is an array of links
+				foreach ( $data as $key => $link ) {
+					// Can be empty due to how the sidebar additions are done
+					if ( $link ) {
+						$listHTML .= $this->makeListItem( $key, $link );
+					}
+				}
+				if ( $listHTML ) {
+					$listHTML = "<ul>$listHTML</ul>";
+				}
+			} else {
+				// $data is a HTML <ul>-list string
+				$listHTML = $data;
+			}
+
+			if ( $listHTML ) {
+				$role = ( $heading == 'search' ) ? 'search' : 'navigation';
+				$s .= "<div class=\"portlet\" id=\"$portletId\" role=\"$role\">\n$headingHTML\n$listHTML\n</div>\n";
+			}
+		}
+
+		$s .= "</div>\n";
 		return $s;
 	}
 

@@ -124,7 +124,6 @@ $specialPageAliases = array(
 	'Recentchanges'             => array( 'Thay_đổi_gần_đây' ),
 	'Recentchangeslinked'       => array( 'Thay_đổi_liên_quan' ),
 	'Revisiondelete'            => array( 'Xóa_phiên_bản' ),
-	'RevisionMove'              => array( 'Di_chuyển_phiên_bản' ),
 	'Search'                    => array( 'Tìm_kiếm' ),
 	'Shortpages'                => array( 'Trang_ngắn' ),
 	'Specialpages'              => array( 'Trang_đặc_biệt' ),
@@ -345,7 +344,7 @@ $messages = array(
 
 'underline-always' => 'Luôn luôn',
 'underline-never' => 'Không bao giờ',
-'underline-default' => 'Mặc định của trình duyệt',
+'underline-default' => 'Mặc định của hình dạng hoặc trình duyệt',
 
 # Font style option in Special:Preferences
 'editfont-style' => 'Kiểu phông chữ trong khung sửa đổi:',
@@ -430,8 +429,8 @@ $messages = array(
 'newwindow' => '(mở cửa sổ mới)',
 'cancel' => 'Hủy bỏ',
 'moredotdotdot' => 'Thêm nữa…',
-'mypage' => 'Trang của tôi',
-'mytalk' => 'Thảo luận với tôi',
+'mypage' => 'Trang cá nhân',
+'mytalk' => 'Thảo luận',
 'anontalk' => 'Thảo luận với IP này',
 'navigation' => 'Xem nhanh',
 'and' => '&#32;và',
@@ -463,6 +462,7 @@ $messages = array(
 'namespaces' => 'Không gian tên',
 'variants' => 'Biến thể',
 
+'navigation-heading' => 'Trình đơn chuyển hướng',
 'errorpagetitle' => 'Lỗi',
 'returnto' => 'Quay lại $1.',
 'tagline' => 'Từ {{SITENAME}}',
@@ -670,7 +670,7 @@ Truy vấn: $2',
 'viewsource-title' => 'Xem mã nguồn của $1',
 'actionthrottled' => 'Thao tác bị giới hạn',
 'actionthrottledtext' => 'Để nhằm tránh spam, bạn không thể thực hiện thao tác này quá nhiều lần trong một thời gian ngắn.  Xin hãy chờ vài phút trước khi thực hiện lại.',
-'protectedpagetext' => 'Trang này đã bị khóa không cho sửa đổi.',
+'protectedpagetext' => 'Trang này đã bị khóa không cho sửa đổi hoặc tác động khác.',
 'viewsourcetext' => 'Bạn vẫn có thể xem và chép xuống mã nguồn của trang này:',
 'viewyourtext' => "Bạn vẫn có thể xem và chép xuống mã nguồn '''các sửa đổi của bạn''' tại trang này:",
 'protectedinterface' => 'Trang này cung cấp một thông báo trong giao diện phần mềm, và bị khóa để tránh phá hoại. Để bổ sung hoặc thay đổi bản dịch ở bất cứ wiki nào, xin vui lòng đóng góp vào [//translatewiki.net/wiki/Main_Page?setlang=vi translatewiki.net], dự án bản địa hóa của MediaWiki.',
@@ -701,9 +701,9 @@ Bảo quản viên khóa nó đưa lý do là: “$3”.',
 'logouttext' => "'''Bạn đã đăng xuất.'''
 
 Bạn có thể tiếp tục dùng {{SITENAME}} một cách vô danh, hoặc bạn có thể <span class='plainlinks'>[$1 đăng nhập lại]</span> dưới cùng tên người dùng này hoặc một tên người dùng khác. Xin lưu ý rằng một vài trang có thể vẫn hiển thị như khi bạn còn đăng nhập, cho đến khi bạn xóa vùng nhớ đệm (''cache'') của trình duyệt.",
-'welcomecreation' => '== Chào mừng, $1! ==
-Tài khoản của bạn đã mở.
-Đừng quên thay đổi [[Special:Preferences|tùy chọn cá nhân của bạn tại {{SITENAME}}]].',
+'welcomeuser' => 'Hoan nghênh, $1!',
+'welcomecreation-msg' => 'Tài khoản của bạn đã được mở.
+Hãy nhớ thay đổi [[Special:Preferences|tùy chọn cá nhân {{SITENAME}}]] của bạn.',
 'yourname' => 'Tên người dùng:',
 'yourpassword' => 'Mật khẩu:',
 'yourpasswordagain' => 'Gõ lại mật khẩu',
@@ -977,7 +977,7 @@ Nó chưa được lưu!'''",
 'note' => "'''Ghi chú:'''",
 'previewnote' => "'''Đây chỉ mới là xem thử.'''
 Các thay đổi của bạn vẫn chưa được lưu!",
-'continue-editing' => 'Sửa tiếp',
+'continue-editing' => 'Đi đến hộp sửa đổi',
 'previewconflict' => 'Phần xem thử này là kết quả của văn bản trong vùng soạn thảo phía trên và nó sẽ xuất hiện như vậy nếu bạn chọn lưu trang.',
 'session_fail_preview' => "'''Những sửa đổi của bạn chưa được lưu giữ do mất dữ liệu về phiên làm việc.
 Xin hãy thử lần nữa.
@@ -1585,8 +1585,11 @@ Nếu bạn đồng ý cung cấp, nó sẽ dùng để ghi nhận công lao c�
 # User rights log
 'rightslog' => 'Nhật trình cấp quyền thành viên',
 'rightslogtext' => 'Đây là nhật trình lưu những thay đổi đối với các quyền hạn thành viên.',
-'rightslogentry' => 'đã đổi cấp của thành viên $1 từ $2 thành $3',
+'rightslogentry' => 'đã đổi các nhóm liên kết của thành viên $1 từ $2 thành $3',
 'rightslogentry-autopromote' => 'được tự động phong cấp từ $2 đến $3',
+'logentry-rights-rights' => '$1 đã đổi các nhóm liên kết của $3 từ $4 đến $5',
+'logentry-rights-rights-legacy' => '$1 đã đổi các nhóm liên kết của $3',
+'logentry-rights-autopromote' => '$1 đã được tự động phong cấp từ $4 đến $5',
 'rightsnone' => '(không có)',
 
 # Associated actions - in the sentence "You do not have permission to X"
@@ -1648,8 +1651,8 @@ Nếu bạn đồng ý cung cấp, nó sẽ dùng để ghi nhận công lao c�
 'rclinks' => 'Xem $1 sửa đổi gần đây nhất trong $2 ngày qua; $3.',
 'diff' => 'khác',
 'hist' => 'sử',
-'hide' => 'ẩn',
-'show' => 'hiện',
+'hide' => 'Ẩn',
+'show' => 'Hiện',
 'minoreditletter' => 'n',
 'newpageletter' => 'M',
 'boteditletter' => 'b',
@@ -1828,6 +1831,7 @@ Nếu vẫn còn bị lỗi, xin hãy liên hệ với một [[Special:ListUsers
 'backend-fail-notsame' => 'Một tập tin khác biệt đã tồn tại ở $1.',
 'backend-fail-invalidpath' => '$1 không phải đường dẫn lưu giữ hợp lệ.',
 'backend-fail-delete' => 'Không thể xóa tập tin $1.',
+'backend-fail-describe' => 'Không thể thay đổi siêu dữ liệu của tập tin “$1”.',
 'backend-fail-alreadyexists' => 'Tập tin $1 đã tồn tại.',
 'backend-fail-store' => 'Không thể lưu tập tin $1 tại $2.',
 'backend-fail-copy' => 'Không thể chép tập tin $1 đến $2.',
@@ -1977,7 +1981,7 @@ Có lẽ bạn muốn miêu tả nó trên [$2 trang miêu tả tập tin] tại
 'shared-repo-from' => 'tại $1',
 'shared-repo' => 'kho lưu trữ dùng chung',
 'filepage.css' => '/* Mã CSS tại đây sẽ ảnh hướng đến trang miêu tả tập tin, cũng như các wiki khách bên ngoài dựa trên wiki này */',
-'upload-disallowed-here' => 'Rất tiếc, bạn không có thể ghi đè lên hình ảnh này.',
+'upload-disallowed-here' => 'Bạn không có thể ghi đè lên tập tin này.',
 
 # File reversion
 'filerevert' => 'Lùi lại phiên bản của $1',
@@ -2211,7 +2215,7 @@ Xem thêm [[Special:WantedCategories|thể loại cần thiết]].',
 'linksearch-pat' => 'Mẫu liên kết:',
 'linksearch-ns' => 'Không gian tên:',
 'linksearch-ok' => 'Tìm kiếm',
-'linksearch-text' => "Bạn có thể sử dụng ký tự đại diện (''wildcard''), ví dụ “*.wikipedia.org”; ít nhất phải có tên miền cấp cao nhất, thí dụ “*.org”.<br />Các giao thức này được hỗ trợ: <code>$1</code>; vui lòng không đưa giao thức vào truy vấn.",
+'linksearch-text' => "Bạn có thể sử dụng ký tự đại diện (''wildcard''), ví dụ “*.wikipedia.org”; ít nhất phải có tên miền cấp cao nhất, thí dụ “*.org”.<br />Các giao thức này được hỗ trợ: <code>$1</code>; mặc định là <code>http://</code> nếu không định rõ giao thức trong truy vấn.",
 'linksearch-line' => '$1 được liên kết từ $2',
 'linksearch-error' => "Chỉ được sử dụng ký tự đại diện (''wildcard'') vào đầu tên miền (''hostname'').",
 
@@ -2260,7 +2264,7 @@ Có [[{{MediaWiki:Listgrouprights-helppage}}|thông tin thêm]] về từng nhó
 'emailuser-title-target' => '{{GENDER:$1}}Gửi thư cho người dùng này',
 'emailuser-title-notarget' => 'Gửi thư cho người dùng',
 'emailpage' => 'Gửi thư',
-'emailpagetext' => 'Mẫu dưới đây sẽ gửi một bức thư điện tử tới người dùng này.
+'emailpagetext' => '{{GENDER:$1}}Mẫu dưới đây sẽ gửi một bức thư điện tử tới người dùng này.
 Địa chỉ thư điện tử mà bạn đã cung cấp trong [[Special:Preferences|tùy chọn cá nhân của mình]] sẽ xuất hiện trong phần địa chỉ “Người gửi” của bức thư, do đó người nhận sẽ có thể trả lời trực tiếp cho bạn.',
 'usermailererror' => 'Lỗi gửi thư:',
 'defemailsubject' => 'Thư của người dùng "$1" tại {{SITENAME}}',
@@ -2292,7 +2296,7 @@ Có [[{{MediaWiki:Listgrouprights-helppage}}|thông tin thêm]] về từng nhó
 
 # Watchlist
 'watchlist' => 'Trang tôi theo dõi',
-'mywatchlist' => 'Trang tôi theo dõi',
+'mywatchlist' => 'Trang theo dõi',
 'watchlistfor2' => 'Của $1 $2',
 'nowatchlist' => 'Danh sách theo dõi của bạn không có gì.',
 'watchlistanontext' => 'Xin hãy $1 để xem hay sửa đổi các trang được theo dõi.',
@@ -2328,20 +2332,23 @@ Những sửa đổi đối với trang này và trang thảo luận của nó s
 
 'enotif_mailer' => 'Thông báo của {{SITENAME}}',
 'enotif_reset' => 'Đánh dấu đã xem mọi trang',
-'enotif_newpagetext' => 'Trang này mới',
 'enotif_impersonal_salutation' => 'thành viên {{SITENAME}}',
-'changed' => 'thay đổi',
-'created' => 'viết mới',
-'enotif_subject' => '$PAGETITLE tại {{SITENAME}} đã được $CHANGEDORCREATED bởi $PAGEEDITOR',
+'enotif_subject_deleted' => 'Trang $1 tại {{SITENAME}} đã được xóa bởi $2.',
+'enotif_subject_created' => 'Trang $1 tại {{SITENAME}} đã được tạo ra bởi $2.',
+'enotif_subject_moved' => 'Trang $1 tại {{SITENAME}} đã được di chuyển bởi $2.',
+'enotif_subject_restored' => 'Trang $1 tại {{SITENAME}} đã được phục hồi bởi $2.',
+'enotif_subject_changed' => 'Trang $1 tại {{SITENAME}} đã được thay đổi bởi $2.',
+'enotif_body_intro_deleted' => 'Trang $1 tại {{SITENAME}} đã được $2 xóa vào $PAGEEDITDATE. Xem phiên bản hiện hành tại $3 .',
+'enotif_body_intro_created' => 'Trang $1 tại {{SITENAME}} đã được $2 tạo ra vào $PAGEEDITDATE. Xem phiên bản hiện hành tại $3 .',
+'enotif_body_intro_moved' => 'Trang $1 tại {{SITENAME}} đã được $2 di chuyển vào $PAGEEDITDATE. Xem phiên bản hiện hành tại $3 .',
+'enotif_body_intro_restored' => 'Trang $1 tại {{SITENAME}} đã được $2 phục hồi vào $PAGEEDITDATE. Xem phiên bản hiện hành tại $3 .',
+'enotif_body_intro_changed' => 'Trang $1 tại {{SITENAME}} đã được $2 thay đổi vào $PAGEEDITDATE. Xem phiên bản hiện hành tại $3 .',
 'enotif_lastvisited' => 'Xem $1 để biết các thay đổi diễn ra từ lần xem cuối cùng của bạn.',
 'enotif_lastdiff' => 'Vào $1 để xem sự thay đổi này.',
 'enotif_anon_editor' => 'người dùng vô danh $1',
 'enotif_body' => 'Xin chào $WATCHINGUSERNAME,
 
-
-Trang $PAGETITLE tại {{SITENAME}} đã được $PAGEEDITOR $CHANGEDORCREATED vào $PAGEEDITDATE, xem phiên bản hiện hành tại $PAGETITLE_URL.
-
-$NEWPAGE
+$PAGEINTRO $NEWPAGE
 
 Tóm lược sửa đổi: $PAGESUMMARY $PAGEMINOREDIT
 
@@ -2349,8 +2356,7 @@ Liên lạc với người viết trang qua:
 thư: $PAGEEDITOR_EMAIL
 wiki: $PAGEEDITOR_WIKI
 
-Sẽ không có thông báo nào khác nếu có sự thay đổi tiếp theo trừ khi bạn xem trang đó.
-Bạn cũng có thể thiết lập lại việc nhắc nhở cho tất cả các trang nằm trong danh sách theo dõi của bạn.
+Sẽ không có thông báo nào khác nếu có sự thay đổi tiếp theo trừ khi bạn xem trang đó. Bạn cũng có thể thiết lập lại việc nhắc nhở cho tất cả các trang nằm trong danh sách theo dõi của bạn.
 
               Hệ thống báo tin {{SITENAME}} thân thiện của bạn
 
@@ -2549,9 +2555,9 @@ $1',
 'blanknamespace' => '(Chính)',
 
 # Contributions
-'contributions' => 'Đóng góp của thành viên',
+'contributions' => '{{GENDER:$1}}Đóng góp của thành viên',
 'contributions-title' => 'Đóng góp của thành viên $1',
-'mycontris' => 'Đóng góp của tôi',
+'mycontris' => 'Đóng góp',
 'contribsub2' => 'Của $1 ($2)',
 'nocontribs' => 'Không tìm thấy thay đổi nào khớp với yêu cầu.',
 'uctop' => '(mới nhất)',
@@ -2590,7 +2596,7 @@ $1',
 'whatlinkshere-hideredirs' => '$1 trang đổi hướng',
 'whatlinkshere-hidetrans' => '$1 trang nhúng',
 'whatlinkshere-hidelinks' => '$1 liên kết',
-'whatlinkshere-hideimages' => '$1 liên kết hình',
+'whatlinkshere-hideimages' => '$1 liên kết tập tin',
 'whatlinkshere-filters' => 'Bộ lọc',
 
 # Block/unblock
@@ -3084,7 +3090,7 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 
 # Info page
 'pageinfo-title' => 'Thông tin về “$1”',
-'pageinfo-not-current' => 'Thông tin được hiển thị có thể chỉ có liên quan đến phiên bản hiện hành.',
+'pageinfo-not-current' => 'Rất tiếc, không thể cung cấp các chi tiết này đối với các phiên bản cũ.',
 'pageinfo-header-basic' => 'Thông tin cơ bản',
 'pageinfo-header-edits' => 'Lịch sử sửa đổi',
 'pageinfo-header-restrictions' => 'Mức khóa trang',
@@ -3093,6 +3099,7 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 'pageinfo-default-sort' => 'Từ khóa sắp xếp mặc định',
 'pageinfo-length' => 'Chiều dài của trang (byte)',
 'pageinfo-article-id' => 'Mã số trang',
+'pageinfo-language' => 'Ngôn ngữ nội dung trang',
 'pageinfo-robot-policy' => 'Trạng thái công cụ tìm kiếm',
 'pageinfo-robot-index' => 'Có thể ghi chỉ mục',
 'pageinfo-robot-noindex' => 'Không thể ghi chỉ mục',
@@ -3114,6 +3121,13 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 'pageinfo-hidden-categories' => 'Thể loại ẩn ($1)',
 'pageinfo-templates' => 'Bản mẫu được nhúng ($1)',
 'pageinfo-toolboxlink' => 'Thông tin trang',
+'pageinfo-redirectsto' => 'Đổi hướng đến',
+'pageinfo-redirectsto-info' => 'thông tin',
+'pageinfo-contentpage' => 'Tính là một trang nội dung',
+'pageinfo-contentpage-yes' => 'Có',
+'pageinfo-protect-cascading' => 'Khóa theo tầng từ đây',
+'pageinfo-protect-cascading-yes' => 'Có',
+'pageinfo-protect-cascading-from' => 'Khóa theo tầng từ',
 
 # Skin names
 'skinname-standard' => 'Cổ điển',
@@ -3134,6 +3148,8 @@ Lưu nó vào máy tính của bạn rồi tải nó lên đây.',
 'markedaspatrollederror' => 'Không thể đánh dấu tuần tra',
 'markedaspatrollederrortext' => 'Bạn phải chọn phiên bản để đánh dấu tuần tra.',
 'markedaspatrollederror-noautopatrol' => 'Bạn không được đánh dấu tuần tra vào sửa đổi của bạn.',
+'markedaspatrollednotify' => 'Đã được đánh dấu tuần tra vào thay đổi tại $1.',
+'markedaspatrollederrornotify' => 'Đánh dấu tuần tra bị thất bại.',
 
 # Patrol log
 'patrol-log-page' => 'Nhật ký tuần tra',
@@ -3203,6 +3219,7 @@ Nếu thực thi nó máy tính của bạn có thể bị tiếm quyền.",
 'hours' => '$1 giờ',
 'days' => '$1 ngày',
 'ago' => 'cách đây $1',
+'just-now' => 'vừa mới xong',
 
 # Bad image list
 'bad_image_list' => 'Định dạng như sau:
@@ -3459,6 +3476,7 @@ Những thông tin khác mặc định sẽ được ẩn đi.
 'exif-compression-3' => 'CCITT Nhóm 3: mã hóa fax',
 'exif-compression-4' => 'CCITT Nhóm 4: mã hóa fax',
 'exif-compression-6' => 'JPEG (cũ)',
+'exif-compression-34712' => 'JPEG 2000',
 
 'exif-copyrighted-true' => 'Dưới bản quyền',
 'exif-copyrighted-false' => 'Phạm vi công cộng',
@@ -3917,6 +3935,7 @@ Bạn cũng có thể [[Special:EditWatchlist|dùng trang sửa đổi bình th�
 'version-license' => 'Giấy phép bản quyền',
 'version-poweredby-credits' => "Wiki này chạy trên '''[//www.mediawiki.org/ MediaWiki]''', bản quyền © 2001–$1 $2.",
 'version-poweredby-others' => 'những người khác',
+'version-credits-summary' => 'Chúng tôi muốn công nhận những người sau đã đóng góp vào [[Special:Version|MediaWiki]].',
 'version-license-info' => "MediaWiki là phần mềm tự do; bạn được phép tái phân phối và/hoặc sửa đổi nó theo những điều khoản của Giấy phép Công cộng GNU do Quỹ Phần mềm Tự do xuất bản; phiên bản 2 hay bất kỳ phiên bản nào mới hơn nào của Giấy phép.
 
 MediaWiki được phân phối với hy vọng rằng nó sẽ hữu ích, nhưng '''không có bất kỳ một bảo đảm nào cả''', ngay cả những bảo đảm ngụ ý cho '''các mục đích thương mại''' hoặc cho '''một mục đích đặc biệt nào đó'''. Xem Giấy phép Công cộng GNU để biết thêm chi tiết.
@@ -4008,8 +4027,8 @@ Các hình ảnh được hiển thị ở kích thước tối đa, còn các l
 'compare-rev1' => 'Phiên bản 1',
 'compare-rev2' => 'Phiên bản 2',
 'compare-submit' => 'So sánh',
-'compare-invalid-title' => 'Tựa trang chỉ định không hợp lệ.',
-'compare-title-not-exists' => 'Tựa trang chỉ định không tồn tại.',
+'compare-invalid-title' => 'Tên trang chỉ định không hợp lệ.',
+'compare-title-not-exists' => 'Tên trang chỉ định không tồn tại.',
 'compare-revision-not-exists' => 'Phiên bản chỉ định không tồn tại.',
 
 # Database error messages
@@ -4063,8 +4082,8 @@ Các hình ảnh được hiển thị ở kích thước tối đa, còn các l
 'logentry-move-move_redir-noredirect' => '$1 đã đổi $3 thành $4 qua đổi hướng (đã tắt đổi hướng)',
 'logentry-patrol-patrol' => '$1 đã đánh dấu tuần tra phiên bản $4 của trang $3',
 'logentry-patrol-patrol-auto' => '$1 đã tự động đánh dấu tuần tra phiên bản $4 của trang $3',
-'logentry-newusers-newusers' => '$1 đã mở tài khoản mới',
-'logentry-newusers-create' => '$1 đã mở tài khoản mới',
+'logentry-newusers-newusers' => 'Đã mở tài khoản người dùng $1',
+'logentry-newusers-create' => 'Đã mở tài khoản người dùng $1',
 'logentry-newusers-create2' => '$1 đã mở tài khoản người dùng $3',
 'logentry-newusers-autocreate' => 'Tài khoản $1 đã được mở tự động',
 'newuserlog-byemail' => 'gửi mật khẩu qua thư điện tử',
@@ -4141,4 +4160,6 @@ Nếu không thì bạn có thể điền biểu mẫu đơn giản ở dưới.
 'duration-centuries' => '$1 thế kỷ',
 'duration-millennia' => '$1 thiên niên kỷ',
 
+# Unknown messages
+'svg-long-error' => 'Tập tin SVG có lỗi: $1',
 );

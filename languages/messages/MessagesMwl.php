@@ -211,7 +211,6 @@ $messages = array(
 'qbbrowse' => 'Nabegar',
 'qbedit' => 'Eiditar',
 'qbpageoptions' => 'Esta páigina',
-'qbpageinfo' => 'Cuntesto',
 'qbmyoptions' => 'Mies páiginas',
 'qbspecialpages' => 'Páiginas speciales',
 'faq' => 'FAQ',
@@ -875,9 +874,6 @@ Altaraçones feturas na tal páigina i páiginas de çcusson a eilha associadas 
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching' => 'A begiar...',
 'unwatching' => 'A deixar de begiar...',
-
-'changed' => 'demudada',
-'created' => 'criada',
 
 # Delete
 'deletepage' => 'Botar fuora páigina',

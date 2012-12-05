@@ -261,7 +261,7 @@ class ApiQueryRevisions extends ApiQueryBase {
 			// rvstart and rvstartid when that is supplied.
 			if ( !is_null( $params['continue'] ) ) {
 				$params['startid'] = $params['continue'];
-				unset( $params['start'] );
+				$params['start'] = null;
 			}
 
 			// This code makes an assumption that sorting by rev_id and rev_timestamp produces
@@ -546,9 +546,9 @@ class ApiQueryRevisions extends ApiQueryBase {
 
 			if ( $text === null ) {
 				$format = $this->contentFormat ? $this->contentFormat : $content->getDefaultFormat();
+				$model = $content->getModel();
 
 				if ( !$content->isSupportedFormat( $format ) ) {
-					$model = $content->getModel();
 					$name = $title->getPrefixedDBkey();
 
 					$this->dieUsage( "The requested format {$this->contentFormat} is not supported ".
@@ -556,7 +556,11 @@ class ApiQueryRevisions extends ApiQueryBase {
 				}
 
 				$text = $content->serialize( $format );
+
+				// always include format and model.
+				// Format is needed to deserialize, model is needed to interpret.
 				$vals['contentformat'] = $format;
+				$vals['contentmodel'] = $model;
 			}
 
 			if ( $text !== false ) {
@@ -715,9 +719,10 @@ class ApiQueryRevisions extends ApiQueryBase {
 			'dir' => $this->getDirectionDescription( $p, ' (enum)' ),
 			'user' => 'Only include revisions made by user (enum)',
 			'excludeuser' => 'Exclude revisions made by user (enum)',
-			'expandtemplates' => 'Expand templates in revision content',
-			'generatexml' => 'Generate XML parse tree for revision content',
-			'parse' => 'Parse revision content. For performance reasons if this option is used, rvlimit is enforced to 1.',
+			'expandtemplates' => "Expand templates in revision content (requires {$p}prop=content)",
+			'generatexml' => "Generate XML parse tree for revision content (requires {$p}prop=content)",
+			'parse' => array( "Parse revision content (requires {$p}prop=content).",
+				'For performance reasons if this option is used, rvlimit is enforced to 1.' ),
 			'section' => 'Only retrieve the content of this section number',
 			'token' => 'Which tokens to obtain for each revision',
 			'continue' => 'When more results are available, use this to continue',
@@ -782,7 +787,10 @@ class ApiQueryRevisions extends ApiQueryBase {
 					ApiBase::PROP_NULLABLE => true
 				),
 				'texthidden' => 'boolean'
-			)
+			),
+			'contentmodel' => array(
+				'contentmodel' => 'string'
+			),
 		);
 
 		self::addTokenProperties( $props, $this->getTokenFunctions() );

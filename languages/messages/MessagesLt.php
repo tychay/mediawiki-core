@@ -315,7 +315,7 @@ $messages = array(
 'newwindow' => '(atsidaro naujame lange)',
 'cancel' => 'Atšaukti',
 'moredotdotdot' => 'Daugiau...',
-'mypage' => 'Mano puslapis',
+'mypage' => 'Naudotojo puslapis',
 'mytalk' => 'Mano aptarimas',
 'anontalk' => 'Šio IP aptarimas',
 'navigation' => 'Naršymas',
@@ -589,9 +589,6 @@ Ją užrakinęs administratorius pateikė šį paaiškinimą: "$3".',
 
 Galite toliau naudoti {{SITENAME}} anonimiškai arba <span class='plainlinks'>[$1 prisijunkite]</span> iš naujo tuo pačiu ar kitu naudotoju.
 Pastaba: kai kuriuose puslapiuose ir toliau gali rodyti, kad esate prisijungęs iki tol, kol išvalysite savo naršyklės podėlį.",
-'welcomecreation' => '== Sveiki, $1! ==
-
-Jūsų paskyra buvo sukurta. Nepamirškite pakeisti savo [[Special:Preferences|{{SITENAME}} nustatymų]].',
 'yourname' => 'Naudotojo vardas:',
 'yourpassword' => 'Slaptažodis:',
 'yourpasswordagain' => 'Pakartokite slaptažodį:',
@@ -2148,11 +2145,7 @@ taip pat bus '''paryškinti''' [[Special:RecentChanges|naujausių keitimų sąra
 
 'enotif_mailer' => '{{SITENAME}} Pranešimų sistema',
 'enotif_reset' => 'Pažymėti visus puslapius kaip aplankytus',
-'enotif_newpagetext' => 'Tai naujas puslapis.',
 'enotif_impersonal_salutation' => '{{SITENAME}} naudotojau',
-'changed' => 'pakeitė',
-'created' => 'sukurė',
-'enotif_subject' => '{{SITENAME}} projekte $PAGEEDITOR $CHANGEDORCREATED $PAGETITLE',
 'enotif_lastvisited' => 'Užeikite į $1, jei norite matyti pakeitimus nuo paskutiniojo apsilankymo.',
 'enotif_lastdiff' => 'Užeikite į $1, jei norite pamatyti šį pakeitimą.',
 'enotif_anon_editor' => 'anoniminis naudotojas $1',

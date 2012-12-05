@@ -160,7 +160,6 @@ $specialPageAliases = array(
 	'Recentchanges'             => array( 'Perubahan_terkini' ),
 	'Recentchangeslinked'       => array( 'Perubahan_berkaitan' ),
 	'Revisiondelete'            => array( 'Hapus_semakan' ),
-	'RevisionMove'              => array( 'Pindah_semakan' ),
 	'Search'                    => array( 'Gelintar' ),
 	'Shortpages'                => array( 'Laman_pendek' ),
 	'Specialpages'              => array( 'Laman_khas' ),
@@ -240,7 +239,7 @@ $messages = array(
 
 'underline-always' => 'Sentiasa',
 'underline-never' => 'Jangan',
-'underline-default' => 'Pelayar web utama',
+'underline-default' => 'Tetapan azali kulit/pelayar',
 
 # Font style option in Special:Preferences
 'editfont-style' => 'Gaya fon ruang sunting:',
@@ -327,8 +326,8 @@ $messages = array(
 'newwindow' => '(dibuka di tetingkap baru)',
 'cancel' => 'Batalkan',
 'moredotdotdot' => 'Lagi...',
-'mypage' => 'Laman saya',
-'mytalk' => 'Perbualan saya',
+'mypage' => 'Halaman',
+'mytalk' => 'Perbualan',
 'anontalk' => 'Perbualan bagi IP ini',
 'navigation' => 'Pandu arah',
 'and' => '&#32;dan',
@@ -360,6 +359,7 @@ $messages = array(
 'namespaces' => 'Ruang nama',
 'variants' => 'Kelainan',
 
+'navigation-heading' => 'Menu pandu arah',
 'errorpagetitle' => 'Ralat',
 'returnto' => 'Kembali ke $1.',
 'tagline' => 'Daripada {{SITENAME}}.',
@@ -603,9 +603,9 @@ Pentadbir yang menguncinya memberikan penjelasan yang berikut: "$3".',
 'logouttext' => "'''Anda telah log keluar.'''
 
 Anda boleh terus menggunakan {{SITENAME}} sebagai pengguna tanpa nama, atau anda boleh <span class='plainlinks'>[$1 log masuk sekali lagi]</span> sebagai pengguna lain. Anda boleh membersihkan cache pelayar web anda sekiranya terdapat laman yang memaparkan seolah-olah anda masih log masuk.",
-'welcomecreation' => '== Selamat datang, $1! ==
-
-Akaun anda telah dibuka. Jangan lupa untuk mengubah [[Special:Preferences|keutamaan {{SITENAME}}]] anda.',
+'welcomeuser' => 'Selamat datang, $1!',
+'welcomecreation-msg' => 'Akaun anda telah dibuka.
+Jangan lupa untuk mengubah [[Special:Preferences|keutamaan anda di {{SITENAME}}]].',
 'yourname' => 'Nama pengguna:',
 'yourpassword' => 'Kata laluan:',
 'yourpasswordagain' => 'Ulangi kata laluan:',
@@ -873,7 +873,7 @@ Masukan log sekatan terakhir disediakan di bawah sebagai rujukan:',
 'note' => "'''Catatan:'''",
 'previewnote' => "'''Ingatlah bahawa ini hanya pralihat.'''
 Perubahan anda belum disimpan!",
-'continue-editing' => 'Teruskan menyunting',
+'continue-editing' => 'Pergi ke tempat menyunting',
 'previewconflict' => 'Paparan ini merupakan teks di bahagian atas dalam kotak sunting teks. Teks ini akan disimpan sekiranya anda memilih berbuat demikian.',
 'session_fail_preview' => "'''Kami tidak dapat memproses suntingan anda kerana kehilangan data sesi. Sila cuba lagi. Jika masalah ini berlanjutan, [[Special:UserLogout|log keluar]] dahulu, kemudian log masuk sekali lagi.'''",
 'session_fail_preview_html' => "'''Kami tidak dapat memproses suntingan anda kerana kehilangan data sesi.'''
@@ -1251,7 +1251,7 @@ Cuba berikan awalan ''all:'' untuk mencari semua kandungan (termasuk laman perbi
 
 # Preferences page
 'preferences' => 'Keutamaan',
-'mypreferences' => 'Keutamaan saya',
+'mypreferences' => 'Keutamaan',
 'prefs-edits' => 'Jumlah suntingan:',
 'prefsnologin' => 'Belum log masuk',
 'prefsnologintext' => 'Anda hendaklah <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} log masuk]</span> terlebih dahulu untuk menetapkan keutamaan.',
@@ -1484,6 +1484,9 @@ Tindakan ini tidak boleh dibatalkan.',
 'rightslogtext' => 'Ini ialah log perubahan terhadap hak pengguna.',
 'rightslogentry' => 'menukar keahlian kumpulan bagi $1 daripada $2 kepada $3',
 'rightslogentry-autopromote' => 'dinaik pangkat secara automatik dari $2 ke $3',
+'logentry-rights-rights' => '$1 menukar keahlian kumpulan untuk $3 dari $4 ke $5',
+'logentry-rights-rights-legacy' => '$1 menukar keahlian kumpulan untuk $3',
+'logentry-rights-autopromote' => '$1 dinaik pangkat secara automatik dari $4 ke $5',
 'rightsnone' => '(tiada)',
 
 # Associated actions - in the sentence "You do not have permission to X"
@@ -1719,6 +1722,7 @@ Sila hubungi [[Special:ListUsers/sysop|pentadbir sistem]].',
 'backend-fail-notsame' => 'Satu fail yang tidak seiras sudah wujud di $1.',
 'backend-fail-invalidpath' => '$1 bukan laluan storan yang sah.',
 'backend-fail-delete' => 'Fail $1 tidak dapat dihapuskan.',
+'backend-fail-describe' => 'Metadata untuk fail "$1" tidak dapat diubah.',
 'backend-fail-alreadyexists' => 'Fail $1 sudah wujud.',
 'backend-fail-store' => 'Fail $1 tidak dapat distorkan di $2.',
 'backend-fail-copy' => 'Fail $1 tidak dapat disalin ke $2.',
@@ -2104,7 +2108,7 @@ Lihat juga [[Special:WantedCategories|kategori yang dikehendaki]].',
 'linksearch-ok' => 'Cari',
 'linksearch-text' => 'Kad bebas seperti "*.wikipedia.org" dibenarkan.<br />
 Memerlukan sekurang-kurangnya satu domain peringkat tinggi, cth. "*.org".<br />
-Protokol yang disokong: <code>$1</code> (jangan bubuh sebarang protokol ini dalam carian anda)',
+Protokol yang disokong: <code>$1</code> (menjadi http:// jika tiada protokol dinyatakan).',
 'linksearch-line' => '$1 dipaut dari $2',
 'linksearch-error' => 'Kad bebas hanya boleh digunakan pada permulaan nama hos.',
 
@@ -2155,7 +2159,7 @@ terlebih dahulu dan mempunyai alamat e-mel yang sah dalam
 'emailuser-title-target' => 'E-mel {{GENDER:$1|pengguna}} ini',
 'emailuser-title-notarget' => 'E-mel pengguna',
 'emailpage' => 'E-mel pengguna',
-'emailpagetext' => 'Gunakan borang berikut untuk mengirim pesanan e-mel kepada pengguna ini.
+'emailpagetext' => 'Gunakan borang berikut untuk mengirim pesanan e-mel kepada {{GENDER:$1|pengguna}} ini.
 
 Alamat e-mel yang ditetapkan dalam [[Special:Preferences|keutamaan anda]] akan digunakan sebagai alamat "Daripada" dalam e-mel tersebut supaya si penerima boleh membalasnya.',
 'usermailererror' => 'Objek Mail memulangkan ralat:',
@@ -2188,7 +2192,7 @@ Alamat e-mel yang ditetapkan dalam [[Special:Preferences|keutamaan anda]] akan d
 
 # Watchlist
 'watchlist' => 'Senarai pantau',
-'mywatchlist' => 'Senarai pantau saya',
+'mywatchlist' => 'Senarai pantau',
 'watchlistfor2' => 'Bagi $1 $2',
 'nowatchlist' => 'Tiada item dalam senarai pantau anda.',
 'watchlistanontext' => 'Sila $1 terlebih dahulu untuk melihat atau menyunting senarai pantau anda.',
@@ -2228,11 +2232,7 @@ Jika anda mahu membuang laman tersebut daripada senarai pantau, klik \"Nyahpanta
 
 'enotif_mailer' => 'Sistem Pemberitahuan {{SITENAME}}',
 'enotif_reset' => 'Tandakan semua laman sebagai telah dikunjungi',
-'enotif_newpagetext' => 'Ini adalah sebuah laman baru.',
 'enotif_impersonal_salutation' => 'Pengguna {{SITENAME}}',
-'changed' => 'diubah',
-'created' => 'dicipta',
-'enotif_subject' => 'Laman $PAGETITLE di {{SITENAME}} telah $CHANGEDORCREATED oleh $PAGEEDITOR',
 'enotif_lastvisited' => 'Lihat $1 untuk semua perubahan sejak kunjungan terakhir anda.',
 'enotif_lastdiff' => 'Rujuk $1 untuk melihat perubahan ini.',
 'enotif_anon_editor' => 'pengguna tanpa nama $1',
@@ -2449,7 +2449,7 @@ $1',
 # Contributions
 'contributions' => 'Sumbangan pengguna',
 'contributions-title' => 'Sumbangan oleh $1',
-'mycontris' => 'Sumbangan saya',
+'mycontris' => 'Sumbangan',
 'contribsub2' => 'Oleh $1 ($2)',
 'nocontribs' => 'Tiada sebarang perubahan yang sepadan dengan kriteria-kriteria ini.',
 'uctop' => '(puncak)',
@@ -2488,7 +2488,7 @@ $1',
 'whatlinkshere-hideredirs' => '$1 pelencongan',
 'whatlinkshere-hidetrans' => '$1 penyertaan',
 'whatlinkshere-hidelinks' => '$1 pautan',
-'whatlinkshere-hideimages' => '$1 pautan imej',
+'whatlinkshere-hideimages' => '$1 pautan fail',
 'whatlinkshere-filters' => 'Penapis',
 
 # Block/unblock
@@ -2961,7 +2961,7 @@ Simpan dalam komputer anda dan muat naiknya di sini.',
 
 # Info page
 'pageinfo-title' => 'Maklumat untuk "$1"',
-'pageinfo-not-current' => 'Maklumat mungkin hanya dipaparkan untuk versi semasa.',
+'pageinfo-not-current' => 'Maaf, maklumat ini tidak dapat disediakan untuk semakan lama.',
 'pageinfo-header-basic' => 'Maklumat asas',
 'pageinfo-header-edits' => 'Sunting sejarah',
 'pageinfo-header-restrictions' => 'Perlindungan halaman',
@@ -2970,6 +2970,7 @@ Simpan dalam komputer anda dan muat naiknya di sini.',
 'pageinfo-default-sort' => 'Kunci isih azali',
 'pageinfo-length' => 'Kepanjangan halaman (bait)',
 'pageinfo-article-id' => 'ID halaman',
+'pageinfo-language' => 'Bahasa isi kandungan halaman',
 'pageinfo-robot-policy' => 'Status enjin pencarian',
 'pageinfo-robot-index' => 'Boleh diindekskan',
 'pageinfo-robot-noindex' => 'Tidak boleh diindekskan',
@@ -3019,6 +3020,8 @@ Simpan dalam komputer anda dan muat naiknya di sini.',
 'markedaspatrollederror' => 'Tidak boleh menanda ronda',
 'markedaspatrollederrortext' => 'Anda perlu menyatakan semakan untuk ditanda ronda.',
 'markedaspatrollederror-noautopatrol' => 'Anda tidak dibenarkan menanda ronda perubahan anda sendiri.',
+'markedaspatrollednotify' => 'Perubahan pada $1 ini telah ditandai sebagai dironda.',
+'markedaspatrollederrornotify' => 'Penandaan sebagai dironda gagal.',
 
 # Patrol log
 'patrol-log-page' => 'Log pemeriksaan',
@@ -3699,6 +3702,7 @@ Anda juga boleh [[Special:EditWatchlist|menggunakan penyunting piawai]].',
 'version-license' => 'Lesen',
 'version-poweredby-credits' => "Wiki ini dikuasakan oleh '''[//www.mediawiki.org/ MediaWiki]''', hak cipta © 2001-$1 $2.",
 'version-poweredby-others' => 'penyumbang-penyumbang lain',
+'version-credits-summary' => 'Kami ingin mengucapkan sekalung budi kepada mereka yang berikut atas sumbangan mereka keada [[Special:Version|MediaWiki]].',
 'version-license-info' => 'MediaWiki adalah perisian bebas; anda boleh mengedarkannya semula dan/atau mengubah suainya di bawah terma-terma Lesen Awam GNU sebagai mana yang telah diterbitkan oleh Yayasan Perisian Bebas, sama ada versi 2 bagi Lesen tersebut, atau (berdasarkan pilihan anda) mana-mana versi selepasnya.
 
 MediaWiki diedarkan dengan harapan bahawa ia berguna, tetapi TANPA SEBARANG WARANTI; hatta waranti yang tersirat bagi KEBOLEHDAGANGAN mahupun KESESUAIAN UNTUK TUJUAN TERTENTU. Sila lihat Lesen Awam GNU untuk butiran lanjut.
@@ -3840,9 +3844,9 @@ Imej ditunjuk dalam leraian penuh, jenis fail yang lain dibuka dengan atur cara 
 'logentry-move-move_redir-noredirect' => '$1 mengalihkan laman $3 ke $4 pada satu lencongan tanpa meninggalkan lencongan',
 'logentry-patrol-patrol' => '$1 menandakan semakan $4 daripada laman $3 sebagai dironda',
 'logentry-patrol-patrol-auto' => '$1 menandakan semakan $4 daripada laman $3 sebagai dironda secara automatik',
-'logentry-newusers-newusers' => '$1 membuka akaun pengguna',
-'logentry-newusers-create' => '$1 membuka akaun pengguna',
-'logentry-newusers-create2' => '$1 membuka akaun pengguna $3',
+'logentry-newusers-newusers' => 'Akaun pengguna $1 dibuka',
+'logentry-newusers-create' => 'Akaun pengguna $1 dibuka',
+'logentry-newusers-create2' => 'Akaun pengguna $3 dibuka oleh $1',
 'logentry-newusers-autocreate' => 'Akaun $1 dibuka secara automatik',
 'newuserlog-byemail' => 'kata laluan dihantar melalui e-mel',
 

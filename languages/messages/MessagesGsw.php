@@ -96,7 +96,6 @@ $specialPageAliases = array(
 	'Recentchanges'             => array( 'Letschti_Änderige' ),
 	'Recentchangeslinked'       => array( 'Änderige_an_verlinkte_Syte' ),
 	'Revisiondelete'            => array( 'Versionsleschig' ),
-	'RevisionMove'              => array( 'Version_verschiebe' ),
 	'Search'                    => array( 'Suech' ),
 	'Shortpages'                => array( 'Churzi_Syte' ),
 	'Specialpages'              => array( 'Spezialsyte' ),
@@ -182,7 +181,7 @@ $messages = array(
 
 'underline-always' => 'immer',
 'underline-never' => 'nie',
-'underline-default' => 'Browser-Vorystellig',
+'underline-default' => 'Voryystellig vu dr Benutzeroberfleichi oder em Brwoser',
 
 # Font style option in Special:Preferences
 'editfont-style' => 'Schriftfamilie fir dr Text im Bearbeitigsfänschter:',
@@ -267,8 +266,8 @@ $messages = array(
 'newwindow' => '(imene nöie Fänschter)',
 'cancel' => 'Abbräche',
 'moredotdotdot' => 'Meh …',
-'mypage' => 'Myyni Syte',
-'mytalk' => 'Myyni Diskussionsyte',
+'mypage' => 'Syte',
+'mytalk' => 'Diskussionsyte',
 'anontalk' => 'Diskussionssyste vo sellere IP',
 'navigation' => 'Navigation',
 'and' => '&#32;un',
@@ -538,9 +537,6 @@ Dr Administrator, wu dr Schrybzuegriff gsperrt het, het dää Grund aagee: „$3
 Du chasch {{SITENAME}} wyter anonym bruche, oder Du chasch di <span class='plainlinks'>[$1 wider aamälde]</span> mit em glyche oder eme andere Benutzername.
 
 Ochat: s cha syy, ass bstimmti Syte eso aazeigt wäre, wie wänn Du allno aagmäldet wärsch, bis Du dr Zwischespycher vu Dyym Browser glescht hesch.",
-'welcomecreation' => '==Willcho, $1!==
-Dyy Benutzerkonto isch aaglait wore.
-Vergiss nid, dyni [[Special:Preferences|{{SITENAME}}-Yystellige]] aazpasse.',
 'yourname' => 'Dyy Benutzername',
 'yourpassword' => 'Passwort:',
 'yourpasswordagain' => 'Passwort no mol yygee:',
@@ -816,7 +812,7 @@ As Information chunnt do ne aktuälle Uuszug us em Benutzersperr-Logbuech:',
 'note' => "'''Obacht: '''",
 'previewnote' => "'''Das isch numen e Vorschau und nonig gspycheret!'''
 Die Syte isch nonig gspycheret wore!",
-'continue-editing' => 'Wyter bearbeite',
+'continue-editing' => 'Zum Bearbeitigsfäld',
 'previewconflict' => 'Die Vorschau zeigt dr Inhalt vum obere Täxtfäld. Eso siht dr Artikel us, wän Du jetz uf Spychere drucksch.',
 'session_fail_preview' => "'''Dyyni Bearbeitig het nid chenne gspycheret wäre, wel Sitzigsdate verlore gange sin.
 Bitte versuech s nomol. Derzue drucksch unter däre Täxtvorschau nomol uf „Syte spychere“.
@@ -1186,7 +1182,7 @@ Einzelheite chasch im [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}
 
 # Preferences page
 'preferences' => 'Yystellige',
-'mypreferences' => 'Ystellige',
+'mypreferences' => 'Yystellige',
 'prefs-edits' => 'Aazahl vu dr Bearbeitige:',
 'prefsnologin' => 'Nid aagmäldet',
 'prefsnologintext' => 'Du muesch <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} aagmäldet]</span> sy, für Benutzerystellige chönne z ändere',
@@ -1415,6 +1411,9 @@ Des cha nimmi ruckgängig gmacht wäre.',
 'rightslogtext' => 'Des ischs Logbuech vun de Änderunge on Bnutzerrechte.',
 'rightslogentry' => 'het d Benutzerrächt fir „$1“ vu „$2“ uf „$3“ gänderet',
 'rightslogentry-autopromote' => 'd Zueornig zue dr Benutzergruppe isch automatisch vu $2 in $3 gänderet wore',
+'logentry-rights-rights' => '$1 het d Gruppezuegherigkeit fir $3 vu $4 uf $5 gänderet',
+'logentry-rights-rights-legacy' => '$1 het d Gruppezuegherigkeit fir $3 gänderet',
+'logentry-rights-autopromote' => '$1 isch automatisch vu $4 zue $5 zuegordnet wore',
 'rightsnone' => '(keini)',
 
 # Associated actions - in the sentence "You do not have permission to X"
@@ -1788,7 +1787,7 @@ Villicht witt d Bschryybig uf dr dertige [$2 Dateibschryybigssyte] bearbeite.',
 'uploadnewversion-linktext' => 'E nöui Version vo dere Datei ufelade',
 'shared-repo-from' => 'vu $1',
 'shared-repo' => 'eme gmeinsame Repositorium',
-'upload-disallowed-here' => 'Leider chasch des Bild nit iberschryybe.',
+'upload-disallowed-here' => 'Du chasch die Datei nit iberschryybe.',
 
 # File reversion
 'filerevert' => 'Zrucksetze vu „$1“',
@@ -2023,7 +2022,7 @@ Lueg au d Lischt vu dr [[Special:WantedCategories|gwinschte Kategorie]].',
 'linksearch-pat' => 'Suechmuschter:',
 'linksearch-ns' => 'Namensruum:',
 'linksearch-ok' => 'Sueche',
-'linksearch-text' => 'Die Spezialsyte macht d Suechi no Syte megli, wu s bstimmti Weblink din het. Doderby chenne Platzhalter wie zem Byschpel <code>*.byschpel.de</code> brucht wäre. S mueß zmindecht ei Top-Level-Domain, z. B. „*.org“. aagee wäre. <br />Unterstitzti Protokoll: <code>$1</code> (Die bitte nit bi dr Suechaafrog aagee.)',
+'linksearch-text' => 'Die Spezialsyte macht d Suechi no Syte megli, wu s bstimmti Weblink din het. Doderby chenne Platzhalter wie zem Byschpel <code>*.byschpel.de</code> brucht wäre. S mueß zmindecht ei Top-Level-Domain, z. B. „*.org“. aagee wäre. <br />Unterstitzti Protokoll: <code>$1</code> (Standard isch http, wänn kei Protokoll aagee isch).',
 'linksearch-line' => '$1 isch vo $2 verknüpft',
 'linksearch-error' => 'Platzhalter chönne numme am Aafang verwändet werre.',
 
@@ -2072,8 +2071,8 @@ Zuesätzligi Informatione iber einzelni Rächt git s [[{{MediaWiki:Listgrouprigh
 'emailuser-title-target' => 'E-Mail an {{GENDER:$1|dää Benutzer|die Benutzeri}} schicke',
 'emailuser-title-notarget' => 'E-Mail an Benutzer',
 'emailpage' => 'E-Mail an Benutzer',
-'emailpagetext' => 'Du chasch im Benutzer mit däm Formular e E-Mail schicke.
-As Absender wird d E-Mail-Adräss us Dyyne [[Special:Preferences|Yystellige]] yytrait, ass dr Benutzer Dir cha Antwort gee.',
+'emailpagetext' => 'Du chasch {{GENDER:$1|em Benutzer|dr Benutzeri}} mit däm Formular e E-Mail schicke.
+As Absender wird d E-Mail-Adräss us Dyyne [[Special:Preferences|Yystellige]] yytrait, ass {{GENDER:$1|dr Benutzer|d Benutzeri}} Dir cha Antwort gee.',
 'usermailererror' => 'S Mail-Objekt het e Fähler zruckgee:',
 'defemailsubject' => '{{SITENAME}}-E-Mail vum Benutzer „$1“',
 'usermaildisabled' => 'Benutzer-E-Mail abgstellt',
@@ -2142,11 +2141,7 @@ Wänn Du d Syte speter wider vu dr Lischt witt stryyche, deno druck eifach uf �
 
 'enotif_mailer' => '{{SITENAME}} E-Mail-Benochrichtigungsdienscht',
 'enotif_reset' => 'Alli Syte as aagluegt markiere',
-'enotif_newpagetext' => 'Des isch e neiji Syte.',
 'enotif_impersonal_salutation' => '{{SITENAME}}-Benutzer',
-'changed' => 'gänderet',
-'created' => 'aagleit',
-'enotif_subject' => 'D {{SITENAME}} Syte $PAGETITLE isch vum $PAGEEDITOR $CHANGEDORCREATED wore.',
 'enotif_lastvisited' => '$1 zeigt alli Änderige uf s Mol.',
 'enotif_lastdiff' => 'Lueg $1 no däre Änderig.',
 'enotif_anon_editor' => 'Anonyme Benutzer $1',
@@ -2397,7 +2392,7 @@ Do chunnt dr aktuäll Yytrag us em Benutzersperr-Logbuech:',
 'whatlinkshere-hideredirs' => 'Wyterleitige $1',
 'whatlinkshere-hidetrans' => 'Vorlageyybindige $1',
 'whatlinkshere-hidelinks' => 'Links $1',
-'whatlinkshere-hideimages' => 'Dateigleicher $1',
+'whatlinkshere-hideimages' => 'Dateilink $1',
 'whatlinkshere-filters' => 'Filter',
 
 # Block/unblock
@@ -2833,6 +2828,7 @@ Die uf em lokale Rächner spychere un derno do uffelade.',
 
 # Info page
 'pageinfo-title' => 'Informatione zue „$1“',
+'pageinfo-not-current' => 'Die Informatione chenne leider nit fir alti Versionen aazeigt wäre.',
 'pageinfo-header-basic' => 'Basisinformatione',
 'pageinfo-header-edits' => 'Bearbeitige',
 'pageinfo-header-restrictions' => 'Syteschutz',
@@ -2841,6 +2837,7 @@ Die uf em lokale Rächner spychere un derno do uffelade.',
 'pageinfo-default-sort' => 'Standardsortierkriterium',
 'pageinfo-length' => 'Sytelengi (in Byte)',
 'pageinfo-article-id' => 'Syten-ID',
+'pageinfo-language' => 'Syteninhaltssproch',
 'pageinfo-robot-policy' => 'Suechmaschinestatus',
 'pageinfo-robot-index' => 'Indizierbar',
 'pageinfo-robot-noindex' => 'Nit indizierbar',
@@ -2861,6 +2858,13 @@ Die uf em lokale Rächner spychere un derno do uffelade.',
 'pageinfo-hidden-categories' => 'Versteckti {{PLURAL:$1|Kategori|Kategorie}} ($1)',
 'pageinfo-templates' => 'Yybundeni {{PLURAL:$1|Vorlag|Vorlage}} ($1)',
 'pageinfo-toolboxlink' => 'Informatione zue dr Syte',
+'pageinfo-redirectsto' => 'Weiterleitung nach',
+'pageinfo-redirectsto-info' => 'Information',
+'pageinfo-contentpage' => 'Zellt as Inhaltssyte',
+'pageinfo-contentpage-yes' => 'Jo',
+'pageinfo-protect-cascading' => 'Syte mit Kaskadeschutz vu do',
+'pageinfo-protect-cascading-yes' => 'Jo',
+'pageinfo-protect-cascading-from' => 'Syte mit Kaskadeschutz vu',
 
 # Patrolling
 'markaspatrolleddiff' => 'Als patrulyrt markyre',
@@ -3538,6 +3542,7 @@ Du chasch au d [[Special:EditWatchlist|Standard-Bearbeitigssyte]] bruuche.',
 'version-license' => 'Lizänz',
 'version-poweredby-credits' => "Die Websyte nutzt '''[//www.mediawiki.org/wiki/MediaWiki/de MediaWiki]''', Copyright © 2001–$1 $2.",
 'version-poweredby-others' => 'anderi',
+'version-credits-summary' => 'Mir danke däne Lyt fir ihri Bytreg zue [[Special:Version|MediaWiki]].',
 'version-license-info' => 'MediaWiki isch e freji Software, d. h. s cha, no dr Bedingige vu dr GNU General Public-Lizänz, wu vu dr Free Software Foundation vereffentligt woren isch, wyterverteilt un/oder modifiziert wäre. Doderbyy cha d Version 2, oder no eigenem Ermässe, jedi nejeri Version vu dr Lizänz brucht wäre.
 
 Des Programm wird in dr Hoffnig verteilt, ass es nitzli isch, aber OHNI JEDI GARANTI un sogar ohni di impliziert Garanti vun ere MÄRTGÄNGIGKEIT oder EIGNIG FIR E BSTIMMTE ZWÄCK. Doderzue git meh Hiiwys in dr GNU General Public-Lizänz.
@@ -3676,9 +3681,9 @@ Di aagfrogt Datei wird diräkt dargstellt bzw. mit dr verchnipfte Aawändig gsta
 'logentry-move-move_redir-noredirect' => '$1 het d Syte $3 nooch $4 verschobe un het debi e Wyterleitig überschrybe, ohni sälber eini aazlege',
 'logentry-patrol-patrol' => '$1 het Version $4 vo Syte $3 als kontrolliert markiert',
 'logentry-patrol-patrol-auto' => '$1 het Version $4 vo Syte $3 automatisch als kontrolliert markiert',
-'logentry-newusers-newusers' => '$1 het en Benutzerchonto erstellt',
-'logentry-newusers-create' => '$1 het en Benutzerchonto erstellt',
-'logentry-newusers-create2' => '$1 het en Benutzerchonto $3 erstellt',
+'logentry-newusers-newusers' => 'Benutzerkonto $1 isch aagleit wore.',
+'logentry-newusers-create' => 'Benutzerkonto $1 isch aagleit wore.',
+'logentry-newusers-create2' => 'Benutzerkonto $3 isch aalgeit wore vu $1',
 'logentry-newusers-autocreate' => 'S Benutzerchonto $1 isch automatisch erstellt worde',
 'newuserlog-byemail' => 's Passwort isch per E-Mail gschickt wore',
 

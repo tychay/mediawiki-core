@@ -160,7 +160,6 @@ $messages = array(
 'qbbrowse' => 'Πλοήγησην',
 'qbedit' => 'Άλλαξον',
 'qbpageoptions' => 'Ατή η σελίδαν',
-'qbpageinfo' => 'Συμφραζόμενα',
 'qbmyoptions' => "Τ' εμά τα σελίδας",
 'qbspecialpages' => 'Ειδικά σελίδας',
 'faq' => 'Πολλά ερωτήσεις (FAQ)',
@@ -338,9 +337,6 @@ $messages = array(
 'virus-unknownscanner' => 'αναγνώριμον αντιικόν:',
 
 # Login and logout pages
-'welcomecreation' => "== Καλώς έρθετεν, $1! ==
-Η λογαρίαν εσουν εγέντον.
-Τ' άλλαγμαν τη [[Special:Preferences|{{SITENAME}} προτιμησίων]] εσουν μη νεσπάλετε.",
 'yourname' => 'Όνεμαν χρήστε:',
 'yourpassword' => 'Σημάδι:',
 'yourpasswordagain' => "Ξαν' γράψτεν το σημάδι:",
@@ -981,8 +977,6 @@ $messages = array(
 'unwatching' => "'κ ωριάζω...",
 
 'enotif_impersonal_salutation' => '{{SITENAME}} χρήστες',
-'changed' => 'ελλάγεν',
-'created' => 'έντον',
 'enotif_anon_editor' => 'ανώνυμον χρήστες $1',
 
 # Delete

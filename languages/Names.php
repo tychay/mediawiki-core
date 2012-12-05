@@ -55,6 +55,7 @@
 	'avk' => 'Kotava', # Kotava
 	'ay' => 'Aymar aru',	# Aymara
 	'az' => 'azərbaycanca',	# Azerbaijani
+	'azb' => 'تورکجه',	# South Azerbaijani
 	'ba' => 'башҡортса',	# Bashkir
 	'bar' => 'Boarisch',	# Bavarian (Austro-Bavarian and South Tyrolean)
 	'bat-smg' => 'žemaitėška', # Samogitian (deprecated code, 'sgs' in ISO 693-3 since 2010-06-30 )
@@ -266,7 +267,7 @@
 	'nap' => 'Nnapulitano',	# Neapolitan
 	'nb' => "norsk (bokmål)\xE2\x80\x8E",		# Norwegian (Bokmal)
 	'nds' => 'Plattdüütsch',	# Low German ''or'' Low Saxon
-	'nds-nl' => 'Nedersaksisch',	# Dutch Low Saxon
+	'nds-nl' => 'Nedersaksies',	# aka Nedersaksisch: Dutch Low Saxon
 	'ne' => 'नेपाली',	# Nepali
 	'new' => 'नेपाल भाषा',		# Newar / Nepal Bhasha
 	'ng' => 'Oshiwambo',		# Ndonga

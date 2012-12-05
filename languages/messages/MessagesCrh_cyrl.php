@@ -17,10 +17,6 @@ $fallback = 'ru';
 
 $fallback8bitEncoding = 'windows-1251';
 
-$separatorTransformTable = array( ','     => '.', '.'     => ',' );
-
-$linkTrail = '/^([a-zâçğıñöşüа-яё“»]+)(.*)$/sDu';
-
 $namespaceNames = array(
 	NS_MEDIA            => 'Медиа',
 	NS_SPECIAL          => 'Махсус',
@@ -40,8 +36,8 @@ $namespaceNames = array(
 	NS_CATEGORY_TALK    => 'Категория_музакереси',
 );
 
-# Aliases to latin namespaces
 $namespaceAliases = array(
+	# Aliases of Latin (crh-latn) namespaces
 	"Media"                 => NS_MEDIA,
 	"Mahsus"                => NS_SPECIAL,
 	"Muzakere"              => NS_TALK,
@@ -104,6 +100,9 @@ $dateFormats = array(
     'ISO 8601 date' => 'xnY.xnm.xnd',
     'ISO 8601 both' => 'xnY.xnm.xnd"T"xnH:xni:xns',
 );
+
+$separatorTransformTable = array( ','  => '.', '.' => ',' );
+$linkTrail = '/^([a-zâçğıñöşüа-яё“»]+)(.*)$/sDu';
 
 $messages = array(
 # User preference toggles
@@ -241,8 +240,8 @@ $messages = array(
 'newwindow' => '(янъы бир пенджереде ачылыр)',
 'cancel' => 'Лягъу',
 'moredotdotdot' => 'Даа...',
-'mypage' => 'Саифем',
-'mytalk' => 'Музакере саифем',
+'mypage' => 'Саифе',
+'mytalk' => 'Музакере',
 'anontalk' => 'Бу IP-нинъ музакереси',
 'navigation' => 'Сайтта ёл тапув',
 'and' => '&#32;ве',
@@ -252,7 +251,6 @@ $messages = array(
 'qbbrowse' => 'Бакъып чыкъ',
 'qbedit' => 'Денъиштир',
 'qbpageoptions' => 'Бу саифе',
-'qbpageinfo' => 'Саифе акъкъында малюмат',
 'qbmyoptions' => 'Саифелерим',
 'qbspecialpages' => 'Махсус саифелер',
 'faq' => 'Сыкъ берильген суаллер',
@@ -492,9 +490,6 @@ $2',
 'logouttext' => "'''Отурымны къапаттынъыз.'''
 
 Шимди {{SITENAME}} сайтыны аноним оларакъ къулланып оласынъыз, я да янъыдан <span class='plainlinks'>[$1 отурым ачып]</span> оласынъыз (истер айны къулланыджы адынен, истер башкъа бир къулланыджы адынен). Web браузеринъиз кэшини темизлегендже базы саифелер санки аля даа отурымынъыз ачыкъ экен киби корюнип олур.",
-'welcomecreation' => '== Хош кельдинъиз, $1! ==
-Эсабынъыз ачылды.
-Бу сайтнынъ [[Special:Preferences|сазламаларыны]] шахсынъызгъа коре денъиштирмеге унутманъыз.',
 'yourname' => 'Къулланыджы адынъыз',
 'yourpassword' => 'Паролинъиз',
 'yourpasswordagain' => 'Парольни бир даа язынъыз:',
@@ -1442,11 +1437,7 @@ $3 мына бу себепни бильдирди: ''$2''",
 
 'enotif_mailer' => '{{SITENAME}} почта вастасынен хабер берген хызмет',
 'enotif_reset' => 'Джумле саифелерни бакъылгъан оларакъ ишаретле',
-'enotif_newpagetext' => 'Бу янъы бир саифедир.',
 'enotif_impersonal_salutation' => '{{SITENAME}} къулланыджысы',
-'changed' => 'денъиштирильди',
-'created' => 'яратылды',
-'enotif_subject' => '«{{SITENAME}}» $PAGETITLE саифеси $PAGEEDITOR къулланыджы тарафындан $CHANGEDORCREATED',
 'enotif_lastvisited' => 'Сонъки зияретинъизден берли япылгъан денъишмелерни корьмек ичюн $1 бакъынъыз.',
 'enotif_anon_editor' => 'адсыз (аноним) къулланыджы $1',
 'enotif_body' => 'Сайгъылы $WATCHINGUSERNAME,

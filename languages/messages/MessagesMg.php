@@ -185,7 +185,6 @@ $specialPageAliases = array(
 	'Recentchanges'             => array( 'Fanovàna_farany' ),
 	'Recentchangeslinked'       => array( 'Fanarahana_ny_rohy' ),
 	'Revisiondelete'            => array( 'Santiôna_voafafa' ),
-	'RevisionMove'              => array( 'Fanalana_santiôna' ),
 	'Search'                    => array( 'Fikarohana' ),
 	'Shortpages'                => array( 'Pejy_fohy' ),
 	'Specialpages'              => array( 'Pejy_manokana' ),
@@ -351,7 +350,7 @@ $messages = array(
 'cancel' => 'Aoka ihany',
 'moredotdotdot' => 'Tohiny...',
 'mypage' => 'Pejiko',
-'mytalk' => 'Ny diniko',
+'mytalk' => 'Dinika',
 'anontalk' => "Resaka ho an'io adiresy IP io",
 'navigation' => 'Fikarohana',
 'and' => '&#32;sy',
@@ -481,6 +480,10 @@ Mitaky version $1-n'i MediaWiki",
 'youhavenewmessages' => 'Manana $1 ($2).',
 'newmessageslink' => 'hafatra vaovao',
 'newmessagesdifflink' => 'fanovana farany',
+'youhavenewmessagesfromusers' => "Manana $1 avy amin'ny mpikambana {{PLURAL:$3|hafa|$3}} ($2).",
+'youhavenewmessagesmanyusers' => "Manana $1 avy amin'ny mpikambana maro ($2).",
+'newmessageslinkplural' => '{{PLURAL:$1|hafatra iray|hafatra maro}}',
+'newmessagesdifflinkplural' => 'fanovana farany{{PLURAL:$1}}',
 'youhavenewmessagesmulti' => "Manana hafatra vaovao ianao eo amin'ny $1.",
 'editsection' => 'hanova',
 'editold' => 'hanova',
@@ -613,16 +616,13 @@ Ny antony napetraka dia : « ''$2'' ».",
 
 Mbola afaka mampiasa ny {{SITENAME}} ianao na dia ef anivoaka aza, na afaka <span class='plainlinks'>[$1 miverina mihiditra]</span> ianao ambanin'ny anaranao na anaram-pikambana hafa.
 Fantaro fa ny endriky ny pejy sasany dia mety mitovy amin'ny endrika nahitanao azy tamin' ianao mbola niditra tato, ho toy izany ny endri-pejy raha tsy nofafanao ny cache.",
-'welcomecreation' => '== Tonga soa, $1! ==
-
-Voaforona soa aman-tsara ny kaontinao.
-Aza hadino ny manova ny [[Special:Preferences|safidinao]]',
 'yourname' => 'Solonanarana',
 'yourpassword' => 'Tenimiafina',
 'yourpasswordagain' => 'Avereno ampidirina eto ny tenimiafina',
 'remembermypassword' => '{{PLURAL:}}Tadidio ny tenimiafiko (mandritry ny $1 andro fara-fahabetsany)',
 'securelogin-stick-https' => "Mijanona tafiditra amin'i HTTPS rehefa tafiditra",
 'yourdomainname' => 'faritra (domaine) misy anao',
+'password-change-forbidden' => "Tsy afaka manova ny tenimiafina ianao eto amin'ity wiki ity.",
 'externaldberror' => "Nisy tsy fetezana angamba teo amin'ny fanamarinana anao tamin'ny sehatra ivelan'ity wiki ity, na tsy manana alalana hanova ny kaontinao ivelany ianao.",
 'login' => 'Midira',
 'nav-login-createaccount' => 'Ampidiro ny solonanarana',
@@ -888,7 +888,7 @@ Tadidio fa mampiasa soramadinika ny lohatenin'ny pejinao manan-tovana *.css sy *
 'note' => "'''Fanamarihana:'''",
 'previewnote' => "'''Fantaro fa topi-maso fotsiny ity.'''
 Mbola tsy voatahiry ny fanovanao !",
-'continue-editing' => 'Tohizana ny fanovana',
+'continue-editing' => 'Hanohy ny fanovàna',
 'previewconflict' => "
 Ity topi-maso ity no mifanaraka amin'ny lahatsoratra ao amin'ny faritra eo ambony,
 ary toy izao no ho fisehon'ny pejy raha misafidy ny hitahiry azy ianao.",
@@ -1247,10 +1247,11 @@ ihany no miseho amin'ny vokatry ny karoka).",
 'qbsettings-fixedright' => 'Ankavanana',
 'qbsettings-floatingleft' => 'Mitsingevaheva any ankavanana',
 'qbsettings-floatingright' => 'Mitsigevaheva any ankavanana',
+'qbsettings-directionality' => "Tsy mihetsika, arakaraky ny fizotran'ny soratra amin'ny teninao (avy any havanana miankavia, na avy any havia miankavanana)",
 
 # Preferences page
 'preferences' => 'Ny momba anao',
-'mypreferences' => 'Ny safidiko',
+'mypreferences' => 'Safidy',
 'prefs-edits' => 'isa ny fanovàna :',
 'prefsnologin' => 'Tsy tafiditra',
 'prefsnologintext' => 'Mila <span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} misoratra ary tafiditra]</span> amin\'ny kaontinao ianao vao afaka manova ny safidinao.',
@@ -1314,7 +1315,7 @@ Fenoy araka ny datin'ny solosainan'ny mpitsidika",
 'timezoneregion-indian' => 'Ranomasimbe Indianina',
 'timezoneregion-pacific' => 'Ranomasimbe Pasifika',
 'allowemail' => "Ekeo ny handraisana imailaka avy amin'ny mpikambana hafa",
-'prefs-searchoptions' => 'Safidy mikasika ny fikarohana',
+'prefs-searchoptions' => 'Karoka',
 'prefs-namespaces' => "Toeran'anarana",
 'defaultns' => "Fikarohana tsipalotra anatin'ireo anaran-tsehatra ireo :",
 'default' => 'tsipalotra',
@@ -1481,6 +1482,9 @@ Tsy haseho ny adiresy imailakao rehefa manoratra any aminao ny mpikambana hafa."
 'rightslogtext' => "Ity ny laogy momban'ny fanovana ny zom-pikambana.",
 'rightslogentry' => "nanova ny fahefan'ny mpikambana « $1 », avy amin'ny $2 izy lasa $3",
 'rightslogentry-autopromote' => '$2 navadika $3 ho azy',
+'logentry-rights-rights' => "$1 dia nanova ny sokajim-pikambana isian'i $3 avy amin'ny $4 lasa $5",
+'logentry-rights-rights-legacy' => "$1 nanova ny vonodrom-pikambana isian'i $3",
+'logentry-rights-autopromote' => 'Lasa $5 ho azy i $1 izay $4 taloha',
 'rightsnone' => '(tsy misy)',
 
 # Associated actions - in the sentence "You do not have permission to X"
@@ -1683,6 +1687,7 @@ Misafidia anaran-drakitra mambangovango.",
 
 $1",
 'upload-warning-subj' => 'Fampitandremana rehefa mampiditra',
+'upload-warning-msg' => "Nisy olana nitranga tam-pampidirana avy amin'i [$2] afaka miverina any amin'ny [[Special:Upload/stash/$1|formiolera fampidirana]] ianao hamahana izany olana izany.",
 
 'upload-proto-error' => 'Protokolina diso',
 'upload-proto-error-text' => "Mila URL manomboka amin'ny <code>http://</code> na <code>ftp://</code> ny fampidiran-drakitra.",
@@ -1750,9 +1755,9 @@ Avereno fanindroany.',
 
 # img_auth script messages
 'img-auth-accessdenied' => 'Tsy afa-mankao',
-'img-auth-nopathinfo' => "Tsy misy ny PATH_INFO.
+'img-auth-nopathinfo' => "Tsy misy PATH_INFO.
 Tsy voaparametatra ny lohamilinao hampita io fampahalalàna io.
-Mety mifototra amin'ny CGI izy ka mety tsy mahazaka img_auth
+Mety mampiasa CGI angamba ilay lohamilina ka tsy mahazaka an'i img_auth
 Vangio ny https://www.mediawiki.org/wiki/Manual:Image_Authorization.",
 'img-auth-notindir' => 'Ny lalana nangatahana dia tsy ny petra-drakitra nokaonfigiorena.',
 'img-auth-badtitle' => "Tsy afaka mamorona lohateny azo ampiasaina avy amin'ny « $1 ».",
@@ -1909,7 +1914,7 @@ Aza manadino manamarina raha tsy misy rohy makany amin'ny endrika hafa alohan'ny
 'statistics-views-total' => 'Tsidika',
 'statistics-views-peredit' => 'Tsidika isaky ny fanovana',
 'statistics-users' => '[[Special:ListUsers|Mpikambana]] nisoratra anarana',
-'statistics-users-active' => 'Mpikambana manova matetika',
+'statistics-users-active' => 'Mpikambana mavitrika',
 'statistics-users-active-desc' => "Mpikambana nanao zavatra teto tanatin'ny $1 andro{{PLURAL:}}.",
 'statistics-mostpopular' => 'Pejy voatsidika',
 
@@ -2092,6 +2097,8 @@ Protokoly zaka <code>$1</code> aza ampiana ao amin'ny karokao izy ireo.",
 'listgrouprights-removegroup' => "Manala ny mpikambana {{PLURAL:$2}}amin'ny gropy : $1",
 'listgrouprights-addgroup-all' => 'Manampy mpikambana anaty vondrona rehetra',
 'listgrouprights-removegroup-all' => 'Manala mpikambana anaty gropy rehetra',
+'listgrouprights-addgroup-self' => "Afaka manampy ny tenany amin'ny vondrona{{PLURAL:$2}}: $1",
+'listgrouprights-removegroup-self' => "Afaka manala ny tenany amin'ny vondrona{{PLURAL:$2}} : $1",
 'listgrouprights-addgroup-self-all' => "Manampy ny vondrom-pikambana rehetra amin'ny kaontiny",
 'listgrouprights-removegroup-self-all' => "Manala ny vondrom-pikambana rehetra amin'ny kaontiny",
 
@@ -2099,6 +2106,7 @@ Protokoly zaka <code>$1</code> aza ampiana ao amin'ny karokao izy ireo.",
 'mailnologin' => 'Tsy misy adiresy handefasana ny tenimiafina',
 'mailnologintext' => "Mila [[Special:UserLogin|miditra]] ianao sady manana imailaka mandeha sy voamarina ao amin'ny [[Special:Preferences|mombamomba anao]] vao afaka mandefa imailaka amin'ny mpikambana hafa.",
 'emailuser' => 'Andefaso imailaka io mpikambana io',
+'emailuser-title-target' => "Handefa mailaka any amin'ity mpikambana ity{{GENDER:$1}}",
 'emailuser-title-notarget' => "Handefa imailaka an'ilay mpikambana",
 'emailpage' => 'Andefaso imailaka io mpikambana io',
 'emailpagetext' => "Raha nametraka adiresy tena miasa tao amin'ny [[Special:Preferences|mombamomba azy io mpikambana io]],
@@ -2136,7 +2144,7 @@ na tsy maniry handray imailaka avy amin'ny mpikambana hafa izy.",
 
 # Watchlist
 'watchlist' => 'Narahiko maso',
-'mywatchlist' => 'Pejy arahako',
+'mywatchlist' => 'Pejy arahana',
 'watchlistfor2' => "Ho an'i $1 $2",
 'nowatchlist' => 'Tsy manaraka pejy ianao.',
 'watchlistanontext' => "Andana $1 hahafahanao mijery na manova zavatra ao amin'ny pejy arahanao.",
@@ -2175,11 +2183,7 @@ Aoriana, raha irinao ny hanaisotra azy ao amin'ny pejy arahanao maso, dia tsindr
 
 'enotif_mailer' => "Fomba fampandrenesana amin'ny alalan'ny imailaka an'i {{SITENAME}}",
 'enotif_reset' => 'Marihana ho efa voavaky ny pejy rehetra',
-'enotif_newpagetext' => 'Pejy vaovao ity pejy ity.',
 'enotif_impersonal_salutation' => "Mpikamban'i {{SITENAME}}",
-'changed' => 'voaova',
-'created' => 'voaforona',
-'enotif_subject' => '$CHANGEDORCREATED $PAGEEDITOR ny pejy $PAGETITLE tao amin\'ny {{SITENAME}}',
 'enotif_lastvisited' => "Jereo eto $1 ny niova rehetra hatramin'ny fitsidihanao farany.",
 'enotif_lastdiff' => 'Jereo $1 mba ahitana ireo fanovana ireo.',
 'enotif_anon_editor' => 'mpikambana tsy nisoratra anarana $1',
@@ -2247,6 +2251,7 @@ ataovy am-pitandremana ity tao ity.",
 'rollback' => 'Foano indray ilay fanovana',
 'rollback_short' => 'Aza ovaina indray',
 'rollbacklink' => 'foano',
+'rollbacklinkcount' => 'hamoana fanovana{{PLURAL:$1}} $1',
 'rollbackfailed' => "Tsy voaverina amin'ny teo aloha",
 'cantrollback' => "Tsy afaka iverenana ny fanovana; ny mpanova farany ihany no tompon'ny pejy.",
 'alreadyrolled' => "Tsy afaka foanana ny fanovana ny pejy « [[:$1]] » nataon'i [[User:$2|$2]] ([[User talk:$2|Dinika]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]])
@@ -2382,12 +2387,13 @@ $1',
 'namespace' => 'Anaran-tsehatra :',
 'invert' => 'Ampifamadiho ny safidy',
 'namespace_association' => 'Anaran-tsehatra nampiarahana',
+'tooltip-namespace_association' => 'Mariho ity boaty ity mba hampiditra ny pejin-dresaky ny anaran-tsehatra voafidy',
 'blanknamespace' => '(fotony)',
 
 # Contributions
 'contributions' => "Fandraisan'anjaran'ny mpikambana",
 'contributions-title' => "Fandraisan'anjaran'i $1",
-'mycontris' => 'Ny nosoratako',
+'mycontris' => "Fandraisan'anjara",
 'contribsub2' => "ho an'ny $1 ($2)",
 'nocontribs' => "Tsy misy fanovana mifanaraka amin'ireo critères ireo.",
 'uctop' => ' (loha)',
@@ -2428,7 +2434,7 @@ Aseho eo ambany ny iditra farany ao amin'ny laogim-panakanana  mba hampahalala :
 'whatlinkshere-hideredirs' => '$1 ny fihodinana',
 'whatlinkshere-hidetrans' => '$1 ny tsofo-pejy',
 'whatlinkshere-hidelinks' => '$1 ny rohy',
-'whatlinkshere-hideimages' => '$1 rakitra mirohy',
+'whatlinkshere-hideimages' => '$1 ny rakitra mirohy',
 'whatlinkshere-filters' => 'sivana',
 
 # Block/unblock
@@ -2466,6 +2472,7 @@ Fenoy etsy ambany ny antony manokana (ohatra, mitanisà pejy nosomparana).",
 'blockipsuccesstext' => 'Voasakana i [[Special:Contributions/$1|$1]].
 <br />Jereo ny [[Special:BlockList|lisitry ny IP voasakana]] raha hanala ny sakana efa misy.',
 'ipb-blockingself' => 'Hanakana ny kaontinao ianao ! Tena hanao izany ve ?',
+'ipb-confirmhideuser' => "Eo ampanakanana mpikambana miaraka amin'ny \"fanakonana mpikambana\" ampiasaina. Izany dia mamafa ny anaran'ilay mpikambana amin'ny listra ary amin'ny iditra laogy. Tena hanao izany ve ianao?",
 'ipb-edit-dropdown' => 'Hanova ny antony fanakanana tsipalotra',
 'ipb-unblock-addr' => "Hanala ny sakan' i $1",
 'ipb-unblock' => "Hanala ny sakan'ny mpikambana na adiresy IP",
@@ -2581,6 +2588,7 @@ Azafady mba antero fa izay tokoa no tena irinao.",
 'lockfilenotwritable' => "Tsy azo soratana ny rakitra fanidiana ny banky angona.
 Mba hahafahany manidy na mamoha ny banky angona, mila azo soratan'ny lohamilin-tranonkala izy.",
 'databasenotlocked' => 'Tsy voaidy ny banky angona.',
+'lockedbyandtime' => "(nataon'i $1 ny $2 tamin'ny $3)",
 
 # Move page
 'move-page' => "Hanova anarana an'i $1",
@@ -2923,6 +2931,13 @@ Raha alefanao ilay izy, mety ho simban'io renifango io ny solosainao.",
 'bydate' => 'araka ny daty',
 'sp-newimages-showfrom' => "Aseho ny rakitra vaovao manomboka amin'ny $1 tamin'ny $2",
 
+# Video information, used by Language::formatTimePeriod() to format lengths in the above messages
+'seconds' => 'segondra{{PLURAL:$1}}',
+'minutes' => 'minitra{{PLURAL:$1}}',
+'hours' => 'ora{{PLURAL:$1}}',
+'days' => 'andro{{PLURAL:$1}}',
+'ago' => '$1 lasa izay',
+
 # Bad image list
 'bad_image_list' => "Ity ny andrefiny :
 
@@ -2977,8 +2992,8 @@ Tokony sary tsy misy na sary tsy izy ny rohy voalohany anaty andalana iray .
 'exif-exifversion' => 'Santiôna EXIF',
 'exif-flashpixversion' => 'Santiôna FlashPix',
 'exif-colorspace' => 'Valan-doko',
-'exif-pixelydimension' => 'Haavon-tsary ekena',
-'exif-pixelxdimension' => 'Halalan-tsary ekena',
+'exif-pixelydimension' => 'Haavon-tsary',
+'exif-pixelxdimension' => 'Halala-tsary',
 'exif-usercomment' => 'Diniky ny mpikambana',
 'exif-relatedsoundfile' => 'Rakitra audio miaraka',
 'exif-datetimeoriginal' => 'Daty fangalana niaviana',
@@ -2989,7 +3004,7 @@ Tokony sary tsy misy na sary tsy izy ny rohy voalohany anaty andalana iray .
 'exif-fnumber' => 'Isa F',
 'exif-exposureprogram' => 'Fomba famakiana',
 'exif-isospeedratings' => 'ISO',
-'exif-aperturevalue' => 'Sanasana',
+'exif-aperturevalue' => 'Fisanasana APEX',
 'exif-lightsource' => 'Loharanon-kazavana',
 'exif-flashenergy' => "Angôvon'akonkazavana",
 'exif-filesource' => 'Fangon-drakitra',
@@ -3010,8 +3025,16 @@ Tokony sary tsy misy na sary tsy izy ny rohy voalohany anaty andalana iray .
 'exif-gpsareainformation' => 'Anaram-paritra GPS',
 'exif-gpsdatestamp' => 'Daty GPS',
 'exif-countrycreated' => 'Firenena nangalana ilay sary',
+'exif-cameraownername' => "Tompon'ilay mpaka sary",
+'exif-licenseurl' => "URl an'ilay lisansa",
+'exif-pngfilecomment' => "Famoahan-kevitra momban'ilay rakitra PNG",
+
+'exif-copyrighted-true' => "Iharan'ny zom-pamorona",
+'exif-copyrighted-false' => 'Valam-bahoaka',
 
 'exif-unknowndate' => 'Daty tsy fantatra',
+
+'exif-orientation-1' => 'Tsotra',
 
 'exif-componentsconfiguration-0' => 'tsy nahitana',
 
@@ -3021,6 +3044,9 @@ Tokony sary tsy misy na sary tsy izy ny rohy voalohany anaty andalana iray .
 
 'exif-meteringmode-0' => 'Tsy fantatra',
 'exif-meteringmode-1' => 'Elanelana',
+'exif-meteringmode-3' => 'Spot',
+'exif-meteringmode-5' => 'Modely',
+'exif-meteringmode-255' => 'Hafa',
 
 # Flash modes
 'exif-flash-mode-3' => 'Toetra aotômatika',
@@ -3273,6 +3299,11 @@ Aseho amin'ny tena habeny ny sary aseho, ny hafa dia alefa miaraka amin'ny rindr
 'logentry-suppress-delete' => "nofafan'i $1 ny pejy $3",
 'revdelete-restricted' => "nametraka fanerena ho an'ny mpandrindra",
 'revdelete-unrestricted' => "fanerena nesorina tamin'ny mpandrindra",
-'newuserlog-byemail' => 'tenimiafina nalefa imailaka',
+'logentry-move-move' => "nanova ny anaran'i $3 ho $4 i $1",
+'logentry-newusers-newusers' => 'Noforonina ny kaontim-pikambana $1',
+'logentry-newusers-create' => 'Noforonina ny kaontim-pikambana $1',
+'logentry-newusers-create2' => "Noforonin'i $1 ny kaomtim-pikambana $3",
+'logentry-newusers-autocreate' => 'Noforonina ho azy ny kaontim-pikambana $&',
+'newuserlog-byemail' => "tenimiafina nalefa tamin'ny imailaka",
 
 );

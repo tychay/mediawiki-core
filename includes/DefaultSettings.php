@@ -361,7 +361,9 @@ $wgImgAuthPublicTest = true;
  *                          container  : backend container name the zone is in
  *                          directory  : root path within container for the zone
  *                          url        : base URL to the root of the zone
- *                          handlerUrl : base script handled URL to the root of the zone
+ *                          urlsByExt  : map of file extension types to base URLs
+ *                                       (useful for using a different cache for videos)
+ *                          handlerUrl : base script-handled URL to the root of the zone
  *                                       (see FileRepo::getZoneHandlerUrl() function)
  *                      Zones default to using "<repo name>-<zone name>" as the container name
  *                      and default to using the container root as the zone's root directory.
@@ -752,10 +754,14 @@ $wgMediaHandlers = array(
  * @since 1.21
  */
 $wgContentHandlers = array(
-	CONTENT_MODEL_WIKITEXT => 'WikitextContentHandler', // the usual case
-	CONTENT_MODEL_JAVASCRIPT => 'JavaScriptContentHandler', // dumb version, no syntax highlighting
-	CONTENT_MODEL_CSS => 'CssContentHandler', // dumb version, no syntax highlighting
-	CONTENT_MODEL_TEXT => 'TextContentHandler', // plain text, for use by extensions etc
+	// the usual case
+	CONTENT_MODEL_WIKITEXT => 'WikitextContentHandler',
+	// dumb version, no syntax highlighting
+	CONTENT_MODEL_JAVASCRIPT => 'JavaScriptContentHandler',
+	// dumb version, no syntax highlighting
+	CONTENT_MODEL_CSS => 'CssContentHandler',
+	// plain text, for use by extensions etc
+	CONTENT_MODEL_TEXT => 'TextContentHandler',
 );
 
 /**
@@ -1875,9 +1881,10 @@ $wgUseLocalMessageCache = false;
 $wgLocalMessageCacheSerialized = true;
 
 /**
- * Instead of caching everything, keep track which messages are requested and
- * load only most used messages. This only makes sense if there is lots of
- * interface messages customised in the wiki (like hundreds in many languages).
+ * Instead of caching everything, only cache those messages which have
+ * been customised in the site content language. This means that
+ * MediaWiki:Foo/ja is ignored if MediaWiki:Foo doesn't exist.
+ * This option is probably only useful for translatewiki.net.
  */
 $wgAdaptiveMessageCache = false;
 
@@ -2555,11 +2562,6 @@ $wgAllowRdfaAttributes = false;
 $wgAllowMicrodataAttributes = false;
 
 /**
- * Cleanup as much presentational html like valign -> css vertical-align as we can
- */
-$wgCleanupPresentationalAttributes = true;
-
-/**
  * Should we try to make our HTML output well-formed XML?  If set to false,
  * output will be a few bytes shorter, and the HTML will arguably be more
  * readable.  If set to true, life will be much easier for the authors of
@@ -2613,12 +2615,12 @@ $wgSiteNotice = '';
 /**
  * A subtitle to add to the tagline, for skins that have it/
  */
-$wgExtraSubtitle	= '';
+$wgExtraSubtitle = '';
 
 /**
  * If this is set, a "donate" link will appear in the sidebar. Set it to a URL.
  */
-$wgSiteSupportPage	= '';
+$wgSiteSupportPage = '';
 
 /**
  * Validate the overall output using tidy and refuse
@@ -3756,7 +3758,7 @@ $wgAllowPrefChange = array();
 /**
  * This is to let user authenticate using https when they come from http.
  * Based on an idea by George Herbert on wikitech-l:
- * http://lists.wikimedia.org/pipermail/wikitech-l/2010-October/050065.html
+ * http://lists.wikimedia.org/pipermail/wikitech-l/2010-October/050039.html
  * @since 1.17
  */
 $wgSecureLogin = false;
@@ -4603,7 +4605,9 @@ $wgProfileOnly = false;
  * Log sums from profiling into "profiling" table in db.
  *
  * You have to create a 'profiling' table in your database before using
- * this feature, see maintenance/archives/patch-profiling.sql
+ * this feature.  Run set $wgProfileToDatabase to true in
+ * LocalSettings.php and run maintenance/update.php or otherwise
+ * manually add patch-profiling.sql to your database.
  *
  * To enable profiling, edit StartProfiler.php
  */
@@ -5435,14 +5439,15 @@ $wgHooks = array();
  * can add to this to provide custom jobs
  */
 $wgJobClasses = array(
-	'refreshLinks' => 'RefreshLinksJob',
-	'refreshLinks2' => 'RefreshLinksJob2',
-	'htmlCacheUpdate' => 'HTMLCacheUpdateJob',
+	'refreshLinks'      => 'RefreshLinksJob',
+	'refreshLinks2'     => 'RefreshLinksJob2',
+	'htmlCacheUpdate'   => 'HTMLCacheUpdateJob',
 	'html_cache_update' => 'HTMLCacheUpdateJob', // backwards-compatible
-	'sendMail' => 'EmaillingJob',
-	'enotifNotify' => 'EnotifNotifyJob',
+	'sendMail'          => 'EmaillingJob',
+	'enotifNotify'      => 'EnotifNotifyJob',
 	'fixDoubleRedirect' => 'DoubleRedirectJob',
-	'uploadFromUrl' => 'UploadFromUrlJob',
+	'uploadFromUrl'     => 'UploadFromUrlJob',
+	'null'              => 'NullJob'
 );
 
 /**
@@ -5462,7 +5467,7 @@ $wgJobTypesExcludedFromDefaultQueue = array();
  * These settings should be global to all wikis.
  */
 $wgJobTypeConf = array(
-	'default' => array( 'class' => 'JobQueueDB' ),
+	'default' => array( 'class' => 'JobQueueDB', 'order' => 'random' ),
 );
 
 /**
@@ -5667,8 +5672,6 @@ $wgLogActions = array(
 	'protect/modify'     => 'modifiedarticleprotection',
 	'protect/unprotect'  => 'unprotectedarticle',
 	'protect/move_prot'  => 'movedarticleprotection',
-	'rights/rights'      => 'rightslogentry',
-	'rights/autopromote' => 'rightslogentry-autopromote',
 	'upload/upload'      => 'uploadedimage',
 	'upload/overwrite'   => 'overwroteimage',
 	'upload/revert'      => 'uploadedimage',
@@ -5686,16 +5689,18 @@ $wgLogActions = array(
  * @see LogFormatter
  */
 $wgLogActionsHandlers = array(
-	'move/move'         => 'MoveLogFormatter',
-	'move/move_redir'  => 'MoveLogFormatter',
-	'delete/delete'     => 'DeleteLogFormatter',
-	'delete/restore'    => 'DeleteLogFormatter',
-	'delete/revision'   => 'DeleteLogFormatter',
-	'delete/event'      => 'DeleteLogFormatter',
-	'suppress/revision' => 'DeleteLogFormatter',
-	'suppress/event'    => 'DeleteLogFormatter',
-	'suppress/delete'   => 'DeleteLogFormatter',
-	'patrol/patrol'     => 'PatrolLogFormatter',
+	'move/move'          => 'MoveLogFormatter',
+	'move/move_redir'    => 'MoveLogFormatter',
+	'delete/delete'      => 'DeleteLogFormatter',
+	'delete/restore'     => 'DeleteLogFormatter',
+	'delete/revision'    => 'DeleteLogFormatter',
+	'delete/event'       => 'DeleteLogFormatter',
+	'suppress/revision'  => 'DeleteLogFormatter',
+	'suppress/event'     => 'DeleteLogFormatter',
+	'suppress/delete'    => 'DeleteLogFormatter',
+	'patrol/patrol'      => 'PatrolLogFormatter',
+	'rights/rights'      => 'RightsLogFormatter',
+	'rights/autopromote' => 'RightsLogFormatter',
 );
 
 /**
@@ -6217,20 +6222,6 @@ $wgExtensionsDirectory = false;
 $wgCompiledFiles = array();
 
 /** @} */ # End of HipHop compilation }
-
-
-/************************************************************************//**
- * @name   Mobile support
- * @{
- */
-
-/**
- * Name of the class used for mobile device detection, must be inherited from
- * IDeviceDetector.
- */
-$wgDeviceDetectionClass = 'DeviceDetection';
-
-/** @} */ # End of Mobile support }
 
 /************************************************************************//**
  * @name   Miscellaneous
