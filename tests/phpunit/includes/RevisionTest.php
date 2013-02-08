@@ -64,16 +64,14 @@ class RevisionTest extends MediaWikiTestCase {
 	}
 
 	function testGetRevisionTextGzip() {
-		if ( !function_exists( 'gzdeflate' ) ) {
-			$this->markTestSkipped( 'Gzip compression is not enabled (requires zlib).' );
-		} else {
-			$row = new stdClass;
-			$row->old_flags = 'gzip';
-			$row->old_text = gzdeflate( 'This is a bunch of revision text.' );
-			$this->assertEquals(
-				'This is a bunch of revision text.',
-				Revision::getRevisionText( $row ) );
-		}
+		$this->checkPHPExtension( 'zlib' );
+
+		$row = new stdClass;
+		$row->old_flags = 'gzip';
+		$row->old_text = gzdeflate( 'This is a bunch of revision text.' );
+		$this->assertEquals(
+			'This is a bunch of revision text.',
+			Revision::getRevisionText( $row ) );
 	}
 
 	function testGetRevisionTextUtf8Native() {
@@ -97,31 +95,27 @@ class RevisionTest extends MediaWikiTestCase {
 	}
 
 	function testGetRevisionTextUtf8NativeGzip() {
-		if ( !function_exists( 'gzdeflate' ) ) {
-			$this->markTestSkipped( 'Gzip compression is not enabled (requires zlib).' );
-		} else {
-			$row = new stdClass;
-			$row->old_flags = 'gzip,utf-8';
-			$row->old_text = gzdeflate( "Wiki est l'\xc3\xa9cole superieur !" );
-			$GLOBALS['wgLegacyEncoding'] = 'iso-8859-1';
-			$this->assertEquals(
-				"Wiki est l'\xc3\xa9cole superieur !",
-				Revision::getRevisionText( $row ) );
-		}
+		$this->checkPHPExtension( 'zlib' );
+
+		$row = new stdClass;
+		$row->old_flags = 'gzip,utf-8';
+		$row->old_text = gzdeflate( "Wiki est l'\xc3\xa9cole superieur !" );
+		$GLOBALS['wgLegacyEncoding'] = 'iso-8859-1';
+		$this->assertEquals(
+			"Wiki est l'\xc3\xa9cole superieur !",
+			Revision::getRevisionText( $row ) );
 	}
 
 	function testGetRevisionTextUtf8LegacyGzip() {
-		if ( !function_exists( 'gzdeflate' ) ) {
-			$this->markTestSkipped( 'Gzip compression is not enabled (requires zlib).' );
-		} else {
-			$row = new stdClass;
-			$row->old_flags = 'gzip';
-			$row->old_text = gzdeflate( "Wiki est l'\xe9cole superieur !" );
-			$GLOBALS['wgLegacyEncoding'] = 'iso-8859-1';
-			$this->assertEquals(
-				"Wiki est l'\xc3\xa9cole superieur !",
-				Revision::getRevisionText( $row ) );
-		}
+		$this->checkPHPExtension( 'zlib' );
+
+		$row = new stdClass;
+		$row->old_flags = 'gzip';
+		$row->old_text = gzdeflate( "Wiki est l'\xe9cole superieur !" );
+		$GLOBALS['wgLegacyEncoding'] = 'iso-8859-1';
+		$this->assertEquals(
+			"Wiki est l'\xc3\xa9cole superieur !",
+			Revision::getRevisionText( $row ) );
 	}
 
 	function testCompressRevisionTextUtf8() {
@@ -139,8 +133,9 @@ class RevisionTest extends MediaWikiTestCase {
 	}
 
 	function testCompressRevisionTextUtf8Gzip() {
-		global $wgCompressRevisions;
+		$this->checkPHPExtension( 'zlib' );
 
+		global $wgCompressRevisions;
 		$wgCompressRevisions = true;
 
 		$row = new stdClass;
@@ -313,8 +308,7 @@ class RevisionTest extends MediaWikiTestCase {
 	 * @group Database
 	 * @dataProvider dataGetSize
 	 */
-	public function testGetSize( $text, $model, $expected_size )
-	{
+	public function testGetSize( $text, $model, $expected_size ) {
 		$rev = $this->newTestRevision( $text, 'RevisionTest_testGetSize', $model );
 		$this->assertEquals( $expected_size, $rev->getSize() );
 	}
@@ -331,8 +325,7 @@ class RevisionTest extends MediaWikiTestCase {
 	 * @group Database
 	 * @dataProvider dataGetSha1
 	 */
-	public function testGetSha1( $text, $model, $expected_hash )
-	{
+	public function testGetSha1( $text, $model, $expected_hash ) {
 		$rev = $this->newTestRevision( $text, 'RevisionTest_testGetSha1', $model );
 		$this->assertEquals( $expected_hash, $rev->getSha1() );
 	}

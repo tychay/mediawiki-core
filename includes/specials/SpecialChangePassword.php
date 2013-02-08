@@ -73,8 +73,10 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 				}
 
 				$this->attemptReset( $this->mNewpass, $this->mRetype );
-				$this->getOutput()->addWikiMsg( 'resetpass_success' );
-				if( !$user->isLoggedIn() ) {
+
+				if( $user->isLoggedIn() ) {
+					$this->doReturnTo();
+				} else {
 					LoginForm::setLoginToken();
 					$token = LoginForm::getLoginToken();
 					$data = array(
@@ -82,7 +84,7 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 						'wpName'       => $this->mUserName,
 						'wpDomain'     => $this->mDomain,
 						'wpLoginToken' => $token,
-						'wpPassword'   => $this->mNewpass,
+						'wpPassword'   => $request->getVal( 'wpNewPassword' ),
 						'returnto'     => $request->getVal( 'returnto' ),
 					);
 					if( $request->getCheck( 'wpRemember' ) ) {
@@ -92,7 +94,7 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 					$login->setContext( $this->getContext() );
 					$login->execute( null );
 				}
-				$this->doReturnTo();
+				return;
 			} catch( PasswordError $e ) {
 				$this->error( $e->getMessage() );
 			}
@@ -112,7 +114,7 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 	 * @param $msg string
 	 */
 	function error( $msg ) {
-		$this->getOutput()->addHTML( Xml::element('p', array( 'class' => 'error' ), $msg ) );
+		$this->getOutput()->addHTML( Xml::element( 'p', array( 'class' => 'error' ), $msg ) );
 	}
 
 	function showForm() {
@@ -202,7 +204,7 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 			if ( $type != 'text' )
 				$out .= Xml::label( $this->msg( $label )->text(), $name );
 			else
-				$out .=  $this->msg( $label )->escaped();
+				$out .= $this->msg( $label )->escaped();
 			$out .= "</td>\n";
 			$out .= "\t<td class='mw-input'>";
 			$out .= $field;
@@ -216,7 +218,13 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 	 * @throws PasswordError when cannot set the new password because requirements not met.
 	 */
 	protected function attemptReset( $newpass, $retype ) {
-		$user = User::newFromName( $this->mUserName );
+		$isSelf = ( $this->mUserName === $this->getUser()->getName() );
+		if ( $isSelf ) {
+			$user = $this->getUser();
+		} else {
+			$user = User::newFromName( $this->mUserName );
+		}
+
 		if( !$user || $user->isAnon() ) {
 			throw new PasswordError( $this->msg( 'nosuchusershort', $this->mUserName )->text() );
 		}
@@ -231,7 +239,7 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 			throw new PasswordError( $this->msg( 'login-throttled' )->text() );
 		}
 
-		if( !$user->checkTemporaryPassword($this->mOldpass) && !$user->checkPassword($this->mOldpass) ) {
+		if( !$user->checkTemporaryPassword( $this->mOldpass ) && !$user->checkPassword( $this->mOldpass ) ) {
 			wfRunHooks( 'PrefsPasswordAudit', array( $user, $newpass, 'wrongpassword' ) );
 			throw new PasswordError( $this->msg( 'resetpass-wrong-oldpass' )->text() );
 		}
@@ -250,7 +258,12 @@ class SpecialChangePassword extends UnlistedSpecialPage {
 			throw new PasswordError( $e->getMessage() );
 		}
 
-		$user->setCookies();
+		if ( $isSelf ) {
+			// This is needed to keep the user connected since
+			// changing the password also modifies the user's token.
+			$user->setCookies();
+		}
+
 		$user->saveSettings();
 	}
 }

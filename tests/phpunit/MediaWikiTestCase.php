@@ -6,6 +6,20 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 	public $runDisabled = false;
 
 	/**
+	 * $called tracks whether the setUp and tearDown method has been called.
+	 * class extending MediaWikiTestCase usually override setUp and tearDown
+	 * but forget to call the parent.
+	 *
+	 * The array format takes a method name as key and anything as a value.
+	 * By asserting the key exist, we know the child class has called the
+	 * parent.
+	 *
+	 * This property must be private, we do not want child to override it,
+	 * they should call the appropriate parent method instead.
+	 */
+	private $called = array();
+
+	/**
 	 * @var Array of TestUser
 	 */
 	public static $users;
@@ -57,7 +71,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 		$this->backupStaticAttributes = false;
 	}
 
-	function run( PHPUnit_Framework_TestResult $result = NULL ) {
+	function run( PHPUnit_Framework_TestResult $result = null ) {
 		/* Some functions require some kind of caching, and will end up using the db,
 		 * which we can't allow, as that would open a new connection for mysql.
 		 * Replace with a HashBag. They would not be going to persist anyway.
@@ -150,6 +164,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 	protected function setUp() {
 		wfProfileIn( __METHOD__ );
 		parent::setUp();
+		$this->called['setUp'] = 1;
 
 		/*
 		//@todo: global variables to restore for *every* test
@@ -171,11 +186,14 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 			}
 		}
 
-		// Clean up open transactions
 		if ( $this->needsDB() && $this->db ) {
+			// Clean up open transactions
 			while( $this->db->trxLevel() > 0 ) {
 				$this->db->rollback();
 			}
+
+			// don't ignore DB errors
+			$this->db->ignoreErrors( false );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -193,11 +211,14 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 			}
 		}
 
-		// Clean up open transactions
 		if ( $this->needsDB() && $this->db ) {
+			// Clean up open transactions
 			while( $this->db->trxLevel() > 0 ) {
 				$this->db->rollback();
 			}
+
+			// don't ignore DB errors
+			$this->db->ignoreErrors( false );
 		}
 
 		// Restore mw globals
@@ -208,6 +229,16 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 
 		parent::tearDown();
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Make sure MediaWikiTestCase extending classes have called their
+	 * parent setUp method
+	 */
+	final public function testMediaWikiTestCaseParentSetupCalled() {
+		$this->assertArrayHasKey( 'setUp', $this->called,
+			get_called_class() . "::setUp() must call parent::setUp()"
+		);
 	}
 
 	/**
@@ -334,7 +365,7 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 				'page_id' => 0,
 				'page_namespace' => 0,
 				'page_title' => ' ',
-				'page_restrictions' => NULL,
+				'page_restrictions' => null,
 				'page_counter' => 0,
 				'page_is_redirect' => 0,
 				'page_is_new' => 0,
@@ -482,12 +513,12 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 		return $this->assertTrue( $value == '', $msg );
 	}
 
-	static private function unprefixTable( $tableName ) {
+	private static function unprefixTable( $tableName ) {
 		global $wgDBprefix;
 		return substr( $tableName, strlen( $wgDBprefix ) );
 	}
 
-	static private function isNotUnittest( $table ) {
+	private static function isNotUnittest( $table ) {
 		return strpos( $table, 'unittest_' ) !== 0;
 	}
 
@@ -829,6 +860,46 @@ abstract class MediaWikiTestCase extends PHPUnit_Framework_TestCase {
 		if( !$haveDiff3 ) {
 			$this->markTestSkipped( "Skip test, since diff3 is not configured" );
 		}
+	}
+
+	/**
+	 * Check whether we have the 'gzip' commandline utility, will skip
+	 * the test whenever "gzip -V" fails.
+	 *
+	 * Result is cached at the process level.
+	 *
+	 * @return bool
+	 *
+	 * @since 1.21
+	 */
+	protected function checkHasGzip() {
+		static $haveGzip;
+
+		if( $haveGzip === null ) {
+			$retval = null;
+			wfShellExec( 'gzip -V', $retval );
+			$haveGzip = ($retval === 0);
+		}
+
+		if( !$haveGzip ) {
+			$this->markTestSkipped( "Skip test, requires the gzip utility in PATH" );
+		}
+
+		return $haveGzip;
+	}
+
+	/**
+	 * Check if $extName is a loaded PHP extension, will skip the
+	 * test whenever it is not loaded.
+	 *
+	 * @since 1.21
+	 */
+	protected function checkPHPExtension( $extName ) {
+		$loaded = extension_loaded( $extName );
+		if( ! $loaded ) {
+			$this->markTestSkipped( "PHP extension '$extName' is not loaded, skipping." );
+		}
+		return $loaded;
 	}
 
 	/**

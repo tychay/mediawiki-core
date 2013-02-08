@@ -31,16 +31,24 @@ class JobQueueGroup {
 	/** @var Array */
 	protected static $instances = array();
 
+	/** @var ProcessCacheLRU */
+	protected $cache;
+
 	protected $wiki; // string; wiki ID
 
-	const TYPE_DEFAULT = 1; // integer; job not in $wgJobTypesExcludedFromDefaultQueue
+	const TYPE_DEFAULT = 1; // integer; jobs popped by default
 	const TYPE_ANY     = 2; // integer; any job
+
+	const USE_CACHE = 1; // integer; use process cache
+
+	const PROC_CACHE_TTL = 15; // integer; seconds
 
 	/**
 	 * @param $wiki string Wiki ID
 	 */
 	protected function __construct( $wiki ) {
 		$this->wiki = $wiki;
+		$this->cache = new ProcessCacheLRU( 1 );
 	}
 
 	/**
@@ -53,6 +61,15 @@ class JobQueueGroup {
 			self::$instances[$wiki] = new self( $wiki );
 		}
 		return self::$instances[$wiki];
+	}
+
+	/**
+	 * Destroy the singleton instances
+	 *
+	 * @return void
+	 */
+	public static function destroySingletons() {
+		self::$instances = array();
 	}
 
 	/**
@@ -73,9 +90,11 @@ class JobQueueGroup {
 	}
 
 	/**
-	 * Insert jobs into the respective queues of with the belong
+	 * Insert jobs into the respective queues of with the belong.
+	 * This inserts the jobs into the queue specified by $wgJobTypeConf.
 	 *
 	 * @param $jobs Job|array A single Job or a list of Jobs
+	 * @throws MWException
 	 * @return bool
 	 */
 	public function push( $jobs ) {
@@ -92,8 +111,15 @@ class JobQueueGroup {
 
 		$ok = true;
 		foreach ( $jobsByType as $type => $jobs ) {
-			if ( !$this->get( $type )->batchPush( $jobs ) ) {
+			if ( !$this->get( $type )->push( $jobs ) ) {
 				$ok = false;
+			}
+		}
+
+		if ( $this->cache->has( 'queues-ready', 'list' ) ) {
+			$list = $this->cache->get( 'queues-ready', 'list' );
+			if ( count( array_diff( array_keys( $jobsByType ), $list ) ) ) {
+				$this->cache->clear( 'queues-ready' );
 			}
 		}
 
@@ -103,19 +129,31 @@ class JobQueueGroup {
 	/**
 	 * Pop a job off one of the job queues
 	 *
-	 * @param $type integer JobQueueGroup::TYPE_* constant
+	 * @param $queueType integer JobQueueGroup::TYPE_* constant
+	 * @param $flags integer Bitfield of JobQueueGroup::USE_* constants
 	 * @return Job|bool Returns false on failure
 	 */
-	public function pop( $type = self::TYPE_DEFAULT ) {
-		$types = ( $type == self::TYPE_DEFAULT )
-			? $this->getDefaultQueueTypes()
-			: $this->getQueueTypes();
+	public function pop( $queueType = self::TYPE_DEFAULT, $flags = 0 ) {
+		if ( $flags & self::USE_CACHE ) {
+			if ( !$this->cache->has( 'queues-ready', 'list', self::PROC_CACHE_TTL ) ) {
+				$this->cache->set( 'queues-ready', 'list', $this->getQueuesWithJobs() );
+			}
+			$types = $this->cache->get( 'queues-ready', 'list' );
+		} else {
+			$types = $this->getQueuesWithJobs();
+		}
+
+		if ( $queueType == self::TYPE_DEFAULT ) {
+			$types = array_intersect( $types, $this->getDefaultQueueTypes() );
+		}
 		shuffle( $types ); // avoid starvation
 
 		foreach ( $types as $type ) { // for each queue...
 			$job = $this->get( $type )->pop();
-			if ( $job ) {
-				return $job; // found
+			if ( $job ) { // found
+				return $job;
+			} else { // not found
+				$this->cache->clear( 'queues-ready' );
 			}
 		}
 
@@ -176,5 +214,72 @@ class JobQueueGroup {
 			}
 		}
 		return $types;
+	}
+
+	/**
+	 * @return Array List of default job types that have non-empty queues
+	 */
+	public function getDefaultQueuesWithJobs() {
+		$types = array();
+		foreach ( $this->getDefaultQueueTypes() as $type ) {
+			if ( !$this->get( $type )->isEmpty() ) {
+				$types[] = $type;
+			}
+		}
+		return $types;
+	}
+
+	/**
+	 * Execute any due periodic queue maintenance tasks for all queues.
+	 *
+	 * A task is "due" if the time ellapsed since the last run is greater than
+	 * the defined run period. Concurrent calls to this function will cause tasks
+	 * to be attempted twice, so they may need their own methods of mutual exclusion.
+	 *
+	 * @return integer Number of tasks run
+	 */
+	public function executeReadyPeriodicTasks() {
+		global $wgMemc;
+
+		list( $db, $prefix ) = wfSplitWikiID( $this->wiki );
+		$key = wfForeignMemcKey( $db, $prefix, 'jobqueuegroup', 'taskruns', 'v1' );
+		$lastRuns = $wgMemc->get( $key ); // (queue => task => UNIX timestamp)
+
+		$count = 0;
+		$tasksRun = array(); // (queue => task => UNIX timestamp)
+		foreach ( $this->getQueueTypes() as $type ) {
+			$queue = $this->get( $type );
+			foreach ( $queue->getPeriodicTasks() as $task => $definition ) {
+				if ( $definition['period'] <= 0 ) {
+					continue; // disabled
+				} elseif ( !isset( $lastRuns[$type][$task] )
+					|| $lastRuns[$type][$task] < ( time() - $definition['period'] ) )
+				{
+					if ( call_user_func( $definition['callback'] ) !== null ) {
+						$tasksRun[$type][$task] = time();
+						++$count;
+					}
+				}
+			}
+		}
+
+		$wgMemc->merge( $key, function( $cache, $key, $lastRuns ) use ( $tasksRun ) {
+			if ( is_array( $lastRuns ) ) {
+				foreach ( $tasksRun as $type => $tasks ) {
+					foreach ( $tasks as $task => $timestamp ) {
+						if ( !isset( $lastRuns[$type][$task] )
+							|| $timestamp > $lastRuns[$type][$task] )
+						{
+							$lastRuns[$type][$task] = $timestamp;
+						}
+					}
+				}
+			} else {
+				$lastRuns = $tasksRun;
+			}
+			return $lastRuns;
+		} );
+
+		return $count;
 	}
 }

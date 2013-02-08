@@ -214,16 +214,16 @@ class profile_point {
 		?>
 		<tr>
 		<th><div style="margin-left: <?php echo (int)$indent; ?>em;">
-			<?php echo htmlspecialchars( $this->name() ) . $extet ?>
+			<?php echo htmlspecialchars( str_replace( ',', ', ', $this->name() ) ) . $extet ?>
 		</div></th>
 		<td class="mw-profileinfo-timep"><?php echo @wfPercent( $this->time() / self::$totaltime * 100 ); ?></td>
 		<td class="mw-profileinfo-memoryp"><?php echo @wfPercent( $this->memory() / self::$totalmemory * 100 ); ?></td>
 		<td class="mw-profileinfo-count"><?php echo $this->count(); ?></td>
 		<td class="mw-profileinfo-cpr"><?php echo round( sprintf( '%.2f', $this->callsPerRequest() ), 2 ); ?></td>
 		<td class="mw-profileinfo-tpc"><?php echo round( sprintf( '%.2f', $this->timePerCall() ), 2 ); ?></td>
-		<td class="mw-profileinfo-mpc"><?php echo round( sprintf( '%.2f' ,$this->memoryPerCall() / 1024 ), 2 ); ?></td>
+		<td class="mw-profileinfo-mpc"><?php echo round( sprintf( '%.2f', $this->memoryPerCall() / 1024 ), 2 ); ?></td>
 		<td class="mw-profileinfo-tpr"><?php echo @round( sprintf( '%.2f', $this->time() / self::$totalcount ), 2 ); ?></td>
-		<td class="mw-profileinfo-mpr"><?php echo @round( sprintf( '%.2f' ,$this->memory() / self::$totalcount / 1024 ), 2 ); ?></td>
+		<td class="mw-profileinfo-mpr"><?php echo @round( sprintf( '%.2f', $this->memory() / self::$totalcount / 1024 ), 2 ); ?></td>
 		</tr>
 		<?php
 		if ( $ex ) {
@@ -349,7 +349,7 @@ function getEscapedProfileUrl( $_filter = false, $_sort = false, $_expand = fals
 
 	return htmlspecialchars(
 		'?' .
-		wfArrayToCGI( array(
+		wfArrayToCgi( array(
 			'filter' => $_filter ? $_filter : $filter,
 			'sort' => $_sort ? $_sort : $sort,
 			'expand' => implode( ',', array_keys( $_expand ) )

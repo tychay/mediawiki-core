@@ -138,7 +138,7 @@ class PageArchive {
 		$res = $dbr->select( 'archive',
 			$fields,
 			array( 'ar_namespace' => $this->title->getNamespace(),
-				   'ar_title' => $this->title->getDBkey() ),
+				'ar_title' => $this->title->getDBkey() ),
 			__METHOD__,
 			array( 'ORDER BY' => 'ar_timestamp DESC' ) );
 		$ret = $dbr->resultObject( $res );
@@ -248,9 +248,9 @@ class PageArchive {
 		$row = $dbr->selectRow( 'archive',
 			'ar_timestamp',
 			array( 'ar_namespace' => $this->title->getNamespace(),
-				   'ar_title' => $this->title->getDBkey(),
-				   'ar_timestamp < ' .
-						$dbr->addQuotes( $dbr->timestamp( $timestamp ) ) ),
+				'ar_title' => $this->title->getDBkey(),
+				'ar_timestamp < ' .
+					$dbr->addQuotes( $dbr->timestamp( $timestamp ) ) ),
 			__METHOD__,
 			array(
 				'ORDER BY' => 'ar_timestamp DESC',
@@ -319,7 +319,7 @@ class PageArchive {
 		$row = $dbr->selectRow( 'archive',
 			array( 'ar_text', 'ar_flags', 'ar_text_id' ),
 			array( 'ar_namespace' => $this->title->getNamespace(),
-				   'ar_title' => $this->title->getDBkey() ),
+				'ar_title' => $this->title->getDBkey() ),
 			__METHOD__,
 			array( 'ORDER BY' => 'ar_timestamp DESC' ) );
 		if( $row ) {
@@ -338,7 +338,7 @@ class PageArchive {
 		$dbr = wfGetDB( DB_SLAVE );
 		$n = $dbr->selectField( 'archive', 'COUNT(ar_title)',
 			array( 'ar_namespace' => $this->title->getNamespace(),
-				   'ar_title' => $this->title->getDBkey() ),
+				'ar_title' => $this->title->getDBkey() ),
 			__METHOD__
 		);
 		return ( $n > 0 );
@@ -432,9 +432,10 @@ class PageArchive {
 	 * be stuffed into old, otherwise the most recent will go into cur.
 	 *
 	 * @param $timestamps Array: pass an empty array to restore all revisions, otherwise list the ones to undelete.
-	 * @param $comment String
 	 * @param $unsuppress Boolean: remove all ar_deleted/fa_deleted restrictions of seletected revs
 	 *
+	 * @param $comment String
+	 * @throws ReadOnlyError
 	 * @return Status, containing the number of revisions restored on success
 	 */
 	private function undeleteRevisions( $timestamps, $unsuppress = false, $comment = '' ) {
@@ -456,7 +457,7 @@ class PageArchive {
 		$page = $dbw->selectRow( 'page',
 			array( 'page_id', 'page_latest' ),
 			array( 'page_namespace' => $this->title->getNamespace(),
-				   'page_title'     => $this->title->getDBkey() ),
+				'page_title' => $this->title->getDBkey() ),
 			__METHOD__,
 			array( 'FOR UPDATE' ) // lock page
 		);
@@ -473,7 +474,7 @@ class PageArchive {
 				__METHOD__ );
 
 			if( $previousTimestamp === false ) {
-				wfDebug( __METHOD__.": existing page refers to a page_latest that does not exist\n" );
+				wfDebug( __METHOD__ . ": existing page refers to a page_latest that does not exist\n" );
 
 				$status = Status::newGood( 0 );
 				$status->warning( 'undeleterevision-missing' );
@@ -511,7 +512,8 @@ class PageArchive {
 			'ar_deleted',
 			'ar_page_id',
 			'ar_len',
-			'ar_sha1');
+			'ar_sha1'
+		);
 
 		if ( $wgContentHandlerUseDB ) {
 			$fields[] = 'ar_content_format';
@@ -826,7 +828,7 @@ class SpecialUndelete extends SpecialPage {
 
 		if( $result->numRows() == 0 ) {
 			$out->addWikiMsg( 'undelete-no-results' );
-			return;
+			return false;
 		}
 
 		$out->addWikiMsg( 'undeletepagetext', $this->getLanguage()->formatNum( $result->numRows() ) );
@@ -1074,10 +1076,10 @@ class SpecialUndelete extends SpecialPage {
 					$targetQuery
 				) .
 			'</strong></div>' .
-			'<div id="mw-diff-'.$prefix.'title2">' .
+			'<div id="mw-diff-' . $prefix . 'title2">' .
 				Linker::revUserTools( $rev ) . '<br />' .
 			'</div>' .
-			'<div id="mw-diff-'.$prefix.'title3">' .
+			'<div id="mw-diff-' . $prefix . 'title3">' .
 				Linker::revComment( $rev ) . $rdel . '<br />' .
 			'</div>';
 	}
@@ -1229,7 +1231,7 @@ class SpecialUndelete extends SpecialPage {
 							Xml::label( $this->msg( 'undeletecomment' )->text(), 'wpComment' ) .
 						"</td>
 						<td class='mw-input'>" .
-							Xml::input( 'wpComment', 50, $this->mComment, array( 'id' =>  'wpComment' ) ) .
+							Xml::input( 'wpComment', 50, $this->mComment, array( 'id' => 'wpComment' ) ) .
 						"</td>
 					</tr>
 					<tr>
@@ -1347,7 +1349,7 @@ class SpecialUndelete extends SpecialPage {
 		// Revision delete links
 		$revdlink = Linker::getRevDeleteLink( $user, $rev, $this->mTargetObj );
 
-		$revisionRow = $this->msg( 'undelete-revisionrow' )->rawParams( $checkBox, $revdlink, $last, $pageLink , $userLink, $revTextSize, $comment )->escaped();
+		$revisionRow = $this->msg( 'undelete-revisionrow' )->rawParams( $checkBox, $revdlink, $last, $pageLink, $userLink, $revTextSize, $comment )->escaped();
 		return "<li>$revisionRow</li>";
 	}
 

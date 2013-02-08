@@ -143,7 +143,7 @@ class ApiQueryAllMessages extends ApiQueryBase {
 				}
 
 				if ( $customiseFilterEnabled ) {
-					$messageIsCustomised = isset( $customisedMessages['pages'][ $langObj->ucfirst( $message ) ] );
+					$messageIsCustomised = isset( $customisedMessages['pages'][$langObj->ucfirst( $message )] );
 					if ( $customised === $messageIsCustomised ) {
 						if ( $customised ) {
 							$a['customised'] = '';
@@ -290,9 +290,5 @@ class ApiQueryAllMessages extends ApiQueryBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:Meta#allmessages_.2F_am';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

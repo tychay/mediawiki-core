@@ -675,6 +675,7 @@ class Title {
 	/**
 	 * Get the page's content model id, see the CONTENT_MODEL_XXX constants.
 	 *
+	 * @throws MWException
 	 * @return String: Content model id
 	 */
 	public function getContentModel() {
@@ -688,7 +689,7 @@ class Title {
 		}
 
 		if( !$this->mContentModel ) {
-			throw new MWException( "failed to determin content model!" );
+			throw new MWException( 'Failed to determine content model!' );
 		}
 
 		return $this->mContentModel;
@@ -1329,7 +1330,7 @@ class Title {
 	 * second argument named variant. This was deprecated in favor
 	 * of passing an array of option with a "variant" key
 	 * Once $query2 is removed for good, this helper can be dropped
-	 * andthe wfArrayToCGI moved to getLocalURL();
+	 * andthe wfArrayToCgi moved to getLocalURL();
 	 *
 	 * @since 1.19 (r105919)
 	 * @param $query
@@ -1341,15 +1342,15 @@ class Title {
 			wfDeprecated( "Title::get{Canonical,Full,Link,Local} method called with a second parameter is deprecated. Add your parameter to an array passed as the first parameter.", "1.19" );
 		}
 		if ( is_array( $query ) ) {
-			$query = wfArrayToCGI( $query );
+			$query = wfArrayToCgi( $query );
 		}
 		if ( $query2 ) {
 			if ( is_string( $query2 ) ) {
 				// $query2 is a string, we will consider this to be
 				// a deprecated $variant argument and add it to the query
-				$query2 = wfArrayToCGI( array( 'variant' => $query2 ) );
+				$query2 = wfArrayToCgi( array( 'variant' => $query2 ) );
 			} else {
-				$query2 = wfArrayToCGI( $query2 );
+				$query2 = wfArrayToCgi( $query2 );
 			}
 			// If we have $query content add a & to it first
 			if ( $query ) {
@@ -1837,10 +1838,9 @@ class Title {
 	 * @return Array list of errors
 	 */
 	private function checkSpecialsAndNSPermissions( $action, $user, $errors, $doExpensiveQueries, $short ) {
-		# Only 'createaccount' and 'execute' can be performed on
-		# special pages, which don't actually exist in the DB.
-		$specialOKActions = array( 'createaccount', 'execute', 'read' );
-		if ( NS_SPECIAL == $this->mNamespace && !in_array( $action, $specialOKActions ) ) {
+		# Only 'createaccount' can be performed on special pages,
+		# which don't actually exist in the DB.
+		if ( NS_SPECIAL == $this->mNamespace && $action !== 'createaccount' ) {
 			$errors[] = array( 'ns-specialprotected' );
 		}
 
@@ -1849,7 +1849,7 @@ class Title {
 			$ns = $this->mNamespace == NS_MAIN ?
 				wfMessage( 'nstab-main' )->text() : $this->getNsText();
 			$errors[] = $this->mNamespace == NS_MEDIAWIKI ?
-				array( 'protectedinterface' ) : array( 'namespaceprotected',  $ns );
+				array( 'protectedinterface' ) : array( 'namespaceprotected', $ns );
 		}
 
 		return $errors;
@@ -2087,7 +2087,7 @@ class Title {
 	 * @return Array list of errors
 	 */
 	private function checkReadPermissions( $action, $user, $errors, $doExpensiveQueries, $short ) {
-		global $wgWhitelistRead, $wgRevokePermissions;
+		global $wgWhitelistRead, $wgWhitelistReadRegexp, $wgRevokePermissions;
 		static $useShortcut = null;
 
 		# Initialize the $useShortcut boolean, to determine if we can skip quite a bit of code below
@@ -2151,6 +2151,17 @@ class Title {
 					if ( in_array( $pure, $wgWhitelistRead, true ) ) {
 						$whitelisted = true;
 					}
+				}
+			}
+		}
+
+		if( !$whitelisted && is_array( $wgWhitelistReadRegexp ) && !empty( $wgWhitelistReadRegexp ) ) {
+			$name = $this->getPrefixedText();
+			// Check for regex whitelisting
+			foreach ( $wgWhitelistReadRegexp as $listItem ) {
+				if ( preg_match( $listItem, $name ) ) {
+					$whitelisted = true;
+					break;
 				}
 			}
 		}
@@ -2360,7 +2371,8 @@ class Title {
 		$expiry = array( 'create' => $expiry );
 
 		$page = WikiPage::factory( $this );
-		$status = $page->doUpdateRestrictions( $limit, $expiry, false, $reason, $wgUser );
+		$cascade = false;
+		$status = $page->doUpdateRestrictions( $limit, $expiry, $cascade, $reason, $wgUser );
 
 		return $status->isOK();
 	}
@@ -2972,6 +2984,7 @@ class Title {
 	 * What is the page_latest field for this page?
 	 *
 	 * @param $flags Int a bit field; may be Title::GAID_FOR_UPDATE to select for update
+	 * @throws MWException
 	 * @return Int or 0 if the page doesn't exist
 	 */
 	public function getLatestRevID( $flags = 0 ) {
@@ -2983,6 +2996,7 @@ class Title {
 			return $this->mLatestID = 0;
 		}
 		$linkCache = LinkCache::singleton();
+		$linkCache->addLinkObj( $this );
 		$cached = $linkCache->getGoodLinkFieldObj( $this, 'revision' );
 		if ( $cached === null ) { # check the assumption that the cache actually knows about this title
 			# XXX: this does apparently happen, see https://bugzilla.wikimedia.org/show_bug.cgi?id=37209
@@ -3500,9 +3514,11 @@ class Title {
 		if ( !$wgContentHandlerUseDB &&
 				$this->getContentModel() !== $nt->getContentModel() ) {
 			// can't move a page if that would change the page's content model
-			$errors[] = array( 'bad-target-model',
-							ContentHandler::getLocalizedName( $this->getContentModel() ),
-							ContentHandler::getLocalizedName( $nt->getContentModel() ) );
+			$errors[] = array(
+				'bad-target-model',
+				ContentHandler::getLocalizedName( $this->getContentModel() ),
+				ContentHandler::getLocalizedName( $nt->getContentModel() )
+			);
 		}
 
 		// Image-specific checks
@@ -3695,8 +3711,8 @@ class Title {
 		}
 
 		# Update watchlists
-		$oldnamespace = $this->getNamespace() & ~1;
-		$newnamespace = $nt->getNamespace() & ~1;
+		$oldnamespace = MWNamespace::getSubject( $this->getNamespace() );
+		$newnamespace = MWNamespace::getSubject( $nt->getNamespace() );
 		$oldtitle = $this->getDBkey();
 		$newtitle = $nt->getDBkey();
 
@@ -3975,7 +3991,7 @@ class Title {
 		}
 		# Get the article text
 		$rev = Revision::newFromTitle( $nt, false, Revision::READ_LATEST );
-		if( !is_object( $rev ) ){
+		if( !is_object( $rev ) ) {
 			return false;
 		}
 		$content = $rev->getContent();
@@ -4027,7 +4043,7 @@ class Title {
 			array()
 		);
 
-		if ( $dbr->numRows( $res ) > 0 ) {
+		if ( $res->numRows() > 0 ) {
 			foreach ( $res as $row ) {
 				// $data[] = Title::newFromText($wgContLang->getNSText ( NS_CATEGORY ).':'.$row->cl_to);
 				$data[$wgContLang->getNSText( NS_CATEGORY ) . ':' . $row->cl_to] = $this->getFullText();
@@ -4459,6 +4475,7 @@ class Title {
 	 * @return Bool true if the update succeded
 	 */
 	public function invalidateCache() {
+		global $wgMemc;
 		if ( wfReadOnly() ) {
 			return false;
 		}
@@ -4470,6 +4487,14 @@ class Title {
 			__METHOD__
 		);
 		HTMLFileCache::clearFileCache( $this );
+
+		// Clear page info.
+		$revision = WikiPage::factory( $this )->getRevision();
+		if( $revision !== null ) {
+			$memcKey = wfMemcKey( 'infoaction', $this->getPrefixedText(), $revision->getId() );
+			$success = $success && $wgMemc->delete( $memcKey );
+		}
+
 		return $success;
 	}
 

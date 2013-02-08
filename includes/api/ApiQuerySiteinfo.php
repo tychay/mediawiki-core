@@ -120,7 +120,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 		$data['sitename'] = $GLOBALS['wgSitename'];
 		$data['generator'] = "MediaWiki {$GLOBALS['wgVersion']}";
 		$data['phpversion'] = phpversion();
-		$data['phpsapi'] = php_sapi_name();
+		$data['phpsapi'] = PHP_SAPI;
 		$data['dbtype'] = $GLOBALS['wgDBtype'];
 		$data['dbversion'] = $this->getDB()->getServerVersion();
 
@@ -226,6 +226,11 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 
 			if ( MWNamespace::isNonincludable( $ns ) ) {
 				$data[$ns]['nonincludable'] = '';
+			}
+
+			$contentmodel = MWNamespace::getNamespaceContentModel( $ns );
+			if ( $contentmodel ) {
+				$data[$ns]['defaultcontentmodel'] = $contentmodel;
 			}
 		}
 
@@ -457,7 +462,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 				}
 				if ( isset( $ext['author'] ) ) {
 					$ret['author'] = is_array( $ext['author'] ) ?
-						implode( ', ', $ext['author' ] ) : $ext['author'];
+						implode( ', ', $ext['author'] ) : $ext['author'];
 				}
 				if ( isset( $ext['url'] ) ) {
 					$ret['url'] = $ext['url'];
@@ -554,7 +559,7 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 		ksort( $myWgHooks );
 
 		$data = array();
-		foreach ( $myWgHooks as $hook => $hooks )  {
+		foreach ( $myWgHooks as $hook => $hooks ) {
 			$arr = array(
 				'name' => $hook,
 				'subscribers' => array_map( array( 'SpecialVersion', 'arrayToString' ), $hooks ),
@@ -661,9 +666,5 @@ class ApiQuerySiteinfo extends ApiQueryBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:Meta#siteinfo_.2F_si';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

@@ -235,6 +235,9 @@ class RecentChange {
 			unset( $this->mAttribs['rc_ip'] );
 		}
 
+		# Trim spaces on user supplied text
+		$this->mAttribs['rc_comment'] = trim( $this->mAttribs['rc_comment'] );
+
 		# Make sure summary is truncated (whole multibyte characters)
 		$this->mAttribs['rc_comment'] = $wgContLang->truncate( $this->mAttribs['rc_comment'], 255 );
 
@@ -797,7 +800,7 @@ class RecentChange {
 		# see http://www.irssi.org/documentation/formats for some colour codes. prefix is \003,
 		# no colour (\003) switches back to the term default
 		$fullString = "$titleString\0034 $flag\00310 " .
-					  "\00302$url\003 \0035*\003 \00303$user\003 \0035*\003 $szdiff \00310$comment\003\n";
+			"\00302$url\003 \0035*\003 \00303$user\003 \0035*\003 $szdiff \00310$comment\003\n";
 
 		return $fullString;
 	}

@@ -208,7 +208,7 @@ $specialPageAliases = array(
 	'Contributions'             => array( 'Contribuții' ),
 	'CreateAccount'             => array( 'Înregistrare' ),
 	'Deadendpages'              => array( 'Pagini_fără_legături' ),
-	'DeletedContributions'      => array( 'Contibuții_șterse' ),
+	'DeletedContributions'      => array( 'Contribuții_șterse' ),
 	'Disambiguations'           => array( 'Dezambiguizări' ),
 	'DoubleRedirects'           => array( 'Redirectări_duble' ),
 	'Emailuser'                 => array( 'Email_utilizator' ),
@@ -416,7 +416,7 @@ pe titlul secțiunii (JavaScript)',
 'category-empty' => "''Această categorie nu conține articole sau fișiere media.''",
 'hidden-categories' => '{{PLURAL:$1|Categorie ascunsă|Categorii ascunse}}',
 'hidden-category-category' => 'Categorii ascunse',
-'category-subcat-count' => '{{PLURAL:$2|Această categorie conține doar următoarea subcategorie.|Această categorie conține {{PLURAL:$1|următoarea subcategorie|următoarele $1 subcategorii}}, dintr-un total de $2.}}',
+'category-subcat-count' => '{{PLURAL:$2|Această categorie conține doar următoarea subcategorie.|Această categorie conține {{PLURAL:$1|următoarea subcategorie|următoarele $1 subcategorii|următoarele $1 de subcategorii}}, dintr-un total de $2.}}',
 'category-subcat-count-limited' => 'Această categorie conține {{PLURAL:$1|următoarea subcategorie|următoarele $1 subcategorii}}.',
 'category-article-count' => '{{PLURAL:$2|Această categorie conține doar următoarea pagină.|{{PLURAL:$1|Următoarea pagină|Următoarele $1 pagini}} se află în această categorie, dintr-un total de $2.}}',
 'category-article-count-limited' => '{{PLURAL:$1|Următoarea pagină|Următoarele $1 pagini}} se află în categoria curentă.',
@@ -434,6 +434,7 @@ pe titlul secțiunii (JavaScript)',
 'newwindow' => '(se deschide într-o fereastră nouă)',
 'cancel' => 'Revocare',
 'moredotdotdot' => 'Mai mult…',
+'morenotlisted' => 'Mai multe nu sunt enumerate...',
 'mypage' => 'Pagină',
 'mytalk' => 'Discuții',
 'anontalk' => 'Discuția pentru această adresă IP',
@@ -664,9 +665,8 @@ S-ar putea ca acesta să fi fost deja șters de altcineva.',
 'delete-hook-aborted' => 'Ștergerea a fost abandonată din cauza unui hook.
 Nicio explicație furnizată.',
 'badtitle' => 'Titlu incorect',
-'badtitletext' => 'Titlul căutat a fost invalid, gol sau o legătură invalidă inter-linguală sau inter-wiki.
-
-Poate conține unul sau mai multe caractere ce nu poate fi folosit în titluri.',
+'badtitletext' => 'Titlul paginii căutate este incorect, gol sau este o legătură interlinguală sau interwiki incorectă.
+Poate conține unul sau mai multe caractere ce nu pot fi folosite în titluri.',
 'perfcached' => 'Datele următoare au fost păstrate în cache și s-ar putea să nu fie actualizate. Un maxim de {{PLURAL:$1|un rezultat este disponibil|$1 rezultate sunt disponibile}} în cache.',
 'perfcachedts' => 'Informațiile de mai jos provin din cache, ultima actualizare efectuându-se la $1. Un maxim de {{PLURAL:$4|un rezultat este disponibil|$4 rezultate sunt disponibile}} în cache.',
 'querypage-no-updates' => 'Actualizările acestei pagini sunt momentan dezactivate. Informațiile de aici nu sunt împrospătate.',
@@ -738,7 +738,7 @@ Nu uitați să vă modificați [[Special:Preferences|preferințele]] pentru {{SI
 'gotaccount' => "Aveți deja un cont de utilizator? '''$1'''.",
 'gotaccountlink' => 'Autentificați-vă',
 'userlogin-resetlink' => 'Ați uitat datele de autentificare?',
-'createaccountmail' => 'după e-mail',
+'createaccountmail' => 'Utilizează o parolă temporară aleasă la întâmplare și o trimite la adresa de e-mail specificată mai jos',
 'createaccountreason' => 'Motiv:',
 'badretype' => 'Parolele pe care le-ați introdus diferă.',
 'userexists' => 'Numele de utilizator pe care l-ați introdus este deja folosit.
@@ -807,6 +807,7 @@ Vă rugăm să așteptați până să mai încercați.',
 # E-mail sending
 'php-mail-error-unknown' => 'Eroare necunoscută în funcția PHP mail()',
 'user-mail-no-addy' => 'S-a încercat trimiterea e-mailului fără o adresă de e-mail.',
+'user-mail-no-body' => 'S-a încercat trimiterea unui e-mail fără conținut sau nejustificat de scurt.',
 
 # Change password dialog
 'resetpass' => 'Modifică parola',
@@ -868,6 +869,7 @@ Parolă temporară: $2',
 'changeemail-oldemail' => 'Adresa de e-mail actuală:',
 'changeemail-newemail' => 'Noua adresă de e-mail:',
 'changeemail-none' => '(niciuna)',
+'changeemail-password' => 'Parola dumneavoastră la {{SITENAME}}:',
 'changeemail-submit' => 'Modifică adresa de e-mail',
 'changeemail-cancel' => 'Revocare',
 
@@ -1051,7 +1053,6 @@ Ultima intrare în jurnal este afișată mai jos pentru referință:",
 'template-semiprotected' => '(semiprotejat)',
 'hiddencategories' => 'Această pagină este membrul {{PLURAL:$1|unei categorii ascunse|a $1 categorii ascunse}}:',
 'edittools' => '<!-- Acest text va apărea după caseta de editare și formularele de trimitere fișier. -->',
-'nocreatetitle' => 'Creare de pagini limitată',
 'nocreatetext' => '{{SITENAME}} a restricționat abilitatea de a crea pagini noi.
 Puteți edita o pagină deja existentă sau puteți să vă [[Special:UserLogin|autentificați/creați]] un cont de utilizator.',
 'nocreate-loggedin' => 'Nu ai permisiunea să creezi pagini noi.',
@@ -1184,7 +1185,7 @@ Ca administrator puteți vedea în continuare această diferență dinte versiun
 Ca administrator puteți vedea în continuare această diferență dinte versiuni; detalii puteți găsi în [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} jurnalul suprimărilor].",
 'rev-delundel' => 'șterge/recuperează',
 'rev-showdeleted' => 'arată',
-'revisiondelete' => 'Șterge/recuperează versiuni',
+'revisiondelete' => 'Ștergere/recuperare versiuni',
 'revdelete-nooldid-title' => 'Versiune invalidă',
 'revdelete-nooldid-text' => 'Fie nu ați specificat versiunea pentru a efectua această
 funcție, fie versiunea specificată nu există, ori sunteți pe cale să ascundeți versiunea curentă.',
@@ -1447,10 +1448,10 @@ Aici se află o combinație generată întâmplător pe care o puteți folosi: $
 Acțiunea nu este reversibilă.',
 'prefs-emailconfirm-label' => 'Confirmare e-mail:',
 'prefs-textboxsize' => 'Mărime căsuță de modificare',
-'youremail' => 'Adresa de e-mail:',
-'username' => 'Nume de utilizator:',
-'uid' => 'ID utilizator:',
-'prefs-memberingroups' => 'Membru în {{PLURAL:$1|grupul|grupurile}}:',
+'youremail' => 'Adresă de e-mail:',
+'username' => '{{GENDER:$1|Nume de utilizator}}:',
+'uid' => 'ID {{GENDER:$1|utilizator|utilizatoare}}:',
+'prefs-memberingroups' => '{{GENDER:$2|Membru|Membră}} în {{PLURAL:$1|grupul|grupurile}}:',
 'prefs-registration' => 'Data înregistrării:',
 'yourrealname' => 'Nume real:',
 'yourlanguage' => 'Interfață în limba:',
@@ -1600,15 +1601,13 @@ Dacă decideți furnizarea sa, acesta va fi folosit pentru a vă atribui munca.'
 'right-sendemail' => 'Trimite e-mail altor utilizatori',
 'right-passwordreset' => 'Vizualizează e-mailurile de reinițializare a parolelor',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Jurnal utilizatori noi',
+'newuserlogpagetext' => 'Acesta este jurnalul creărilor conturilor de utilizator.',
+
 # User rights log
 'rightslog' => 'Jurnal permisiuni de utilizator',
 'rightslogtext' => 'Acest jurnal cuprinde modificările permisiunilor utilizatorilor.',
-'rightslogentry' => 'a schimbat permisiunile pentru $1 de la $2 la $3',
-'rightslogentry-autopromote' => 'a fost promovat în mod automat de la $2 la $3',
-'logentry-rights-rights' => '$1 a schimbat apartenența la grup pentru $3 de la $4 la $5',
-'logentry-rights-rights-legacy' => '$1 a schimbat apartenența la grup pentru $3',
-'logentry-rights-autopromote' => '$1 a fost promovat în mod automat de la $4 la $5',
-'rightsnone' => '(niciunul)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'citiți această pagină',
@@ -2238,7 +2237,7 @@ Vedeți și [[Special:WantedCategories|categoriile dorite]].',
 'linksearch-ok' => 'Caută',
 'linksearch-text' => 'Pot fi folosite metacaractere precum „*.wikipedia.org”.
 Necesită cel puțin un domeniu de nivel superior, cum ar fi „*.org”.<br />
-Protocoale suportate: <code>$1</code> (se trece implicit la http:// dacă nu este specificat niciun protocol).',
+{{PLURAL:$2|Protocol suportat|Protocoale suportate}}: <code>$1</code> (se trece implicit la http:// dacă nu este specificat niciun protocol).',
 'linksearch-line' => '$1 este legat de $2',
 'linksearch-error' => 'Metacaracterele pot să apară doar la începutul hostname-ului.',
 
@@ -2249,17 +2248,13 @@ Protocoale suportate: <code>$1</code> (se trece implicit la http:// dacă nu est
 'listusers-blocked' => '(blocat{{GENDER:$1||ă|}})',
 
 # Special:ActiveUsers
-'activeusers' => 'Lista de utilizatori activi',
-'activeusers-intro' => 'Aceasta este o listă cu utilizatorii care au avut un fel de activitate în {{PLURAL:$1|ultima zi|ultimele $1 zile}}.',
-'activeusers-count' => '$1 {{PLURAL:$1|modificare recentă|modificări recente}} în {{PLURAL:$3|ultima zi|ultimele $3 zile}}',
+'activeusers' => 'Listă utilizatori activi',
+'activeusers-intro' => 'Aceasta este o listă cu utilizatorii care au avut orice fel de activitate în {{PLURAL:$1|ultima zi|ultimele $1 zile}}.',
+'activeusers-count' => '{{PLURAL:$1|o acțiune|$1 acțiuni|$1 de acțiuni}} în {{PLURAL:$3|ultima zi|ultimele $3 zile|ultimele $3 de zile}}',
 'activeusers-from' => 'Afișează utilizatori începând cu:',
 'activeusers-hidebots' => 'Ascunde roboții',
 'activeusers-hidesysops' => 'Ascunde administratorii',
 'activeusers-noresult' => 'Niciun utilizator găsit.',
-
-# Special:Log/newusers
-'newuserlogpage' => 'Jurnal utilizatori noi',
-'newuserlogpagetext' => 'Acesta este jurnalul creărilor conturilor de utilizator.',
 
 # Special:ListGroupRights
 'listgrouprights' => 'Permisiuni grupuri de utilizatori',
@@ -2327,7 +2322,7 @@ Adresa de e-mail specificată de dumneavoastră în [[Special:Preferences|prefer
 'watchnologintext' => 'Trebuie să fiți [[Special:UserLogin|autentificat]] pentru a vă modifica lista de pagini urmărite.',
 'addwatch' => 'Adăugă la lista de pagini urmărite',
 'addedwatchtext' => 'Pagina „[[:$1]]” a fost adăugată la lista dumneavoastră de [[Special:Watchlist|pagini urmărite]].
-Modificările viitoare efectuate asupra acestei pagini dar și asupra paginii de discuție asociată vor fi listate acolo și, în plus, ele vor apărea cu <b>caractere îngroșate</b> în pagina cu [[Special:RecentChanges|schimbări recente]] pentru evidențiere.',
+Modificările viitoare efectuate asupra acestei pagini dar și asupra paginii de discuție asociată vor fi listate acolo.',
 'removewatch' => 'Elimină din lista de pagini urmărite',
 'removedwatchtext' => 'Pagina „[[:$1]]” a fost eliminată din [[Special:Watchlist|lista de pagini urmărite]].',
 'watch' => 'Urmărire',
@@ -2361,7 +2356,7 @@ Modificările viitoare efectuate asupra acestei pagini dar și asupra paginii de
 'enotif_subject_moved' => 'Pagina $1 de la {{SITENAME}} a fost redenumită de către {{gender:$2|$2}}',
 'enotif_subject_restored' => 'Pagina $1 de la {{SITENAME}} a fost restaurată de către {{gender:$2|$2}}',
 'enotif_subject_changed' => 'Pagina $1 de la {{SITENAME}} a fost modificată de către {{gender:$2|$2}}',
-'enotif_body_intro_deleted' => 'Pagina $1 de la {{SITENAME}} a fost ștearsă la $PAGEEDITDATE de către {{gender:$2|$2}}; vedeți $3 pentru versiunea actuală.',
+'enotif_body_intro_deleted' => 'Pagina $1 de la {{SITENAME}} a fost ștearsă la $PAGEEDITDATE de către {{gender:$2|$2}}; vedeți $3.',
 'enotif_body_intro_created' => 'Pagina $1 de la {{SITENAME}} a fost creată la $PAGEEDITDATE de către {{gender:$2|$2}}; vedeți $3 pentru versiunea actuală.',
 'enotif_body_intro_moved' => 'Pagina $1 de la {{SITENAME}} a fost redenumită la $PAGEEDITDATE de către {{gender:$2|$2}}; vedeți $3 pentru versiunea actuală.',
 'enotif_body_intro_restored' => 'Pagina $1 de la {{SITENAME}} a fost restaurată la $PAGEEDITDATE de către {{gender:$2|$2}}; vedeți $3 pentru versiunea actuală.',
@@ -2394,6 +2389,8 @@ $UNWATCHURL
 
 Asistență și suport:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'creată',
+'changed' => 'modificată',
 
 # Delete
 'deletepage' => 'Șterge pagina',
@@ -2462,6 +2459,8 @@ Consultați [[Special:ProtectedPages|indexul paginilor protejate]] pentru o list
 'prot_1movedto2' => 'a mutat [[$1]] la [[$2]]',
 'protect-badnamespace-title' => 'Spațiu de nume neprotejabil',
 'protect-badnamespace-text' => 'Paginile din acest spațiu de nume nu pot fi protejate.',
+'protect-norestrictiontypes-text' => 'Această pagină nu poate fi protejată întrucât nu există niciun tip de restricție disponibil.',
+'protect-norestrictiontypes-title' => 'Pagină neprotejabilă',
 'protect-legend' => 'Confirmă protejare',
 'protectcomment' => 'Motiv:',
 'protectexpiry' => 'Expiră:',
@@ -2478,9 +2477,9 @@ Aici sunt setările curente pentru pagina '''$1''':",
 'protect-cascadeon' => 'Această pagină este protejată deoarece este inclusă în {{PLURAL:$1|următoarea pagină, ce are|următoarele pagini ce au}} activată protejarea la modificare în cascadă.
 Puteți schimba nivelul de protejare al acestei pagini, dar asta nu va afecta protecția în cascadă.',
 'protect-default' => 'Permis pentru toți utilizatorii',
-'protect-fallback' => 'Cere permisiunea "$1"',
-'protect-level-autoconfirmed' => 'Blochează utilizatorii noi și neînregistrați',
-'protect-level-sysop' => 'Numai administratorii',
+'protect-fallback' => 'Autorizat doar pentru utilizatorii cu permisiunea „$1”',
+'protect-level-autoconfirmed' => 'Autorizat doar pentru utilizatorii autoconfirmați',
+'protect-level-sysop' => 'Autorizat doar pentru administratori',
 'protect-summary-cascade' => 'în cascadă',
 'protect-expiring' => 'expiră $1 (UTC)',
 'protect-expiring-local' => 'expiră la $1',
@@ -2785,8 +2784,7 @@ nu uitați să verificați dacă nu există redirecționări [[Special:DoubleRed
 
 Vă rugăm să rețineți că sunteți responsabil(ă) pentru a face legăturile vechi să rămână valide.
 
-Rețineți că pagina '''nu va fi redenumită''' dacă există deja o pagină cu noul titlu, în afara cazurilor în care cea din urmă nu are conținut sau este deja
-o redirecționare; în plus, aceasta nu trebuie să aibă un istoric de modificări.
+Rețineți că pagina '''nu va fi redenumită''' dacă există deja o pagină cu noul titlu, în afara cazului în care cea din urmă este deja o redirecționare; în plus, aceasta nu trebuie să aibă un istoric de modificări.
 Cu alte cuvinte, veți putea redenumi înapoi o pagină pe care ați redenumit-o greșit, dar nu veți putea suprascrie o pagină validă existentă prin redenumirea alteia.
 
 '''ATENȚIE!'''
@@ -2969,6 +2967,7 @@ Un dosar temporar lipsește.',
 'import-error-interwiki' => 'Pagina „$1” nu poate fi importată deoarece numele acesteia este rezervat pentru legături externe (interwiki).',
 'import-error-special' => 'Pagina „$1” nu poate fi importată deoarece aparține unui spațiu de nume special care nu admite pagini.',
 'import-error-invalid' => 'Pagina „$1” nu poate fi importată deoarece numele acesteia este invalid.',
+'import-error-unserialize' => 'Versiunea $2 a paginii „$1” nu poate fi deserializată. Versiunea a fost raportată ca utilizând modelul de conținut $3 serializat ca $4.',
 'import-options-wrong' => '{{PLURAL:$2|Opțiune eronată|Opțiuni eronate}}: <nowiki>$1</nowiki>',
 'import-rootpage-invalid' => 'Pagina rădăcină furnizată este un titlu nevalid.',
 'import-rootpage-nosubpage' => 'Spațiul de nume „$1” al paginii rădăcină nu permite subpagini.',
@@ -3129,6 +3128,7 @@ Permite adăugarea unui motiv în descrierea modificărilor',
 'pageinfo-magic-words' => '{{PLURAL:$1|Cuvânt magic|Cuvinte magice}} ($1)',
 'pageinfo-hidden-categories' => '{{PLURAL:$1|Categorie ascunsă|Categorii ascunse}} ($1)',
 'pageinfo-templates' => '{{PLURAL:$1|Format inclus|Formate incluse}} ($1)',
+'pageinfo-transclusions' => '{{PLURAL:$1|Pagină transclusă|Pagini transcluse}} din ($1)',
 'pageinfo-toolboxlink' => 'Informații despre pagină',
 'pageinfo-redirectsto' => 'Redirecționează către',
 'pageinfo-redirectsto-info' => 'info',
@@ -3137,6 +3137,10 @@ Permite adăugarea unui motiv în descrierea modificărilor',
 'pageinfo-protect-cascading' => 'Protecțiile provin în cascadă de aici',
 'pageinfo-protect-cascading-yes' => 'Da',
 'pageinfo-protect-cascading-from' => 'Protecțiile provin în cascadă de la',
+'pageinfo-category-info' => 'Informații despre categorie',
+'pageinfo-category-pages' => 'Număr de pagini',
+'pageinfo-category-subcats' => 'Număr de subcategorii',
+'pageinfo-category-files' => 'Număr de fișiere',
 
 # Skin names
 'skinname-standard' => 'Clasic',
@@ -3195,6 +3199,7 @@ Executându-l, sistemul dvs. poate fi compromis.",
 'file-nohires' => 'Rezoluții mai mari nu sunt disponibile.',
 'svg-long-desc' => 'Fișier SVG, cu dimensiunea nominală de $1 × $2 pixeli, mărime fișier: $3',
 'svg-long-desc-animated' => 'Fișier SVG animat, cu dimensiunea nominală de $1 × $2 pixeli, mărime fișier: $3',
+'svg-long-error' => 'Fișier SVG invalid: $1',
 'show-big-image' => 'Rezoluție maximă',
 'show-big-image-preview' => 'Mărimea acestei previzualizări: $1.',
 'show-big-image-other' => '{{PLURAL:$2|Altă rezoluție|Alte rezoluții}}: $1.',
@@ -3224,6 +3229,8 @@ Executându-l, sistemul dvs. poate fi compromis.",
 'minutes' => '{{PLURAL:$1|un minut|$1 minute|$1 de minute}}',
 'hours' => '{{PLURAL:$1|o oră|$1 ore|$1 de ore}}',
 'days' => '{{PLURAL:$1|o zi|$1 zile|$1 de zile}}',
+'months' => '{{PLURAL:$1|$1 lună|$1 luni|$1 de luni}}',
+'years' => '{{PLURAL:$1|$1 an|$1 ani|$1 de ani}}',
 'ago' => '$1 în urmă',
 'just-now' => 'Chiar acum',
 
@@ -3875,7 +3882,7 @@ Imaginile sunt afișate la rezoluția lor maximă, în timp ce alte tipuri de fi
 'specialpages-group-highuse' => 'Pagini utilizate intens',
 'specialpages-group-pages' => 'Liste de pagini',
 'specialpages-group-pagetools' => 'Unelte pentru pagini',
-'specialpages-group-wiki' => 'Date și unelte wiki',
+'specialpages-group-wiki' => 'Date și instrumente',
 'specialpages-group-redirects' => 'Pagini speciale de redirecționare',
 'specialpages-group-spam' => 'Unelte spam',
 
@@ -3972,8 +3979,12 @@ Imaginile sunt afișate la rezoluția lor maximă, în timp ce alte tipuri de fi
 'logentry-newusers-newusers' => 'Contul de utilizator $1 a fost creat',
 'logentry-newusers-create' => 'Contul de utilizator $1 a fost creat',
 'logentry-newusers-create2' => 'Contul de utilizator $3 a fost creat de către $1',
+'logentry-newusers-byemail' => 'Contul de utilizator $3 a fost creat de către $1, iar parola a fost trimisă prin e-mail',
 'logentry-newusers-autocreate' => 'Contul $1 a fost creat în mod automat',
-'newuserlog-byemail' => 'parola trimisă prin e-mail',
+'logentry-rights-rights' => '$1 a schimbat apartenența la grup pentru $3 de la $4 la $5',
+'logentry-rights-rights-legacy' => '$1 a schimbat apartenența la grup pentru $3',
+'logentry-rights-autopromote' => '$1 a fost promovat în mod automat de la $4 la $5',
+'rightsnone' => '(niciunul)',
 
 # Feedback
 'feedback-bugornote' => 'Dacă sunteți pregătit să descrieți o problemă tehnică în detaliu vă rugăm să [$1 raportați un bug].
@@ -4027,6 +4038,7 @@ Imaginile sunt afișate la rezoluția lor maximă, în timp ce alte tipuri de fi
 'api-error-ok-but-empty' => 'Eroare internă: niciun răspuns de la server.',
 'api-error-overwrite' => 'Nu este permisă suprascrierea unui fișier existent.',
 'api-error-stashfailed' => 'Eroare internă: serverul nu a putut stoca fișierul temporar.',
+'api-error-publishfailed' => 'Eroare internă: serverul nu a putut publica fișierul temporar.',
 'api-error-timeout' => 'Serverul nu a răspuns în timp util.',
 'api-error-unclassified' => 'A apărut o eroare necunoscută.',
 'api-error-unknown-code' => 'Eroare necunoscută: „$1”',
@@ -4047,6 +4059,4 @@ Imaginile sunt afișate la rezoluția lor maximă, în timp ce alte tipuri de fi
 'duration-centuries' => '$1 {{PLURAL:$1|secol|secole|de secole}}',
 'duration-millennia' => '$1 {{PLURAL:$1|mileniu|milenii|de milenii}}',
 
-# Unknown messages
-'svg-long-error' => 'Fișier SVG invalid: $1',
 );

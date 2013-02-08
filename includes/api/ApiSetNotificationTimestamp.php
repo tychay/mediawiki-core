@@ -31,10 +31,6 @@
  */
 class ApiSetNotificationTimestamp extends ApiBase {
 
-	public function __construct( $main, $action ) {
-		parent::__construct( $main, $action );
-	}
-
 	public function execute() {
 		$user = $this->getUser();
 
@@ -49,7 +45,7 @@ class ApiSetNotificationTimestamp extends ApiBase {
 		$args = array_merge( array( $params, 'entirewatchlist' ), array_keys( $pageSet->getAllowedParams() ) );
 		call_user_func_array( array( $this, 'requireOnlyOneParameter' ), $args );
 
-		$dbw = $this->getDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER, 'api' );
 
 		$timestamp = null;
 		if ( isset( $params['timestamp'] ) ) {
@@ -277,9 +273,5 @@ class ApiSetNotificationTimestamp extends ApiBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:SetNotificationTimestamp';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

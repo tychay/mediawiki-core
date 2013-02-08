@@ -3,6 +3,7 @@
 /**
  * @group API
  * @group Database
+ * @group medium
  */
 class ApiTest extends ApiTestCase {
 
@@ -11,7 +12,7 @@ class ApiTest extends ApiTestCase {
 
 		$this->assertEquals(
 			null, $mock->requireOnlyOneParameter( array( "filename" => "foo.txt",
-													   "enablechunks" => false ), "filename", "enablechunks" ) );
+				"enablechunks" => false ), "filename", "enablechunks" ) );
 	}
 
 	/**
@@ -22,7 +23,7 @@ class ApiTest extends ApiTestCase {
 
 		$this->assertEquals(
 			null, $mock->requireOnlyOneParameter( array( "filename" => "foo.txt",
-													   "enablechunks" => 0 ), "filename", "enablechunks" ) );
+				"enablechunks" => 0 ), "filename", "enablechunks" ) );
 	}
 
 	/**
@@ -33,7 +34,7 @@ class ApiTest extends ApiTestCase {
 
 		$this->assertEquals(
 			null, $mock->requireOnlyOneParameter( array( "filename" => "foo.txt",
-													   "enablechunks" => true ), "filename", "enablechunks" ) );
+				"enablechunks" => true ), "filename", "enablechunks" ) );
 	}
 
 	/**
@@ -43,7 +44,6 @@ class ApiTest extends ApiTestCase {
 	 * @expectedException UsageException
 	 */
 	function testApi() {
-	
 		$api = new ApiMain(
 			new FauxRequest( array( 'action' => 'help', 'format' => 'xml' ) )
 		);
@@ -194,7 +194,7 @@ class ApiTest extends ApiTestCase {
 
 		return $cj;
 	}
-	
+
 	function testRunLogin() {
 		$sysopUser = self::$users['sysop'];
 		$data = $this->doApiRequest( array(
@@ -217,10 +217,10 @@ class ApiTest extends ApiTestCase {
 		$this->assertArrayHasKey( "result", $data[0]['login'] );
 		$this->assertEquals( "Success", $data[0]['login']['result'] );
 		$this->assertArrayHasKey( 'lgtoken', $data[0]['login'] );
-		
+
 		return $data;
 	}
-	
+
 	function testGettingToken() {
 		foreach ( self::$users as $user ) {
 			$this->runTokenTest( $user );
@@ -228,7 +228,6 @@ class ApiTest extends ApiTestCase {
 	}
 
 	function runTokenTest( $user ) {
-		
 		$data = $this->getTokenList( $user );
 
 		$this->assertArrayHasKey( 'query', $data[0] );

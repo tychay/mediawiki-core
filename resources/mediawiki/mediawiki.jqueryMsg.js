@@ -100,6 +100,8 @@
 		 */
 		return function () {
 			var $target = this.empty();
+			// TODO: Simply $target.append( failableParserFn( arguments ).contents() )
+			// or Simply $target.append( failableParserFn( arguments ) )
 			$.each( failableParserFn( arguments ).contents(), function ( i, node ) {
 				$target.append( node );
 			} );
@@ -164,7 +166,7 @@
 				regularLiteral, regularLiteralWithoutBar, regularLiteralWithoutSpace, backslash, anyCharacter,
 				escapedOrLiteralWithoutSpace, escapedOrLiteralWithoutBar, escapedOrRegularLiteral,
 				whitespace, dollar, digits,
-				openExtlink, closeExtlink, openLink, closeLink, templateName, pipe, colon,
+				openExtlink, closeExtlink, wikilinkPage, wikilinkContents, openLink, closeLink, templateName, pipe, colon,
 				templateContents, openTemplate, closeTemplate,
 				nonWhitespaceExpression, paramExpression, expression, result;
 
@@ -304,6 +306,14 @@
 				 var result = nOrMore( 1, escapedOrLiteralWithoutBar )();
 				 return result === null ? null : result.join('');
 			}
+
+			// Used for wikilink page names.  Like literalWithoutBar, but
+			// without allowing escapes.
+			function unescapedLiteralWithoutBar() {
+				var result = nOrMore( 1, regularLiteralWithoutBar )();
+				return result === null ? null : result.join('');
+			}
+
 			function literal() {
 				 var result = nOrMore( 1, escapedOrRegularLiteral )();
 				 return result === null ? null : result.join('');
@@ -357,16 +367,48 @@
 			}
 			openLink = makeStringParser( '[[' );
 			closeLink = makeStringParser( ']]' );
+			pipe = makeStringParser( '|' );
+
+			function template() {
+				var result = sequence( [
+					openTemplate,
+					templateContents,
+					closeTemplate
+				] );
+				return result === null ? null : result[1];
+			}
+
+			wikilinkPage = choice( [
+				unescapedLiteralWithoutBar,
+				template
+			] );
+
+			function pipedWikilink() {
+				var result = sequence( [
+					wikilinkPage,
+					pipe,
+					expression
+				] );
+				return result === null ? null : [ result[0], result[2] ];
+			}
+
+			wikilinkContents = choice( [
+				pipedWikilink,
+				wikilinkPage // unpiped link
+			] );
+
 			function link() {
-				var result, parsedResult;
+				var result, parsedResult, parsedLinkContents;
 				result = null;
+
 				parsedResult = sequence( [
 					openLink,
-					expression,
+					wikilinkContents,
 					closeLink
 				] );
 				if ( parsedResult !== null ) {
-					 result = [ 'WLINK', parsedResult[1] ];
+					parsedLinkContents = parsedResult[1];
+					result = [ 'WLINK' ].concat( parsedLinkContents );
 				}
 				return result;
 			}
@@ -389,7 +431,7 @@
 				// use a CONCAT operator if there are multiple nodes, otherwise return the first node, raw.
 				return expr.length > 1 ? [ 'CONCAT' ].concat( expr ) : expr[0];
 			}
-			pipe = makeStringParser( '|' );
+
 			function templateWithReplacement() {
 				var result = sequence( [
 					templateName,
@@ -430,14 +472,6 @@
 			] );
 			openTemplate = makeStringParser('{{');
 			closeTemplate = makeStringParser('}}');
-			function template() {
-				var result = sequence( [
-					openTemplate,
-					templateContents,
-					closeTemplate
-				] );
-				return result === null ? null : result[1];
-			}
 			nonWhitespaceExpression = choice( [
 				template,
 				link,
@@ -454,6 +488,7 @@
 				replacement,
 				literalWithoutBar
 			] );
+
 			expression = choice( [
 				template,
 				link,
@@ -462,6 +497,7 @@
 				replacement,
 				literal
 			] );
+
 			function start() {
 				var result = nOrMore( 0, expression )();
 				if ( result === null ) {
@@ -559,8 +595,9 @@
 						$span.append( childNode );
 					} );
 				} else {
-					// strings, integers, anything else
-					$span.append( node );
+					// Let jQuery append nodes, arrays of nodes and jQuery objects
+					// other things (strings, numbers, ..) are appended as text nodes (not as HTML strings)
+					$span.append( $.type( node ) === 'object' ? node : document.createTextNode( node ) );
 				}
 			} );
 			return $span;
@@ -571,7 +608,7 @@
 		 * Note that we expect the parsed parameter to be zero-based. i.e. $1 should have become [ 0 ].
 		 * if the specified parameter is not found return the same string
 		 * (e.g. "$99" -> parameter 98 -> not found -> return "$99" )
-		 * TODO throw error if nodes.length > 1 ?
+		 * TODO: Throw error if nodes.length > 1 ?
 		 * @param {Array} of one element, integer, n >= 0
 		 * @return {String} replacement
 		 */
@@ -579,13 +616,7 @@
 			var index = parseInt( nodes[0], 10 );
 
 			if ( index < replacements.length ) {
-				if ( typeof arg === 'string' ) {
-					// replacement is a string, escape it
-					return mw.html.escape( replacements[index] );
-				} else {
-					// replacement is no string, don't touch!
-					return replacements[index];
-				}
+				return replacements[index];
 			} else {
 				// index not found, fallback to displaying variable
 				return '$' + ( index + 1 );
@@ -594,11 +625,41 @@
 
 		/**
 		 * Transform wiki-link
-		 * TODO unimplemented
+		 *
+		 * TODO:
+		 * It only handles basic cases, either no pipe, or a pipe with an explicit
+		 * anchor.
+		 *
+		 * It does not attempt to handle features like the pipe trick.
+		 * However, the pipe trick should usually not be present in wikitext retrieved
+		 * from the server, since the replacement is done at save time.
+		 * It may, though, if the wikitext appears in extension-controlled content.
+		 *
 		 * @param nodes
 		 */
-		wlink: function () {
-			return 'unimplemented';
+		wlink: function ( nodes ) {
+			var page, anchor, url;
+
+			page = nodes[0];
+			url = mw.util.wikiGetlink( page );
+
+			// [[Some Page]] or [[Namespace:Some Page]]
+			if ( nodes.length === 1 ) {
+				anchor = page;
+			}
+
+			/*
+			 * [[Some Page|anchor text]] or
+			 * [[Namespace:Some Page|anchor]
+			 */
+			else {
+				anchor = nodes[1];
+			}
+
+			return $( '<a />' ).attr( {
+				title: page,
+				href: url
+			} ).text( anchor );
 		},
 
 		/**
@@ -695,6 +756,30 @@
 			var form = nodes[0],
 				word = nodes[1];
 			return word && form && this.language.convertGrammar( word, form );
+		},
+
+		/**
+		 * Tranform parsed structure into a int: (interface language) message include
+		 * Invoked by putting {{MediaWiki:othermessage}} into a message
+		 * @param {Array} of nodes
+		 * @return {string} Other message
+		 */
+		int: function ( nodes ) {
+			return mw.jqueryMsg.getMessageFunction()( nodes[0].toLowerCase() );
+		},
+
+		/**
+		 * Takes an unformatted number (arab, no group separators and . as decimal separator)
+		 * and outputs it in the localized digit script and formatted with decimal
+		 * separator, according to the current language
+		 * @param {Array} of nodes
+		 * @return {Number|String} formatted number
+		 */
+		formatnum: function ( nodes ) {
+			var isInteger = ( nodes[1] && nodes[1] === 'R' ) ? true : false,
+				number = nodes[0];
+
+			return this.language.convertNumber( number, isInteger );
 		}
 	};
 	// Deprecated! don't rely on gM existing.
@@ -711,7 +796,7 @@
 		// Caching is somewhat problematic, because we do need different message functions for different maps, so
 		// we'd have to cache the parser as a member of this.map, which sounds a bit ugly.
 		// Do not use mw.jqueryMsg unless required
-		if ( this.map.get( this.key ).indexOf( '{{' ) < 0 ) {
+		if ( !/\{\{|\[/.test(this.map.get( this.key ) ) ) {
 			// Fall back to mw.msg's simple parser
 			return oldParser.apply( this );
 		}

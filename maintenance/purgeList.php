@@ -32,7 +32,7 @@ class PurgeList extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "Send purge requests for listed pages to squid";
-		$this->addOption( 'purge', 'Whether to update page_touched.' , false, false );
+		$this->addOption( 'purge', 'Whether to update page_touched.', false, false );
 		$this->addOption( 'namespace', 'Namespace number', false, true );
 		$this->setBatchSize( 100 );
 	}
@@ -86,7 +86,7 @@ class PurgeList extends Maintenance {
 		);
 
 		$start   = 0;
-		$end = $dbr->numRows( $result );
+		$end = $result->numRows();
 		$this->output( "Will purge $end pages from namespace $ns\n" );
 
 		# Do remaining chunk

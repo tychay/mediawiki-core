@@ -549,6 +549,15 @@ nowiki 3
 
 !! end
 
+!! test
+Entities inside <nowiki>
+!! input
+<nowiki>&lt;</nowiki>
+!! result
+<p>&lt;
+</p>
+!! end
+
 
 ###
 ### Comments
@@ -785,6 +794,24 @@ x <div>foo</div> z
 
 !! end
 
+!! test
+Empty lines between block tags to test open p-tags are closed between the block tags
+!! input
+<div></div>
+
+
+<div></div>a
+
+b
+!! result
+<div></div>
+<p><br />
+</p>
+<div></div>a
+<p>b
+</p>
+!! end
+
 ###
 ### Preformatted text
 ###
@@ -886,6 +913,15 @@ Bug 6200: Preformatted in <blockquote>
 <pre width="8" onmouseover="alert(document.cookie)">Narrow screen goodies</pre>
 !! result
 <pre width="8">Narrow screen goodies</pre>
+
+!! end
+
+!! test
+Entities inside <pre>
+!! input
+<pre>&lt;</pre>
+!! result
+<pre>&lt;</pre>
 
 !! end
 
@@ -1208,6 +1244,23 @@ c
 !!end
 
 !!test
+2c. Indent-Pre and tables (bug 42252)
+!!input
+{|
+ |+ foo
+ !  | bar
+|}
+!!result
+<table>
+<caption> foo
+</caption>
+<tr>
+<th> bar
+</th></tr></table>
+
+!!end
+
+!!test
 3a. Indent-Pre and block tags (single-line html)
 !!input
  <p> foo </p>
@@ -1290,6 +1343,20 @@ c
 </td></tr></table>
 
 !!end
+
+!! test
+5. White-space in indent-pre
+NOTE: the white-space char on 2nd line is significant
+!! input
+ a<br/>
+ 
+ b
+!! result
+<pre>a<br />
+
+b
+</pre>
+!! end
 
 ###
 ### HTML-pre (some to spec PHP parser behavior and some Parsoid-RT-centric)
@@ -2725,6 +2792,45 @@ A table with nothing but a caption
 !! end
 
 !! test
+A table with caption with default-spaced attributes and a table row
+!! input
+{|
+|+ style="color: red;" | caption1
+|-
+| foo
+|}
+!! result
+<table>
+<caption style="color: red;"> caption1
+</caption>
+<tr>
+<td> foo
+</td></tr></table>
+
+!! end
+
+!! test
+A table with captions with non-default spaced attributes and a table row
+!! input
+{|
+|+style="color: red;"|caption2
+|+ style="color: red;"| caption3
+|-
+| foo
+|}
+!! result
+<table>
+<caption style="color: red;">caption2
+</caption>
+<caption style="color: red;"> caption3
+</caption>
+<tr>
+<td> foo
+</td></tr></table>
+
+!! end
+
+!! test
 Table td-cell syntax variations
 !! input
 {|
@@ -3125,6 +3231,29 @@ disabled
 
 !! end
 
+!! test
+Wikitext table with a lot of comments
+!! input
+{|
+<!-- c0 -->
+| foo
+<!-- c1 -->
+|- <!-- c2 -->
+<!-- c3 -->
+|<!-- c4 -->
+<!-- c5 -->
+|}
+!! result
+<table>
+<tr>
+<td> foo
+</td></tr>
+<tr>
+<td>
+</td></tr></table>
+
+!! end
+
 ###
 ### Internal links
 ###
@@ -3208,6 +3337,28 @@ Link with suffix
 <p><a href="/wiki/Main_Page" title="Main Page">Main Pagexxx</a>, <a href="/wiki/Main_Page" title="Main Page">Main Page</a>XXX, <a href="/wiki/Main_Page" title="Main Page">Main Page</a>!!!
 </p>
 !! end
+
+!! article
+prefixed article
+!! text
+Some text
+!! endarticle
+
+!! test
+Bug 43661: Piped links with identical prefixes
+!! input
+[[prefixed article|prefixed articles with spaces]]
+
+[[prefixed article|prefixed articlesaoeu]]
+
+[[Main Page|Main Page test]]
+!! result
+<p><a href="/wiki/Prefixed_article" title="Prefixed article">prefixed articles with spaces</a>
+</p><p><a href="/wiki/Prefixed_article" title="Prefixed article">prefixed articlesaoeu</a>
+</p><p><a href="/wiki/Main_Page" title="Main Page">Main Page test</a>
+</p>
+!! end
+
 
 !! test
 Link with HTML entity in suffix / tail
@@ -3576,6 +3727,24 @@ language=kaa
 [[Something]]'nice
 !! result
 <p><a href="/index.php?title=Something&amp;action=edit&amp;redlink=1" class="new" title="Something (bet ele jaratılmag'an)">Something'nice</a>
+</p>
+!! end
+
+!! test
+Parsoid-centric test: Whitespace in ext- and wiki-links should be preserved
+!! input
+[[Foo|  bar]]
+
+[[Foo|  ''bar'']]
+
+[http://wp.org   foo]
+
+[http://wp.org   ''foo'']
+!! result
+<p><a href="/index.php?title=Foo&amp;action=edit&amp;redlink=1" class="new" title="Foo (page does not exist)">  bar</a>
+</p><p><a href="/index.php?title=Foo&amp;action=edit&amp;redlink=1" class="new" title="Foo (page does not exist)">  <i>bar</i></a>
+</p><p><a rel="nofollow" class="external text" href="http://wp.org">foo</a>
+</p><p><a rel="nofollow" class="external text" href="http://wp.org"><i>foo</i></a>
 </p>
 !! end
 
@@ -4040,6 +4209,73 @@ Nested lists 8 (multiple nesting transitions)
 </li></ul>
 
 !! end
+
+!! test
+Unbalanced closing block tags break a list
+(Disabled since php parser generates broken html -- relies on Tidy to fix up)
+!! options
+disabled
+!! input
+<div>
+*a</div><div>
+*b</div>
+!! result
+<div>
+<ul><li>a
+</li></ul></div><div>
+<ul><li>b
+</li></ul></div>
+!! end
+
+!! test
+Unbalanced closing non-block tags don't break a list
+(Disabled since php parser generates broken html -- relies on Tidy to fix up)
+!! options
+disabled
+!! input
+<span>
+*a</span><span>
+*b</span>
+!! result
+<p><span></span>
+</p>
+<ul><li>a<span></span>
+</li><li>b
+</li></ul>
+!! end
+
+!! test
+Unclosed formatting tags that straddle lists are closed and reopened
+(Disabled since php parser generates broken html -- relies on Tidy to fix up)
+!! options
+disabled
+!! input
+# <s> a
+# b </s>
+!! result
+<ol><li> <s> a </s>
+</li><li> <s> b </s>
+</li></ol>
+!! end
+
+!!test
+List embedded in a non-block tag
+(Ugly Parsoid output -- worth fixing; Disabled for PHP parser since it relies on Tidy)
+!! options
+disabled
+!!input
+<small>
+* foo
+</small>
+!!result
+<p><small></small></p>
+<small>
+<ul>
+<li> foo</li>
+</ul>
+</small>
+<p><small></small></p>
+!!end
 
 !! test
 List items are not parsed correctly following a <pre> block (bug 785)
@@ -4530,7 +4766,7 @@ Magic links: RFC (bug 479)
 !! input
 RFC 822
 !! result
-<p><a class="external mw-magiclink-rfc" href="//tools.ietf.org/html/rfc822">RFC 822</a>
+<p><a class="external mw-magiclink-rfc" rel="nofollow" href="//tools.ietf.org/html/rfc822">RFC 822</a>
 </p>
 !! end
 
@@ -4548,7 +4784,7 @@ Magic links: PMID incorrectly converts space to underscore
 !! input
 PMID 1234
 !! result
-<p><a class="external mw-magiclink-pmid" href="//www.ncbi.nlm.nih.gov/pubmed/1234?dopt=Abstract">PMID 1234</a>
+<p><a class="external mw-magiclink-pmid" rel="nofollow" href="//www.ncbi.nlm.nih.gov/pubmed/1234?dopt=Abstract">PMID 1234</a>
 </p>
 !! end
 
@@ -4855,8 +5091,14 @@ Main Page
 Template as link source
 !! input
 [[{{linktest2}}]]
+
+[[{{linktest2}}|Main Page]]
+
+[[{{linktest2}}]]Page
 !! result
 <p><a href="/wiki/Main_Page" title="Main Page">Main Page</a>
+</p><p><a href="/wiki/Main_Page" title="Main Page">Main Page</a>
+</p><p><a href="/wiki/Main_Page" title="Main Page">Main Page</a>Page
 </p>
 !! end
 
@@ -5370,8 +5612,23 @@ Templates: Links: 2. Generation of link href
 Templates: Links: 3. Generation of part of a link href
 !!input
 [[Fo{{echo|o}}|bar]]
+
+[[Foo{{echo|bar}}]]
+
+[[Foo{{echo|bar}}baz]]
+
+[[Foo{{echo|bar}}|bar]]
+
+[[:Foo{{echo|bar}}]]
+
+[[:Foo{{echo|bar}}|bar]]
 !!result
 <p><a href="/index.php?title=Foo&amp;action=edit&amp;redlink=1" class="new" title="Foo (page does not exist)">bar</a>
+</p><p><a href="/index.php?title=Foobar&amp;action=edit&amp;redlink=1" class="new" title="Foobar (page does not exist)">Foobar</a>
+</p><p><a href="/index.php?title=Foobarbaz&amp;action=edit&amp;redlink=1" class="new" title="Foobarbaz (page does not exist)">Foobarbaz</a>
+</p><p><a href="/index.php?title=Foobar&amp;action=edit&amp;redlink=1" class="new" title="Foobar (page does not exist)">bar</a>
+</p><p><a href="/index.php?title=Foobar&amp;action=edit&amp;redlink=1" class="new" title="Foobar (page does not exist)">Foobar</a>
+</p><p><a href="/index.php?title=Foobar&amp;action=edit&amp;redlink=1" class="new" title="Foobar (page does not exist)">bar</a>
 </p>
 !!end
 
@@ -5694,7 +5951,7 @@ disabled
 |bar
 |}
 !!result
-<table data-parsoid="{&quot;src&quot;:&quot;{|\n|{{echo|foo&lt;/table&gt;}}\n|bar\n|}&quot;}" about="#mwt1" typeof="mw:Object/Template ">
+<table  about="#mwt1" typeof="mw:Object/Template ">
 <tbody><tr><td>foo</td></tr></tbody></table><span about="#mwt1">
 bar</span><span about="#mwt1">
 </span>
@@ -5726,14 +5983,14 @@ disabled
   </tr>
 </table>
 !!result
-<table data-parsoid="{&quot;src&quot;:&quot;&lt;table&gt;\n  &lt;tr&gt;\n    &lt;td&gt;\n    &lt;table&gt;\n      &lt;tr&gt;\n        &lt;td&gt;1. {{echo|foo &lt;/table&gt;}}&lt;/td&gt;\n        &lt;td&gt; bar &lt;/td&gt;\n        &lt;td&gt;2. {{echo|baz &lt;/table&gt;}}&lt;/td&gt;\n      &lt;/tr&gt;\n      &lt;tr&gt;\n        &lt;td&gt;abc&lt;/td&gt;\n      &lt;/tr&gt;\n    &lt;/table&gt;\n    &lt;/td&gt;\n  &lt;/tr&gt;\n  &lt;tr&gt;\n    &lt;td&gt;xyz&lt;/td&gt;\n  &lt;/tr&gt;\n&lt;/table&gt;&quot;}" about="#mwt1" typeof="mw:Object/Template">
-  <tbody><tr data-parsoid="{&quot;stx&quot;:&quot;html&quot;}">
-    <td data-parsoid="{&quot;stx&quot;:&quot;html&quot;}">
-    <table data-parsoid="{&quot;stx&quot;:&quot;html&quot;}">
-      <tbody><tr data-parsoid="{&quot;stx&quot;:&quot;html&quot;}">
-        <td data-parsoid="{&quot;stx&quot;:&quot;html&quot;}">1. foo </td></tr></tbody></table></td>
-        <td data-parsoid="{&quot;stx&quot;:&quot;html&quot;}"> bar </td>
-        <td data-parsoid="{&quot;stx&quot;:&quot;html&quot;}">2. baz </td></tr></tbody></table><span about="#mwt1">
+<table  about="#mwt1" typeof="mw:Object/Template">
+  <tbody><tr >
+    <td >
+    <table >
+      <tbody><tr >
+        <td >1. foo </td></tr></tbody></table></td>
+        <td > bar </td>
+        <td >2. baz </td></tr></tbody></table><span about="#mwt1">
       </span><span about="#mwt1">
       
         abc</span><span about="#mwt1">
@@ -5746,6 +6003,28 @@ disabled
   </span><span about="#mwt1">
 </span>
 !!end
+
+!! test
+Templates: Ugly templates: 3. newline-only template parameter
+!! input
+foo {{echo|
+}}
+!! result
+<p>foo 
+</p>
+!! end
+
+# This looks like a bug: a single newline triggers p/br for some reason.
+!! test
+Templates: Ugly templates: 4. newline-only template parameter inconsistency
+!! input
+{{echo|
+}}
+!! result
+<p><br />
+</p>
+!! end
+
 
 !!test
 Parser Functions: 1. Simple example
@@ -6665,7 +6944,7 @@ BUG 1887: A RFC with a thumbnail
 !! input
 [[Image:foobar.jpg|thumb|This is RFC 12354]]
 !! result
-<div class="thumb tright"><div class="thumbinner" style="width:182px;"><a href="/wiki/File:Foobar.jpg" class="image"><img alt="" src="http://example.com/images/thumb/3/3a/Foobar.jpg/180px-Foobar.jpg" width="180" height="20" class="thumbimage" srcset="http://example.com/images/thumb/3/3a/Foobar.jpg/270px-Foobar.jpg 1.5x, http://example.com/images/thumb/3/3a/Foobar.jpg/360px-Foobar.jpg 2x" /></a>  <div class="thumbcaption"><div class="magnify"><a href="/wiki/File:Foobar.jpg" class="internal" title="Enlarge"><img src="/skins/common/images/magnify-clip.png" width="15" height="11" alt="" /></a></div>This is <a class="external mw-magiclink-rfc" href="//tools.ietf.org/html/rfc12354">RFC 12354</a></div></div></div>
+<div class="thumb tright"><div class="thumbinner" style="width:182px;"><a href="/wiki/File:Foobar.jpg" class="image"><img alt="" src="http://example.com/images/thumb/3/3a/Foobar.jpg/180px-Foobar.jpg" width="180" height="20" class="thumbimage" srcset="http://example.com/images/thumb/3/3a/Foobar.jpg/270px-Foobar.jpg 1.5x, http://example.com/images/thumb/3/3a/Foobar.jpg/360px-Foobar.jpg 2x" /></a>  <div class="thumbcaption"><div class="magnify"><a href="/wiki/File:Foobar.jpg" class="internal" title="Enlarge"><img src="/skins/common/images/magnify-clip.png" width="15" height="11" alt="" /></a></div>This is <a class="external mw-magiclink-rfc" rel="nofollow" href="//tools.ietf.org/html/rfc12354">RFC 12354</a></div></div></div>
 
 !! end
 
@@ -7505,6 +7784,10 @@ Namespaced link must have a title (bad fragment version)
 !!end
 
 
+###
+### HTML tags and HTML attributes
+###
+
 !! test
 div with no attributes
 !! input
@@ -7561,6 +7844,18 @@ disabled
 !! result
 <div class="">HTML rocks</div>
 
+!! end
+
+# The PHP parser escapes the opening brace to &#123; for some reason, so
+# disabled this test for it.
+!! test
+div with braces in attribute value
+!! options
+disabled
+!! input
+<div title="{}">Foo</div>
+!! result
+<div title="{}">Foo</div>
 !! end
 
 # This it very inconsistent in the PHP parser: it returns 
@@ -7646,6 +7941,15 @@ text with character entity: eacute
 I always thought &eacute; was a cute letter.
 !! result
 <p>I always thought &#233; was a cute letter.
+</p>
+!! end
+
+!! test
+text with entity-escaped character entity-like string: eacute
+!! input
+I always thought &amp;eacute; was a cute letter.
+!! result
+<p>I always thought &amp;eacute; was a cute letter.
 </p>
 !! end
 
@@ -10250,7 +10554,7 @@ Double RFC
 !! input
 RFC RFC 1234
 !! result
-<p>RFC <a class="external mw-magiclink-rfc" href="//tools.ietf.org/html/rfc1234">RFC 1234</a>
+<p>RFC <a class="external mw-magiclink-rfc" rel="nofollow" href="//tools.ietf.org/html/rfc1234">RFC 1234</a>
 </p>
 !! end
 
@@ -10268,7 +10572,7 @@ RFC code coverage
 !! input
 RFC   983&#x20;987
 !! result
-<p><a class="external mw-magiclink-rfc" href="//tools.ietf.org/html/rfc983">RFC 983</a>&#x20;987
+<p><a class="external mw-magiclink-rfc" rel="nofollow" href="//tools.ietf.org/html/rfc983">RFC 983</a>&#x20;987
 </p>
 !! end
 
@@ -10728,6 +11032,22 @@ Both [[Dunav]] and [[Дунав]] are names for this river.
 </p>
 !!end
 
+!! article
+Дуна
+!! text
+content
+!! endarticle
+
+!! test
+Link to another existing title shouldn't be parsed as self-link even if it's a variant of this title
+!! options
+title=[[Duna]] language=sr
+!! input
+[[Дуна]] is not a self-link while [[Duna]] and [[Dуна]] are still self-links.
+!! result
+<p><a href="/wiki/%D0%94%D1%83%D0%BD%D0%B0" title="Дуна">Дуна</a> is not a self-link while <strong class="selflink">Duna</strong> and <strong class="selflink">Dуна</strong> are still self-links.
+</p>
+!! end
 
 !! test
 Link to pages in language variants
@@ -10797,6 +11117,29 @@ language=sr cat
 [[Category:МедиаWики Усер'с Гуиде]]
 !! result
 <a href="/wiki/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%98%D0%B0:MediaWiki_User%27s_Guide" title="Категорија:MediaWiki User's Guide">MediaWiki User's Guide</a>
+!! end
+
+
+!! article
+Category:分类
+!! text
+blah
+!! endarticle
+
+!! article
+Category:分類
+!! text
+blah
+!! endarticle
+
+!! test
+Don't convert blue categorylinks to another variant (bug 33210)
+!! options
+language=zh cat
+!! input
+[[A]][[Category:分类]]
+!! result
+<a href="/wiki/Category:%E5%88%86%E7%B1%BB" title="Category:分类">分类</a>
 !! end
 
 
@@ -10873,6 +11216,20 @@ language=zh variant=zh-tw
 
 
 !! test
+Conversion around HTML tags
+!! options
+language=sr variant=sr-ec
+!! input
+-{H|span=>sr-ec:script;title=>sr-ec:src;}-
+<span title="La-{sr-el:L;sr-ec:C;}-tin">ski</span>
+!! result
+<p>
+<span title="ЛаCтин">ски</span>
+</p>
+!! end
+
+
+!! test
 Explicit session-wise language variant mapping (A flag and - flag)
 !! options
 language=zh variant=zh-tw
@@ -10923,6 +11280,20 @@ Should be stripped-{T|zh:China;zh-tw:Taiwan}-!
 !! result
 China
 <p>Should be stripped!
+</p>
+!! end
+
+!! test
+Recursive conversion of alt and title attrs shouldn't clear converter state
+!! options
+language=zh variant=zh-cn showtitle
+!! input
+-{H|zh-cn:Exclamation;zh-tw:exclamation;}-
+Should be stripped-{T|zh-cn:China;zh-tw:Taiwan}-<span title="exclamation">!</span>
+!! result
+China
+<p>
+Should be stripped<span title="Exclamation">!</span>
 </p>
 !! end
 
@@ -11435,17 +11806,6 @@ Multibyte character in padright
 </p>
 !! end
 
-!! test
-Formatted date
-!! config
-wgUseDynamicDates=1
-!! input
-[[2009-03-24]]
-!! result
-<p><span class="mw-formatted-date" title="2009-03-24"><a href="/index.php?title=2009&amp;action=edit&amp;redlink=1" class="new" title="2009 (page does not exist)">2009</a>-<a href="/index.php?title=March_24&amp;action=edit&amp;redlink=1" class="new" title="March 24 (page does not exist)">03-24</a></span>
-</p>
-!!end
-
 !!test
 formatdate parser function
 !!input
@@ -11465,33 +11825,11 @@ formatdate parser function, with default format
 !! end
 
 !! test
-Linked date with autoformatting disabled
-!! config
-wgUseDynamicDates=false
-!! input
-[[2009-03-24]]
-!! result
-<p><a href="/index.php?title=2009-03-24&amp;action=edit&amp;redlink=1" class="new" title="2009-03-24 (page does not exist)">2009-03-24</a>
-</p>
-!! end
-
-!! test
 Spacing of numbers in formatted dates
 !! input
 {{#formatdate:January 15}}
 !! result
 <p><span class="mw-formatted-date" title="01-15">January 15</span>
-</p>
-!! end
-
-!! test
-Spacing of numbers in formatted dates (linked)
-!! config
-wgUseDynamicDates=true
-!! input
-[[January 15]]
-!! result
-<p><span class="mw-formatted-date" title="01-15"><a href="/index.php?title=January_15&amp;action=edit&amp;redlink=1" class="new" title="January 15 (page does not exist)">January 15</a></span>
 </p>
 !! end
 
@@ -12358,6 +12696,23 @@ File:foobar.jpg|caption|alt=galleryalt|link=" onclick="alert('malicious javascri
 !! end
 
 !!test
+Gallery with invalid title as link (bug 43964)
+!! input
+<gallery>
+File:foobar.jpg|link=<
+</gallery>
+!! result
+<ul class="gallery">
+		<li class="gallerybox" style="width: 155px"><div style="width: 155px">
+			<div class="thumb" style="width: 150px;"><div style="margin:68px auto;"><a href="/wiki/File:Foobar.jpg" class="image"><img alt="Foobar.jpg" src="http://example.com/images/thumb/3/3a/Foobar.jpg/120px-Foobar.jpg" width="120" height="14" /></a></div></div>
+			<div class="gallerytext">
+			</div>
+		</div></li>
+</ul>
+
+!! end
+
+!!test
 Language parser function
 !! input
 {{#language:ar}}
@@ -12942,6 +13297,23 @@ disabled
 </tbody></table>
 !! end
 
+!! test
+Tables: 4d. No escaping needed
+!! input
+{|
+||+1
+||-2
+|}
+!! result
+<table>
+<tr>
+<td>+1
+</td>
+<td>-2
+</td></tr></table>
+
+!! end
+
 #### --------------- Links ---------------
 #### 1. Quote marks in link text
 #### 2. Wikilinks: Escapes needed
@@ -12956,7 +13328,7 @@ disabled
 !! input
 [[Foo|<nowiki>Foo''boo''</nowiki>]]
 !! result
-<a rel="mw:WikiLink" href="Foo" data-parsoid="{&quot;tsr&quot;:[0,7],&quot;contentPos&quot;:[5,5],&quot;src&quot;:&quot;[[Foo]]&quot;,&quot;bsp&quot;:[0,7],&quot;stx&quot;:&quot;simple&quot;}">Foo''boo''</a>
+<a rel="mw:WikiLink" href="Foo">Foo''boo''</a>
 !! end
 
 !! test
@@ -13198,6 +13570,137 @@ disabled
 </p>
 !! end
 
+!! test
+HTML tag with necessary entities in attributes
+!! input
+<span title="&amp;amp;">foo</span>
+!! result
+<p><span title="&amp;amp;">foo</span>
+</p>
+!! end
+
+!! test
+HTML tag with 'unnecessary' entity encoding in attributes
+!! input
+<span title="&amp;">foo</span>
+!! result
+<p><span title="&amp;">foo</span>
+</p>
+!! end
+
+!! test
+HTML tag with broken attribute value quoting
+!! input
+<span title="Hello world>Foo</span>
+!! result
+<p><span>Foo</span>
+</p>
+!! end
+
+!! test
+Parsoid-only: HTML tag with broken attribute value quoting
+!! options
+disabled
+!! input
+<span title="Hello world>Foo</span>
+!! result
+<p><span title="Hello world">Foo</span>
+</p>
+!! end
+
+!! test
+Table with broken attribute value quoting
+!! input
+{|
+| title="Hello world|Foo
+|}
+!! result
+<table>
+<tr>
+<td>Foo
+</td></tr></table>
+
+!! end
+
+!! test
+Table with broken attribute value quoting on consecutive lines
+!! input
+{|
+| title="Hello world|Foo
+| style="color:red|Bar
+|}
+!! result
+<table>
+<tr>
+<td>Foo
+</td>
+<td>Bar
+</td></tr></table>
+
+!! end
+
+!! test
+Parsoid-only: Table with broken attribute value quoting on consecutive lines
+!! options
+disabled
+!! input
+{|
+| title="Hello world|Foo
+| style="color:red|Bar
+|}
+!! result
+<table>
+<tr>
+<td title="Hello world">Foo
+</td><td style="color: red;">Bar
+</td></tr></table>
+
+!! end
+
+!!test
+Accept empty td cell attribute
+!!input
+{|
+| align="center" | foo ||  |
+|}
+!!result
+<table>
+<tr>
+<td align="center"> foo </td>
+<td>
+</td></tr></table>
+
+!!end
+
+!!test
+Non-empty attributes in th-cells
+!!input
+{|
+! Foo !! style="color: red" | Bar
+|}
+!!result
+<table>
+<tr>
+<th> Foo </th>
+<th style="color: red"> Bar
+</th></tr></table>
+
+!!end
+
+!!test
+Accept empty attributes in th-cells
+!!input
+{|
+!| foo !!| bar
+|}
+!!result
+<table>
+<tr>
+<th> foo </th>
+<th> bar
+</th></tr></table>
+
+!!end
 
 TODO:
 more images

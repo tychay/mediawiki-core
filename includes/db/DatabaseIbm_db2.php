@@ -143,13 +143,12 @@ class IBM_DB2Result{
 	 * @param $sql String
 	 * @param $columns Array
 	 */
-	public function __construct( $db, $result, $num_rows, $sql, $columns ){
+	public function __construct( $db, $result, $num_rows, $sql, $columns ) {
 		$this->db = $db;
 
-		if( $result instanceof ResultWrapper ){
+		if( $result instanceof ResultWrapper ) {
 			$this->result = $result->result;
-		}
-		else{
+		} else {
 			$this->result = $result;
 		}
 
@@ -224,7 +223,7 @@ class IBM_DB2Result{
 	 * @return mixed Array on success, false on failure
 	 * @throws DBUnexpectedError
 	 */
-	public function fetchRow(){
+	public function fetchRow() {
 		if ( $this->result
 				&& $this->num_rows > 0
 				&& $this->current_pos >= 0
@@ -239,7 +238,7 @@ class IBM_DB2Result{
 				}
 			}
 
-			if ( $this->loadedLines > $this->current_pos ){
+			if ( $this->loadedLines > $this->current_pos ) {
 				return $this->resultSet[$this->current_pos++];
 			}
 
@@ -251,7 +250,7 @@ class IBM_DB2Result{
 	 * Free a DB2 result object
 	 * @throws DBUnexpectedError
 	 */
-	public function freeResult(){
+	public function freeResult() {
 		unset( $this->resultSet );
 		if ( !@db2_free_result( $this->result ) ) {
 			throw new DBUnexpectedError( $this, "Unable to free DB2 result\n" );
@@ -420,7 +419,7 @@ class DatabaseIbm_db2 extends DatabaseBase {
 	 * Returns the database connection object
 	 * @return Object
 	 */
-	public function getDb(){
+	public function getDb() {
 		return $this->mConn;
 	}
 
@@ -788,8 +787,8 @@ class DatabaseIbm_db2 extends DatabaseBase {
 		// Wide characters are evil -- some of them look like '
 		$s = utf8_encode( $s );
 		// Fix its stupidity
-		$from =	array( 	"\\\\",	"\\'",	'\\n',	'\\t',	'\\"',	'\\r' );
-		$to = array( 		"\\",		"''",		"\n",		"\t",		'"',		"\r" );
+		$from = array( "\\\\", "\\'", '\\n', '\\t', '\\"', '\\r' );
+		$to = array( "\\", "''", "\n", "\t", '"', "\r" );
 		$s = str_replace( $from, $to, $s ); // DB2 expects '', not \' escaping
 		return $s;
 	}
@@ -1116,10 +1115,10 @@ class DatabaseIbm_db2 extends DatabaseBase {
 
 		// find out the primary keys
 		$keyres = $this->doQuery( "SELECT NAME FROM SYSIBM.SYSCOLUMNS WHERE TBNAME = '"
-		  . strtoupper( $table )
-		  . "' AND TBCREATOR = '"
-		  . strtoupper( $schema )
-		  . "' AND KEYSEQ > 0" );
+			. strtoupper( $table )
+			. "' AND TBCREATOR = '"
+			. strtoupper( $schema )
+			. "' AND KEYSEQ > 0" );
 
 		$keys = array();
 		for (
@@ -1380,15 +1379,9 @@ class DatabaseIbm_db2 extends DatabaseBase {
 			}
 		}
 
-		if ( isset( $options['GROUP BY'] ) ) {
-			$preLimitTail .= " GROUP BY {$options['GROUP BY']}";
-		}
-		if ( isset( $options['HAVING'] ) ) {
-			$preLimitTail .= " HAVING {$options['HAVING']}";
-		}
-		if ( isset( $options['ORDER BY'] ) ) {
-			$preLimitTail .= " ORDER BY {$options['ORDER BY']}";
-		}
+		$preLimitTail .= $this->makeGroupByWithHaving( $options );
+
+		$preLimitTail .= $this->makeOrderBy( $options );
 
 		if ( isset( $noKeyOptions['DISTINCT'] )
 			|| isset( $noKeyOptions['DISTINCTROW'] ) )

@@ -33,7 +33,7 @@
  *
  * @internal documentation reviewed 15 Mar 2010
  */
-class Article extends Page {
+class Article implements Page {
 	/**@{{
 	 * @private
 	 */
@@ -280,15 +280,13 @@ class Article extends Page {
 				$message = $this->getContext()->getUser()->isLoggedIn() ? 'noarticletext' : 'noarticletextanon';
 				$content = new MessageContent( $message, null, 'parsemag' );
 			}
-			wfProfileOut( __METHOD__ );
-
-			return $content;
 		} else {
 			$this->fetchContentObject();
-			wfProfileOut( __METHOD__ );
-
-			return $this->mContentObject;
+			$content = $this->mContentObject;
 		}
+
+		wfProfileOut( __METHOD__ );
+		return $content;
 	}
 
 	/**
@@ -403,7 +401,7 @@ class Article extends Page {
 	 *
 	 * @note code that wants to retrieve page content from the database should use WikiPage::getContent().
 	 *
-	 * @return Content|null
+	 * @return Content|null|boolean false
 	 *
 	 * @since 1.21
 	 */
@@ -864,15 +862,21 @@ class Article extends Page {
 
 		$ns = $this->getTitle()->getNamespace();
 
-		if ( $ns == NS_USER || $ns == NS_USER_TALK ) {
-			# Don't index user and user talk pages for blocked users (bug 11443)
-			if ( !$this->getTitle()->isSubpage() ) {
-				if ( Block::newFromTarget( null, $this->getTitle()->getText() ) instanceof Block ) {
-					return array(
-						'index'  => 'noindex',
-						'follow' => 'nofollow'
-					);
-				}
+		# Don't index user and user talk pages for blocked users (bug 11443)
+		if ( ( $ns == NS_USER || $ns == NS_USER_TALK ) && !$this->getTitle()->isSubpage() ) {
+			$specificTarget = null;
+			$vagueTarget = null;
+			$titleText = $this->getTitle()->getText();
+			if ( IP::isValid( $titleText ) ) {
+				$vagueTarget = $titleText;
+			} else {
+				$specificTarget = $titleText;
+			}
+			if ( Block::newFromTarget( $specificTarget, $vagueTarget ) instanceof Block ) {
+				return array(
+					'index'  => 'noindex',
+					'follow' => 'nofollow'
+				);
 			}
 		}
 
@@ -988,9 +992,7 @@ class Article extends Page {
 				}
 
 				// Add a <link rel="canonical"> tag
-				$outputPage->addLink( array( 'rel' => 'canonical',
-					'href' => $this->getTitle()->getLocalURL() )
-				);
+				$outputPage->setCanonicalUrl( $this->getTitle()->getLocalURL() );
 
 				// Tell the output object that the user arrived at this article through a redirect
 				$outputPage->setRedirectedFrom( $this->mRedirectedFrom );
@@ -1120,7 +1122,7 @@ class Article extends Page {
 
 		# Show delete and move logs
 		LogEventsList::showLogExtract( $outputPage, array( 'delete', 'move' ), $this->getTitle(), '',
-			array(  'lim' => 10,
+			array( 'lim' => 10,
 				'conds' => array( "log_action != 'revision'" ),
 				'showIfEmpty' => false,
 				'msgKey' => array( 'moveddeleted-notice' ) )
@@ -1481,7 +1483,7 @@ class Article extends Page {
 				$reason = $this->generateReason( $hasHistory );
 			} catch ( MWException $e ) {
 				# if a page is horribly broken, we still want to be able to delete it. so be lenient about errors here.
-				wfDebug("Error while building auto delete summary: $e");
+				wfDebug( "Error while building auto delete summary: $e" );
 				$reason = '';
 			}
 		}

@@ -36,6 +36,8 @@ abstract class JobQueue {
 
 	const QoS_Atomic = 1; // integer; "all-or-nothing" job insertions
 
+	const MAX_ATTEMPTS = 3; // integer; number of times to try a job
+
 	/**
 	 * @param $params array
 	 */
@@ -49,19 +51,23 @@ abstract class JobQueue {
 	/**
 	 * Get a job queue object of the specified type.
 	 * $params includes:
-	 *   class    : What job class to use (determines job type)
-	 *   wiki     : wiki ID of the wiki the jobs are for (defaults to current wiki)
-	 *   type     : The name of the job types this queue handles
-	 *   order    : Order that pop() selects jobs, one of "fifo", "timestamp" or "random".
-	 *              If "fifo" is used, the queue will effectively be FIFO. Note that
-	 *              job completion will not appear to be exactly FIFO if there are multiple
-	 *              job runners since jobs can take different times to finish once popped.
-	 *              If "timestamp" is used, the queue will at least be loosely ordered
-	 *              by timestamp, allowing for some jobs to be popped off out of order.
-	 *              If "random" is used, pop() will pick jobs in random order. This might be
-	 *              useful for improving concurrency depending on the queue storage medium.
-	 *   claimTTL : If supported, the queue will recycle jobs that have been popped
-	 *              but not acknowledged as completed after this many seconds.
+	 *   - class    : What job class to use (determines job type)
+	 *   - wiki     : wiki ID of the wiki the jobs are for (defaults to current wiki)
+	 *   - type     : The name of the job types this queue handles
+	 *   - order    : Order that pop() selects jobs, one of "fifo", "timestamp" or "random".
+	 *                If "fifo" is used, the queue will effectively be FIFO. Note that
+	 *                job completion will not appear to be exactly FIFO if there are multiple
+	 *                job runners since jobs can take different times to finish once popped.
+	 *                If "timestamp" is used, the queue will at least be loosely ordered
+	 *                by timestamp, allowing for some jobs to be popped off out of order.
+	 *                If "random" is used, pop() will pick jobs in random order. This might be
+	 *                useful for improving concurrency depending on the queue storage medium.
+	 *   - claimTTL : If supported, the queue will recycle jobs that have been popped
+	 *                but not acknowledged as completed after this many seconds. Recycling
+	 *                of jobs simple means re-inserting them into the queue. Jobs can be
+	 *                attempted up to three times before being discarded.
+	 *
+	 * Queue classes should throw an exception if they do not support the options given.
 	 *
 	 * @param $params array
 	 * @return JobQueue
@@ -94,10 +100,11 @@ abstract class JobQueue {
 	}
 
 	/**
-	 * Quickly check if the queue is empty.
+	 * Quickly check if the queue is empty (has no available jobs).
 	 * Queue classes should use caching if they are any slower without memcached.
 	 *
 	 * @return bool
+	 * @throws MWException
 	 */
 	final public function isEmpty() {
 		wfProfileIn( __METHOD__ );
@@ -113,11 +120,68 @@ abstract class JobQueue {
 	abstract protected function doIsEmpty();
 
 	/**
-	 * Push a batch of jobs into the queue
+	 * Get the number of available jobs in the queue.
+	 * Queue classes should use caching if they are any slower without memcached.
+	 *
+	 * @return integer
+	 * @throws MWException
+	 */
+	final public function getSize() {
+		wfProfileIn( __METHOD__ );
+		$res = $this->doGetSize();
+		wfProfileOut( __METHOD__ );
+		return $res;
+	}
+
+	/**
+	 * @see JobQueue::getSize()
+	 * @return integer
+	 */
+	abstract protected function doGetSize();
+
+	/**
+	 * Get the number of acquired jobs (these are temporarily out of the queue).
+	 * Queue classes should use caching if they are any slower without memcached.
+	 *
+	 * @return integer
+	 * @throws MWException
+	 */
+	final public function getAcquiredCount() {
+		wfProfileIn( __METHOD__ );
+		$res = $this->doGetAcquiredCount();
+		wfProfileOut( __METHOD__ );
+		return $res;
+	}
+
+	/**
+	 * @see JobQueue::getAcquiredCount()
+	 * @return integer
+	 */
+	abstract protected function doGetAcquiredCount();
+
+	/**
+	 * Push a single jobs into the queue.
+	 * This does not require $wgJobClasses to be set for the given job type.
+	 *
+	 * @param $jobs Job|Array
+	 * @param $flags integer Bitfield (supports JobQueue::QoS_Atomic)
+	 * @return bool Returns false on failure
+	 * @throws MWException
+	 */
+	final public function push( $jobs, $flags = 0 ) {
+		$jobs = is_array( $jobs ) ? $jobs : array( $jobs );
+
+		return $this->batchPush( $jobs, $flags );
+	}
+
+	/**
+	 * Push a batch of jobs into the queue.
+	 * This does not require $wgJobClasses to be set for the given job type.
 	 *
 	 * @param $jobs array List of Jobs
 	 * @param $flags integer Bitfield (supports JobQueue::QoS_Atomic)
-	 * @return bool
+	 * @return bool Returns false on failure
+	 * @throws MWException
 	 */
 	final public function batchPush( array $jobs, $flags = 0 ) {
 		foreach ( $jobs as $job ) {
@@ -127,9 +191,6 @@ abstract class JobQueue {
 		}
 		wfProfileIn( __METHOD__ );
 		$ok = $this->doBatchPush( $jobs, $flags );
-		if ( $ok ) {
-			wfIncrStats( 'job-insert', count( $jobs ) );
-		}
 		wfProfileOut( __METHOD__ );
 		return $ok;
 	}
@@ -141,16 +202,24 @@ abstract class JobQueue {
 	abstract protected function doBatchPush( array $jobs, $flags );
 
 	/**
-	 * Pop a job off of the queue
+	 * Pop a job off of the queue.
+	 * This requires $wgJobClasses to be set for the given job type.
 	 *
 	 * @return Job|bool Returns false on failure
+	 * @throws MWException
 	 */
 	final public function pop() {
+		global $wgJobClasses;
+
+		if ( $this->wiki !== wfWikiID() ) {
+			throw new MWException( "Cannot pop '{$this->type}' job off foreign wiki queue." );
+		} elseif ( !isset( $wgJobClasses[$this->type] ) ) {
+			// Do not pop jobs if there is no class for the queue type
+			throw new MWException( "Unrecognized job type '{$this->type}'." );
+		}
+
 		wfProfileIn( __METHOD__ );
 		$job = $this->doPop();
-		if ( $job ) {
-			wfIncrStats( 'job-pop' );
-		}
 		wfProfileOut( __METHOD__ );
 		return $job;
 	}
@@ -162,10 +231,13 @@ abstract class JobQueue {
 	abstract protected function doPop();
 
 	/**
-	 * Acknowledge that a job was completed
+	 * Acknowledge that a job was completed.
+	 *
+	 * This does nothing for certain queue classes or if "claimTTL" is not set.
 	 *
 	 * @param $job Job
 	 * @return bool
+	 * @throws MWException
 	 */
 	final public function ack( Job $job ) {
 		if ( $job->getType() !== $this->type ) {
@@ -208,8 +280,11 @@ abstract class JobQueue {
 	 * Essentially, the new batch of jobs belong to a new "root job" and the older ones to a
 	 * previous "root job" for the same task of "update links of pages that use template X".
 	 *
+	 * This does nothing for certain queue classes.
+	 *
 	 * @param $job Job
 	 * @return bool
+	 * @throws MWException
 	 */
 	final public function deduplicateRootJob( Job $job ) {
 		if ( $job->getType() !== $this->type ) {
@@ -231,9 +306,12 @@ abstract class JobQueue {
 	}
 
 	/**
-	 * Wait for any slaves or backup servers to catch up
+	 * Wait for any slaves or backup servers to catch up.
+	 *
+	 * This does nothing for certain queue classes.
 	 *
 	 * @return void
+	 * @throws MWException
 	 */
 	final public function waitForBackups() {
 		wfProfileIn( __METHOD__ );
@@ -246,4 +324,49 @@ abstract class JobQueue {
 	 * @return void
 	 */
 	protected function doWaitForBackups() {}
+
+	/**
+	 * Return a map of task names to task definition maps.
+	 * A "task" is a fast periodic queue maintenance action.
+	 * Mutually exclusive tasks must implement their own locking in the callback.
+	 *
+	 * Each task value is an associative array with:
+	 *   - name     : the name of the task
+	 *   - callback : a PHP callable that performs the task
+	 *   - period   : the period in seconds corresponding to the task frequency
+	 *
+	 * @return Array
+	 */
+	final public function getPeriodicTasks() {
+		$tasks = $this->doGetPeriodicTasks();
+		foreach ( $tasks as $name => &$def ) {
+			$def['name'] = $name;
+		}
+		return $tasks;
+	}
+
+	/**
+	 * @see JobQueue::getPeriodicTasks()
+	 * @return Array
+	 */
+	protected function doGetPeriodicTasks() {
+		return array();
+	}
+
+	/**
+	 * Clear any process and persistent caches
+	 *
+	 * @return void
+	 */
+	final public function flushCaches() {
+		wfProfileIn( __METHOD__ );
+		$this->doFlushCaches();
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * @see JobQueue::flushCaches()
+	 * @return void
+	 */
+	protected function doFlushCaches() {}
 }

@@ -13,6 +13,7 @@
  * @author Esteban97
  * @author Kaganer
  * @author LeighvsOptimvsMaximvs
+ * @author MF-Warburg
  * @author McDutchie
  * @author MissPetticoats
  * @author Omnipaedista
@@ -701,7 +702,6 @@ Nobis etiam spondes te esse ipsum horum verborum scriptorem primum, aut ex opere
 'template-protected' => '(protecta)',
 'template-semiprotected' => '(semi-protecta)',
 'hiddencategories' => 'Haec pagina ad {{PLURAL:$1|unam categoriam celatam|$1 categorias celatas}} pertinet:',
-'nocreatetitle' => 'Creatio paginarum coercita',
 'nocreate-loggedin' => 'Tibi non licet paginas novas creare.',
 'permissionserrors' => 'Errores permissionis',
 'permissionserrorstext-withaction' => 'Tibi non licet $2, ex {{PLURAL:$1|ratione|rationibus}}:',
@@ -1037,10 +1037,13 @@ Si vis id dare, opera tua tibi ascribentur.',
 'right-userrights-interwiki' => 'Potestates usorum aliis in vicis recensere',
 'right-siteadmin' => 'Basem datorum obstruere vel deobstruere',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Index rationum novarum creatarum',
+'newuserlogpagetext' => 'Hic est index rationum novarum creatarum.',
+
 # User rights log
 'rightslog' => 'Index mutationum iuribus usorum',
 'rightslogtext' => 'Haec est index mutationum iuribus usorum.',
-'rightsnone' => '(nullus)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'hanc paginam legere',
@@ -1419,10 +1422,6 @@ Vide etiam [[Special:WantedCategories|categorias desideratas]].',
 'activeusers-hidesysops' => 'Celare magistratus',
 'activeusers-noresult' => 'Nullus usor inventus.',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Index rationum novarum creatarum',
-'newuserlogpagetext' => 'Hic est index rationum novarum creatarum.',
-
 # Special:ListGroupRights
 'listgrouprights' => 'Gregum usorum potestates',
 'listgrouprights-group' => 'Grex',
@@ -1469,9 +1468,8 @@ Inscriptio electronica quam in [[Special:Preferences|praeferentiis tuis]] dedis 
 'watchlistanontext' => 'Necesse est $1 ad indicem paginarum custoditarum inspiciendum vel recensendum.',
 'watchnologin' => 'Conventum non est apertum',
 'watchnologintext' => '[[Special:UserLogin|Conventum aperire]] debes ut indicem paginarum custoditarum mutes.',
-'addedwatchtext' => "Pagina \"[[:\$1]]\" in [[Special:Watchlist|paginas tuas custoditas]] addita est. Mutationes posthac huic paginae et paginae disputationis ibi notabuntur, et pagina '''litteris pinguibus''' apparebit in [[Special:RecentChanges|nuper mutatorum]] indice, ut sit facilius electu.
-
-Si paginam ex indice paginarum custoditarum removere vis, imprime \"decustodire\" ab summa pagina.",
+'addedwatchtext' => 'Pagina "[[:$1]]" in [[Special:Watchlist|paginas tuas custoditas]] addita est.
+Mutationes posthac huic paginae et paginae disputationis ibi notabuntur.',
 'removedwatchtext' => 'Pagina "[[:$1]]" ex [[Special:Watchlist|indice paginarum custoditarum]] remota est.',
 'watch' => 'Custodire',
 'watchthispage' => 'Custodire hanc paginam',
@@ -1521,6 +1519,8 @@ To change your watchlist settings, visit
 
 Feedback and further assistance:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'creata',
+'changed' => 'mutata',
 
 # Delete
 'deletepage' => 'Delere paginam',
@@ -1584,9 +1584,9 @@ ad emendationem proximam ab $2.',
 Ecce protectiones paginae '''$1''':",
 'protect-cascadeon' => 'Hanc paginam, in {{PLURAL:$1|pagina seriatim protecta|paginis seriatim protectis}} inclusam, potes deprotegere; manebit autem protectio serialis.',
 'protect-default' => 'Usoribus omnibus licet',
-'protect-fallback' => 'Postulat permissum "$1"',
-'protect-level-autoconfirmed' => 'Tironibus et conventu carentibus non licet',
-'protect-level-sysop' => 'Magistratus soli',
+'protect-fallback' => 'Sinere solum usores permissu "$1"',
+'protect-level-autoconfirmed' => 'Sinere solum usores adfirmati automaticale',
+'protect-level-sysop' => 'Sinere solum magistratus',
 'protect-summary-cascade' => 'defluens',
 'protect-expiring' => 'exit $1 (UTC)',
 'protect-expiry-indefinite' => 'infinita',
@@ -1651,7 +1651,7 @@ Si pagina nova cum ipso nomine post deletionem creata est, emendationes restitut
 'blanknamespace' => '(principale)',
 
 # Contributions
-'contributions' => 'Conlationes usoris',
+'contributions' => 'Conlationes {{GENDER:$1|usoris}}',
 'contributions-title' => 'Conlationes usoris $1',
 'mycontris' => 'Conlationes',
 'contribsub2' => 'Pro $1 ($2)',
@@ -2339,7 +2339,7 @@ Quaesumus, adfirma ut iterum hanc paginam crees.",
 'specialpages-group-users' => 'Usores eorumque potestates',
 'specialpages-group-pages' => 'Indices paginarum',
 'specialpages-group-pagetools' => 'Instrumenta paginarum',
-'specialpages-group-wiki' => 'Vici-data et instrumenta',
+'specialpages-group-wiki' => 'Data et instrumenta',
 'specialpages-group-redirects' => 'Paginae speciales redirigentes',
 'specialpages-group-spam' => 'Instrumenta contra praeconia incommoda',
 
@@ -2375,7 +2375,7 @@ Quaesumus, adfirma ut iterum hanc paginam crees.",
 'logentry-newusers-create' => 'Ratio usoris $1 creata est',
 'logentry-newusers-create2' => 'Ratio usoris $3 creata est ab usore $1',
 'logentry-newusers-autocreate' => 'Ratio $1 automatice creata est',
-'newuserlog-byemail' => 'tessera missa litteris electronicis',
+'rightsnone' => '(nullus)',
 
 # Search suggestions
 'searchsuggest-search' => 'Quaerere',

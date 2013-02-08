@@ -19,6 +19,12 @@ class BackupDumperPageTest extends DumpTestCase {
 	private $namespace, $talk_namespace;
 
 	function addDBData() {
+		// be sure, titles created here using english namespace names
+		$this->setMwGlobals( array(
+			'wgLanguageCode' => 'en',
+			'wgContLang' => Language::factory( 'en' ),
+		));
+
 		$this->tablesUsed[] = 'page';
 		$this->tablesUsed[] = 'revision';
 		$this->tablesUsed[] = 'text';
@@ -78,11 +84,6 @@ class BackupDumperPageTest extends DumpTestCase {
 
 	protected function setUp() {
 		parent::setUp();
-
-		$this->setMwGlobals( array(
-			'wgLanguageCode' => 'en',
-			'wgContLang' => Language::factory( 'en' ),
-		));
 
 		// Since we will restrict dumping by page ranges (to allow
 		// working tests, even if the db gets prepopulated by a base
@@ -231,6 +232,8 @@ class BackupDumperPageTest extends DumpTestCase {
 	}
 
 	function testCurrentStubGzip () {
+		$this->checkHasGzip();
+
 		// Preparing the dump
 		$fname = $this->getNewTempFile();
 		$dumper = new BackupDumper( array ( "--output=gzip:" . $fname ) );
@@ -283,6 +286,8 @@ class BackupDumperPageTest extends DumpTestCase {
 		// We reproduce such a setup with our mini fixture, although we omit
 		// chunks, and all the other gimmicks of xmldumps-backup.
 		//
+		$this->checkHasGzip();
+
 		$fnameMetaHistory = $this->getNewTempFile();
 		$fnameMetaCurrent = $this->getNewTempFile();
 		$fnameArticles = $this->getNewTempFile();
@@ -301,7 +306,7 @@ class BackupDumperPageTest extends DumpTestCase {
 		// computer. We only check that reporting does not crash the dumping
 		// and that something is reported
 		$dumper->stderr = fopen( 'php://output', 'a' );
-		if ( $dumper->stderr === FALSE ) {
+		if ( $dumper->stderr === false ) {
 			$this->fail( "Could not open stream for stderr" );
 		}
 

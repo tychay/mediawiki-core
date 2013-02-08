@@ -597,7 +597,7 @@ $messages = array(
 'prefs-edits' => 'Дьузар хъувунрин кьадар',
 'prefsnologin' => 'Куьне гьахьнавач',
 'changepassword' => 'Парол дегишарун',
-'prefs-skin' => 'КЪайдадиз ттунин тема',
+'prefs-skin' => 'Къайдадиз ттунин тема',
 'skin-preview' => 'Сифтедин килигун',
 'datedefault' => 'Туькlуьрмир',
 'prefs-beta' => 'Бета-мумкинвилер',
@@ -613,7 +613,7 @@ $messages = array(
 'prefs-changeemail' => 'Э-почта дегишарун',
 'prefs-setemail' => 'Э-почта эцигна туькIуьрун',
 'prefs-email' => 'E-mail туькlуьрунин кьадарар',
-'prefs-rendering' => 'КЪецепатан  акунар',
+'prefs-rendering' => 'Къецепатан акунар',
 'saveprefs' => 'Хуьн',
 'resetprefs' => 'Хуьн тавунвай дегишвилер алудун',
 'restoreprefs' => 'Авайл хьиз кьунвай низамарунар туькIуьр хъувун',
@@ -689,9 +689,11 @@ $messages = array(
 'right-browsearchive' => 'Алуднавай ччинар жугъурун',
 'right-undelete' => 'Алуднавай ччинар туькIуьр хъувун',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Уртахар регистрация авунин журнал',
+
 # User rights log
 'rightslog' => 'Эхтияр Ишлемишчидин дафтlар',
-'rightsnone' => '(садни)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'И ччин кIелун',
@@ -918,9 +920,6 @@ $messages = array(
 'listusers-noresult' => 'Иштиракчияр жагъуриз хьанвач',
 'listusers-blocked' => '(блокарнава)',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Уртахар регистрация авунин журнал',
-
 # Special:ListGroupRights
 'listgrouprights-group' => 'КIеретI',
 'listgrouprights-members' => '(уьзвийрин сиягь)',
@@ -951,6 +950,9 @@ $messages = array(
 # Displayed when you click the "watch" button and it is in the process of watching
 'watching' => 'Килигун...',
 'unwatching' => 'Амма клигнай',
+
+'created' => 'туькIуьрнава',
+'changed' => 'дегишнава',
 
 # Delete
 'deletepage' => 'Къакъудун хъувун',
@@ -1320,6 +1322,9 @@ Cиягьда авай анжах (* лишандихъ галаз эгечIза
 
 # Special:ComparePages
 'compare-page1' => 'Чар 1',
+
+# New logging system
+'rightsnone' => '(садни)',
 
 # Feedback
 'feedback-subject' => 'Тема:',

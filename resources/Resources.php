@@ -20,6 +20,10 @@
  * @file
  */
 
+if( !defined( 'MEDIAWIKI' ) ) {
+	die( 'Not an entry point.' );
+}
+
 return array(
 
 	/* Special modules who have their own classes */
@@ -143,6 +147,7 @@ return array(
 	),
 	'jquery.client' => array(
 		'scripts' => 'resources/jquery/jquery.client.js',
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 	'jquery.collapsibleTabs' => array(
 		'scripts' => 'resources/jquery/jquery.collapsibleTabs.js',
@@ -157,6 +162,7 @@ return array(
 	),
 	'jquery.cookie' => array(
 		'scripts' => 'resources/jquery/jquery.cookie.js',
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 	'jquery.delayedBind' => array(
 		'scripts' => 'resources/jquery/jquery.delayedBind.js',
@@ -210,6 +216,7 @@ return array(
 	),
 	'jquery.mwExtension' => array(
 		'scripts' => 'resources/jquery/jquery.mwExtension.js',
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 	'jquery.placeholder' => array(
 		'scripts' => 'resources/jquery/jquery.placeholder.js',
@@ -647,9 +654,11 @@ return array(
 	),
 	'mediawiki.notify' => array(
 		'scripts' => 'resources/mediawiki/mediawiki.notify.js',
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 	'mediawiki.searchSuggest' => array(
 		'scripts' => 'resources/mediawiki/mediawiki.searchSuggest.js',
+		'styles' => 'resources/mediawiki/mediawiki.searchSuggest.css',
 		'messages' => array(
 			'searchsuggest-search',
 			'searchsuggest-containing',
@@ -687,6 +696,7 @@ return array(
 		),
 		'messages' => array( 'showtoc', 'hidetoc' ),
 		'position' => 'top', // For $wgPreloadJavaScriptMwUtil
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 
 	/* MediaWiki Action */
@@ -759,6 +769,7 @@ return array(
 				'mediawiki.language.data',
 				'mediawiki.cldr'
 			),
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 
 	'mediawiki.cldr' => array(
@@ -766,14 +777,17 @@ return array(
 		'dependencies' => array(
 			'mediawiki.libs.pluralruleparser',
 		),
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 
 	'mediawiki.libs.pluralruleparser' => array(
 		'scripts' => 'resources/mediawiki.libs/CLDRPluralRuleParser.js',
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 
 	'mediawiki.language.init' => array(
 		'scripts' => 'resources/mediawiki.language/mediawiki.language.init.js',
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 
 	'mediawiki.jqueryMsg' => array(
@@ -782,6 +796,7 @@ return array(
 			'mediawiki.util',
 			'mediawiki.language',
 		),
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 
 	/* MediaWiki Libs */
@@ -911,6 +926,9 @@ return array(
 			'largefileserver',
 		),
 		'dependencies' => array( 'mediawiki.libs.jpegmeta', 'mediawiki.util' ),
+	),
+	'mediawiki.special.userlogin.signup' => array(
+		'scripts' => 'resources/mediawiki.special/mediawiki.special.userLogin.signup.js',
 	),
 	'mediawiki.special.javaScriptTest' => array(
 		'scripts' => 'resources/mediawiki.special/mediawiki.special.javaScriptTest.js',

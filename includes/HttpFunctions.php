@@ -244,7 +244,7 @@ class MWHttpRequest {
 		}
 
 		$members = array( "postData", "proxy", "noProxy", "sslVerifyHost", "caInfo",
-				  "method", "followRedirects", "maxRedirects", "sslVerifyCert", "callback" );
+				"method", "followRedirects", "maxRedirects", "sslVerifyCert", "callback" );
 
 		foreach ( $members as $o ) {
 			if ( isset( $options[$o] ) ) {
@@ -284,7 +284,7 @@ class MWHttpRequest {
 			Http::$httpEngine = function_exists( 'curl_init' ) ? 'curl' : 'php';
 		} elseif ( Http::$httpEngine == 'curl' && !function_exists( 'curl_init' ) ) {
 			throw new MWException( __METHOD__ . ': curl (http://php.net/curl) is not installed, but' .
-								   ' Http::$httpEngine is set to "curl"' );
+				' Http::$httpEngine is set to "curl"' );
 		}
 
 		switch( Http::$httpEngine ) {
@@ -328,10 +328,13 @@ class MWHttpRequest {
 	public function proxySetup() {
 		global $wgHTTPProxy;
 
-		if ( $this->proxy || !$this->noProxy ) {
+		// If there is an explicit proxy set and proxies are not disabled, then use it
+		if ( $this->proxy && !$this->noProxy ) {
 			return;
 		}
 
+		// Otherwise, fallback to $wgHTTPProxy/http_proxy (when set) if this is not a machine
+		// local URL and proxies are not disabled
 		if ( Http::isLocalURL( $this->url ) || $this->noProxy ) {
 			$this->proxy = '';
 		} elseif ( $wgHTTPProxy ) {
@@ -643,12 +646,12 @@ class MWHttpRequest {
 			$locations = $headers[ 'location' ];
 			$domain = '';
 			$foundRelativeURI = false;
-			$countLocations = count($locations);
+			$countLocations = count( $locations );
 
 			for ( $i = $countLocations - 1; $i >= 0; $i-- ) {
 				$url = parse_url( $locations[ $i ] );
 
-				if ( isset($url[ 'host' ]) ) {
+				if ( isset( $url['host'] ) ) {
 					$domain = $url[ 'scheme' ] . '://' . $url[ 'host' ];
 					break;	//found correct URI (with host)
 				} else {
@@ -827,7 +830,7 @@ class PhpHttpRequest extends MWHttpRequest {
 		parent::execute();
 
 		if ( is_array( $this->postData ) ) {
-			$this->postData = wfArrayToCGI( $this->postData );
+			$this->postData = wfArrayToCgi( $this->postData );
 		}
 
 		if ( $this->parsedUrl['scheme'] != 'http' &&

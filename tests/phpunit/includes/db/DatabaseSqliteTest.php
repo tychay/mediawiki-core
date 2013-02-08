@@ -12,7 +12,10 @@ class MockDatabaseSqlite extends DatabaseSqliteStandalone {
 		return true;
 	}
 
-	function replaceVars( $s ) {
+	/**
+	 * Override parent visibility to public
+	 */
+	public function replaceVars( $s ) {
 		return parent::replaceVars( $s );
 	}
 }
@@ -232,7 +235,7 @@ class DatabaseSqliteTest extends MediaWikiTestCase {
 	 * @todo: currently only checks list of tables
 	 */
 	public function testUpgrades() {
-		global $IP, $wgVersion;
+		global $IP, $wgVersion, $wgProfileToDatabase;
 
 		// Versions tested
 		$versions = array(
@@ -251,6 +254,9 @@ class DatabaseSqliteTest extends MediaWikiTestCase {
 
 		$currentDB = new DatabaseSqliteStandalone( ':memory:' );
 		$currentDB->sourceFile( "$IP/maintenance/tables.sql" );
+		if ( $wgProfileToDatabase ) {
+			$currentDB->sourceFile( "$IP/maintenance/sqlite/archives/patch-profiling.sql" );
+		}
 		$currentTables = $this->getTables( $currentDB );
 		sort( $currentTables );
 
@@ -371,5 +377,13 @@ class DatabaseSqliteTest extends MediaWikiTestCase {
 		}
 		ksort( $indexes );
 		return $indexes;
+	}
+
+	function testCaseInsensitiveLike() {
+		// TODO: Test this for all databases
+		$db = new DatabaseSqliteStandalone( ':memory:' );
+		$res = $db->query( 'SELECT "a" LIKE "A" AS a' );
+		$row = $res->fetchRow();
+		$this->assertFalse( (bool)$row['a'] );
 	}
 }

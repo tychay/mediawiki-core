@@ -33,10 +33,6 @@
  */
 class ApiEditPage extends ApiBase {
 
-	public function __construct( $query, $moduleName ) {
-		parent::__construct( $query, $moduleName );
-	}
-
 	public function execute() {
 		$user = $this->getUser();
 		$params = $this->extractRequestParams();
@@ -68,12 +64,12 @@ class ApiEditPage extends ApiBase {
 				$redirValues = array();
 				foreach ( $titles as $id => $newTitle ) {
 
-					if ( !isset( $titles[ $id - 1 ] ) ) {
-						$titles[ $id - 1 ] = $oldTitle;
+					if ( !isset( $titles[$id - 1] ) ) {
+						$titles[$id - 1] = $oldTitle;
 					}
 
 					$redirValues[] = array(
-						'from' => $titles[ $id - 1 ]->getPrefixedText(),
+						'from' => $titles[$id - 1]->getPrefixedText(),
 						'to' => $newTitle->getPrefixedText()
 					);
 
@@ -648,9 +644,5 @@ class ApiEditPage extends ApiBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:Edit';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

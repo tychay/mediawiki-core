@@ -785,7 +785,6 @@ Ang pinaka-ulihi nga log ginbutang sa idalom agod nga imo mahibaluan:",
 'template-protected' => '(protektado)',
 'template-semiprotected' => '(medyo-protektado)',
 'hiddencategories' => 'Ini nga pahina ay membro sang {{PLURAL:$1|1 tago nga kategorya|$1 mga tago nga kategorya}}:',
-'nocreatetitle' => 'Ginalimitahan ang pagbuhat sang panid',
 'nocreatetext' => 'Ang {{SITENAME}} nagapuggong sang abilidad nga magtuga sang mga bag-o nga panid.
 Mahimo ka nga magbalik kag mag-ilis sang naga-eksister nga panid, ukon[[Special:UserLogin|magsulod ukon maghimo sang akawnt]].',
 'nocreate-loggedin' => 'Wala ka sang lisensya sa pagbuhat sang bag-o nga mga panid.',
@@ -1219,9 +1218,11 @@ Ang imo adres sang e-mail wala ginapakita kon kontakon ka sang iban.',
 'right-read' => 'Basahan ang panid',
 'right-edit' => 'Ilisan ang panid',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Naga-usar nga ginhimo log',
+
 # User rights log
 'rightslog' => 'Karapatan sang naga-usar log',
-'rightsnone' => '(wala)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-edit' => 'islan ini nga pahina',
@@ -1337,9 +1338,6 @@ Mga Pahina sa [[Special:Watchlist|imo lista-lantaw]] ay '''dukot'''.",
 # Special:LinkSearch
 'linksearch' => 'Eksternal na mga tabid',
 'linksearch-ok' => 'Pangita-a',
-
-# Special:Log/newusers
-'newuserlogpage' => 'Naga-usar nga ginhimo log',
 
 # Special:ListGroupRights
 'listgrouprights-group' => 'Grupo',
@@ -1645,5 +1643,6 @@ Ang iban ay pagataguon sang default.
 # New logging system
 'revdelete-restricted' => 'ginapatuman nga pagbawal sa mga administrador',
 'revdelete-unrestricted' => 'ginkakas nga pagbawal sa mga administrador',
+'rightsnone' => '(wala)',
 
 );

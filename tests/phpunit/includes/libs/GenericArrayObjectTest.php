@@ -36,7 +36,7 @@ abstract class GenericArrayObjectTest extends MediaWikiTestCase {
 	 *
 	 * @return array
 	 */
-	public abstract function elementInstancesProvider();
+	abstract public function elementInstancesProvider();
 
 	/**
 	 * Returns the name of the concrete class being tested.
@@ -45,7 +45,7 @@ abstract class GenericArrayObjectTest extends MediaWikiTestCase {
 	 *
 	 * @return string
 	 */
-	public abstract function getInstanceClass();
+	abstract public function getInstanceClass();
 
 	/**
 	 * Provides instances of the concrete class being tested.
@@ -110,7 +110,10 @@ abstract class GenericArrayObjectTest extends MediaWikiTestCase {
 	 * @param GenericArrayObject $list
 	 */
 	public function testUnset( GenericArrayObject $list ) {
-		if ( !$list->isEmpty() ) {
+		if ( $list->isEmpty() ) {
+			$this->assertTrue( true ); // We cannot test unset if there are no elements
+		}
+		else {
 			$offset = $list->getIterator()->key();
 			$count = $list->count();
 			$list->offsetUnset( $offset );
@@ -123,10 +126,6 @@ abstract class GenericArrayObjectTest extends MediaWikiTestCase {
 			unset( $list[$offset] );
 			$this->assertEquals( $count - 1, $list->count() );
 		}
-
-		$exception = null;
-		try { $list->offsetUnset( 'sdfsedtgsrdysftu' ); } catch ( \Exception $exception ){}
-		$this->assertInstanceOf( '\Exception', $exception );
 	}
 
 	/**
@@ -171,7 +170,7 @@ abstract class GenericArrayObjectTest extends MediaWikiTestCase {
 
 		$elementClass = $list->getObjectType();
 
-		foreach ( array( 42, 'foo', array(), new \stdClass(), 4.2 ) as $element ) {
+		foreach ( array( 42, 'foo', array(), new stdClass(), 4.2 ) as $element ) {
 			$validValid = $element instanceof $elementClass;
 
 			try{
@@ -240,6 +239,26 @@ abstract class GenericArrayObjectTest extends MediaWikiTestCase {
 		$this->checkTypeChecks( function( GenericArrayObject $list, $element ) {
 			$list->offsetSet( mt_rand(), $element );
 		} );
+	}
+
+	/**
+	 * @dataProvider instanceProvider
+	 *
+	 * @since 1.21
+	 *
+	 * @param GenericArrayObject $list
+	 */
+	public function testSerialization( GenericArrayObject $list ) {
+		$serialization = serialize( $list );
+		$copy = unserialize( $serialization );
+
+		$this->assertEquals( $serialization, serialize( $copy ) );
+		$this->assertEquals( count( $list ), count( $copy ) );
+
+		$list = $list->getArrayCopy();
+		$copy = $copy->getArrayCopy();
+
+		$this->assertArrayEquals( $list, $copy, true, true );
 	}
 
 }

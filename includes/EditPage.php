@@ -546,8 +546,8 @@ class EditPage {
 			// Standard preference behaviour
 			return true;
 		} elseif ( !$this->mTitle->exists() &&
-		  isset( $wgPreviewOnOpenNamespaces[$this->mTitle->getNamespace()] ) &&
-		  $wgPreviewOnOpenNamespaces[$this->mTitle->getNamespace()] )
+			isset( $wgPreviewOnOpenNamespaces[$this->mTitle->getNamespace()] ) &&
+			$wgPreviewOnOpenNamespaces[$this->mTitle->getNamespace()] )
 		{
 			// Categories are special
 			return true;
@@ -577,13 +577,15 @@ class EditPage {
 	}
 
 	/**
-	 * Does this EditPage class support section editing?
-	 * This is used by EditPage subclasses to indicate their ui cannot handle section edits
+	 * Returns whether section editing is supported for the current page.
+	 * Subclasses may override this to replace the default behavior, which is
+	 * to check ContentHandler::supportsSections.
 	 *
-	 * @return bool
+	 * @return bool true if this edit page supports sections, false otherwise.
 	 */
 	protected function isSectionEditSupported() {
-		return true;
+		$contentHandler = ContentHandler::getForTitle( $this->mTitle );
+		return $contentHandler->supportsSections();
 	}
 
 	/**
@@ -597,6 +599,11 @@ class EditPage {
 
 		# Section edit can come from either the form or a link
 		$this->section = $request->getVal( 'wpSection', $request->getVal( 'section' ) );
+
+		if ( $this->section !== null && $this->section !== '' && !$this->isSectionEditSupported() ) {
+			throw new ErrorPageError( 'sectioneditnotsupported-title', 'sectioneditnotsupported-text' );
+		}
+
 		$this->isNew = !$this->mTitle->exists() || $this->section == 'new';
 
 		if ( $request->wasPosted() ) {
@@ -610,15 +617,18 @@ class EditPage {
 				// modified by subclasses
 				wfProfileIn( get_class( $this ) . "::importContentFormData" );
 				$textbox1 = $this->importContentFormData( $request );
-				if ( isset( $textbox1 ) ) {
+				if ( $textbox1 !== null ) {
 					$this->textbox1 = $textbox1;
 				}
 
 				wfProfileOut( get_class( $this ) . "::importContentFormData" );
 			}
 
+			# Trim spaces on user supplied text
+			$summary = trim( $request->getText( 'wpSummary' ) );
+
 			# Truncate for whole multibyte characters
-			$this->summary = $wgContLang->truncate( $request->getText( 'wpSummary' ), 255 );
+			$this->summary = $wgContLang->truncate( $summary, 255 );
 
 			# If the summary consists of a heading, e.g. '==Foobar==', extract the title from the
 			# header syntax, e.g. 'Foobar'. This is mainly an issue when we are using wpSummary for
@@ -1219,6 +1229,54 @@ class EditPage {
 	}
 
 	/**
+	 * Run hooks that can filter edits just before they get saved.
+	 *
+	 * @param Content $content the Content to filter.
+	 * @param Status  $status for reporting the outcome to the caller
+	 * @param User    $user the user performing the edit
+	 *
+	 * @return bool
+	 */
+	protected function runPostMergeFilters( Content $content, Status $status, User $user ) {
+		// Run old style post-section-merge edit filter
+		if ( !ContentHandler::runLegacyHooks( 'EditFilterMerged',
+			array( $this, $content, &$this->hookError, $this->summary ) ) ) {
+
+			# Error messages etc. could be handled within the hook...
+			$status->fatal( 'hookaborted' );
+			$status->value = self::AS_HOOK_ERROR;
+			return false;
+		} elseif ( $this->hookError != '' ) {
+			# ...or the hook could be expecting us to produce an error
+			$status->fatal( 'hookaborted' );
+			$status->value = self::AS_HOOK_ERROR_EXPECTED;
+			return false;
+		}
+
+		// Run new style post-section-merge edit filter
+		if ( !wfRunHooks( 'EditFilterMergedContent',
+			array( $this->mArticle->getContext(), $content, $status, $this->summary,
+				$user, $this->minoredit ) ) ) {
+
+			# Error messages etc. could be handled within the hook...
+			// XXX: $status->value may already be something informative...
+			$this->hookError = $status->getWikiText();
+			$status->fatal( 'hookaborted' );
+			$status->value = self::AS_HOOK_ERROR;
+			return false;
+		} elseif ( !$status->isOK() ) {
+			# ...or the hook could be expecting us to produce an error
+			// FIXME this sucks, we should just use the Status object throughout
+			$this->hookError = $status->getWikiText();
+			$status->fatal( 'hookaborted' );
+			$status->value = self::AS_HOOK_ERROR_EXPECTED;
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
 	 * Attempt submission (no UI)
 	 *
 	 * @param $result
@@ -1235,7 +1293,7 @@ class EditPage {
 
 		$status = Status::newGood();
 
-		wfProfileIn( __METHOD__  );
+		wfProfileIn( __METHOD__ );
 		wfProfileIn( __METHOD__ . '-checks' );
 
 		if ( !wfRunHooks( 'EditPage::attemptSave', array( $this ) ) ) {
@@ -1243,16 +1301,17 @@ class EditPage {
 			$status->fatal( 'hookaborted' );
 			$status->value = self::AS_HOOK_ERROR;
 			wfProfileOut( __METHOD__ . '-checks' );
-			wfProfileOut( __METHOD__  );
+			wfProfileOut( __METHOD__ );
 			return $status;
 		}
 
 		try {
 			# Construct Content object
 			$textbox_content = $this->toEditContent( $this->textbox1 );
-		} catch (MWContentSerializationException $ex) {
+		} catch ( MWContentSerializationException $ex ) {
 			$status->fatal( 'content-failed-to-parse', $this->contentModel, $this->contentFormat, $ex->getMessage() );
 			$status->value = self::AS_PARSE_ERROR;
+			wfProfileOut( __METHOD__ . '-checks' );
 			wfProfileOut( __METHOD__ );
 			return $status;
 		}
@@ -1265,7 +1324,7 @@ class EditPage {
 				$status->setResult( false, $code );
 
 				wfProfileOut( __METHOD__ . '-checks' );
-				wfProfileOut( __METHOD__  );
+				wfProfileOut( __METHOD__ );
 
 				return $status;
 		}
@@ -1386,17 +1445,7 @@ class EditPage {
 				return $status;
 			}
 
-			// Run post-section-merge edit filter
-			if ( !wfRunHooks( 'EditFilterMerged', array( $this, $this->textbox1, &$this->hookError, $this->summary ) ) ) {
-				# Error messages etc. could be handled within the hook...
-				$status->fatal( 'hookaborted' );
-				$status->value = self::AS_HOOK_ERROR;
-				wfProfileOut( __METHOD__ );
-				return $status;
-			} elseif ( $this->hookError != '' ) {
-				# ...or the hook could be expecting us to produce an error
-				$status->fatal( 'hookaborted' );
-				$status->value = self::AS_HOOK_ERROR_EXPECTED;
+			if ( !$this->runPostMergeFilters( $textbox_content, $status, $wgUser ) ) {
 				wfProfileOut( __METHOD__ );
 				return $status;
 			}
@@ -1459,7 +1508,7 @@ class EditPage {
 						$this->isConflict = false;
 						wfDebug( __METHOD__ . ": conflict suppressed; new section\n" );
 					}
-				} elseif ( $this->section == '' && Revision::userWasLastToEdit( DB_MASTER,  $this->mTitle->getArticleID(),
+				} elseif ( $this->section == '' && Revision::userWasLastToEdit( DB_MASTER, $this->mTitle->getArticleID(),
 							$wgUser->getId(), $this->edittime ) ) {
 					# Suppress edit conflict with self, except for section edits where merging is required.
 					wfDebug( __METHOD__ . ": Suppressing edit conflict, same user.\n" );
@@ -1510,20 +1559,7 @@ class EditPage {
 				return $status;
 			}
 
-			// Run post-section-merge edit filter
-			$hook_args = array( $this, $content, &$this->hookError, $this->summary );
-
-			if ( !ContentHandler::runLegacyHooks( 'EditFilterMerged', $hook_args )
-				|| !wfRunHooks( 'EditFilterMergedContent', $hook_args ) ) {
-				# Error messages etc. could be handled within the hook...
-				$status->fatal( 'hookaborted' );
-				$status->value = self::AS_HOOK_ERROR;
-				wfProfileOut( __METHOD__ );
-				return $status;
-			} elseif ( $this->hookError != '' ) {
-				# ...or the hook could be expecting us to produce an error
-				$status->fatal( 'hookaborted' );
-				$status->value = self::AS_HOOK_ERROR_EXPECTED;
+			if ( !$this->runPostMergeFilters( $content, $status, $wgUser ) ) {
 				wfProfileOut( __METHOD__ );
 				return $status;
 			}
@@ -1624,12 +1660,7 @@ class EditPage {
 			$doEditStatus = $this->mArticle->doEditContent( $content, $this->summary, $flags,
 															false, null, $this->contentFormat );
 
-		if ( $doEditStatus->isOK() ) {
-				$result['redirect'] = $content->isRedirect();
-			$this->updateWatchlist();
-			wfProfileOut( __METHOD__ );
-			return $status;
-		} else {
+		if ( !$doEditStatus->isOK() ) {
 			// Failure from doEdit()
 			// Show the edit conflict page for certain recognized errors from doEdit(),
 			// but don't show it for errors from extension hooks
@@ -1644,6 +1675,11 @@ class EditPage {
 			wfProfileOut( __METHOD__ );
 			return $doEditStatus;
 		}
+
+		$result['redirect'] = $content->isRedirect();
+		$this->updateWatchlist();
+		wfProfileOut( __METHOD__ );
+		return $status;
 	}
 
 	/**
@@ -1672,15 +1708,14 @@ class EditPage {
 	}
 
 	/**
-	 * @private
-	 * @todo document
+	 * Attempts to merge text content with base and current revisions
 	 *
 	 * @param $editText string
 	 *
 	 * @return bool
 	 * @deprecated since 1.21, use mergeChangesIntoContent() instead
 	 */
-	function mergeChangesInto( &$editText ){
+	function mergeChangesInto( &$editText ) {
 		ContentHandler::deprecated( __METHOD__, "1.21" );
 
 		$editContent = $this->toEditContent( $editText );
@@ -1695,14 +1730,17 @@ class EditPage {
 	}
 
 	/**
-	 * @private
-	 * @todo document
+	 * Attempts to do 3-way merge of edit content with a base revision
+	 * and current content, in case of edit conflict, in whichever way appropriate
+	 * for the content type.
+	 *
+	 * @since 1.21
 	 *
 	 * @param $editContent
+	 *
 	 * @return bool
-	 * @since since 1.WD
 	 */
-	private function mergeChangesIntoContent( &$editContent ){
+	private function mergeChangesIntoContent( &$editContent ) {
 		wfProfileIn( __METHOD__ );
 
 		$db = wfGetDB( DB_MASTER );
@@ -1733,10 +1771,10 @@ class EditPage {
 			$editContent = $result;
 			wfProfileOut( __METHOD__ );
 			return true;
-		} else {
-			wfProfileOut( __METHOD__ );
-			return false;
 		}
+
+		wfProfileOut( __METHOD__ );
+		return false;
 	}
 
 	/**
@@ -2850,21 +2888,24 @@ HTML
 		$dbr = wfGetDB( DB_SLAVE );
 		$data = $dbr->selectRow(
 			array( 'logging', 'user' ),
-			array( 'log_type',
-				   'log_action',
-				   'log_timestamp',
-				   'log_user',
-				   'log_namespace',
-				   'log_title',
-				   'log_comment',
-				   'log_params',
-				   'log_deleted',
-				   'user_name' ),
-			array( 'log_namespace' => $this->mTitle->getNamespace(),
-				   'log_title' => $this->mTitle->getDBkey(),
-				   'log_type' => 'delete',
-				   'log_action' => 'delete',
-				   'user_id=log_user' ),
+			array(
+				'log_type',
+				'log_action',
+				'log_timestamp',
+				'log_user',
+				'log_namespace',
+				'log_title',
+				'log_comment',
+				'log_params',
+				'log_deleted',
+				'user_name'
+			), array(
+				'log_namespace' => $this->mTitle->getNamespace(),
+				'log_title' => $this->mTitle->getDBkey(),
+				'log_type' => 'delete',
+				'log_action' => 'delete',
+				'user_id=log_user'
+			),
 			__METHOD__,
 			array( 'LIMIT' => 1, 'ORDER BY' => 'log_timestamp DESC' )
 		);
@@ -2934,7 +2975,7 @@ HTML
 			$parserOptions = $this->mArticle->makeParserOptions( $this->mArticle->getContext() );
 			$parserOptions->setEditSection( false );
 			$parserOptions->setIsPreview( true );
-			$parserOptions->setIsSectionPreview( !is_null($this->section) && $this->section !== '' );
+			$parserOptions->setIsSectionPreview( !is_null( $this->section ) && $this->section !== '' );
 
 			# don't parse non-wikitext pages, show message about preview
 			if ( $this->mTitle->isCssJsSubpage() || $this->mTitle->isCssOrJsPage() ) {
@@ -2957,7 +2998,7 @@ HTML
 				# Used messages to make sure grep find them:
 				# Messages: usercsspreview, userjspreview, sitecsspreview, sitejspreview
 				if( $level && $format ) {
-					$note = "<div id='mw-{$level}{$format}preview'>" . wfMessage( "{$level}{$format}preview" )->text()  . "</div>";
+					$note = "<div id='mw-{$level}{$format}preview'>" . wfMessage( "{$level}{$format}preview" )->text() . "</div>";
 				}
 			}
 
@@ -2993,7 +3034,7 @@ HTML
 				}
 			}
 		} catch ( MWContentSerializationException $ex ) {
-			$m = wfMessage('content-failed-to-parse', $this->contentModel, $this->contentFormat, $ex->getMessage() );
+			$m = wfMessage( 'content-failed-to-parse', $this->contentModel, $this->contentFormat, $ex->getMessage() );
 			$note .= "\n\n" . $m->parse();
 			$previewHTML = '';
 		}
@@ -3416,7 +3457,7 @@ HTML
 		global $wgOut, $wgLang;
 		$this->textbox2 = $this->textbox1;
 
-		if( is_array( $match ) ){
+		if( is_array( $match ) ) {
 			$match = $wgLang->listToText( $match );
 		}
 		$wgOut->prepareErrorPage( wfMessage( 'spamprotectiontitle' ) );

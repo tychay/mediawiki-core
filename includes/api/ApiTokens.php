@@ -30,10 +30,6 @@
  */
 class ApiTokens extends ApiBase {
 
-	public function __construct( $main, $action ) {
-		parent::__construct( $main, $action );
-	}
-
 	public function execute() {
 		wfProfileIn( __METHOD__ );
 		$params = $this->extractRequestParams();
@@ -150,9 +146,5 @@ class ApiTokens extends ApiBase {
 			'api.php?action=tokens' => 'Retrieve an edit token (the default)',
 			'api.php?action=tokens&type=email|move' => 'Retrieve an email token and a move token'
 		);
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

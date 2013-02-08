@@ -132,14 +132,14 @@ class GlobalTest extends MediaWikiTestCase {
 	 * @dataProvider provideArrayToCGI
 	 */
 	function testArrayToCGI( $array, $result ) {
-		$this->assertEquals( $result, wfArrayToCGI( $array ) );
+		$this->assertEquals( $result, wfArrayToCgi( $array ) );
 	}
 
 
 	function testArrayToCGI2() {
 		$this->assertEquals(
 			"baz=bar&foo=bar",
-			wfArrayToCGI(
+			wfArrayToCgi(
 				array( 'baz' => 'bar' ),
 				array( 'foo' => 'bar', 'baz' => 'overridden value' ) ) );
 	}
@@ -183,7 +183,7 @@ class GlobalTest extends MediaWikiTestCase {
 	 * @dataProvider provideCgiRoundTrip
 	 */
 	function testCgiRoundTrip( $cgi ) {
-		$this->assertEquals( $cgi, wfArrayToCGI( wfCgiToArray( $cgi ) ) );
+		$this->assertEquals( $cgi, wfArrayToCgi( wfCgiToArray( $cgi ) ) );
 	}
 
 	function testMimeTypeMatch() {
@@ -425,15 +425,6 @@ class GlobalTest extends MediaWikiTestCase {
 
 	}
 
-
-	function testInStringTest() {
-	
-		$this->assertTrue( in_string( 'foo', 'foobar' ), 'foo is in foobar' );
-		$this->assertFalse( in_string( 'Bar', 'foobar' ), 'Case-sensitive by default' );
-		$this->assertTrue( in_string( 'Foo', 'foobar', true ), 'Case-insensitive when asked' );
-	
-	}
-
 	/**
 	 * test @see wfShorthandToInteger()
 	 * @dataProvider provideShorthand
@@ -496,6 +487,7 @@ class GlobalTest extends MediaWikiTestCase {
 	 * @param String $expectedText: Text after merge has been completed
 	 *
 	 * @dataProvider provideMerge()
+	 * @group medium
 	 */
 	public function testMerge( $old, $mine, $yours, $expectedMergeResult, $expectedText ) {
 		$this->checkHasDiff3();
@@ -685,4 +677,3 @@ class GlobalTest extends MediaWikiTestCase {
 	}
 	/* TODO: many more! */
 }
-

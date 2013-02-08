@@ -58,7 +58,7 @@ abstract class ApiFormatBase extends ApiBase {
 	 * This method is not called if getIsHtml() returns true.
 	 * @return string
 	 */
-	public abstract function getMimeType();
+	abstract public function getMimeType();
 
 	/**
 	 * Whether this formatter needs raw data such as _element tags
@@ -308,10 +308,6 @@ See the <a href='https://www.mediawiki.org/wiki/API'>complete documentation</a>,
 	public function getDescription() {
 		return $this->getIsHtml() ? ' (pretty-print in HTML)' : '';
 	}
-
-	public static function getBaseVersion() {
-		return __CLASS__ . ': $Id$';
-	}
 }
 
 /**
@@ -380,9 +376,5 @@ class ApiFormatFeedWrapper extends ApiFormatBase {
 			// Error has occurred, print something useful
 			ApiBase::dieDebug( __METHOD__, 'Invalid feed class/item' );
 		}
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

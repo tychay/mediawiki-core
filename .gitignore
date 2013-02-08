@@ -1,6 +1,9 @@
 # Repository management
 .svn
 
+# git-deploy status file:
+/.deploy
+
 # Editors
 *.kate-swp
 *~
@@ -33,6 +36,11 @@ StartProfiler.php
 
 # Building & testing
 node_modules/
+
+# Composer
+/vendor
+/composer.lock
+/composer.json
 
 # Operating systems
 ## Mac OS X

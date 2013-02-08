@@ -603,9 +603,9 @@ L\'administrador que l\'ha bloquejat ha donat aquesta explicació: "$3".',
 
 Podeu continuar utilitzant {{SITENAME}} de forma anònima, o podeu <span class='plainlinks'>[$1 iniciar una sessió una altra vegada]</span> amb el mateix o un altre usuari.
 Tingueu en compte que algunes pàgines poden continuar mostrant-se com si encara estiguéssiu en una sessió, fins que buideu la memòria cau del vostre navegador.",
-'welcomeuser' => 'Benvingut,  $1 !',
+'welcomeuser' => 'Benvingut, $1!',
 'welcomecreation-msg' => 'El vostre compte ha estat creat.
-No oblideu de canviar les vostres [[Special:Preferences|{{SITENAME}} preferències]].',
+No oblideu de canviar les vostres [[Special:Preferences|preferències de {{SITENAME}}]].',
 'yourname' => "Nom d'usuari",
 'yourpassword' => 'Contrasenya',
 'yourpasswordagain' => 'Escriviu una altra vegada la contrasenya',
@@ -752,6 +752,7 @@ Contrasenya temporal: $2",
 'changeemail-oldemail' => 'Adreça de correu electrònic actual:',
 'changeemail-newemail' => 'Nova adreça de correu electrònic:',
 'changeemail-none' => '(cap)',
+'changeemail-password' => 'La vostra contrasenya a {{SITENAME}}:',
 'changeemail-submit' => 'Canvia de correu electrònic',
 'changeemail-cancel' => 'Cancel·la',
 
@@ -764,7 +765,7 @@ Contrasenya temporal: $2",
 'link_tip' => 'Enllaç intern',
 'extlink_sample' => "http://www.example.com títol de l'enllaç",
 'extlink_tip' => 'Enllaç extern (recordeu el prefix http://)',
-'headline_sample' => "Text per a l'encapçalament",
+'headline_sample' => "Text de l'encapçalament",
 'headline_tip' => 'Encapçalat de secció de 2n nivell',
 'nowiki_sample' => 'Inseriu ací text sense format',
 'nowiki_tip' => 'Ignora el format wiki',
@@ -929,7 +930,6 @@ A continuació es mostra la darrera entrada del registre com a referència:",
 'template-semiprotected' => '(semiprotegida)',
 'hiddencategories' => 'Aquesta pàgina forma part de {{PLURAL:$1|la següent categoria oculta|les següents categories ocultes}}:',
 'edittools' => "<!-- Es mostrarà als formularis d'edició i de càrrega el text que hi haja després d'aquesta línia. -->",
-'nocreatetitle' => "S'ha limitat la creació de pàgines",
 'nocreatetext' => "El projecte {{SITENAME}} ha restringit la possibilitat de crear noves pàgines.
 Podeu modificar les planes ja existents o bé [[Special:UserLogin|entrar en un compte d'usuari]].",
 'nocreate-loggedin' => 'No teniu permisos per a crear pàgines noves.',
@@ -1326,9 +1326,9 @@ No es podrà desfer el canvi.',
 'prefs-emailconfirm-label' => 'Confirmació de correu electrònic:',
 'prefs-textboxsize' => "Mida de la caixa d'edició",
 'youremail' => 'Correu electrònic:',
-'username' => "Nom d'usuari:",
-'uid' => "Identificador d'usuari:",
-'prefs-memberingroups' => 'Membre dels {{PLURAL:$1|grup|grups}}:',
+'username' => "{{GENDER:$1|Nom d'usuari}}:",
+'uid' => "{{GENDER:$1|Usuari}} Identificador d'usuari:",
+'prefs-memberingroups' => '{{GENDER:$2|Membre}} {{PLURAL:$1|del grup|dels grups}}:',
 'prefs-registration' => 'Hora de registre:',
 'yourrealname' => 'Nom real *',
 'yourlanguage' => 'Idioma:',
@@ -1476,15 +1476,13 @@ Ha de tenir com a molt {{PLURAL:$1|un caràcter|$1 caràcters}}.',
 'right-sendemail' => 'Enviar missatges de correu electrònic a altres usuaris',
 'right-passwordreset' => 'Veure les soŀlicituds de restabliment de contrasenya per correu electrònic',
 
+# Special:Log/newusers
+'newuserlogpage' => "Registre de creació de l'usuari",
+'newuserlogpagetext' => 'Aquest és un registre de creació de nous usuaris.',
+
 # User rights log
 'rightslog' => "Registre dels permisos d'usuari",
 'rightslogtext' => "Aquest és un registre de canvis dels permisos d'usuari.",
-'rightslogentry' => 'ha modificat els drets de $1 del grup $2 a $3',
-'rightslogentry-autopromote' => 'ha estat promogut automàticament de $2 a $3',
-'logentry-rights-rights' => '$1 ha canviat la pertinença de grups per $3 de $4 a $5',
-'logentry-rights-rights-legacy' => '$1 ha canviat la pertinença de grups per $3',
-'logentry-rights-autopromote' => '$1 ha estat promogut automàticament de $4 a $5',
-'rightsnone' => '(cap)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'llegir aquesta pàgina',
@@ -2088,8 +2086,8 @@ Vegeu també [[Special:WantedCategories|les categories soŀlicitades]].",
 'linksearch-ns' => 'Espai de noms:',
 'linksearch-ok' => 'Cerca',
 'linksearch-text' => 'Es poden utilitzar caràcters comodí com "*.wikipedia.org".
-Necessita com a mínim un domini de primer nivell, per exemple "*.org".<br />
-Protocols admesos: <code>$1</code> (http:// per defecte si no se n\'especifica cap).',
+Es necessita com a mínim un domini de primer nivell, per exemple "*.org".<br />
+{{PLURAL:$2|Protocol admès|Protocols admesos}}: <code>$1</code> (http:// per defecte si no se n\'especifica cap).',
 'linksearch-line' => '$1 enllaçat a $2',
 'linksearch-error' => "Els caràcters comodí només poden aparèixer a l'inici de l'url.",
 
@@ -2107,10 +2105,6 @@ Protocols admesos: <code>$1</code> (http:// per defecte si no se n\'especifica c
 'activeusers-hidebots' => 'Amaga bots',
 'activeusers-hidesysops' => 'Amaga administradors',
 'activeusers-noresult' => "No s'han trobat usuaris.",
-
-# Special:Log/newusers
-'newuserlogpage' => "Registre de creació de l'usuari",
-'newuserlogpagetext' => 'Aquest és un registre de creació de nous usuaris.',
 
 # Special:ListGroupRights
 'listgrouprights' => "Drets dels grups d'usuaris",
@@ -2180,8 +2174,8 @@ L'adreça electrònica que vau indicar a [[Special:Preferences|les vostres prefe
 'watchnologintext' => "Heu d'[[Special:UserLogin|entrar]]
 per modificar el vostre llistat de seguiment.",
 'addwatch' => 'Afegeix a llista de seguiment',
-'addedwatchtext' => "S'ha afegit la pàgina «[[:$1]]» a la vostra [[Special:Watchlist|llista de seguiment]].
-S'hi mostraran els canvis futurs que tinguin lloc en aquesta pàgina i la corresponent discussió. A més la pàgina estarà ressaltada '''en negreta''' a la [[Special:RecentChanges|llista de canvis recents]] perquè pugueu adonar-vos dels canvis amb més facilitat.",
+'addedwatchtext' => 'La pàgina "[[:$1]]" ha estat afegida a la vostra [[Special:Watchlist|llista de seguiment]].
+S\'hi mostraran els canvis futurs que tinguin lloc en aquesta pàgina i la corresponent discussió.',
 'removewatch' => 'Treu de la llista de seguiment',
 'removedwatchtext' => "S'ha tret la pàgina «[[:$1]]» de la vostra [[Special:Watchlist|llista de seguiment]].",
 'watch' => 'Vigila',
@@ -2210,14 +2204,22 @@ S'hi mostraran els canvis futurs que tinguin lloc en aquesta pàgina i la corres
 'enotif_mailer' => 'Sistema de notificació per correl de {{SITENAME}}',
 'enotif_reset' => 'Marca totes les pàgines com a visitades',
 'enotif_impersonal_salutation' => 'usuari de la {{SITENAME}}',
+'enotif_subject_deleted' => 'La pàgina $1 de {{SITENAME}} ha estat suprimida per {{gender:$2|$2}}',
+'enotif_subject_created' => 'La pàgina $1 de {{SITENAME}} ha estat creada per {{gender:$2|$2}}',
+'enotif_subject_moved' => 'La pàgina $1 de {{SITENAME}} ha estat reanomenada per {{gender:$2|$2}}',
+'enotif_subject_restored' => 'La pàgina $1 de {{SITENAME}} ha estat restaurada per {{gender:$2|$2}}',
+'enotif_subject_changed' => 'La pàgina $1 de {{SITENAME}} ha estat canviada per {{gender:$2|$2}}',
+'enotif_body_intro_deleted' => 'La pàgina $1 de {{SITENAME}} ha estat suprimida el $PAGEEDITDATE per {{gender:$2|$2}}, vegeu $3 .',
+'enotif_body_intro_created' => 'La pàgina $1 de {{SITENAME}} ha estat creada el $PAGEEDITDATE per {{gender:$2|$2}}. Aneu a $3 per veure la revisió actual.',
+'enotif_body_intro_moved' => 'La pàgina $1 de {{SITENAME}} ha estat reanomenada el $PAGEEDITDATE per {{gender:$2|$2}}. Aneu a $3 per veure la revisió actual.',
+'enotif_body_intro_restored' => 'La pàgina $1 de {{SITENAME}} ha estat restaurada el $PAGEEDITDATE per {{gender:$2|$2}}. Aneu a $3 per veure la revisió actual.',
+'enotif_body_intro_changed' => 'La pàgina $1 de {{SITENAME}} ha estat canviada el $PAGEEDITDATE per {{gender:$2|$2}}. Aneu a $3 per veure la revisió actual.',
 'enotif_lastvisited' => "Vegeu $1 per a tots els canvis que s'han fet d'ença de la vostra darrera visita.",
 'enotif_lastdiff' => 'Consulteu $1 per a visualitzar aquest canvi.',
 'enotif_anon_editor' => 'usuari anònim $1',
-'enotif_body' => 'Benvolgut $WATCHINGUSERNAME,
+'enotif_body' => 'Benvolgut/uda $WATCHINGUSERNAME,
 
-La pàgina $PAGETITLE del projecte {{SITENAME}} ha estat $CHANGEDORCREATED el dia $PAGEEDITDATE per $PAGEEDITOR, vegeu la versió actual a $PAGETITLE_URL.
-
-$NEWPAGE
+$PAGEINTRO $NEWPAGE
 
 Resum de l\'editor: $PAGESUMMARY $PAGEMINOREDIT
 
@@ -2228,7 +2230,7 @@ wiki: $PAGEEDITOR_WIKI
 No rebreu més notificacions de futurs canvis si no visiteu la pàgina.
 També podeu canviar el mode de notificació de les pàgines que vigileu en la vostra llista de seguiment.
 
-			 El servei de notificacions del projecte {{SITENAME}}
+El servei de notificacions del projecte {{SITENAME}}
 
 --
 Per a canviar les opcions de notificació per correu electrònic aneu a
@@ -2242,6 +2244,8 @@ $UNWATCHURL
 
 Suggeriments i ajuda:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'creada',
+'changed' => 'modificada',
 
 # Delete
 'deletepage' => 'Elimina la pàgina',
@@ -2252,7 +2256,7 @@ Suggeriments i ajuda:
 'exblank' => 'la pàgina estava en blanc',
 'delete-confirm' => 'Elimina «$1»',
 'delete-legend' => 'Elimina',
-'historywarning' => "'''Avís:''' La pàgina que eliminareu té un historial amb aproximadament {{PLURAL:$1|una modificació|$1 modificacions}}:",
+'historywarning' => "'''Atenció:''' La pàgina que esteu a punt d'eliminar té un historial amb $1 {{PLURAL:$1|versió|versions}}, aproximadament:",
 'confirmdeletetext' => "Esteu a punt d'esborrar de forma permanent una pàgina o imatge i tot el seu historial de la base de dades.
 Confirmeu que realment ho voleu fer, que enteneu les
 conseqüències, i que el que esteu fent està d'acord amb la [[{{MediaWiki:Policy-url}}|política]] del projecte.",
@@ -2424,7 +2428,7 @@ $1",
 'blanknamespace' => '(Principal)',
 
 # Contributions
-'contributions' => "{{GENDER:$1|Contribucions de l'usuari}}",
+'contributions' => "Contribucions de {{GENDER:$1|l'usuari|la usuària}}",
 'contributions-title' => "Contribucions de l'usuari $1",
 'mycontris' => 'Contribucions',
 'contribsub2' => 'Per $1 ($2)',
@@ -2811,6 +2815,7 @@ Deseu-lo al vostre ordinador i carregueu-ne una còpia ací.",
 'import-error-interwiki' => "No s'importa la pàgina «$1» perquè el seu nom està reservat a l'enllaçament extern (interwiki).",
 'import-error-special' => "No s'importa la pàgina «$1» perquè el seu nom pertany a l'espai de noms especial que no permet pàgines.",
 'import-error-invalid' => "No s'importa la pàgina «$1» perquè el seu nom no és vàlid.",
+'import-error-unserialize' => 'La revisió $2 de la pàgina "$1" no pot ser desserialitzada. La revisió indica que utilitza el model de contingut $3 serialitzat com a $4.',
 'import-options-wrong' => '{{PLURAL:$2|Opció equivocada|Opcions equivocades}}: <nowiki>$1</nowiki>',
 'import-rootpage-invalid' => 'La pàgina arrel donada és un títol no vàlid.',
 'import-rootpage-nosubpage' => 'L\'espai de noms "$1" de la pàgina arrel no permet subpàgines.',
@@ -3025,6 +3030,7 @@ Si l'executeu, podeu comprometre la seguretat del vostre sistema.",
 'file-nohires' => 'No hi ha cap versió amb una resolució més gran.',
 'svg-long-desc' => 'fitxer SVG, nominalment $1 × $2 píxels, mida del fitxer: $3',
 'svg-long-desc-animated' => 'Fitxer SVG animat, nominalment $1 × $2 píxels, mida del fitxer: $3',
+'svg-long-error' => 'El fitxer SVG no és vàlid: $1',
 'show-big-image' => 'Imatge en màxima resolució',
 'show-big-image-preview' => "Mida d'aquesta previsualització: $1.",
 'show-big-image-other' => '{{PLURAL:$2|Altra resolució|Altres resolucions}}: $1.',
@@ -3813,7 +3819,10 @@ Les imatges es mostren en plena resolució; altres tipus de fitxer s'inicien dir
 'logentry-newusers-create' => "S'ha creat el compte d'usuari $1",
 'logentry-newusers-create2' => "$1 ha creat el compte d'usuari $3",
 'logentry-newusers-autocreate' => "El compte d'usuari $1 ha estat creat de manera automàtica",
-'newuserlog-byemail' => 'contrasenya enviada per correu electrònic',
+'logentry-rights-rights' => '$1 ha canviat la pertinença de grups per $3 de $4 a $5',
+'logentry-rights-rights-legacy' => '$1 ha canviat la pertinença de grups per $3',
+'logentry-rights-autopromote' => '$1 ha estat promogut automàticament de $4 a $5',
+'rightsnone' => '(cap)',
 
 # Feedback
 'feedback-bugornote' => "Si podeu descriure un problema tècnic en detall, [$1 informeu-ne].
@@ -3887,6 +3896,4 @@ Altrament, podeu fer servir un senzill formulari a continuació. El vostre comen
 'duration-centuries' => '$1 {{PLURAL:$1|segle|segles}}',
 'duration-millennia' => '$1 {{PLURAL:$1|mil·leni|mil·lenis}}',
 
-# Unknown messages
-'svg-long-error' => 'El fitxer SVG no és vàlid: $1',
 );

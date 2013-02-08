@@ -31,10 +31,6 @@
  */
 class ApiImport extends ApiBase {
 
-	public function __construct( $main, $action ) {
-		parent::__construct( $main, $action );
-	}
-
 	public function execute() {
 		$user = $this->getUser();
 		$params = $this->extractRequestParams();
@@ -150,7 +146,7 @@ class ApiImport extends ApiBase {
 
 	public function getDescription() {
 		return array(
-			'Import a page from another wiki, or an XML file.' ,
+			'Import a page from another wiki, or an XML file.',
 			'Note that the HTTP POST must be done as a file upload (i.e. using multipart/form-data) when',
 			'sending a file for the "xml" parameter.'
 		);
@@ -185,10 +181,6 @@ class ApiImport extends ApiBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:Import';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }
 

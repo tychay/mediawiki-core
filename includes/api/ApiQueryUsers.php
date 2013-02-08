@@ -124,7 +124,7 @@ class ApiQueryUsers extends ApiQueryBase {
 				$this->addWhereFld( 'user_name', $goodNames );
 				$this->addTables( 'user_groups' );
 				$this->addJoinConds( array( 'user_groups' => array( 'INNER JOIN', 'ug_user=user_id' ) ) );
-				$this->addFields( array('user_name', 'ug_group') );
+				$this->addFields( array( 'user_name', 'ug_group' ) );
 				$userGroupsRes = $this->select( __METHOD__ );
 
 				foreach( $userGroupsRes as $row ) {
@@ -161,7 +161,7 @@ class ApiQueryUsers extends ApiQueryBase {
 				}
 
 				if ( isset( $this->prop['implicitgroups'] ) ) {
-					$data[$name]['implicitgroups'] =  $user->getAutomaticGroups();
+					$data[$name]['implicitgroups'] = $user->getAutomaticGroups();
 				}
 
 				if ( isset( $this->prop['rights'] ) ) {
@@ -250,7 +250,7 @@ class ApiQueryUsers extends ApiQueryBase {
 			}
 			$done[] = $u;
 		}
-		return $result->setIndexedTagName_internal( array( 'query', $this->getModuleName() ), 'user' );
+		$result->setIndexedTagName_internal( array( 'query', $this->getModuleName() ), 'user' );
 	}
 
 	/**
@@ -395,9 +395,5 @@ class ApiQueryUsers extends ApiQueryBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:Users';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

@@ -252,9 +252,9 @@ class Message {
 	public static function newFallbackSequence( /*...*/ ) {
 		$keys = func_get_args();
 		if ( func_num_args() == 1 ) {
-			if ( is_array($keys[0]) ) {
+			if ( is_array( $keys[0] ) ) {
 				// Allow an array to be passed as the first argument instead
-				$keys = array_values($keys[0]);
+				$keys = array_values( $keys[0] );
 			} else {
 				// Optimize a single string to not need special fallback handling
 				$keys = $keys[0];
@@ -416,7 +416,7 @@ class Message {
 	 */
 	public function content() {
 		if ( !$this->content ) {
-			$this->content = new MessageContent( $this->key );
+			$this->content = new MessageContent( $this );
 		}
 
 		return $this->content;
@@ -431,7 +431,7 @@ class Message {
 		$string = $this->fetchMessage();
 
 		if ( $string === false ) {
-			$key =  htmlspecialchars( is_array( $this->key ) ? $this->key[0] : $this->key );
+			$key = htmlspecialchars( is_array( $this->key ) ? $this->key[0] : $this->key );
 			if ( $this->format === 'plain' ) {
 				return '<' . $key . '>';
 			}
@@ -457,11 +457,11 @@ class Message {
 			if( preg_match( '/^<p>(.*)\n?<\/p>\n?$/sU', $string, $m ) ) {
 				$string = $m[1];
 			}
-		} elseif( $this->format === 'block-parse' ){
+		} elseif( $this->format === 'block-parse' ) {
 			$string = $this->parseText( $string );
-		} elseif( $this->format === 'text' ){
+		} elseif( $this->format === 'text' ) {
 			$string = $this->transformText( $string );
-		} elseif( $this->format === 'escaped' ){
+		} elseif( $this->format === 'escaped' ) {
 			$string = $this->transformText( $string );
 			$string = htmlspecialchars( $string, ENT_QUOTES, 'UTF-8', false );
 		}
@@ -474,13 +474,30 @@ class Message {
 
 	/**
 	 * Magic method implementation of the above (for PHP >= 5.2.0), so we can do, eg:
-	 *     $foo = Message::get($key);
+	 *     $foo = Message::get( $key );
 	 *     $string = "<abbr>$foo</abbr>";
 	 * @since 1.18
 	 * @return String
 	 */
 	public function __toString() {
-		return $this->toString();
+		// PHP doesn't allow __toString to throw exceptions and will
+		// trigger a fatal error if it does. So, catch any exceptions.
+
+		try {
+			return $this->toString();
+		} catch ( Exception $ex ) {
+			try {
+				trigger_error( "Exception caught in " . __METHOD__ . " (message " . $this->key . "): "
+					. $ex, E_USER_WARNING );
+			} catch ( Exception $ex ) {
+				// Doh! Cause a fatal error after all?
+			}
+
+			if ( $this->format === 'plain' ) {
+				return '<' . $this->key . '>';
+			}
+			return '&lt;' . $this->key . '&gt;';
+		}
 	}
 
 	/**
@@ -673,4 +690,46 @@ class Message {
 		return $this->message;
 	}
 
+}
+
+/**
+ * Variant of the Message class.
+ *
+ * Rather than treating the message key as a lookup
+ * value (which is passed to the MessageCache and
+ * translated as necessary), a RawMessage key is
+ * treated as the actual message.
+ *
+ * All other functionality (parsing, escaping, etc.)
+ * is preserved.
+ *
+ * @since 1.21
+ */
+class RawMessage extends Message {
+	/**
+	 * Call the parent constructor, then store the key as
+	 * the message.
+	 *
+	 * @param $key Message to use
+	 * @param $params Parameters for the message
+	 * @see Message::__construct
+	 */
+	public function __construct( $key, $params = array() ) {
+		parent::__construct( $key, $params );
+		// The key is the message.
+		$this->message = $key;
+	}
+
+	/**
+	 * Fetch the message (in this case, the key).
+	 *
+	 * @return string
+	 */
+	public function fetchMessage() {
+		// Just in case the message is unset somewhere.
+		if( !isset( $this->message ) ) {
+			$this->message = $this->key;
+		}
+		return $this->message;
+	}
 }

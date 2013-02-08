@@ -61,6 +61,7 @@
  * @author Tischbeinahe
  * @author UV
  * @author Umherirrender
+ * @author Vogone
  * @author W (aka Wuzur)
  * @author Wikifan
  * @author Wikinaut
@@ -192,6 +193,7 @@ $specialPageAliases = array(
 	'Userlogin'                 => array( 'Anmelden' ),
 	'Userlogout'                => array( 'Abmelden' ),
 	'Userrights'                => array( 'Benutzerrechte' ),
+	'Version'                   => array( 'Versionsinformationen' ),
 	'Wantedcategories'          => array( 'Gewünschte_Kategorien' ),
 	'Wantedfiles'               => array( 'Gewünschte_Dateien', 'Fehlende_Dateien' ),
 	'Wantedpages'               => array( 'Gewünschte_Seiten' ),
@@ -540,6 +542,7 @@ $messages = array(
 'newwindow' => '(wird in einem neuen Fenster geöffnet)',
 'cancel' => 'Abbrechen',
 'moredotdotdot' => 'Mehr …',
+'morenotlisted' => 'Weitere, nicht aufgeführte …',
 'mypage' => 'Eigene Seite',
 'mytalk' => 'Diskussion',
 'anontalk' => 'Diskussionsseite dieser IP',
@@ -778,7 +781,7 @@ Die Daten werden bis auf Weiteres nicht erneuert.',
 Funktion: $1<br />
 Abfrage: $2',
 'viewsource' => 'Quelltext anzeigen',
-'viewsource-title' => 'Quelltext von Seite $1 ansehen',
+'viewsource-title' => 'Quelltext der Seite $1',
 'actionthrottled' => 'Aktionsanzahl limitiert',
 'actionthrottledtext' => 'Im Rahmen einer Anti-Spam-Maßnahme kann diese Aktion in einem kurzen Zeitabstand nur begrenzt oft ausgeführt werden. Diese Grenze hast du überschritten.
 Bitte versuche es in ein paar Minuten erneut.',
@@ -842,7 +845,7 @@ Vergiss nicht, deine [[Special:Preferences|{{SITENAME}}-Einstellungen]] zu ände
 'gotaccount' => "Du hast bereits ein Benutzerkonto? '''$1'''.",
 'gotaccountlink' => 'Anmelden',
 'userlogin-resetlink' => 'Die Anmeldedaten vergessen?',
-'createaccountmail' => 'Benutzerkonto anlegen (mit Passwortzusendung)',
+'createaccountmail' => 'Ein temporäres Zufallspasswort verwenden und an die unten angegebene E-Mail-Adresse versenden',
 'createaccountreason' => 'Grund:',
 'badretype' => 'Die beiden Passwörter stimmen nicht überein.',
 'userexists' => 'Dieser Benutzername ist schon vergeben.
@@ -912,6 +915,7 @@ Bitte warte, bevor du es erneut probierst.',
 # E-mail sending
 'php-mail-error-unknown' => 'Unbekannter Fehler mit der Funktion mail() von PHP',
 'user-mail-no-addy' => 'Versuchte, eine E-Mail ohne Angabe einer E-Mail-Adresse zu versenden.',
+'user-mail-no-body' => 'Es wurde versucht, eine E-Mail mit einem leeren oder zu kurzen Textkörper zu versenden.',
 
 # Change password dialog
 'resetpass' => 'Passwort ändern',
@@ -968,6 +972,7 @@ Temporäres Passwort: $2',
 'changeemail-oldemail' => 'Aktuelle E-Mail-Adresse:',
 'changeemail-newemail' => 'Neue E-Mail-Adresse:',
 'changeemail-none' => '(keine)',
+'changeemail-password' => 'Dein {{SITENAME}}-Passwort:',
 'changeemail-submit' => 'E-Mail-Adresse ändern',
 'changeemail-cancel' => 'Abbrechen',
 
@@ -1146,7 +1151,6 @@ Zur Information folgt der aktuelle Logbucheintrag:",
 'template-semiprotected' => '(schreibgeschützt für unangemeldete und neue Benutzer)',
 'hiddencategories' => 'Diese Seite ist Mitglied von {{PLURAL:$1|1 versteckter Kategorie|$1 versteckten Kategorien}}:',
 'edittools' => '<!-- Dieser Text wird unter dem „Bearbeiten“-Formular sowie dem „Hochladen“-Formular angezeigt. -->',
-'nocreatetitle' => 'Die Erstellung neuer Seiten ist eingeschränkt.',
 'nocreatetext' => 'Auf {{SITENAME}} wurde das Erstellen neuer Seiten eingeschränkt. Du kannst bestehende Seiten ändern oder dich [[Special:UserLogin|anmelden]].',
 'nocreate-loggedin' => 'Du hast nicht die erforderliche Berechtigung, um neue Seiten erstellen zu können.',
 'sectioneditnotsupported-title' => 'Die Bearbeitung von Abschnitten wird nicht unterstützt',
@@ -1537,9 +1541,9 @@ Dies kann nicht mehr rückgängig gemacht werden.',
 'prefs-emailconfirm-label' => 'E-Mail-Bestätigung:',
 'prefs-textboxsize' => 'Größe des Bearbeitungsfensters',
 'youremail' => 'E-Mail-Adresse:',
-'username' => 'Benutzername:',
-'uid' => 'Benutzerkennung:',
-'prefs-memberingroups' => 'Mitglied der {{PLURAL:$1|Benutzergruppe|Benutzergruppen}}:',
+'username' => '{{GENDER:$1|Benutzername}}:',
+'uid' => '{{GENDER:$1|Benutzerkennung}}:',
+'prefs-memberingroups' => '{{GENDER:$2|Mitglied}} der {{PLURAL:$1|Benutzergruppe|Benutzergruppen}}:',
 'prefs-memberingroups-type' => '$2',
 'prefs-registration' => 'Anmeldezeitpunkt:',
 'prefs-registration-date-time' => '$2, $3 Uhr',
@@ -1689,15 +1693,13 @@ Dies kann nicht mehr rückgängig gemacht werden.',
 'right-sendemail' => 'E-Mails an andere Benutzer senden',
 'right-passwordreset' => 'Passwort eines Benutzers zurücksetzen und die dazu verschickte E-Mail einsehen',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Neuanmeldungs-Logbuch',
+'newuserlogpagetext' => 'Dies ist ein Logbuch der neu erstellten Benutzerkonten.',
+
 # User rights log
 'rightslog' => 'Rechte-Logbuch',
 'rightslogtext' => 'Dies ist das Logbuch der Änderungen der Benutzerrechte.',
-'rightslogentry' => 'änderte die Benutzerrechte für „$1“ von „$2“ zu „$3“',
-'rightslogentry-autopromote' => 'wurde automatisch von „$2“ zu „$3“ zugeordnet',
-'logentry-rights-rights' => '$1 änderte die Gruppenzugehörigkeit für $3 von $4 zu $5',
-'logentry-rights-rights-legacy' => '$1 änderte die Gruppenzugehörigkeit für $3',
-'logentry-rights-autopromote' => '$1 wurde automatisch von $4 zu $5 zugeordnet',
-'rightsnone' => '(–)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'die Seite zu lesen',
@@ -1983,7 +1985,7 @@ Sie kann daher keiner ordnungsgemäßen Sicherheitsüberprüfung unterzogen werd
 
 # Special:UploadStash
 'uploadstash' => 'Vorabspeicherung beim Hochladen',
-'uploadstash-summary' => 'Diese Seite ermöglicht den Zugriff auf Dateien, die hochgeladen wurden, bzw. gerade hochgeladen werden, aber noch nicht auf dem Wiki publiziert wurden. Diese Dateien sind, der hochladende Benutzer ausgenommen, noch nicht öffentlich einsehbar.',
+'uploadstash-summary' => 'Diese Seite ermöglicht den Zugriff auf Dateien, die hochgeladen wurden, bzw. gerade hochgeladen werden, aber noch nicht auf dem Wiki publiziert wurden. Die Dateien sind ausschließlich für den hochladenden Benutzer einsehbar.',
 'uploadstash-clear' => 'Die vorab gespeicherten Dateien entfernen',
 'uploadstash-nofiles' => 'Es sind keine vorab gespeicherten Dateien vorhanden.',
 'uploadstash-badtoken' => 'Das Entfernen der vorab gespeicherten Dateien war erfolglos, vielleicht weil deine Sitzungsdaten abgelaufen sind. Bitte versuche es erneut.',
@@ -2321,7 +2323,7 @@ Siehe auch die Liste der [[Special:WantedCategories|gewünschten Kategorien]].',
 'linksearch-pat' => 'Suchmuster:',
 'linksearch-ns' => 'Namensraum:',
 'linksearch-ok' => 'Suchen',
-'linksearch-text' => 'Diese Spezialseite ermöglicht die Suche nach Seiten, in denen bestimmte Weblinks enthalten sind. Dabei können Platzhalter wie beispielsweise <code>*.beispiel.de</code> benutzt werden. Es muss mindestens eine Top-Level-Domain, z. B. „*.org“. angegeben werden. <br />Unterstützte Protokolle: <code>$1</code> (Standard ist http, falls kein Protokoll angegeben ist.)',
+'linksearch-text' => 'Diese Spezialseite ermöglicht die Suche nach Seiten, in denen bestimmte Weblinks enthalten sind. Dabei können Platzhalter wie beispielsweise <code>*.beispiel.de</code> benutzt werden. Es muss mindestens eine Top-Level-Domain, z. B. „*.org“. angegeben werden. <br />{{PLURAL:$2|Unterstütztes Protokoll|Unterstützte Protokolle}}: <code>$1</code> (Standard ist http, falls kein Protokoll angegeben ist.)',
 'linksearch-line' => '$1 ist verlinkt von $2',
 'linksearch-error' => 'Wildcards können nur am Anfang der URL verwendet werden.',
 
@@ -2334,15 +2336,11 @@ Siehe auch die Liste der [[Special:WantedCategories|gewünschten Kategorien]].',
 # Special:ActiveUsers
 'activeusers' => 'Aktive Benutzer',
 'activeusers-intro' => 'Dies ist eine Liste von Benutzern, die innerhalb {{PLURAL:$1|des letzten Tages|der letzten $1 Tage}} Aktivitäten aufwiesen.',
-'activeusers-count' => '$1 {{PLURAL:$1|Bearbeitung|Bearbeitungen}} in den {{PLURAL:$3|letzten 24 Stunden|vergangenen $3 Tagen}}',
+'activeusers-count' => '$1 {{PLURAL:$1|Aktion|Aktionen}} in den {{PLURAL:$3|letzten 24 Stunden|vergangenen $3 Tagen}}',
 'activeusers-from' => 'Zeige Benutzer ab:',
 'activeusers-hidebots' => 'Bots ausblenden',
 'activeusers-hidesysops' => 'Administratoren ausblenden',
 'activeusers-noresult' => 'Keine Benutzer gefunden.',
-
-# Special:Log/newusers
-'newuserlogpage' => 'Neuanmeldungs-Logbuch',
-'newuserlogpagetext' => 'Dies ist ein Logbuch der neu erstellten Benutzerkonten.',
 
 # Special:ListGroupRights
 'listgrouprights' => 'Benutzergruppenrechte',
@@ -2411,7 +2409,7 @@ Als Absender wird die E-Mail-Adresse aus deinen [[Special:Preferences|Einstellun
 'watchnologintext' => 'Du musst [[Special:UserLogin|angemeldet]] sein, um deine Beobachtungsliste bearbeiten zu können.',
 'addwatch' => 'Zur Beobachtungsliste hinzufügen',
 'addedwatchtext' => 'Die Seite „[[:$1]]“ wurde zu deiner [[Special:Watchlist|Beobachtungsliste]] hinzugefügt.
-Spätere Änderungen an dieser Seite und der zugehörigen Diskussionsseite werden dort gelistet und die Seite wird in der [[Special:RecentChanges|Liste der letzten Änderungen]] in Fettschrift angezeigt.',
+Spätere Änderungen an dieser Seite und der zugehörigen Diskussionsseite werden dort gelistet.',
 'removewatch' => 'Von der Beobachtungsliste entfernen',
 'removedwatchtext' => 'Die Seite „[[:$1]]“ wurde von deiner [[Special:Watchlist|Beobachtungsliste]] entfernt.',
 'watch' => 'Beobachten',
@@ -2445,7 +2443,7 @@ Spätere Änderungen an dieser Seite und der zugehörigen Diskussionsseite werde
 'enotif_subject_moved' => '{{SITENAME}}-Seite $1 wurde von {{GENDER:$2|$2}} verschoben',
 'enotif_subject_restored' => '{{SITENAME}}-Seite $1 wurde von {{GENDER:$2|$2}} wiederhergestellt',
 'enotif_subject_changed' => '{{SITENAME}}-Seite $1 wurde von {{GENDER:$2|$2}} geändert',
-'enotif_body_intro_deleted' => 'Die {{SITENAME}}-Seite $1 wurde am $PAGEEDITDATE von {{GENDER:$2|$2}} gelöscht. Siehe $3 für deren aktuelle Version.',
+'enotif_body_intro_deleted' => 'Die {{SITENAME}}-Seite $1 wurde am $PAGEEDITDATE von {{GENDER:$2|$2}} gelöscht. Siehe $3.',
 'enotif_body_intro_created' => 'Die {{SITENAME}}-Seite $1 wurde am $PAGEEDITDATE von {{GENDER:$2|$2}} erstellt. Siehe $3 für deren aktuelle Version.',
 'enotif_body_intro_moved' => 'Die {{SITENAME}}-Seite $1 wurde am $PAGEEDITDATE von {{GENDER:$2|$2}} verschoben. Siehe $3 für deren aktuelle Version.',
 'enotif_body_intro_restored' => 'Die {{SITENAME}}-Seite $1 wurde am $PAGEEDITDATE von {{GENDER:$2|$2}} wiederhergestellt. Siehe $3 für deren aktuelle Version.',
@@ -2475,6 +2473,8 @@ Um die Einstellungen deiner Beobachtungsliste anzupassen, besuche {{canonicalurl
 Um die Seite von deiner Beobachtungsliste herunterzunehmen, besuche $UNWATCHURL
 
 Rückmeldungen und weitere Hilfe: {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'erstellt',
+'changed' => 'geändert',
 
 # Delete
 'deletepage' => 'Seite löschen',
@@ -2540,6 +2540,8 @@ Siehe die [[Special:ProtectedPages|Liste der geschützten Seiten]] für alle akt
 'prot_1movedto2' => 'hat „[[$1]]“ nach „[[$2]]“ verschoben',
 'protect-badnamespace-title' => 'Nicht-schützbarer Namensraum',
 'protect-badnamespace-text' => 'Seiten dieses Namensraums können nicht geschützt werden.',
+'protect-norestrictiontypes-text' => 'Diese Seite kann nicht geschützt werden, da keine Beschränkungstypen verfügbar sind.',
+'protect-norestrictiontypes-title' => 'Nicht schützbare Seite',
 'protect-legend' => 'Seitenschutzstatus ändern',
 'protectcomment' => 'Grund:',
 'protectexpiry' => 'Sperrdauer:',
@@ -2552,9 +2554,9 @@ Siehe die [[Special:ProtectedPages|Liste der geschützten Seiten]] für alle akt
 'protect-locked-access' => "Dein Benutzerkonto verfügt nicht über die notwendigen Rechte zur Änderung des Seitenschutzes. Hier sind die aktuellen Seitenschutzeinstellungen der Seite '''„$1“:'''",
 'protect-cascadeon' => 'Diese Seite ist gegenwärtig Teil einer Kaskadensperre. Sie ist in die {{PLURAL:$1|folgende Seite|folgenden Seiten}} eingebunden, welche durch die Kaskadensperroption geschützt {{PLURAL:$1|ist|sind}}. Der Seitenschutzstatus dieser Seite kann geändert werden, dies hat jedoch keinen Einfluss auf die Kaskadensperre:',
 'protect-default' => 'Alle Benutzer',
-'protect-fallback' => 'Es wird die „$1“-Berechtigung benötigt.',
-'protect-level-autoconfirmed' => 'Sperrung für neue und nicht registrierte Benutzer',
-'protect-level-sysop' => 'Nur Administratoren',
+'protect-fallback' => 'Nur Benutzern mit der „$1“-Berechtigung erlauben.',
+'protect-level-autoconfirmed' => 'Nur automatisch bestätigten Benutzern erlauben',
+'protect-level-sysop' => 'Nur Administratoren erlauben',
 'protect-summary-cascade' => 'kaskadierend',
 'protect-expiring' => 'bis $2, $3 Uhr (UTC)',
 'protect-expiring-local' => 'bis $1',
@@ -2846,22 +2848,22 @@ Siehe die [[Special:BlockList|Liste der gesperrten IP-Adressen und Benutzernamen
 'movepagetext' => "Mit untenstehendem Formular kannst du eine Seite umbenennen, indem du sie mitsamt allen Versionen auf einen neuen Titel verschiebst.
 Der alte Titel wird danach zum neuen weiterleiten.
 Du kannst Weiterleitungen, die auf den Originaltitel verlinken, automatisch korrigieren lassen.
-Stelle sicher, dass du im Anschluss alle [[Special:DoubleRedirects|doppelten]] oder [[Special:BrokenRedirects|kaputten Weiterleitungen]] überprüfst.
+Stelle sicher, dass du im Anschluss alle [[Special:DoubleRedirects|doppelten]] oder [[Special:BrokenRedirects|defekten Weiterleitungen]] überprüfst.
 Du bist dafür verantwortlich, dass Links weiterhin auf das korrekte Ziel verweisen.
 
-Die Seite wird '''nicht''' verschoben, sofern es bereits eine Seite mit dem vorgesehenen Titel gibt, es sei denn, diese ist leer oder eine Weiterleitung ohne Versionsgeschichte.
-Dies bedeutet, dass du die Umbenennung rückgängig machen kannst, sofern du einen Fehler gemacht hast. Du kannst hingegen keine Seite überschreiben.
+Die Seite wird '''nicht''' verschoben, sofern es bereits eine Seite mit dem vorgesehenen Titel gibt, es sei denn, diese eine Weiterleitung ohne Versionsgeschichte.
+Dies bedeutet, dass du die Umbenennung rückgängig machen kannst, sofern du einen Fehler gemacht hast. Du kannst hingegen keine existierende Seite überschreiben.
 
 '''Warnung!'''
 Die Verschiebung kann weitreichende und unerwartete Folgen für häufig besuchte Seiten haben.
 Du solltest daher die Konsequenzen verstanden haben, bevor du jetzt fortfährst.",
 'movepagetext-noredirectfixer' => "Mit untenstehendem Formular kannst du eine Seite umbenennen, indem du sie mitsamt allen Versionen auf einen neuen Titel verschiebst.
 Der alte Titel wird danach zum neuen weiterleiten.
-Stelle sicher, dass du im Anschluss alle [[Special:DoubleRedirects|doppelten]] oder [[Special:BrokenRedirects|kaputten Weiterleitungen]] überprüfst.
+Stelle sicher, dass du im Anschluss alle [[Special:DoubleRedirects|doppelten]] oder [[Special:BrokenRedirects|defekten Weiterleitungen]] überprüfst.
 Du bist dafür verantwortlich, dass Links weiterhin auf das korrekte Ziel verweisen.
 
-Die Seite wird '''nicht''' verschoben, sofern es bereits eine Seite mit dem vorgesehenen Titel gibt, es sei denn, diese ist leer oder eine Weiterleitung ohne Versionsgeschichte.
-Dies bedeutet, dass du die Umbenennung rückgängig machen kannst, sofern du einen Fehler gemacht hast. Du kannst hingegen keine Seite überschreiben.
+Die Seite wird '''nicht''' verschoben, sofern es bereits eine Seite mit dem vorgesehenen Titel gibt, es sei denn, diese ist eine Weiterleitung ohne Versionsgeschichte.
+Dies bedeutet, dass du die Umbenennung rückgängig machen kannst, sofern du einen Fehler gemacht hast. Du kannst hingegen keine existierende Seite überschreiben.
 
 '''Warnung!'''
 Die Verschiebung kann weitreichende und unerwartete Folgen für häufig besuchte Seiten haben.
@@ -3024,7 +3026,7 @@ Diese auf dem lokalen Rechner speichern und danach hier hochladen.',
 'import-noarticle' => 'Es wurde keine zu importierende Seite angegeben!',
 'import-nonewrevisions' => 'Alle Versionen wurden bereits zu einem früheren Zeitpunkt importiert.',
 'xml-error-string' => '$1 Zeile $2, Spalte $3, (Byte $4): $5',
-'import-upload' => 'XML-Daten importieren',
+'import-upload' => 'XML-Dateien importieren',
 'import-token-mismatch' => 'Verlust der Sessiondaten. Bitte versuche es erneut.',
 'import-invalid-interwiki' => 'Aus dem angegebenen Wiki ist kein Import möglich.',
 'import-error-edit' => 'Die Seite „$1“ wurde nicht importiert, da du nicht berechtigt bist, sie zu bearbeiten.',
@@ -3032,6 +3034,7 @@ Diese auf dem lokalen Rechner speichern und danach hier hochladen.',
 'import-error-interwiki' => 'Die Seite „$1“ wurde nicht importiert, da deren Name für externe Links (Interwiki) reserviert ist.',
 'import-error-special' => 'Die Seite „$1“ wurde nicht importiert, da sie zu einem besonderen Namensraum gehört, in dem keine Seiten möglich sind.',
 'import-error-invalid' => 'Seite „$1“ wurde nicht importiert, da deren Name ungültig ist.',
+'import-error-unserialize' => 'Die Version $2 der Seite „$1“ konnte nicht deserialisiert werden. Die Version wurde zur Verwendung des Inhaltsmodells $3 gemeldet, das als $4 serialisiert ist.',
 'import-options-wrong' => 'Falsche {{PLURAL:$2|Option|Optionen}}: <nowiki>$1</nowiki>',
 'import-rootpage-invalid' => 'Der angegebene Stammseitenname ist ungültig.',
 'import-rootpage-nosubpage' => 'Im Namensraum „$1“ der Stammseite sind keine Unterseiten erlaubt.',
@@ -3196,8 +3199,8 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 'pageinfo-article-id' => 'Seitenkennnummer',
 'pageinfo-language' => 'Seiteninhaltssprache',
 'pageinfo-robot-policy' => 'Suchmaschinenstatus',
-'pageinfo-robot-index' => 'Indizierbar',
-'pageinfo-robot-noindex' => 'Nicht indizierbar',
+'pageinfo-robot-index' => 'Indexierbar',
+'pageinfo-robot-noindex' => 'Nicht indexierbar',
 'pageinfo-views' => 'Anzahl der Seitenaufrufe',
 'pageinfo-watchers' => 'Anzahl der Beobachter der Seite',
 'pageinfo-redirects-name' => 'Weiterleitungen zu dieser Seite',
@@ -3215,6 +3218,7 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 'pageinfo-magic-words' => '{{PLURAL:$1|Magisches Wort|Magische Wörter}} ($1)',
 'pageinfo-hidden-categories' => 'Versteckte {{PLURAL:$1|Kategorie|Kategorien}} ($1)',
 'pageinfo-templates' => 'Eingebundene {{PLURAL:$1|Vorlage|Vorlagen}} ($1)',
+'pageinfo-transclusions' => 'Eingebunden in {{PLURAL:$1|1 Seite|$1 Seiten}}',
 'pageinfo-toolboxlink' => 'Seiteninformationen',
 'pageinfo-redirectsto' => 'Weiterleitungen nach',
 'pageinfo-redirectsto-info' => 'Information',
@@ -3223,6 +3227,10 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 'pageinfo-protect-cascading' => 'Seiten mit Kaskadenschutz von hier',
 'pageinfo-protect-cascading-yes' => 'Ja',
 'pageinfo-protect-cascading-from' => 'Seiten mit Kaskadenschutz von',
+'pageinfo-category-info' => 'Kategorieinformationen',
+'pageinfo-category-pages' => 'Anzahl der Seiten',
+'pageinfo-category-subcats' => 'Anzahl der Unterkategorien',
+'pageinfo-category-files' => 'Anzahl der Dateien',
 
 # Skin names
 'skinname-standard' => 'Klassik',
@@ -3280,6 +3288,7 @@ Durch das Herunterladen und Öffnen der Datei kann dein Computer beschädigt wer
 'file-nohires' => 'Keine höhere Auflösung vorhanden.',
 'svg-long-desc' => 'SVG-Datei, Basisgröße: $1 × $2 Pixel, Dateigröße: $3',
 'svg-long-desc-animated' => 'Animierte SVG-Datei, Basisgröße $1 × $2 Pixel, Dateigröße: $3',
+'svg-long-error' => 'Ungültige SVG-Datei: $1',
 'show-big-image' => 'Volle Auflösung',
 'show-big-image-preview' => 'Größe dieser Vorschau: $1.',
 'show-big-image-other' => 'Weitere {{PLURAL:$2|Auflösung|Auflösungen}}: $1.',
@@ -3309,6 +3318,8 @@ Durch das Herunterladen und Öffnen der Datei kann dein Computer beschädigt wer
 'minutes' => '{{PLURAL:$1|$1 Minute|$1 Minuten}}',
 'hours' => '{{PLURAL:$1|einer Stunde|$1 Stunden}}',
 'days' => '{{PLURAL:$1|$1 Tag|$1 Tage}}',
+'months' => '{{PLURAL:$1|Ein Monat|$1 Monate}}',
+'years' => '{{PLURAL:$1|Ein Jahr|$1 Jahre}}',
 'ago' => 'vor $1',
 'just-now' => 'Gerade eben',
 
@@ -3924,6 +3935,7 @@ Du kannst auch die [[Special:EditWatchlist|Standardseite]] zum Bearbeiten benutz
 'version-variables' => 'Erweiterungen mit Variablen',
 'version-antispam' => 'Spamschutzerweiterungen',
 'version-skins' => 'Benutzeroberflächen',
+'version-api' => 'API-Erweiterungen',
 'version-other' => 'Andere Erweiterungen',
 'version-mediahandlers' => 'Mediennutzungserweiterungen',
 'version-hooks' => "Schnittstellen ''(Hooks)''",
@@ -3984,7 +3996,7 @@ Eine [{{SERVER}}{{SCRIPTPATH}}/COPYING Kopie der ''GNU General Public License'']
 'specialpages-group-highuse' => 'Häufig benutzte Seiten',
 'specialpages-group-pages' => 'Seitenlisten',
 'specialpages-group-pagetools' => 'Seitenwerkzeuge',
-'specialpages-group-wiki' => 'Systemdaten und Werkzeuge',
+'specialpages-group-wiki' => 'Daten und Werkzeuge',
 'specialpages-group-redirects' => 'Weiterleitende Spezialseiten',
 'specialpages-group-spam' => 'Spam-Werkzeuge',
 
@@ -4081,8 +4093,12 @@ Eine [{{SERVER}}{{SCRIPTPATH}}/COPYING Kopie der ''GNU General Public License'']
 'logentry-newusers-newusers' => 'Benutzerkonto $1 wurde erstellt',
 'logentry-newusers-create' => 'Benutzerkonto $1 wurde erstellt',
 'logentry-newusers-create2' => 'Benutzerkonto $3 wurde von $1 erstellt',
+'logentry-newusers-byemail' => 'Das Benutzerkonto $3 wurde von $1 erstellt und das Passwort wurde per E-Mail zugesandt',
 'logentry-newusers-autocreate' => 'Benutzerkonto $1 wurde automatisch erstellt',
-'newuserlog-byemail' => 'das Passwort wurde per E-Mail versandt',
+'logentry-rights-rights' => '$1 änderte die Gruppenzugehörigkeit für $3 von $4 zu $5',
+'logentry-rights-rights-legacy' => '$1 änderte die Gruppenzugehörigkeit für $3',
+'logentry-rights-autopromote' => '$1 wurde automatisch von $4 zu $5 zugeordnet',
+'rightsnone' => '(–)',
 
 # Feedback
 'feedback-bugornote' => 'Sofern du detailliert ein technisches Problem beschreiben möchtest, melde bitte [$1 einen Fehler].
@@ -4136,6 +4152,7 @@ Anderenfalls kannst du auch das untenstehende einfache Formular nutzen. Dein Kom
 'api-error-ok-but-empty' => 'Interner Fehler: Der Server reagiert nicht.',
 'api-error-overwrite' => 'Das Überschreiben einer vorhandenen Datei ist nicht erlaubt.',
 'api-error-stashfailed' => 'Interner Fehler: Der Server konnte keine temporäre Datei speichern.',
+'api-error-publishfailed' => 'Interner Fehler: Der Server konnte die temporäre Datei nicht veröffentlichen.',
 'api-error-timeout' => 'Der Server hat nicht innerhalb der erwarteten Zeit reagiert.',
 'api-error-unclassified' => 'Ein unbekannter Fehler ist aufgetreten.',
 'api-error-unknown-code' => 'Unbekannter Fehler: „$1“',
@@ -4156,6 +4173,4 @@ Anderenfalls kannst du auch das untenstehende einfache Formular nutzen. Dein Kom
 'duration-centuries' => '$1 {{PLURAL:$1|Jahrhundert|Jahrhunderte}}',
 'duration-millennia' => '$1 {{PLURAL:$1|Jahrtausend|Jahrtausende}}',
 
-# Unknown messages
-'svg-long-error' => 'Ungültige SVG-Datei: $1',
 );

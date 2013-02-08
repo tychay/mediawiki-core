@@ -1,6 +1,6 @@
 <?php
 
-class LinkerTest extends MediaWikiTestCase {
+class LinkerTest extends MediaWikiLangTestCase {
 
 	/**
 	 * @dataProvider provideCasesForUserLink
@@ -9,6 +9,7 @@ class LinkerTest extends MediaWikiTestCase {
 	function testUserLink( $expected, $userId, $userName, $altUserName = false, $msg='' ) {
 		$this->setMwGlobals( array(
 			'wgArticlePath' => '/wiki/$1',
+			'wgWellFormedXml' => true,
 	   	) );
 
 		$this->assertEquals( $expected,

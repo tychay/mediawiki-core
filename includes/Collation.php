@@ -43,6 +43,8 @@ abstract class Collation {
 		switch( $collationName ) {
 			case 'uppercase':
 				return new UppercaseCollation;
+			case 'uppercase-sv':
+				return new UppercaseSvCollation;
 			case 'identity':
 				return new IdentityCollation;
 			case 'uca-default':
@@ -118,6 +120,22 @@ class UppercaseCollation extends Collation {
 			$string = substr( $string, 1 );
 		}
 		return $this->lang->ucfirst( $this->lang->firstChar( $string ) );
+	}
+}
+
+/**
+ * Like UppercaseCollation but swaps Ä and Æ.
+ *
+ * This provides an ordering suitable for Swedish.
+ * @author Lejonel
+ */
+class UppercaseSvCollation extends UppercaseCollation {
+
+	/* Unicode code point order is ÄÅÆÖ, Swedish order is ÅÄÖ and Æ is often sorted as Ä.
+	 * Replacing Ä for Æ should give a better collation. */
+	function getSortKey( $string ) {
+		$uppercase = $this->lang->uc( $string );
+		return strtr( $uppercase, array( 'Ä' => 'Æ', 'Æ' => 'Ä' ) );
 	}
 }
 
@@ -374,5 +392,20 @@ class IcuCollation extends Collation {
 		}
 		return false;
 	}
-}
 
+	/**
+	 * Return the version of ICU library used by PHP's intl extension,
+	 * or false when the extension is not installed of the version
+	 * can't be determined.
+	 *
+	 * The constant INTL_ICU_VERSION this function refers to isn't really
+	 * documented. It is available since PHP 5.3.7 (see PHP bug 54561).
+	 * This function will return false on older PHPs.
+	 *
+	 * @since 1.21
+	 * @return string|false
+	 */
+	static function getICUVersion() {
+		return defined( 'INTL_ICU_VERSION' ) ? INTL_ICU_VERSION : false;
+	}
+}

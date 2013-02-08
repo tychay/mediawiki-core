@@ -50,19 +50,19 @@ if ( $wgLoadScript === false ) $wgLoadScript = "$wgScriptPath/load$wgScriptExten
 
 if ( $wgArticlePath === false ) {
 	if ( $wgUsePathInfo ) {
-		$wgArticlePath      = "$wgScript/$1";
+		$wgArticlePath = "$wgScript/$1";
 	} else {
-		$wgArticlePath      = "$wgScript?title=$1";
+		$wgArticlePath = "$wgScript?title=$1";
 	}
 }
 
-if ( !empty($wgActionPaths) && !isset($wgActionPaths['view']) ) {
+if ( !empty( $wgActionPaths ) && !isset( $wgActionPaths['view'] ) ) {
 	# 'view' is assumed the default action path everywhere in the code
 	# but is rarely filled in $wgActionPaths
 	$wgActionPaths['view'] = $wgArticlePath;
 }
 
-if ( !empty($wgActionPaths) && !isset($wgActionPaths['view']) ) {
+if ( !empty( $wgActionPaths ) && !isset( $wgActionPaths['view'] ) ) {
 	# 'view' is assumed the default action path everywhere in the code
 	# but is rarely filled in $wgActionPaths
 	$wgActionPaths['view'] = $wgArticlePath ;
@@ -323,7 +323,7 @@ if ( !$wgEnotifMinorEdits ) {
 }
 
 # $wgDisabledActions is deprecated as of 1.18
-foreach( $wgDisabledActions as $action ){
+foreach( $wgDisabledActions as $action ) {
 	$wgActions[$action] = false;
 }
 
@@ -353,12 +353,13 @@ if ( $wgAjaxUploadDestCheck ) {
 
 if ( $wgNewUserLog ) {
 	# Add a new log type
-	$wgLogTypes[]                        = 'newusers';
-	$wgLogNames['newusers']              = 'newuserlogpage';
-	$wgLogHeaders['newusers']            = 'newuserlogpagetext';
+	$wgLogTypes[] = 'newusers';
+	$wgLogNames['newusers'] = 'newuserlogpage';
+	$wgLogHeaders['newusers'] = 'newuserlogpagetext';
 	$wgLogActionsHandlers['newusers/newusers'] = 'NewUsersLogFormatter';
 	$wgLogActionsHandlers['newusers/create'] = 'NewUsersLogFormatter';
 	$wgLogActionsHandlers['newusers/create2'] = 'NewUsersLogFormatter';
+	$wgLogActionsHandlers['newusers/byemail'] = 'NewUsersLogFormatter';
 	$wgLogActionsHandlers['newusers/autocreate'] = 'NewUsersLogFormatter';
 }
 
@@ -388,6 +389,11 @@ if ( !defined( 'MW_COMPILED' ) ) {
 	require_once( "$IP/includes/ProxyTools.php" );
 	require_once( "$IP/includes/normal/UtfNormalDefines.php" );
 	wfProfileOut( $fname . '-includes' );
+}
+
+if ( $wgSecureLogin && substr( $wgServer, 0, 2 ) !== '//' ) {
+	$wgSecureLogin = false;
+	wfWarn( 'Secure login was enabled on a server that only supports HTTP or HTTPS. Disabling secure login.' );
 }
 
 # Now that GlobalFunctions is loaded, set defaults that depend

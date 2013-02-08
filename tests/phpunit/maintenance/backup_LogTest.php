@@ -172,6 +172,8 @@ class BackupDumperLoggerTest extends DumpTestCase {
 	function testXmlDumpsBackupUseCaseLogging() {
 		global $wgContLang;
 
+		$this->checkHasGzip();
+
 		// Preparing the dump
 		$fname = $this->getNewTempFile();
 		$dumper = new BackupDumper( array ( "--output=gzip:" . $fname,
@@ -186,7 +188,7 @@ class BackupDumperLoggerTest extends DumpTestCase {
 		// to be able to alert (once dumping produces reports) that this test
 		// needs updates.
 		$dumper->stderr = fopen( 'php://output', 'a' );
-		if ( $dumper->stderr === FALSE ) {
+		if ( $dumper->stderr === false ) {
 			$this->fail( "Could not open stream for stderr" );
 		}
 

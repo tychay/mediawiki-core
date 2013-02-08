@@ -562,7 +562,7 @@ class ApiPageSet extends ApiQueryBase {
 
 			// Get pageIDs data from the `page` table
 			$this->profileDBIn();
-			$res = $db->select( $tables, $fields, $where,  __METHOD__ );
+			$res = $db->select( $tables, $fields, $where, __METHOD__ );
 			foreach ( $res as $row ) {
 				$revid = intval( $row->rev_id );
 				$pageid = intval( $row->rev_page );
@@ -705,9 +705,10 @@ class ApiPageSet extends ApiQueryBase {
 				if ( $this->mConvertTitles &&
 						count( $wgContLang->getVariants() ) > 1  &&
 						!$titleObj->exists() ) {
-					// Language::findVariantLink will modify titleObj into
+					// Language::findVariantLink will modify titleText and titleObj into
 					// the canonical variant if possible
-					$wgContLang->findVariantLink( $title, $titleObj );
+					$titleText = is_string( $title ) ? $title : $titleObj->getPrefixedText();
+					$wgContLang->findVariantLink( $titleText, $titleObj );
 					$titleWasConverted = $unconvertedTitle !== $titleObj->getPrefixedText();
 				}
 
@@ -728,7 +729,11 @@ class ApiPageSet extends ApiQueryBase {
 			// namespace is localized or the capitalization is
 			// different
 			if ( $titleWasConverted ) {
-				$this->mConvertedTitles[$title] = $titleObj->getPrefixedText();
+				$this->mConvertedTitles[$unconvertedTitle] = $titleObj->getPrefixedText();
+				// In this case the page can't be Special.
+				if ( is_string( $title ) && $title !== $unconvertedTitle ) {
+					$this->mNormalizedTitles[$title] = $unconvertedTitle;
+				}
 			} elseif ( is_string( $title ) && $title !== $titleObj->getPrefixedText() ) {
 				$this->mNormalizedTitles[$title] = $titleObj->getPrefixedText();
 			}
@@ -785,9 +790,5 @@ class ApiPageSet extends ApiQueryBase {
 			array( 'code' => 'multisource', 'info' => "Cannot use 'pageids' at the same time as 'dataSource'" ),
 			array( 'code' => 'multisource', 'info' => "Cannot use 'revids' at the same time as 'dataSource'" ),
 		) );
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

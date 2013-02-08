@@ -711,7 +711,6 @@ $2، $1',
 # User rights log
 'rightslog' => 'سیاهه اختیارای کاروری',
 'rightslogtext' => 'اینتا سیاهه تغییرای اختیارای کاروری هسته.',
-'rightsnone' => '(هچّی)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-edit' => 'این صفحه ره دچی‌ین',
@@ -864,6 +863,7 @@ $2، $1',
 'enotif_lastvisited' => 'بدی‌ین همه‌ی تغییرات از آخرین باری که سر بزونی وسّه $1 ره هارشین.',
 'enotif_lastdiff' => 'هارشائن این تغییر وسّه $1 ره بزنین.',
 'enotif_anon_editor' => 'نشناسی‌یه کارور $1',
+'created' => 'بساته بیّه',
 
 # Delete
 'deletepage' => 'صفحه پاک هاکردن',
@@ -1086,6 +1086,7 @@ $5
 'logentry-move-move_redir-noredirect' => '$1 ، $3 ره بدون اینکه مسیر تغییری درس بوه به $4 که مسیر تغییر بیه منتقل هاکرده',
 'logentry-newusers-newusers' => '$1  بساتن اتا حساب کاروری',
 'logentry-newusers-create' => '$1  بساتن اتا حساب کاروری',
+'rightsnone' => '(هچّی)',
 
 # Feedback
 'feedback-subject' => 'موضوع:',

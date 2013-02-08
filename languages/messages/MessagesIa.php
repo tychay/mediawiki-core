@@ -276,6 +276,7 @@ $messages = array(
 'newwindow' => '(se aperi in un nove fenestra)',
 'cancel' => 'Cancellar',
 'moredotdotdot' => 'Plus...',
+'morenotlisted' => 'Alteres non listate…',
 'mypage' => 'Pagina',
 'mytalk' => 'Discussion',
 'anontalk' => 'Discussion pro iste adresse IP',
@@ -520,7 +521,7 @@ Consulta: $2',
 'actionthrottled' => 'Action limitate',
 'actionthrottledtext' => 'Como mesura anti-spam, tu es limitate de executar iste action troppo de vices durante un curte periodo de tempore, e tu ha excedite iste limite.
 Per favor reprova post alcun minutas.',
-'protectedpagetext' => 'Iste pagina ha essite protegite contra modificationes.',
+'protectedpagetext' => 'Iste pagina ha essite protegite pro impedir le modification o altere actiones.',
 'viewsourcetext' => 'Tu pote vider e copiar le codice-fonte de iste pagina:',
 'viewyourtext' => "Tu pote vider e copiar le fonte de '''tu modificationes''' de iste pagina:",
 'protectedinterface' => 'Iste pagina contine texto pro le interfacie del software de iste wiki, e es protegite pro impedir le abuso. Pro adder o modificar traductiones pro tote le wikis, per favor usa [//translatewiki.net/ translatewiki.net], le projecto de traduction de MediaWiki.',
@@ -579,7 +580,7 @@ Non oblida personalisar tu [[Special:Preferences|preferentias in {{SITENAME}}]].
 'gotaccount' => "Tu jam ha un conto? '''$1'''.",
 'gotaccountlink' => 'Aperir session',
 'userlogin-resetlink' => 'Datos de authentication oblidate?',
-'createaccountmail' => 'per e-mail',
+'createaccountmail' => 'Usar un contrasigno aleatori temporari e inviar lo al adresse de e-mail specificate hic infra',
 'createaccountreason' => 'Motivo:',
 'badretype' => 'Le duo contrasignos que tu scribeva non es identic.',
 'userexists' => 'Iste nomine de usator es jam in uso.
@@ -660,6 +661,7 @@ Per favor attende ante de probar lo novemente.',
 # E-mail sending
 'php-mail-error-unknown' => 'Error incognite in le function mail() de PHP',
 'user-mail-no-addy' => 'Tentava inviar e-mail sin adresse de e-mail.',
+'user-mail-no-body' => 'Tentava inviar e-mail con texto vacue o multo curte.',
 
 # Change password dialog
 'resetpass' => 'Cambiar contrasigno',
@@ -727,6 +729,7 @@ Contrasigno temporari: $2',
 'changeemail-oldemail' => 'Adresse de e-mail actual:',
 'changeemail-newemail' => 'Adresse de e-mail nove:',
 'changeemail-none' => '(nulle)',
+'changeemail-password' => 'Contrasigno de {{SITENAME}}:',
 'changeemail-submit' => 'Cambiar e-mail',
 'changeemail-cancel' => 'Cancellar',
 
@@ -901,10 +904,10 @@ In addition, tu nos garanti que tu es le autor de isto, o que tu lo ha copiate d
 '''Non submitte material subjecte a copyright sin autorisation expresse!'''",
 'longpageerror' => "'''Error: Le texto que tu submitteva occupa {{PLURAL:$1|un kilobyte|$1 kilobytes}}, excedente le maximo de {{PLURAL:$2|un kilobyte|$2 kilobytes}}.'''
 Illo non pote esser salveguardate.",
-'readonlywarning' => "'''Attention: Le base de datos ha essite blocate pro mantenentia, ergo tu non pote salveguardar tu modificationes in iste momento.'''
-Nos recommenda copiar-e-collar le texto in un file de texto e salveguardar lo pro plus tarde.
+'readonlywarning' => "'''Attention: Le base de datos ha essite blocate pro mantenentia. Tu non pote salveguardar tu modificationes in iste momento.'''
+Nos recommenda copiar-e-collar le texto in un file e salveguardar lo pro plus tarde.
 
-Le administrator qui lo blocava dava iste explication: $1",
+Le administrator qui ha blocate le base de datos ha fornite iste explication: $1",
 'protectedpagewarning' => "'''Attention:  Iste pagina ha essite protegite de sorta que solmente usatores con privilegios de administrator pote modificar lo.''' Le ultime entrata del registro es fornite hic infra pro referentia:",
 'semiprotectedpagewarning' => "'''Nota:''' Iste pagina ha essite protegite de maniera que solmente usatores registrate pote modificar lo. Le ultime entrata del registro es fornite hic infra pro referentia:",
 'cascadeprotectedwarning' => "'''Attention:''' Iste pagina ha essite protegite de maniera que solmente administratores pote modificar lo, proque illo es includite in le protection in cascada del sequente {{PLURAL:$1|pagina|paginas}}:",
@@ -916,7 +919,6 @@ Le administrator qui lo blocava dava iste explication: $1",
 'template-semiprotected' => '(semi-protegite)',
 'hiddencategories' => 'Iste pagina es membro de {{PLURAL:$1|1 categoria|$1 categorias}} celate:',
 'edittools' => '<!-- Iste texto se monstrara sub le formularios de modificar articulos e de incargar files. -->',
-'nocreatetitle' => 'Creation de paginas limitate',
 'nocreatetext' => '{{SITENAME}} ha restringite le possibilitate de crear nove paginas.
 Tu pote retornar e modificar un pagina existente, o [[Special:UserLogin|aperir un session, o crear un conto]].',
 'nocreate-loggedin' => 'Tu non ha le permission de crear nove paginas.',
@@ -1321,9 +1323,9 @@ Le operation non pote esser disfacite.',
 'prefs-emailconfirm-label' => 'Confirmation del e-mail:',
 'prefs-textboxsize' => 'Dimension del fenestra de modification',
 'youremail' => 'E-mail:',
-'username' => 'Nomine de usator:',
-'uid' => 'ID del usator:',
-'prefs-memberingroups' => 'Membro de {{PLURAL:$1|gruppo|gruppos}}:',
+'username' => '{{GENDER:$1|Nomine de usator}}:',
+'uid' => 'ID del {{GENDER:$1|usator}}:',
+'prefs-memberingroups' => '{{GENDER:$2|Membro}} de {{PLURAL:$1|gruppo|gruppos}}:',
 'prefs-registration' => 'Data de registration:',
 'yourrealname' => 'Nomine real:',
 'yourlanguage' => 'Lingua:',
@@ -1472,15 +1474,13 @@ Si tu opta pro dar lo, isto essera usate pro dar te attribution pro tu contribut
 'right-sendemail' => 'Inviar e-mail a altere usatores',
 'right-passwordreset' => 'Vider le e-mails pro reinitialisar le contrasigno',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Registro de creation de usatores',
+'newuserlogpagetext' => 'Isto es un registro de creation de usatores.',
+
 # User rights log
 'rightslog' => 'Registro de derectos de usator',
 'rightslogtext' => 'Isto es un registro de cambios in derectos de usator.',
-'rightslogentry' => 'cambiava le gruppos del quales $1 es membro de $2 a $3',
-'rightslogentry-autopromote' => 'ha essite automaticamente promovite de $2 a $3',
-'logentry-rights-rights' => '$1 cambiava le appertinentia a gruppos pro $3 de $4 a $5',
-'logentry-rights-rights-legacy' => '$1 cambiava le appertinentia a gruppos pro $3',
-'logentry-rights-autopromote' => '$1 ha essite automaticamente promovite de $4 a $5',
-'rightsnone' => '(nulle)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'leger iste pagina',
@@ -2120,7 +2120,7 @@ Vide etiam le [[Special:WantedCategories|categorias desirate]].',
 'linksearch-ok' => 'Cercar',
 'linksearch-text' => 'Es possibile usar metacharacteres como in "*.wikipedia.org".
 Isto necessita specificar al minus le dominio de nivello superior, per exemplo "*.org".<br />
-Protocollos supportate: <code>$1</code> (http:// es assumite si nulle protocollo es specificate).',
+{{PLURAL:$2|Le protocollo|Protocollos}} supportate: <code>$1</code> (http:// es assumite si nulle protocollo es specificate).',
 'linksearch-line' => '$1 ligate ab $2',
 'linksearch-error' => 'Le metacharacteres pote apparer solmente al initio del nomine de host.',
 
@@ -2133,15 +2133,11 @@ Protocollos supportate: <code>$1</code> (http:// es assumite si nulle protocollo
 # Special:ActiveUsers
 'activeusers' => 'Lista de usatores active',
 'activeusers-intro' => 'Isto es un lista de usatores que habeva alcun typo de activitate intra le ultime $1 {{PLURAL:$1|die|dies}}.',
-'activeusers-count' => '$1 {{PLURAL:$1|modification|modificationes}} in le ultime {{PLURAL:$3|die|$3 dies}}',
+'activeusers-count' => '$1 {{PLURAL:$1|action|actiones}} in le ultime {{PLURAL:$3|die|$3 dies}}',
 'activeusers-from' => 'Presentar usatores a partir de:',
 'activeusers-hidebots' => 'Celar bots',
 'activeusers-hidesysops' => 'Celar administratores',
 'activeusers-noresult' => 'Nulle usator trovate.',
-
-# Special:Log/newusers
-'newuserlogpage' => 'Registro de creation de usatores',
-'newuserlogpagetext' => 'Isto es un registro de creation de usatores.',
 
 # Special:ListGroupRights
 'listgrouprights' => 'Derectos del gruppos de usatores',
@@ -2203,7 +2199,7 @@ como le adresse del expeditor, de sorta que le destinatario potera responder te 
 'usermessage-editor' => 'Messagero del systema',
 
 # Watchlist
-'watchlist' => 'Mi observatorio',
+'watchlist' => 'Observatorio',
 'mywatchlist' => 'Observatorio',
 'watchlistfor2' => 'De $1 $2',
 'nowatchlist' => 'Tu non ha paginas sub observation.',
@@ -2211,10 +2207,8 @@ como le adresse del expeditor, de sorta que le destinatario potera responder te 
 'watchnologin' => 'Tu non ha aperite un session',
 'watchnologintext' => 'Tu debe [[Special:UserLogin|aperir un session]] pro modificar tu observatorio.',
 'addwatch' => 'Adder al observatorio',
-'addedwatchtext' => "Le pagina \"[[:\$1]]\" ha essite addite a tu [[Special:Watchlist|observatorio]].
-Le modificationes futur in iste pagina e in su pagina de discussion essera listate ibi,
-e le pagina apparera '''in litteras grasse''' in le [[Special:RecentChanges|lista de modificationes recente]] pro
-render lo plus facile de deteger.",
+'addedwatchtext' => 'Le pagina "[[:$1]]" ha essite addite a tu [[Special:Watchlist|observatorio]].
+Le modificationes futur in iste pagina e in le pagina de discussion associate essera listate in illo.',
 'removewatch' => 'Remover del observatorio',
 'removedwatchtext' => 'Le pagina "[[:$1]]" ha essite removite de [[Special:Watchlist|tu observatorio]].',
 'watch' => 'Observar',
@@ -2243,6 +2237,11 @@ render lo plus facile de deteger.",
 'enotif_mailer' => 'Systema de notification via e-mail de {{SITENAME}}',
 'enotif_reset' => 'Marcar tote le paginas como visitate',
 'enotif_impersonal_salutation' => 'Usator de {{SITENAME}}',
+'enotif_subject_deleted' => 'Le pagina $1 de {{SITENAME}} ha essite {{GENDER:$2|delite}} per $2',
+'enotif_subject_created' => 'Le pagina $1 de {{SITENAME}} ha essite {{GENDER:$2|create}} per $2',
+'enotif_subject_moved' => 'Le pagina $1 de {{SITENAME}} ha essite {{GENDER:$2|renominate}} per $2',
+'enotif_subject_restored' => 'Le pagina $1 de {{SITENAME}} ha essite {{GENDER:$2|restaurate}} per $2',
+'enotif_subject_changed' => 'Le pagina $1 de {{SITENAME}} ha essite {{GENDER:$2|modificate}} per $2',
 'enotif_lastvisited' => 'Vide $1 pro tote le modificationes depost tu ultime visita.',
 'enotif_lastdiff' => 'Vide $1 pro revider iste modification.',
 'enotif_anon_editor' => 'usator anonyme $1',
@@ -2276,6 +2275,8 @@ $UNWATCHURL
 
 Feedback e ulterior assistentia:
 {{canonicalurl:{{MediaWiki:Helppage}}}}',
+'created' => 'create',
+'changed' => 'modificate',
 
 # Delete
 'deletepage' => 'Deler pagina',
@@ -2366,9 +2367,9 @@ Ecce le configurationes actual del pagina '''$1''':",
 'protect-cascadeon' => 'Iste pagina es actualmente protegite proque illo es includite in le sequente {{PLURAL:$1|pagina, le qual|paginas, le quales}} ha activate le protection in cascada.
 Tu pote cambiar le nivello de protection de iste pagina, ma isto non cambiara le effecto del protection in cascada.',
 'protect-default' => 'Permitter tote le usatores',
-'protect-fallback' => 'Requirer permission de "$1"',
-'protect-level-autoconfirmed' => 'Blocar usatores nove e non registrate',
-'protect-level-sysop' => 'Administratores solmente',
+'protect-fallback' => 'Permitter solmente usatores con le permission de "$1"',
+'protect-level-autoconfirmed' => 'Permitter solmente usatores autoconfirmate',
+'protect-level-sysop' => 'Permitter solmente administratores',
 'protect-summary-cascade' => 'in cascada',
 'protect-expiring' => 'expira le $1 (UTC)',
 'protect-expiring-local' => 'expira le $1',
@@ -2469,7 +2470,7 @@ $1',
 'blanknamespace' => '(Principal)',
 
 # Contributions
-'contributions' => 'Contributiones del usator',
+'contributions' => 'Contributiones del {{GENDER:$1|usator}}',
 'contributions-title' => 'Contributiones del usator $1',
 'mycontris' => 'Contributiones',
 'contribsub2' => 'Pro $1 ($2)',
@@ -2676,16 +2677,16 @@ Pro blocar o disblocar le base de datos, le servitor web debe poter scriber a is
 # Move page
 'move-page' => 'Renominar $1',
 'move-page-legend' => 'Renominar pagina',
-'movepagetext' => "Per medio del formulario infra tu pote renominar un pagina, transferente tote su historia al nove nomine.
+'movepagetext' => "Per medio del formulario hic infra tu pote renominar un pagina, transferente tote su historia al nove nomine.
 Le titulo anterior devenira un pagina de redirection verso le nove titulo.
 Tu pote actualisar automaticamente le redirectiones que puncta verso le titulo original.
-Si tu prefere non facer isto, assecura te de reparar omne redirectiones [[Special:DoubleRedirects|duple]] o [[Special:BrokenRedirects|rupte]].
+Si tu prefere non facer isto, non oblida de reparar omne redirectiones [[Special:DoubleRedirects|duple]] o [[Special:BrokenRedirects|rupte]].
 Tu ha le responsabilitate de assecurar que le ligamines continua a punctar verso le paginas correcte.
 
-Nota que le pagina '''non''' essera renominate si existe ja un pagina sub le nove titulo, salvo si illo es vacue o un redirection e non ha un historia de modificationes passate.
-Isto vole dicer que tu pote renominar un pagina retro a su titulo original si tu ha committite un error, ben que tu non pote superscriber un pagina existente.
+Nota que le pagina '''non''' essera renominate si existe jam un pagina sub le nove titulo, excepte si iste es un redirection sin historia de modificationes passate.
+Isto te lassa le possibilitate de restaurar le titulo original de un pagina si tu ha committite un error, sin permitter te de supplantar un pagina existente.
 
-'''ATTENTION!'''
+'''Attention!'''
 Isto pote esser un cambio drastic e inexpectate pro un pagina popular;
 per favor assecura te de haber comprendite le consequentias de isto ante de continuar.",
 'movepagetext-noredirectfixer' => "Per medio del formulario infra tu pote renominar un pagina, transferente tote su historia al nove nomine.
@@ -3891,7 +3892,10 @@ Le imagines se monstra in plen resolution, le altere typos de file se executa di
 'logentry-newusers-create' => 'Le conto de usator $1 ha essite create',
 'logentry-newusers-create2' => 'Le conto de usator $3 ha essite create per $1',
 'logentry-newusers-autocreate' => 'Le conto $1 ha essite create automaticamente',
-'newuserlog-byemail' => 'contrasigno inviate per e-mail',
+'logentry-rights-rights' => '$1 cambiava le appertinentia a gruppos pro $3 de $4 a $5',
+'logentry-rights-rights-legacy' => '$1 cambiava le appertinentia a gruppos pro $3',
+'logentry-rights-autopromote' => '$1 ha essite automaticamente promovite de $4 a $5',
+'rightsnone' => '(nulle)',
 
 # Feedback
 'feedback-bugornote' => 'Si tu es preste a describer un problema technic in detalio, per favor [$1 reporta un falta].

@@ -52,7 +52,7 @@ class WebResponse {
 	 */
 	public function setcookie( $name, $value, $expire = 0, $prefix = null, $domain = null, $forceSecure = null ) {
 		global $wgCookiePath, $wgCookiePrefix, $wgCookieDomain;
-		global $wgCookieSecure,$wgCookieExpiration, $wgCookieHttpOnly;
+		global $wgCookieSecure, $wgCookieExpiration, $wgCookieHttpOnly;
 		if ( $expire == 0 ) {
 			$expire = time() + $wgCookieExpiration;
 		}
@@ -159,7 +159,7 @@ class FauxResponse extends WebResponse {
 	 * @param $name string
 	 * @return string
 	 */
-	public function getcookie( $name )  {
+	public function getcookie( $name ) {
 		if ( isset( $this->cookies[$name] ) ) {
 			return $this->cookies[$name];
 		}

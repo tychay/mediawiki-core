@@ -123,9 +123,9 @@ $wgScriptPath       = '/wiki';
  * redirect loops when "pretty URLs" are used.
  */
 $wgUsePathInfo =
-	( strpos( php_sapi_name(), 'cgi' ) === false ) &&
-	( strpos( php_sapi_name(), 'apache2filter' ) === false ) &&
-	( strpos( php_sapi_name(), 'isapi' ) === false );
+	( strpos( PHP_SAPI, 'cgi' ) === false ) &&
+	( strpos( PHP_SAPI, 'apache2filter' ) === false ) &&
+	( strpos( PHP_SAPI, 'isapi' ) === false );
 
 /**
  * The extension to append to script names by default. This can either be .php
@@ -438,14 +438,34 @@ $wgUseInstantCommons = false;
 
 /**
  * File backend structure configuration.
+ *
  * This is an array of file backend configuration arrays.
  * Each backend configuration has the following parameters:
- *  - 'name'        : A unique name for the backend
- *  - 'class'       : The file backend class to use
- *  - 'wikiId'      : A unique string that identifies the wiki (container prefix)
- *  - 'lockManager' : The name of a lock manager (see $wgLockManagers)
+ *  - 'name'         : A unique name for the backend
+ *  - 'class'        : The file backend class to use
+ *  - 'wikiId'       : A unique string that identifies the wiki (container prefix)
+ *  - 'lockManager'  : The name of a lock manager (see $wgLockManagers)
  *
- * Additional parameters are specific to the class used.
+ * See FileBackend::__construct() for more details.
+ * Additional parameters are specific to the file backend class used.
+ * These settings should be global to all wikis when possible.
+ *
+ * There are two particularly important aspects about each backend:
+ *   - a) Whether it is fully qualified or wiki-relative.
+ *        By default, the paths of files are relative to the current wiki,
+ *        which works via prefixing them with the current wiki ID when accessed.
+ *        Setting 'wikiId' forces the backend to be fully qualified by prefixing
+ *        all paths with the specified value instead. This can be useful if
+ *        multiple wikis need to share the same data. Note that 'name' is *not*
+ *        part of any prefix and thus should not be relied upon for namespacing.
+ *   - b) Whether it is only defined for some wikis or is defined on all
+ *        wikis in the wiki farm. Defining a backend globally is useful
+ *        if multiple wikis need to share the same data.
+ * One should be aware of these aspects when configuring a backend for use with
+ * any basic feature or plugin. For example, suppose an extension stores data for
+ * different wikis in different directories and sometimes needs to access data from
+ * a foreign wiki's directory in order to render a page on given wiki. The extension
+ * would need a fully qualified backend that is defined on all wikis in the wiki farm.
  */
 $wgFileBackends = array();
 
@@ -455,6 +475,7 @@ $wgFileBackends = array();
  *  - 'name'        : A unique name for the lock manager
  *  - 'class'       : The lock manger class to use
  * Additional parameters are specific to the class used.
+ * These settings should be global to all wikis.
  */
 $wgLockManagers = array();
 
@@ -890,7 +911,7 @@ $wgMaxAnimatedGifArea = 1.25e7;
  *  $wgTiffThumbnailType = array( 'jpg', 'image/jpeg' );
  * @endcode
  */
- $wgTiffThumbnailType = false;
+$wgTiffThumbnailType = false;
 
 /**
  * If rendered thumbnail files are older than this timestamp, they
@@ -1263,6 +1284,12 @@ $wgSMTP = false;
  * If using safe_mode this has no effect
  */
 $wgAdditionalMailParams = null;
+
+/**
+ * For parts of the system that have been updated to provide HTML email content, send
+ * both text and HTML parts as the body of the email
+ */
+$wgAllowHTMLEmail = false;
 
 /**
  * True: from page editor if s/he opted-in. False: Enotif mails appear to come
@@ -2192,6 +2219,12 @@ $wgUsePrivateIPs = false;
 $wgLanguageCode = 'en';
 
 /**
+ * Language cache size, or really how many languages can we handle
+ * simultanously without degrading to crawl speed.
+ */
+$wgLangObjCacheSize = 10;
+
+/**
  * Some languages need different word forms, usually for different cases.
  * Used in Language::convertGrammar().
  *
@@ -2346,11 +2379,6 @@ $wgBrowserBlackList = array(
 $wgLegacySchemaConversion = false;
 
 /**
- * Enable to allow rewriting dates in page text.
- * DOES NOT FORMAT CORRECTLY FOR MOST LANGUAGES.
- */
-$wgUseDynamicDates  = false;
-/**
  * Enable dates like 'May 12' instead of '12 May', this only takes effect if
  * the interface is set to English.
  */
@@ -2383,7 +2411,7 @@ $wgDisableLangConversion = false;
 /** Whether to enable language variant conversion for links. */
 $wgDisableTitleConversion = false;
 
-/** Whether to enable cononical language links in meta data. */
+/** Whether to enable canonical language links in meta data. */
 $wgCanonicalLanguageLinks = true;
 
 /** Default variant code, if false, the default will be the language code */
@@ -2482,17 +2510,6 @@ $wgLocaltimezone = null;
  * By default, this will be set to match $wgLocaltimezone.
  */
 $wgLocalTZoffset = null;
-
-/**
- * If set to true, this will roll back a few bug fixes introduced in 1.19,
- * emulating the 1.18 behaviour, to avoid introducing bug 34832. In 1.19,
- * language variant conversion is disabled in interface messages. Setting this
- * to true re-enables it.
- *
- * @todo This variable should be removed (implicitly false) in 1.20 or earlier.
- */
-$wgBug34832TransitionalRollback = true;
-
 
 /** @} */ # End of language/charset settings
 
@@ -2846,11 +2863,20 @@ $wgSend404Code = true;
 /**
  * The $wgShowRollbackEditCount variable is used to show how many edits will be
  * rollback. The numeric value of the varible are the limit up to are counted.
- * If the value is false or 0, the edits are not counted.
+ * If the value is false or 0, the edits are not counted. Disabling this will
+ * furthermore prevent MediaWiki from hiding some useless rollback links.
  *
  * @since 1.20
  */
 $wgShowRollbackEditCount = 10;
+
+/**
+ * Output a <link rel="canonical"> tag on every page indicating the canonical
+ * server which should be used, i.e. $wgServer or $wgCanonicalServer. Since
+ * detection of the current server is unreliable, the link is sent
+ * unconditionally.
+ */
+$wgEnableCanonicalServerLink = false;
 
 /** @} */ # End of output format settings }
 
@@ -3233,11 +3259,13 @@ $wgNamespacesWithSubpages = array(
 	NS_TALK           => true,
 	NS_USER           => true,
 	NS_USER_TALK      => true,
+	NS_PROJECT        => true,
 	NS_PROJECT_TALK   => true,
 	NS_FILE_TALK      => true,
 	NS_MEDIAWIKI      => true,
 	NS_MEDIAWIKI_TALK => true,
 	NS_TEMPLATE_TALK  => true,
+	NS_HELP           => true,
 	NS_HELP_TALK      => true,
 	NS_CATEGORY_TALK  => true
 );
@@ -3763,6 +3791,13 @@ $wgAllowPrefChange = array();
  */
 $wgSecureLogin = false;
 
+/**
+ * By default, keep users logged in via HTTPS when $wgSecureLogin is also
+ * true. Users opt-out of HTTPS when they login by de-selecting the checkbox.
+ * @since 1.21
+ */
+$wgSecureLoginDefaultHTTPS = true;
+
 /** @} */ # end user accounts }
 
 /************************************************************************//**
@@ -3829,6 +3864,34 @@ $wgBlockDisablesLogin = false;
  * see http://www.mediawiki.org/wiki/Manual:Image_Authorization
  */
 $wgWhitelistRead = false;
+
+/**
+ * Pages anonymous user may see, set as an array of regular expressions.
+ *
+ * This function will match the regexp against the title name, which
+ * is without underscore.
+ *
+ * @par Example:
+ * To whitelist [[Main Page]]:
+ * @code
+ * $wgWhitelistReadRegexp = array( "/Main Page/" );
+ * @endcode
+ *
+ * @note Unless ^ and/or $ is specified, a regular expression might match
+ * pages not intended to be whitelisted.  The above example will also
+ * whitelist a page named 'Security Main Page'.
+ *
+ * @par Example:
+ * To allow reading any page starting with 'User' regardless of the case:
+ * @code
+ * $wgWhitelistReadRegexp = array( "@^UsEr.*@i" );
+ * @endcode
+ * Will allow both [[User is banned]] and [[User:JohnDoe]]
+ *
+ * @note This will only work if $wgGroupPermissions['*']['read'] is false --
+ * see below. Otherwise, ALL pages are accessible, regardless of this setting.
+ */
+$wgWhitelistReadRegexp = false;
 
 /**
  * Should editors be required to have a validated e-mail
@@ -4311,6 +4374,7 @@ $wgRateLimitsExcludedIPs = array();
 /**
  * Log IP addresses in the recentchanges table; can be accessed only by
  * extensions (e.g. CheckUser) or a DB admin
+ * Used for retroactive autoblocks
  */
 $wgPutIPinRC = true;
 
@@ -4659,6 +4723,13 @@ $wgAggregateStatsID = false;
  * Does not work if pages are cached (for example with squid).
  */
 $wgDisableCounters = false;
+
+/**
+ * InfoAction retrieves a list of transclusion links (both to and from).
+ * This number puts a limit on that query in the case of highly transcluded
+ * templates.
+ */
+$wgPageInfoTransclusionLimit = 50;
 
 /**
  * Set this to an integer to only do synchronous site_stats updates
@@ -5015,8 +5086,8 @@ $wgUpgradeKey = false;
  * @since 1.20
  */
 $wgGitRepositoryViewers = array(
-    'https://gerrit.wikimedia.org/r/p/(.*)' => 'https://gerrit.wikimedia.org/r/gitweb?p=$1;h=%H',
-    'ssh://(?:[a-z0-9_]+@)?gerrit.wikimedia.org:29418/(.*)' => 'https://gerrit.wikimedia.org/r/gitweb?p=$1;h=%H',
+	'https://gerrit.wikimedia.org/r/p/(.*)' => 'https://gerrit.wikimedia.org/r/gitweb?p=$1;h=%H',
+	'ssh://(?:[a-z0-9_]+@)?gerrit.wikimedia.org:29418/(.*)' => 'https://gerrit.wikimedia.org/r/gitweb?p=$1;h=%H',
 );
 
 /** @} */ # End of maintenance }
@@ -5177,6 +5248,15 @@ $wgAllowCategorizedRecentChanges = false;
  * Has no effect if no tags are defined in valid_tag.
  */
 $wgUseTagFilter = true;
+
+/**
+ * If set to an integer, pages that are watched by more users than this
+ * threshold will not require the unwatchedpages permission to view the
+ * number of watchers.
+ *
+ * @since 1.21
+ */
+$wgUnwatchedPageThreshold = false;
 
 /** @} */ # end RC/watchlist }
 
@@ -5452,7 +5532,8 @@ $wgJobClasses = array(
 
 /**
 
- * Jobs that must be explicitly requested, i.e. aren't run by job runners unless special flags are set.
+ * Jobs that must be explicitly requested, i.e. aren't run by job runners unless
+ * special flags are set. The values here are keys of $wgJobClasses.
  *
  * These can be:
  * - Very long-running jobs.
@@ -5991,6 +6072,22 @@ $wgEnableAPI = true;
 $wgEnableWriteAPI = true;
 
 /**
+ *
+ *     WARNING: SECURITY THREAT - debug use only
+ *
+ * Disables many security checks in the API for debugging purposes.
+ * This flag should never be used on the production servers, as it introduces
+ * a number of potential security holes. Even when enabled, the validation
+ * will still be performed, but instead of failing, API will return a warning.
+ * Also, there will always be a warning notifying that this flag is set.
+ * At this point, the flag allows GET requests to go through for modules
+ * requiring POST.
+ *
+ * @since 1.21
+ */
+$wgDebugAPI = false;
+
+/**
  * API module extensions.
  * Associative array mapping module name to class name.
  * Extension modules may override the core modules.
@@ -6107,9 +6204,40 @@ $wgMaxShellMemory = 102400;
 $wgMaxShellFileSize = 102400;
 
 /**
- * Maximum CPU time in seconds for shell processes under linux
+ * Maximum CPU time in seconds for shell processes under Linux
  */
 $wgMaxShellTime = 180;
+
+/**
+ * Maximum wall clock time (i.e. real time, of the kind the clock on the wall
+ * would measure) in seconds for shell processes under Linux
+ */
+$wgMaxShellWallClockTime = 180;
+
+/**
+ * Under Linux: a cgroup directory used to constrain memory usage of shell 
+ * commands. The directory must be writable by the user which runs MediaWiki.
+ *
+ * If specified, this is used instead of ulimit, which is inaccurate, and
+ * causes malloc() to return NULL, which exposes bugs in C applications, making
+ * them segfault or deadlock.
+ *
+ * A wrapper script will create a cgroup for each shell command that runs, as
+ * a subgroup of the specified cgroup. If the memory limit is exceeded, the 
+ * kernel will send a SIGKILL signal to a process in the subgroup.
+ *
+ * @par Example:
+ * @code
+ *    mkdir -p /sys/fs/cgroup/memory/mediawiki
+ *    mkdir -m 0777 /sys/fs/cgroup/memory/mediawiki/job
+ *    echo '$wgShellCgroup = "/sys/fs/cgroup/memory/mediawiki/job";' >> LocalSettings.php
+ * @endcode
+ *
+ * The reliability of cgroup cleanup can be improved by installing a 
+ * notify_on_release script in the root cgroup, see e.g.
+ * https://gerrit.wikimedia.org/r/#/c/40784
+ */
+$wgShellCgroup = false;
 
 /**
  * Executable path of the PHP cli binary (php/php5). Should be set up on install.
@@ -6170,6 +6298,15 @@ $wgUpdateRowsPerJob = 500;
  * Number of rows to update per query
  */
 $wgUpdateRowsPerQuery = 100;
+
+/**
+ * Do not purge all the pages that use a page when it is edited
+ * if there are more than this many such pages. This is used to
+ * avoid invalidating a large portion of the squid/parser cache.
+ *
+ * This setting should factor in any squid/parser cache expiry settings.
+ */
+$wgMaxBacklinksInvalidate = false;
 
 /** @} */ # End job queue }
 
@@ -6369,8 +6506,9 @@ $wgRequirePasswordforEmailChange = true;
  *
  * @since 1.20
  */
-$wgSiteTypes = array();
-$wgSiteTypes['mediawiki'] = 'MediaWikiSite';
+$wgSiteTypes = array(
+	'mediawiki' => 'MediaWikiSite',
+);
 
 /**
  * For really cool vim folding this needs to be at the end:

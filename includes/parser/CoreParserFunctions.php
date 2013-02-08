@@ -422,7 +422,7 @@ class CoreParserFunctions {
 		return self::formatRaw( SiteStats::images(), $raw );
 	}
 	static function numberofadmins( $parser, $raw = null ) {
-		return self::formatRaw( SiteStats::numberingroup('sysop'), $raw );
+		return self::formatRaw( SiteStats::numberingroup( 'sysop' ), $raw );
 	}
 	static function numberofedits( $parser, $raw = null ) {
 		return self::formatRaw( SiteStats::edits(), $raw );
@@ -662,21 +662,31 @@ class CoreParserFunctions {
 			$length = $cache[$page];
 		} elseif( $parser->incrementExpensiveFunctionCount() ) {
 			$rev = Revision::newFromTitle( $title, false, Revision::READ_NORMAL );
-			$id = $rev ? $rev->getPage() : 0;
+			$pageID = $rev ? $rev->getPage() : 0;
+			$revID = $rev ? $rev->getId() : 0;
 			$length = $cache[$page] = $rev ? $rev->getSize() : 0;
 
 			// Register dependency in templatelinks
-			$parser->mOutput->addTemplate( $title, $id, $rev ? $rev->getId() : 0 );
+			$parser->mOutput->addTemplate( $title, $pageID, $revID );
 		}
 		return self::formatRaw( $length, $raw );
 	}
 
 	/**
-	* Returns the requested protection level for the current page
+	 * Returns the requested protection level for the current page
+	 *
+	 * @param Parser $parser
+	 * @param string $type
+	 * @param string $title
+	 *
 	 * @return string
 	 */
-	static function protectionlevel( $parser, $type = '' ) {
-		$restrictions = $parser->mTitle->getRestrictions( strtolower( $type ) );
+	static function protectionlevel( $parser, $type = '', $title = '' ) {
+		$titleObject = Title::newFromText( $title );
+		if ( !( $titleObject instanceof Title ) ) {
+			$titleObject = $parser->mTitle;
+		}
+		$restrictions = $titleObject->getRestrictions( strtolower( $type ) );
 		# Title::getRestrictions returns an array, its possible it may have
 		# multiple values in the future
 		return implode( $restrictions, ',' );
@@ -790,7 +800,7 @@ class CoreParserFunctions {
 
 	// Usage {{filepath|300}}, {{filepath|nowiki}}, {{filepath|nowiki|300}} or {{filepath|300|nowiki}}
 	// or {{filepath|300px}}, {{filepath|200x300px}}, {{filepath|nowiki|200x300px}}, {{filepath|200x300px|nowiki}}
-	public static function filepath( $parser, $name='', $argA='', $argB='' ) {
+	public static function filepath( $parser, $name = '', $argA = '', $argB = '' ) {
 		$file = wfFindFile( $name );
 
 		if( $argA == 'nowiki' ) {

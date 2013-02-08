@@ -105,15 +105,19 @@ abstract class ApiBase extends ContextSource {
 	 * The result data should be stored in the ApiResult object available
 	 * through getResult().
 	 */
-	public abstract function execute();
+	abstract public function execute();
 
 	/**
 	 * Returns a string that identifies the version of the extending class.
 	 * Typically includes the class name, the svn revision, timestamp, and
 	 * last author. Usually done with SVN's Id keyword
 	 * @return string
+	 * @deprecated since 1.21, version string is no longer supported
 	 */
-	public abstract function getVersion();
+	public function getVersion() {
+		wfDeprecated( __METHOD__, '1.21' );
+		return '';
+	}
 
 	/**
 	 * Get the name of the module being executed by this instance
@@ -121,6 +125,16 @@ abstract class ApiBase extends ContextSource {
 	 */
 	public function getModuleName() {
 		return $this->mModuleName;
+	}
+
+
+	/**
+	 * Get the module manager, or null if this module has no sub-modules
+	 * @since 1.21
+	 * @return ApiModuleManager
+	 */
+	public function getModuleManager() {
+		return null;
 	}
 
 	/**
@@ -254,6 +268,8 @@ abstract class ApiBase extends ContextSource {
 			}
 			$msg = $lnPrfx . implode( $lnPrfx, $msg ) . "\n";
 
+			$msg .= $this->makeHelpArrayToString( $lnPrfx, false, $this->getHelpUrls() );
+
 			if ( $this->isReadMode() ) {
 				$msg .= "\nThis module requires read rights";
 			}
@@ -297,25 +313,6 @@ abstract class ApiBase extends ContextSource {
 					}
 				}
 			}
-
-			$msg .= $this->makeHelpArrayToString( $lnPrfx, "Help page", $this->getHelpUrls() );
-
-			if ( $this->getMain()->getShowVersions() ) {
-				$versions = $this->getVersion();
-				$pattern = '/(\$.*) ([0-9a-z_]+\.php) (.*\$)/i';
-				$callback = array( $this, 'makeHelpMsg_callback' );
-
-				if ( is_array( $versions ) ) {
-					foreach ( $versions as &$v ) {
-						$v = preg_replace_callback( $pattern, $callback, $v );
-					}
-					$versions = implode( "\n  ", $versions );
-				} else {
-					$versions = preg_replace_callback( $pattern, $callback, $versions );
-				}
-
-				$msg .= "Version:\n  $versions\n";
-			}
 		}
 
 		return $msg;
@@ -340,13 +337,15 @@ abstract class ApiBase extends ContextSource {
 			return '';
 		}
 		if ( !is_array( $input ) ) {
-			$input = array(
-				$input
-			);
+			$input = array( $input );
 		}
 
 		if ( count( $input ) > 0 ) {
-			$msg = $title . ( count( $input ) > 1 ? 's' : '' ) . ":\n  ";
+			if ( $title ) {
+				$msg = $title . ( count( $input ) > 1 ? 's' : '' ) . ":\n  ";
+			} else {
+				$msg = '  ';
+			}
 			$msg .= implode( $prefix, $input ) . "\n";
 			return $msg;
 		}
@@ -484,44 +483,6 @@ abstract class ApiBase extends ContextSource {
 		} else {
 			return false;
 		}
-	}
-
-	/**
-	 * Callback for preg_replace_callback() call in makeHelpMsg().
-	 * Replaces a source file name with a link to ViewVC
-	 *
-	 * @param $matches array
-	 * @return string
-	 */
-	public function makeHelpMsg_callback( $matches ) {
-		global $wgAutoloadClasses, $wgAutoloadLocalClasses;
-
-		$file = '';
-		if ( isset( $wgAutoloadLocalClasses[get_class( $this )] ) ) {
-			$file = $wgAutoloadLocalClasses[get_class( $this )];
-		} elseif ( isset( $wgAutoloadClasses[get_class( $this )] ) ) {
-			$file = $wgAutoloadClasses[get_class( $this )];
-		}
-
-		// Do some guesswork here
-		$path = strstr( $file, 'includes/api/' );
-		if ( $path === false ) {
-			$path = strstr( $file, 'extensions/' );
-		} else {
-			$path = 'phase3/' . $path;
-		}
-
-		// Get the filename from $matches[2] instead of $file
-		// If they're not the same file, they're assumed to be in the
-		// same directory
-		// This is necessary to make stuff like ApiMain::getVersion()
-		// returning the version string for ApiBase work
-		if ( $path ) {
-			return "{$matches[0]}\n   https://svn.wikimedia.org/" .
-					"viewvc/mediawiki/trunk/" . dirname( $path ) .
-					"/{$matches[2]}";
-		}
-		return $matches[0];
 	}
 
 	/**
@@ -703,7 +664,7 @@ abstract class ApiBase extends ContextSource {
 			array( $this, "parameterNotEmpty" ) ) ), $required );
 
 		if ( count( $intersection ) > 1 ) {
-			$this->dieUsage( "The parameters {$p}" . implode( ", {$p}",  $intersection ) . ' can not be used together', "{$p}invalidparammix" );
+			$this->dieUsage( "The parameters {$p}" . implode( ", {$p}", $intersection ) . ' can not be used together', "{$p}invalidparammix" );
 		} elseif ( count( $intersection ) == 0 ) {
 			$this->dieUsage( "One of the parameters {$p}" . implode( ", {$p}", $required ) . ' is required', "{$p}missingparam" );
 		}
@@ -1152,11 +1113,11 @@ abstract class ApiBase extends ContextSource {
 	 * @return string
 	 */
 	function validateTimestamp( $value, $paramName ) {
-		$value = wfTimestamp( TS_UNIX, $value );
-		if ( $value === 0 ) {
+		$unixTimestamp = wfTimestamp( TS_UNIX, $value );
+		if ( $unixTimestamp === false ) {
 			$this->dieUsage( "Invalid value '$value' for timestamp parameter $paramName", "badtimestamp_{$paramName}" );
 		}
-		return wfTimestamp( TS_MW, $value );
+		return wfTimestamp( TS_MW, $unixTimestamp );
 	}
 
 	/**
@@ -1352,8 +1313,8 @@ abstract class ApiBase extends ContextSource {
 		// uploadMsgs
 		'invalid-file-key' => array( 'code' => 'invalid-file-key', 'info' => 'Not a valid file key' ),
 		'nouploadmodule' => array( 'code' => 'nouploadmodule', 'info' => 'No upload module set' ),
-		'uploaddisabled' => array( 'code' => 'uploaddisabled', 'info' => 'Uploads are not enabled.  Make sure $wgEnableUploads is set to true in LocalSettings.php and the PHP ini setting file_uploads is true' ),
-		'copyuploaddisabled' => array( 'code' => 'copyuploaddisabled', 'info' => 'Uploads by URL is not enabled.  Make sure $wgAllowCopyUploads is set to true in LocalSettings.php.' ),
+		'uploaddisabled' => array( 'code' => 'uploaddisabled', 'info' => 'Uploads are not enabled. Make sure $wgEnableUploads is set to true in LocalSettings.php and the PHP ini setting file_uploads is true' ),
+		'copyuploaddisabled' => array( 'code' => 'copyuploaddisabled', 'info' => 'Uploads by URL is not enabled. Make sure $wgAllowCopyUploads is set to true in LocalSettings.php.' ),
 		'copyuploadbaddomain' => array( 'code' => 'copyuploadbaddomain', 'info' => 'Uploads by URL are not allowed from this domain.' ),
 
 		'filename-tooshort' => array( 'code' => 'filename-tooshort', 'info' => 'The filename is too short' ),
@@ -1388,6 +1349,26 @@ abstract class ApiBase extends ContextSource {
 	}
 
 	/**
+	 * Will only set a warning instead of failing if the global $wgDebugAPI
+	 * is set to true. Otherwise behaves exactly as dieUsageMsg().
+	 * @param $error (array|string) Element of a getUserPermissionsErrors()-style array
+	 * @since 1.21
+	 */
+	public function dieUsageMsgOrDebug( $error ) {
+		global $wgDebugAPI;
+		if( $wgDebugAPI !== true ) {
+			$this->dieUsageMsg( $error );
+		} else {
+			if( is_string( $error ) ) {
+				$error = array( $error );
+			}
+			$parsed = $this->parseMsg( $error );
+			$this->setWarning( '$wgDebugAPI: ' . $parsed['code']
+				. ' - ' . $parsed['info'] );
+		}
+	}
+
+	/**
 	 * Return the error message related to a certain array
 	 * @param $error array Element of a getUserPermissionsErrors()-style array
 	 * @return array('code' => code, 'info' => info)
@@ -1398,7 +1379,7 @@ abstract class ApiBase extends ContextSource {
 
 		// Check whether the error array was nested
 		// array( array( <code>, <params> ), array( <another_code>, <params> ) )
-		if( is_array( $key ) ){
+		if( is_array( $key ) ) {
 			$error = $key;
 			$key = array_shift( $error );
 		}
@@ -1688,13 +1669,5 @@ abstract class ApiBase extends ContextSource {
 			print "\n" . wfBacktrace();
 		}
 		print "\n</pre>\n";
-	}
-
-	/**
-	 * Returns a string that identifies the version of this class.
-	 * @return string
-	 */
-	public static function getBaseVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

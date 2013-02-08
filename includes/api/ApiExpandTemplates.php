@@ -33,10 +33,6 @@
  */
 class ApiExpandTemplates extends ApiBase {
 
-	public function __construct( $main, $action ) {
-		parent::__construct( $main, $action );
-	}
-
 	public function execute() {
 		// Cache may vary on $wgUser because ParserOptions gets data from it
 		$this->getMain()->setCacheMode( 'anon-public-user-private' );
@@ -129,9 +125,5 @@ class ApiExpandTemplates extends ApiBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:Parsing_wikitext#expandtemplates';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }

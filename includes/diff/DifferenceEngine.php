@@ -38,6 +38,9 @@ class DifferenceEngine extends ContextSource {
 	 * @private
 	 */
 	var $mOldid, $mNewid;
+	/**
+	 * @var Content
+	 */
 	var $mOldContent, $mNewContent;
 	protected $mDiffLang;
 
@@ -149,7 +152,7 @@ class DifferenceEngine extends ContextSource {
 	function deletedLink( $id ) {
 		if ( $this->getUser()->isAllowed( 'deletedhistory' ) ) {
 			$dbr = wfGetDB( DB_SLAVE );
-			$row = $dbr->selectRow('archive', '*',
+			$row = $dbr->selectRow( 'archive', '*',
 				array( 'ar_rev_id' => $id ),
 				__METHOD__ );
 			if ( $row ) {
@@ -291,8 +294,11 @@ class DifferenceEngine extends ContextSource {
 
 			if ( $samePage && $this->mNewPage->quickUserCan( 'edit', $user ) ) {
 				if ( $this->mNewRev->isCurrent() && $this->mNewPage->userCan( 'rollback', $user ) ) {
-					$out->preventClickjacking();
-					$rollback = '&#160;&#160;&#160;' . Linker::generateRollback( $this->mNewRev, $this->getContext() );
+					$rollbackLink = Linker::generateRollback( $this->mNewRev, $this->getContext() );
+					if ( $rollbackLink ) {
+						$out->preventClickjacking();
+						$rollback = '&#160;&#160;&#160;' . $rollbackLink;
+					}
 				}
 				if ( !$this->mOldRev->isDeleted( Revision::DELETED_TEXT ) && !$this->mNewRev->isDeleted( Revision::DELETED_TEXT ) ) {
 					$undoLink = ' ' . $this->msg( 'parentheses' )->rawParams(
@@ -610,8 +616,8 @@ class DifferenceEngine extends ContextSource {
 	/**
 	 * Get complete diff table, including header
 	 *
-	 * @param $otitle Title: old title
-	 * @param $ntitle Title: new title
+	 * @param string|bool $otitle Header for old text or false
+	 * @param string|bool $ntitle Header for new text or false
 	 * @param $notice String: HTML between diff header and body
 	 * @return mixed
 	 */

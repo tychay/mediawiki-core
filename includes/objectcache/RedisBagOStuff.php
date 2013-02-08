@@ -90,7 +90,7 @@ class RedisBagOStuff extends BagOStuff {
 		}
 	}
 
-	public function get( $key ) {
+	public function get( $key, &$casToken = null ) {
 		wfProfileIn( __METHOD__ );
 		list( $server, $conn ) = $this->getConnection( $key );
 		if ( !$conn ) {
@@ -103,6 +103,7 @@ class RedisBagOStuff extends BagOStuff {
 			$result = false;
 			$this->handleException( $server, $e );
 		}
+		$casToken = $result;
 		$this->logRequest( 'get', $key, $server, $result );
 		wfProfileOut( __METHOD__ );
 		return $result;
@@ -129,6 +130,49 @@ class RedisBagOStuff extends BagOStuff {
 		}
 
 		$this->logRequest( 'set', $key, $server, $result );
+		wfProfileOut( __METHOD__ );
+		return $result;
+	}
+
+	/**
+	 * @param $casToken mixed
+	 * @param $key string
+	 * @param $value mixed
+	 * @param $exptime int
+	 * @return bool
+	 */
+	public function cas( $casToken, $key, $value, $expiry = 0 ) {
+		wfProfileIn( __METHOD__ );
+		list( $server, $conn ) = $this->getConnection( $key );
+		if ( !$conn ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+		$expiry = $this->convertToRelative( $expiry );
+		try {
+			$conn->watch( $key );
+
+			if ( $this->get( $key ) !== $casToken ) {
+				wfProfileOut( __METHOD__ );
+				return false;
+			}
+
+			$conn->multi();
+
+			if ( !$expiry ) {
+				// No expiry, that is very different from zero expiry in Redis
+				$conn->set( $key, $value );
+			} else {
+				$conn->setex( $key, $expiry, $value );
+			}
+
+			$result = $conn->exec();
+		} catch ( RedisException $e ) {
+			$result = false;
+			$this->handleException( $server, $e );
+		}
+
+		$this->logRequest( 'cas', $key, $server, $result );
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
@@ -288,23 +332,10 @@ class RedisBagOStuff extends BagOStuff {
 		if ( count( $this->servers ) === 1 ) {
 			$candidates = $this->servers;
 		} else {
-			// Use consistent hashing
-			//
-			// Note: Benchmarking on PHP 5.3 and 5.4 indicates that for small
-			// strings, md5() is only 10% slower than hash('joaat',...) etc.,
-			// since the function call overhead dominates. So there's not much
-			// justification for breaking compatibility with installations
-			// compiled with ./configure --disable-hash.
-			$hashes = array();
-			foreach ( $this->servers as $server ) {
-				$hashes[$server] = md5( $server . '/' . $key );
-			}
-			asort( $hashes );
+			$candidates = $this->servers;
+			ArrayUtils::consistentHashSort( $candidates, $key, '/' );
 			if ( !$this->automaticFailover ) {
-				reset( $hashes );
-				$candidates = array( key( $hashes ) );
-			} else {
-				$candidates = array_keys( $hashes );
+				$candidates = array_slice( $candidates, 0, 1 );
 			}
 		}
 
@@ -418,4 +449,3 @@ class RedisBagOStuff extends BagOStuff {
 			( $result === false ? "failure" : "success" ) );
 	}
 }
-

@@ -112,7 +112,7 @@ $messages = array(
 
 'underline-always' => 'Pirme',
 'underline-never' => 'Diri',
-'underline-default' => 'An aada-nga-daan nga panngaykayan',
+'underline-default' => 'An panmutos o pandalikyat nga aada-nga-daan',
 
 # Font style option in Special:Preferences
 'editfont-style' => 'Estilo hin font ha lugar hin pagliwat',
@@ -199,8 +199,9 @@ $messages = array(
 'newwindow' => '(nabuklad hin bag-o nga tamboan o bintana)',
 'cancel' => 'Pasagdi',
 'moredotdotdot' => 'Damo pa nga…',
-'mypage' => 'Akon pakli',
-'mytalk' => 'Akon paghingay',
+'morenotlisted' => 'Damo pa nga waray gintalaan...',
+'mypage' => 'Pakli',
+'mytalk' => 'Mga akon paghingay',
 'anontalk' => 'Paghingay para hini nga IP',
 'navigation' => 'Paglayag',
 'and' => '&#32;ngan',
@@ -440,7 +441,7 @@ Kweri: $2',
 'actionthrottled' => 'Ginpahinay an ginbuhat',
 'actionthrottledtext' => 'Komo uska pangontra ha spam, ikaw in ginlilimitaran paghimo hini nga pagbuhat hin sobra kadamo ha sulod hin gutiay nga oras, ngan ikaw in naglapos hini nga katubtuban.
 Alayon pagutro kahuman hin pipira ka mga minuto.',
-'protectedpagetext' => 'Ini nga pakli in pinasaliporan para mapugngan an mga pagliwat.',
+'protectedpagetext' => 'Ginpanalipdan ini nga pakli basi mapugngan an pagliwat o iba pa nga mga maburuhat.',
 'viewsourcetext' => 'Puydi ka kinmita ngan kinmopya han gintikangan han pakli:',
 'viewyourtext' => "Puydi nim makit-an ngan makopya an tinikangan han '''imo mga pagliwat''' ha dinhi nga pakli:",
 'protectedinterface' => 'Ini nga pakli in nahatag hin teksto hit interface para han software han hin nga wiki, ngan in pinasasaliporan para makalikay hit pag-abuso.
@@ -464,6 +465,7 @@ An magdudurmara nga nagtrangka hini in naghatag hini nga eksplenasyon: "$3".',
 'virus-unknownscanner' => 'diri-nasasabtan nga antivirus:',
 
 # Login and logout pages
+'welcomeuser' => '¡Uswag ngan Dayon, $1!',
 'yourname' => 'Agnay hit gumaramit:',
 'yourpassword' => 'Tigaman-pagsulod:',
 'yourpasswordagain' => 'Utroha pagbutang an tigaman-han-pagsakob:',
@@ -628,7 +630,7 @@ o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 
 'note' => "'''Pahibaro:'''",
 'previewnote' => "'''Hinumdumi nga pahiuna-nga-paggawas pa la ini.'''
 ¡Waray pa katipig an imo mga ginbag-o!",
-'continue-editing' => 'Padayon pagliwat',
+'continue-editing' => 'Pakadto han lugar hin panliwat',
 'editing' => 'Ginliliwat an $1',
 'creating' => 'Ginhihimo an $1',
 'editingsection' => 'Ginliliwat an $1 (bahin)',
@@ -644,7 +646,6 @@ Nasaad ka liwat nga imo ini kalugaringon nga ginsurat, o ginkopya nimo ini tikan
 'template-protected' => '(pinaliporan)',
 'template-semiprotected' => '(katunga nga pinasaliporan)',
 'hiddencategories' => 'Ini nga pakli in api han {{PLURAL:$1|1 nakatago nga kaarangay|$1 nakatago nga kaarangay}}:',
-'nocreatetitle' => 'Limitado an pahimo hin pakli',
 'nocreate-loggedin' => 'Diri ka gintutugotan paghimo hin mga bag-o nga pakli.',
 'sectioneditnotsupported-title' => 'Diri suportado han pagliwat han seksyon',
 'sectioneditnotsupported-text' => 'Diri suportado an pagliwat han seksyon ha dinhi nga pakli.',
@@ -830,7 +831,7 @@ Ginpapasabot nga an sulod han mga panudlok han {{SITENAME}} in bangin daan an.',
 
 # Preferences page
 'preferences' => 'Mga karuyag',
-'mypreferences' => 'Akon mga karuyag',
+'mypreferences' => 'Mga akon karuyag',
 'prefs-edits' => 'Ihap han mga pagliwat:',
 'prefsnologin' => 'Diri nakalog-in',
 'changepassword' => 'Igliwan an tigaman-pagsulod',
@@ -986,9 +987,12 @@ Diri ka gintutugotan pagliwat han mga katungod han gumaramit ha iba nga mga wiki
 'right-userrights-interwiki' => 'Igliwat an mga katungod han gumaramit han mga gumaramit ha iba nga mga wiki',
 'right-sendemail' => 'Padad-i hin e-mail ngada ha iba nga mga gumaramit',
 
+# Special:Log/newusers
+'newuserlogpage' => 'Talaan han paghimo hin gumaramit',
+'newuserlogpagetext' => 'Ini an talaan han mga nagkahihimo nga mga gumaramit.',
+
 # User rights log
 'rightslog' => 'Talaan hin mga katungod han gumaramit',
-'rightsnone' => '(waray)',
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-read' => 'basaha ini nga pakli',
@@ -1354,10 +1358,6 @@ An paglaladawan han iya [$2 fayl han paglaladawan nga pakli] didto in ginpapakit
 'activeusers-hidesysops' => 'Igtago an mga magdudumara',
 'activeusers-noresult' => 'Waray gumaramit nga nahiagian.',
 
-# Special:Log/newusers
-'newuserlogpage' => 'Talaan han paghimo hin gumaramit',
-'newuserlogpagetext' => 'Ini an talaan han mga nagkahihimo nga mga gumaramit.',
-
 # Special:ListGroupRights
 'listgrouprights-group' => 'Hugpo',
 'listgrouprights-rights' => 'Mga katungod',
@@ -1392,8 +1392,8 @@ An paglaladawan han iya [$2 fayl han paglaladawan nga pakli] didto in ginpapakit
 'usermessage-editor' => 'Mensahero han sistema',
 
 # Watchlist
-'watchlist' => 'Akon barantayan',
-'mywatchlist' => 'Akon angay timan-an',
+'watchlist' => 'Barantayan',
+'mywatchlist' => 'Mga angay timan-an nakon',
 'watchlistfor2' => 'Para ha $1 $2',
 'watchnologin' => 'Diri nakalog-in',
 'watch' => 'Bantayi',
@@ -1405,6 +1405,8 @@ An paglaladawan han iya [$2 fayl han paglaladawan nga pakli] didto in ginpapakit
 
 'enotif_impersonal_salutation' => 'gumaramit han {{SITENAME}}',
 'enotif_anon_editor' => 'waray magpakilala nga gumaramit $1',
+'created' => 'nahimo',
+'changed' => 'naliwanan',
 
 # Delete
 'deletepage' => 'Igpara an pakli',
@@ -1480,9 +1482,9 @@ $1',
 'blanknamespace' => '(Panguna)',
 
 # Contributions
-'contributions' => 'Mga amot han gumaramit',
+'contributions' => 'Mga ámot ni {{GENDER:$1|User}}',
 'contributions-title' => 'Mga amot han gumaramit para ha $1',
-'mycontris' => 'Akon mga ámot',
+'mycontris' => 'Mga ámot nakon',
 'contribsub2' => 'Para ha $1 $2',
 'uctop' => '(bawbaw)',
 'month' => 'Tikang ha bulan (ngan uruunhan):',
@@ -1514,7 +1516,7 @@ $1',
 'whatlinkshere-hideredirs' => '$1 nga mga redirek',
 'whatlinkshere-hidetrans' => '$1 nga mga transklusyon',
 'whatlinkshere-hidelinks' => '$1 an mga sumpay',
-'whatlinkshere-hideimages' => '$1 sumpay hin hulagway',
+'whatlinkshere-hideimages' => '$1 an mga sumpay han paypay',
 'whatlinkshere-filters' => 'Mga panara',
 
 # Block/unblock
@@ -2203,7 +2205,7 @@ An iba in daan nakatago.
 'logentry-newusers-create' => '$1 in naghimo hin gumaramit nga akawnt',
 'logentry-newusers-create2' => '$1 in naghimo hin gumaramit nga akawnt $3',
 'logentry-newusers-autocreate' => 'An akawnt nga $1 in lugaring nga nahimo',
-'newuserlog-byemail' => 'Ginpadangat an tigaman-pagsulod pinaagi han e-mail',
+'rightsnone' => '(waray)',
 
 # Feedback
 'feedback-subject' => 'Himangrawon:',

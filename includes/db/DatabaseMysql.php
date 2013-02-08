@@ -133,7 +133,7 @@ class DatabaseMysql extends DatabaseBase {
 				substr( $password, 0, 3 ) . "..., error: " . $error . "\n" );
 
 			wfProfileOut( __METHOD__ );
-			$this->reportConnectionError( $error );
+			return $this->reportConnectionError( $error );
 		}
 
 		if ( $dbName != '' ) {
@@ -146,7 +146,7 @@ class DatabaseMysql extends DatabaseBase {
 					"from client host " . wfHostname() . "\n" );
 
 				wfProfileOut( __METHOD__ );
-				$this->reportConnectionError( "Error selecting database $dbName" );
+				return $this->reportConnectionError( "Error selecting database $dbName" );
 			}
 		}
 
@@ -361,7 +361,7 @@ class DatabaseMysql extends DatabaseBase {
 	 * @param $options string|array
 	 * @return int
 	 */
-	public function estimateRowCount( $table, $vars='*', $conds='', $fname = 'DatabaseMysql::estimateRowCount', $options = array() ) {
+	public function estimateRowCount( $table, $vars = '*', $conds = '', $fname = 'DatabaseMysql::estimateRowCount', $options = array() ) {
 		$options['EXPLAIN'] = true;
 		$res = $this->select( $table, $vars, $conds, $fname, $options );
 		if ( $res === false ) {
@@ -393,7 +393,7 @@ class DatabaseMysql extends DatabaseBase {
 		for( $i = 0; $i < $n; $i++ ) {
 			$meta = mysql_fetch_field( $res->result, $i );
 			if( $field == $meta->name ) {
-				return new MySQLField($meta);
+				return new MySQLField( $meta );
 			}
 		}
 		return false;
@@ -449,7 +449,7 @@ class DatabaseMysql extends DatabaseBase {
 	function strencode( $s ) {
 		$sQuoted = mysql_real_escape_string( $s, $this->mConn );
 
-		if($sQuoted === false) {
+		if( $sQuoted === false ) {
 			$this->ping();
 			$sQuoted = mysql_real_escape_string( $s, $this->mConn );
 		}
@@ -597,10 +597,9 @@ class DatabaseMysql extends DatabaseBase {
 		if ( $res && $row = $this->fetchRow( $res ) ) {
 			wfProfileOut( $fname );
 			return $row[0];
-		} else {
-			wfProfileOut( $fname );
-			return false;
 		}
+		wfProfileOut( $fname );
+		return false;
 	}
 
 	/**
@@ -686,7 +685,7 @@ class DatabaseMysql extends DatabaseBase {
 
 	public function streamStatementEnd( &$sql, &$newLine ) {
 		if ( strtoupper( substr( $newLine, 0, 9 ) ) == 'DELIMITER' ) {
-			preg_match( '/^DELIMITER\s+(\S+)/' , $newLine, $m );
+			preg_match( '/^DELIMITER\s+(\S+)/', $newLine, $m );
 			$this->delimiter = $m[1];
 			$newLine = '';
 		}
@@ -722,7 +721,7 @@ class DatabaseMysql extends DatabaseBase {
 		if( $row->lockstatus == 1 ) {
 			return true;
 		} else {
-			wfDebug( __METHOD__." failed to acquire lock\n" );
+			wfDebug( __METHOD__ . " failed to acquire lock\n" );
 			return false;
 		}
 	}
@@ -900,7 +899,7 @@ class DatabaseMysql extends DatabaseBase {
 		$endArray = array();
 
 		foreach( $result as $table ) {
-			$vars = get_object_vars($table);
+			$vars = get_object_vars( $table );
 			$table = array_pop( $vars );
 
 			if( !$prefix || strpos( $table, $prefix ) === 0 ) {

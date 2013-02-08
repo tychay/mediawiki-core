@@ -118,11 +118,11 @@ class ApiQueryInfo extends ApiQueryBase {
 		}
 
 		// The token is always the same, let's exploit that
-		if ( !isset( ApiQueryInfo::$cachedTokens[ 'edit' ] ) ) {
-			ApiQueryInfo::$cachedTokens[ 'edit' ] = $wgUser->getEditToken();
+		if ( !isset( ApiQueryInfo::$cachedTokens['edit'] ) ) {
+			ApiQueryInfo::$cachedTokens['edit'] = $wgUser->getEditToken();
 		}
 
-		return ApiQueryInfo::$cachedTokens[ 'edit' ];
+		return ApiQueryInfo::$cachedTokens['edit'];
 	}
 
 	public static function getDeleteToken( $pageid, $title ) {
@@ -132,11 +132,11 @@ class ApiQueryInfo extends ApiQueryBase {
 		}
 
 		// The token is always the same, let's exploit that
-		if ( !isset( ApiQueryInfo::$cachedTokens[ 'delete' ] ) ) {
-			ApiQueryInfo::$cachedTokens[ 'delete' ] = $wgUser->getEditToken();
+		if ( !isset( ApiQueryInfo::$cachedTokens['delete'] ) ) {
+			ApiQueryInfo::$cachedTokens['delete'] = $wgUser->getEditToken();
 		}
 
-		return ApiQueryInfo::$cachedTokens[ 'delete' ];
+		return ApiQueryInfo::$cachedTokens['delete'];
 	}
 
 	public static function getProtectToken( $pageid, $title ) {
@@ -146,11 +146,11 @@ class ApiQueryInfo extends ApiQueryBase {
 		}
 
 		// The token is always the same, let's exploit that
-		if ( !isset( ApiQueryInfo::$cachedTokens[ 'protect' ] ) ) {
-			ApiQueryInfo::$cachedTokens[ 'protect' ] = $wgUser->getEditToken();
+		if ( !isset( ApiQueryInfo::$cachedTokens['protect'] ) ) {
+			ApiQueryInfo::$cachedTokens['protect'] = $wgUser->getEditToken();
 		}
 
-		return ApiQueryInfo::$cachedTokens[ 'protect' ];
+		return ApiQueryInfo::$cachedTokens['protect'];
 	}
 
 	public static function getMoveToken( $pageid, $title ) {
@@ -160,11 +160,11 @@ class ApiQueryInfo extends ApiQueryBase {
 		}
 
 		// The token is always the same, let's exploit that
-		if ( !isset( ApiQueryInfo::$cachedTokens[ 'move' ] ) ) {
-			ApiQueryInfo::$cachedTokens[ 'move' ] = $wgUser->getEditToken();
+		if ( !isset( ApiQueryInfo::$cachedTokens['move'] ) ) {
+			ApiQueryInfo::$cachedTokens['move'] = $wgUser->getEditToken();
 		}
 
-		return ApiQueryInfo::$cachedTokens[ 'move' ];
+		return ApiQueryInfo::$cachedTokens['move'];
 	}
 
 	public static function getBlockToken( $pageid, $title ) {
@@ -174,11 +174,11 @@ class ApiQueryInfo extends ApiQueryBase {
 		}
 
 		// The token is always the same, let's exploit that
-		if ( !isset( ApiQueryInfo::$cachedTokens[ 'block' ] ) ) {
-			ApiQueryInfo::$cachedTokens[ 'block' ] = $wgUser->getEditToken();
+		if ( !isset( ApiQueryInfo::$cachedTokens['block'] ) ) {
+			ApiQueryInfo::$cachedTokens['block'] = $wgUser->getEditToken();
 		}
 
-		return ApiQueryInfo::$cachedTokens[ 'block' ];
+		return ApiQueryInfo::$cachedTokens['block'];
 	}
 
 	public static function getUnblockToken( $pageid, $title ) {
@@ -193,11 +193,11 @@ class ApiQueryInfo extends ApiQueryBase {
 		}
 
 		// The token is always the same, let's exploit that
-		if ( !isset( ApiQueryInfo::$cachedTokens[ 'email' ] ) ) {
-			ApiQueryInfo::$cachedTokens[ 'email' ] = $wgUser->getEditToken();
+		if ( !isset( ApiQueryInfo::$cachedTokens['email'] ) ) {
+			ApiQueryInfo::$cachedTokens['email'] = $wgUser->getEditToken();
 		}
 
-		return ApiQueryInfo::$cachedTokens[ 'email' ];
+		return ApiQueryInfo::$cachedTokens['email'];
 	}
 
 	public static function getImportToken( $pageid, $title ) {
@@ -207,11 +207,11 @@ class ApiQueryInfo extends ApiQueryBase {
 		}
 
 		// The token is always the same, let's exploit that
-		if ( !isset( ApiQueryInfo::$cachedTokens[ 'import' ] ) ) {
-			ApiQueryInfo::$cachedTokens[ 'import' ] = $wgUser->getEditToken();
+		if ( !isset( ApiQueryInfo::$cachedTokens['import'] ) ) {
+			ApiQueryInfo::$cachedTokens['import'] = $wgUser->getEditToken();
 		}
 
-		return ApiQueryInfo::$cachedTokens[ 'import' ];
+		return ApiQueryInfo::$cachedTokens['import'];
 	}
 
 	public static function getWatchToken( $pageid, $title ) {
@@ -221,11 +221,11 @@ class ApiQueryInfo extends ApiQueryBase {
 		}
 
 		// The token is always the same, let's exploit that
-		if ( !isset( ApiQueryInfo::$cachedTokens[ 'watch' ] ) ) {
-			ApiQueryInfo::$cachedTokens[ 'watch' ] = $wgUser->getEditToken( 'watch' );
+		if ( !isset( ApiQueryInfo::$cachedTokens['watch'] ) ) {
+			ApiQueryInfo::$cachedTokens['watch'] = $wgUser->getEditToken( 'watch' );
 		}
 
-		return ApiQueryInfo::$cachedTokens[ 'watch' ];
+		return ApiQueryInfo::$cachedTokens['watch'];
 	}
 
 	public static function getOptionsToken( $pageid, $title ) {
@@ -235,11 +235,11 @@ class ApiQueryInfo extends ApiQueryBase {
 		}
 
 		// The token is always the same, let's exploit that
-		if ( !isset( ApiQueryInfo::$cachedTokens[ 'options' ] ) ) {
-			ApiQueryInfo::$cachedTokens[ 'options' ] = $wgUser->getEditToken();
+		if ( !isset( ApiQueryInfo::$cachedTokens['options'] ) ) {
+			ApiQueryInfo::$cachedTokens['options'] = $wgUser->getEditToken();
 		}
 
-		return ApiQueryInfo::$cachedTokens[ 'options' ];
+		return ApiQueryInfo::$cachedTokens['options'];
 	}
 
 	public function execute() {
@@ -268,10 +268,7 @@ class ApiQueryInfo extends ApiQueryBase {
 			// Throw away any titles we're gonna skip so they don't
 			// clutter queries
 			$cont = explode( '|', $this->params['continue'] );
-			if ( count( $cont ) != 2 ) {
-				$this->dieUsage( 'Invalid continue param. You should pass the original ' .
-						'value returned by the previous query', '_badcontinue' );
-			}
+			$this->dieContinueUsageIf( count( $cont ) != 2 );
 			$conttitle = Title::makeTitleSafe( $cont[0], $cont[1] );
 			foreach ( $this->everything as $pageid => $title ) {
 				if ( Title::compare( $title, $conttitle ) >= 0 ) {
@@ -349,7 +346,7 @@ class ApiQueryInfo extends ApiQueryBase {
 			$pageInfo['touched'] = wfTimestamp( TS_ISO_8601, $this->pageTouched[$pageid] );
 			$pageInfo['lastrevid'] = intval( $this->pageLatest[$pageid] );
 			$pageInfo['counter'] = $wgDisableCounters
-				? ""
+				? ''
 				: intval( $this->pageCounter[$pageid] );
 			$pageInfo['length'] = intval( $this->pageLength[$pageid] );
 
@@ -809,12 +806,6 @@ class ApiQueryInfo extends ApiQueryBase {
 		return 'Get basic page information such as namespace, title, last touched date, ...';
 	}
 
-	public function getPossibleErrors() {
-		return array_merge( parent::getPossibleErrors(), array(
-			array( 'code' => '_badcontinue', 'info' => 'Invalid continue param. You should pass the original value returned by the previous query' ),
-		) );
-	}
-
 	public function getExamples() {
 		return array(
 			'api.php?action=query&prop=info&titles=Main%20Page',
@@ -824,9 +815,5 @@ class ApiQueryInfo extends ApiQueryBase {
 
 	public function getHelpUrls() {
 		return 'https://www.mediawiki.org/wiki/API:Properties#info_.2F_in';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
 	}
 }
